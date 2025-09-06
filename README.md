@@ -1,6 +1,6 @@
 # GradHire – Job Search & ATS Resume Builder
 
-GradHire is a mobile/web platform designed to help fresh graduates and job seekers build professional ATS-friendly resumes and apply for jobs easily.  
+Grad Hire is a mobile/web platform designed to help fresh graduates and job seekers build professional ATS-friendly resumes and apply for jobs easily.  
 This project is developed by **QX (Quick Execution Group)** as part of our graduation project.
 
 ---
