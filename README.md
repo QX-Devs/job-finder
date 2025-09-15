@@ -5,7 +5,7 @@ This project is developed by **QX (Quick Execution Group)** as part of our gradu
 
 ---
 
-# 🚀 Features
+## 🚀 Features
 - **Graduate/Non-Graduate Flow**: Tailored onboarding for each user type.
 - **ATS Resume Builder**: Automatically generates optimized resumes for applicant tracking systems.
 - **Job Search Integration**: Aggregates jobs from multiple sources and displays them in one place.
