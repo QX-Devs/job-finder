@@ -317,3 +317,53 @@
 .nav-link.active:hover::after {
   width: 100%;
 }
+/* Add these styles to the end of your Navbar.css file */
+
+/* New styles for the Logout button */
+.logout-btn {
+  background: linear-gradient(135deg, #e53935, #b71c1c);
+  box-shadow: 0 4px 15px rgba(229, 57, 53, 0.3);
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(229, 57, 53, 0.5);
+}
+
+/* New styles for mobile action buttons */
+.mobile-actions {
+  display: none; /* Hide on desktop */
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 968px) {
+  /* This rule already exists, keep it */
+  .navbar-actions {
+    display: none;
+  }
+
+  /* New rule to display actions inside the mobile menu */
+  .mobile-actions {
+    display: flex;
+  }
+
+  /* Make sure buttons take full width on mobile */
+  .mobile-actions .nav-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+}
+
+/* This rule below is for removing a pseudo-element that is no longer needed */
+@media (max-width: 968px) {
+  .navbar-links.mobile-open::after {
+    content: none; /* Remove the old pseudo-element separator */
+  }
+}

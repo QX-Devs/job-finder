@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import authService from "../services/authService";
 import {
   Eye,
   EyeOff,
@@ -11,30 +13,25 @@ import {
   Laptop,
 } from "lucide-react";
 import "./Login.css";
-import {
-  ValidEmail,
-  ValidFullName,
-  ValidPassword,
-  ValidCPassword,
-} from "../ValidInputs"; // ✅ make sure this path is correct
+import { ValidEmail, ValidPassword } from "../ValidInputs";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [mode, setMode] = useState("login");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
-    fullName: "",
   });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   const containerRef = useRef(null);
   const cardRef = useRef(null);
 
-  // 🌀 Floating background animation
+  // Floating background animation
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (containerRef.current) {
@@ -48,28 +45,19 @@ const Login = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // 🧩 Handle input changes
+  // Handle input changes
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: "" })); // clear error while typing
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+    setApiError("");
   };
 
-  // ⚙️ Validate all fields before submission
+  // Validate form
   const validateForm = () => {
     const newErrors = {};
 
     if (mode !== "forgot" && !ValidEmail(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
-    }
-
-    if (mode === "register") {
-      if (!ValidFullName(formData.fullName))
-        newErrors.fullName = "Name should contain only letters and spaces.";
-      if (!ValidPassword(formData.password))
-        newErrors.password =
-          "Password must be at least 8 characters and include uppercase, lowercase, number, and special symbol.";
-      if (!ValidCPassword(formData.password, formData.confirmPassword))
-        newErrors.confirmPassword = "Passwords do not match or are invalid.";
     }
 
     if (mode === "login" && !ValidPassword(formData.password)) {
@@ -84,24 +72,56 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // 🚀 Handle submit
-  const handleSubmit = (e) => {
+  // Handle submit
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return; // prevent submit on invalid input
-    console.log(`${mode} attempt:`, formData);
-    alert(`${mode} success ✅`);
+    
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    setApiError("");
+
+    try {
+      if (mode === "login") {
+        const response = await authService.login(formData.email, formData.password);
+        
+        if (response.success) {
+          navigate('/');
+        } else {
+          setApiError(response.message || 'Login failed. Please check your credentials.');
+        }
+      } else if (mode === "forgot") {
+        // Handle forgot password logic
+        const response = await authService.forgotPassword(formData.email);
+        
+        if (response.success) {
+          alert('Password reset link has been sent to your email.');
+          setMode("login");
+        } else {
+          setApiError(response.message || 'Failed to send reset link. Please try again.');
+        }
+      }
+    } catch (error) {
+      console.error(`${mode} error:`, error);
+      setApiError(error.message || 'An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // 🔁 Mode switch animation
+  // Mode switch animation
   const switchMode = (newMode) => {
     if (newMode === mode) return;
     cardRef.current?.classList.add("entering");
     setMode(newMode);
+    setFormData({ email: "", password: "" });
+    setErrors({});
+    setApiError("");
     setTimeout(() => cardRef.current?.classList.remove("entering"), 700);
   };
 
   const redirectToSignUp = () => {
-    window.location.href = "/signup";
+    navigate('/signup');
   };
 
   const formConfig = {
@@ -110,13 +130,6 @@ const Login = () => {
       subtitle: "Your career starts here – build resumes, apply, and succeed.",
       buttonText: "Login",
       fields: ["email", "password"],
-    },
-    register: {
-      title: "Create Your Account",
-      subtitle:
-        "Join thousands of professionals building their careers with GradJob.",
-      buttonText: "Register",
-      fields: ["fullName", "email", "password", "confirmPassword"],
     },
     forgot: {
       title: "Reset Your Password",
@@ -128,37 +141,23 @@ const Login = () => {
 
   const config = formConfig[mode];
 
-  // 🎨 Input field renderer
+  // Input field renderer
   const renderField = (field) => {
-    const icons = { email: Mail, password: Lock, confirmPassword: Lock, fullName: User };
+    const icons = { email: Mail, password: Lock };
     const Icon = icons[field];
-    const isPassword = field.includes("Password");
-    const showPass = field === "password" ? showPassword : showConfirm;
-    const toggleShow = field === "password" ? setShowPassword : setShowConfirm;
+    const isPassword = field === "password";
 
     return (
       <div key={field} className="form-group">
         <div className={`input-wrapper ${errors[field] ? "has-error" : ""}`}>
           <Icon className="input-icon" size={20} />
           <input
-            type={
-              isPassword && !showPass
-                ? "password"
-                : field === "email"
-                ? "email"
-                : "text"
-            }
+            type={isPassword && !showPassword ? "password" : "text"}
             value={formData[field]}
             onChange={(e) => handleChange(field, e.target.value)}
             placeholder={
-              field === "fullName"
-                ? "Enter your full name"
-                : field === "email"
+              field === "email"
                 ? "Enter your email"
-                : field === "confirmPassword"
-                ? "Confirm your password"
-                : field === "password" && mode === "register"
-                ? "Create a password"
                 : "Enter your password"
             }
             className="form-input"
@@ -167,10 +166,10 @@ const Login = () => {
           {isPassword && (
             <button
               type="button"
-              onClick={() => toggleShow(!showPass)}
+              onClick={() => setShowPassword(!showPassword)}
               className="toggle-btn"
             >
-              {showPass ? <EyeOff size={20} /> : <Eye size={20} />}
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           )}
         </div>
@@ -183,27 +182,14 @@ const Login = () => {
     <div ref={containerRef} className="auth-container">
       <div className="auth-background">
         <div className="gradient-bg"></div>
-        <div className="floating-particles">
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={i}
-              className="particle"
-              style={{
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 8}s`,
-                animationDuration: `${8 + Math.random() * 4}s`,
-              }}
-            />
-          ))}
-        </div>
         <div className="floating-shapes">
           {[
             { Component: "div", className: "shape shape-1", size: 120 },
             { Component: "div", className: "shape shape-2", size: 80 },
             { Component: "div", className: "shape shape-3", size: 100 },
-            { Component: Briefcase, className: "icon-shape", size: 35, pos: "briefcase" },
-            { Component: FileText, className: "icon-shape", size: 30, pos: "file" },
-            { Component: Laptop, className: "icon-shape", size: 40, pos: "laptop" },
+            { Component: Briefcase, className: "icon-shape", size: 35 },
+            { Component: FileText, className: "icon-shape", size: 30 },
+            { Component: Laptop, className: "icon-shape", size: 40 },
           ].map((item, i) => {
             const multiplier = [20, -15, 25, 18, -22, 15][i];
             const multiplierY = [20, -15, -10, -12, 18, 25][i];
@@ -243,21 +229,64 @@ const Login = () => {
             <p className="auth-subtitle">{config.subtitle}</p>
           </div>
 
+          {apiError && (
+            <div style={{
+              background: '#fee',
+              color: '#c33',
+              padding: '0.8rem',
+              borderRadius: '8px',
+              marginBottom: '1rem',
+              fontSize: '0.9rem',
+              fontWeight: '500'
+            }}>
+              {apiError}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="auth-form">
             {config.fields.map(renderField)}
-            <button type="submit" className={`submit-btn ${mode}-btn`}>
-              <span>{config.buttonText}</span>
+            
+            {mode === "login" && (
+              <div className="forgot-password-link">
+                <button 
+                  type="button" 
+                  onClick={() => switchMode("forgot")} 
+                  className="link-btn"
+                >
+                  Forgot Password?
+                </button>
+              </div>
+            )}
+
+            <button 
+              type="submit" 
+              className={`submit-btn ${mode}-btn`}
+              disabled={isLoading}
+            >
+              <span>
+                {isLoading 
+                  ? (mode === "login" ? 'Logging in...' : 'Sending...') 
+                  : config.buttonText
+                }
+              </span>
               <ArrowRight size={20} />
             </button>
           </form>
 
           <div className="auth-footer">
-            <button onClick={() => switchMode("forgot")} className="link-btn">
-              Forgot Password?
-            </button>
+            {mode === "forgot" && (
+              <button 
+                onClick={() => switchMode("login")} 
+                className="link-btn"
+              >
+                Back to Login
+              </button>
+            )}
+            
             <div className="divider">
               <span>Don't have an account?</span>
             </div>
+            
             <button
               onClick={redirectToSignUp}
               className="signup-redirect-btn"

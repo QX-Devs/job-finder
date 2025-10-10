@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import "./Home.css";
 import Layout from '../components/Layout';
+import authService from '../services/authService';
 
 const Home = () => {
   const sectionRefs = useRef([]);
@@ -132,6 +133,9 @@ const Home = () => {
     { label: 'Terms of Service', href: '/terms-of-service' }
   ];
 
+  // Check if user is logged in
+  const isLoggedIn = authService.isAuthenticated();
+
   return (
     <div className="main-container">
       <Layout />
@@ -182,10 +186,19 @@ const Home = () => {
               <Download size={20} />
               <span>Download on Google Play</span>
             </a>
-            <a href="/signup" className="btn btn-secondary">
-              <LogIn size={20} />
-              <span>Get Started</span>
-            </a>
+            
+            {/* Conditionally render Get Started or Dashboard button */}
+            {isLoggedIn ? (
+              <a href="/dashboard" className="btn btn-secondary">
+                <LogIn size={20} />
+                <span> Go to Dashboard</span>
+              </a>
+            ) : (
+              <a href="/signup" className="btn btn-secondary">
+                <LogIn size={20} />
+                <span> Get Started</span>
+              </a>
+            )}
           </div>
 
           <div className="hero-highlights">

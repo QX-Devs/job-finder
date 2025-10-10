@@ -1,35 +1,29 @@
 import React, { useState, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import authService from '../services/authService';
 import { 
   ArrowRight, ArrowLeft, Check, Plus, X, 
   Sparkles, MapPin, GraduationCap, Briefcase, Code, 
-  RotateCcw, Star, Eye, EyeOff, Mail, Lock, User, Phone
+  RotateCcw, Star, Eye, EyeOff
 } from 'lucide-react';
 import './SignUP.css';
 
 const SignUP = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState('forward');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [formData, setFormData] = useState({
-    // Step 1 - Sign Up Info
     fullName: '',
     email: '',
     password: '',
     confirmPassword: '',
     phone: '',
     countryCode: '+962',
-    
-    // Step 2 - Location & Status
     location: '',
     employmentStatus: '',
-    
-    // Step 3 - Education
     education: [{ id: 1, degree: '', institution: '', major: '', graduationYear: '' }],
-    
-    // Step 4 - Experience
     experience: [{ id: 1, jobTitle: '', company: '', startDate: '', endDate: '', description: '' }],
-    
-    // Step 5 - Skills & Goals
     skills: [],
     careerObjective: '',
     resumeVisibility: 'private'
@@ -37,6 +31,7 @@ const SignUP = () => {
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
   const [newSkill, setNewSkill] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -175,15 +170,51 @@ const SignUP = () => {
     if (currentStep > 1) navigateStep(currentStep - 1);
   }, [currentStep, navigateStep]);
 
-  const handleFinish = useCallback(() => {
+  const handleFinish = useCallback(async () => {
     setIsLoading(true);
-    setTimeout(() => {
+    setApiError('');
+
+    try {
+      // Prepare data for API
+      const registrationData = {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+        countryCode: formData.countryCode,
+        location: formData.location,
+        employmentStatus: formData.employmentStatus,
+        careerObjective: formData.careerObjective,
+        resumeVisibility: formData.resumeVisibility,
+        
+        // Clean up education data
+        education: formData.education
+          .filter(edu => edu.degree && edu.institution)
+          .map(({ id, ...edu }) => edu),
+        
+        // Clean up experience data
+        experience: formData.experience
+          .filter(exp => exp.jobTitle && exp.company)
+          .map(({ id, ...exp }) => exp),
+        
+        // Skills array
+        skills: formData.skills
+      };
+
+      // Call API
+      const response = await authService.register(registrationData);
+
+      if (response.success) {
+        alert('Account created successfully!');
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setApiError(error.message || 'Registration failed. Please try again.');
+    } finally {
       setIsLoading(false);
-      alert('Account created successfully!');
-      // Redirect to home or login
-      // window.location.href = '/home';
-    }, 2000);
-  }, []);
+    }
+  }, [formData, navigate]);
 
   const editStep = useCallback((step) => {
     setShowConfirmation(false);
@@ -678,6 +709,20 @@ const SignUP = () => {
   return (
     <div className="wizard-container">
       <form onSubmit={handleFormSubmit}>
+        {apiError && (
+          <div style={{
+            background: '#fee',
+            color: '#c33',
+            padding: '1rem',
+            borderRadius: '8px',
+            marginBottom: '1rem',
+            textAlign: 'center',
+            fontWeight: '500'
+          }}>
+            {apiError}
+          </div>
+        )}
+
         <div className="progress-container">
           <div className="progress-steps">
             {[1, 2, 3, 4, 5].map(step => (
