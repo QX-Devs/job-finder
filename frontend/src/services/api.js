@@ -1,9 +1,17 @@
 // src/services/api.js
 
 import axios from 'axios';
+import { HTTP_STATUS, ERROR_MESSAGES } from './apiConstants';
 
 // Base API URL - with fallback for different environments
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
+// Default retry configuration
+const RETRY_CONFIG = {
+  maxRetries: 3,
+  retryDelay: 1000, // 1 second
+  retryStatusCodes: [408, 429, 500, 502, 503, 504] // Status codes to retry
+};
 
 // Create axios instance with default configuration
 const api = axios.create({
@@ -11,7 +19,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 seconds timeout
+  timeout: 15000, // 15 seconds timeout (increased from 10)
   withCredentials: false, // Set to true if using cookies
 });
 
@@ -34,123 +42,213 @@ api.interceptors.request.use(
       };
     }
 
+    // Add request ID for tracking
+    config.headers['X-Request-ID'] = generateRequestId();
+
     // Log request for debugging (remove in production)
     if (process.env.NODE_ENV === 'development') {
-      console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`, config);
+      console.log(`🔄 API Request: ${config.method?.toUpperCase()} ${config.url}`, {
+        headers: config.headers,
+        params: config.params,
+        data: config.data
+      });
     }
 
     return config;
   },
   (error) => {
     // Log request error
-    console.error('API Request Error:', error);
+    console.error('❌ API Request Error:', error);
     return Promise.reject(error);
   }
 );
 
-// Response interceptor - Handle errors globally
+// Response interceptor - Handle errors globally with retry logic
 api.interceptors.response.use(
   (response) => {
     // Log response for debugging (remove in production)
     if (process.env.NODE_ENV === 'development') {
-      console.log(`API Response: ${response.status} ${response.config.url}`, response.data);
+      console.log(`✅ API Response: ${response.status} ${response.config.url}`, {
+        data: response.data,
+        headers: response.headers
+      });
     }
 
     return response;
   },
-  (error) => {
+  async (error) => {
     // Log response error
-    console.error('API Response Error:', error);
+    console.error('❌ API Response Error:', error);
+
+    const originalRequest = error.config;
+
+    // ✅ RETRY LOGIC FOR NETWORK ERRORS AND SPECIFIC STATUS CODES
+    if (shouldRetry(error) && !originalRequest._retryCount) {
+      originalRequest._retryCount = originalRequest._retryCount || 0;
+      
+      if (originalRequest._retryCount < RETRY_CONFIG.maxRetries) {
+        originalRequest._retryCount++;
+        
+        console.log(`🔄 Retrying request (${originalRequest._retryCount}/${RETRY_CONFIG.maxRetries}): ${originalRequest.url}`);
+        
+        // Exponential backoff delay
+        const delay = RETRY_CONFIG.retryDelay * Math.pow(2, originalRequest._retryCount - 1);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        
+        return api(originalRequest);
+      }
+    }
 
     // Handle different error scenarios
     if (error.response) {
       // Server responded with error status (4xx, 5xx)
       const { status, data } = error.response;
 
+      // Create enhanced error object
+      const enhancedError = {
+        message: data?.message || getErrorMessage(status),
+        status,
+        data: data || {},
+        url: error.config?.url,
+        method: error.config?.method,
+        timestamp: new Date().toISOString()
+      };
+
       switch (status) {
-        case 400:
-          // Bad Request
-          console.error('Bad Request:', data);
+        case HTTP_STATUS.BAD_REQUEST:
+          // 400 - Bad Request
+          console.error('❌ Bad Request:', enhancedError);
           break;
 
-        case 401:
-          // Unauthorized - Token expired or invalid
-          // Only redirect if it's NOT a login request to avoid infinite loops
-          if (error.config.url !== '/auth/login' && 
-              error.config.url !== '/auth/register') {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            
-            // Use setTimeout to avoid React state updates during render
-            setTimeout(() => {
-              window.location.href = '/login?session_expired=true';
-            }, 100);
-          }
+        case HTTP_STATUS.UNAUTHORIZED:
+          // 401 - Unauthorized - Token expired or invalid
+          handleUnauthorizedError(error);
           break;
 
-        case 403:
-          // Forbidden - User doesn't have permission
-          console.error('Forbidden:', data);
+        case HTTP_STATUS.FORBIDDEN:
+          // 403 - Forbidden - User doesn't have permission
+          console.error('🚫 Forbidden:', enhancedError);
           break;
 
-        case 404:
-          // Not Found
-          console.error('Endpoint not found:', error.config.url);
+        case HTTP_STATUS.NOT_FOUND:
+          // 404 - Not Found
+          console.error('🔍 Endpoint not found:', error.config?.url);
           break;
 
-        case 409:
-          // Conflict - Resource conflict
-          console.error('Conflict:', data);
+        case HTTP_STATUS.CONFLICT:
+          // 409 - Conflict - Resource conflict
+          console.error('⚡ Conflict:', enhancedError);
           break;
 
-        case 422:
-          // Unprocessable Entity - Validation errors
-          console.error('Validation Error:', data);
+        case HTTP_STATUS.UNPROCESSABLE_ENTITY:
+          // 422 - Unprocessable Entity - Validation errors
+          console.error('📝 Validation Error:', enhancedError);
           break;
 
-        case 429:
-          // Too Many Requests - Rate limiting
-          console.error('Rate limit exceeded:', data);
+        case HTTP_STATUS.TOO_MANY_REQUESTS:
+          // 429 - Too Many Requests - Rate limiting
+          console.error('🚦 Rate limit exceeded:', enhancedError);
           break;
 
-        case 500:
-          // Internal Server Error
-          console.error('Server Error:', data);
+        case HTTP_STATUS.INTERNAL_SERVER_ERROR:
+          // 500 - Internal Server Error
+          console.error('💥 Server Error:', enhancedError);
           break;
 
-        case 502:
-          // Bad Gateway
-          console.error('Bad Gateway:', data);
+        case HTTP_STATUS.BAD_GATEWAY:
+          // 502 - Bad Gateway
+          console.error('🌐 Bad Gateway:', enhancedError);
           break;
 
-        case 503:
-          // Service Unavailable
-          console.error('Service Unavailable:', data);
+        case HTTP_STATUS.SERVICE_UNAVAILABLE:
+          // 503 - Service Unavailable
+          console.error('🔧 Service Unavailable:', enhancedError);
           break;
 
         default:
-          console.error(`HTTP Error ${status}:`, data);
+          console.error(`❓ HTTP Error ${status}:`, enhancedError);
       }
 
-      // Return the error response data if available
-      return Promise.reject(data || { message: `HTTP Error ${status}` });
+      // Return the enhanced error
+      return Promise.reject(enhancedError);
 
     } else if (error.request) {
       // Request was made but no response received (network error)
-      console.error('Network Error:', error.request);
+      console.error('📡 Network Error:', {
+        message: ERROR_MESSAGES.NETWORK_ERROR,
+        details: error.request
+      });
+
       return Promise.reject({ 
-        message: 'Network error. Please check your connection.' 
+        message: ERROR_MESSAGES.NETWORK_ERROR,
+        code: 'NETWORK_ERROR',
+        timestamp: new Date().toISOString()
       });
 
     } else {
       // Something else happened while setting up the request
-      console.error('Request Setup Error:', error.message);
+      console.error('⚙️ Request Setup Error:', error.message);
+      
       return Promise.reject({ 
-        message: 'Request configuration error.' 
+        message: 'Request configuration error.',
+        code: 'REQUEST_SETUP_ERROR',
+        details: error.message,
+        timestamp: new Date().toISOString()
       });
     }
   }
 );
+
+// Helper function to determine if request should be retried
+function shouldRetry(error) {
+  // Retry on network errors (no response)
+  if (!error.response) {
+    return true;
+  }
+
+  // Retry on specific status codes
+  const status = error.response?.status;
+  return RETRY_CONFIG.retryStatusCodes.includes(status);
+}
+
+// Helper function to get user-friendly error messages
+function getErrorMessage(status) {
+  const messages = {
+    [HTTP_STATUS.BAD_REQUEST]: 'Invalid request. Please check your input.',
+    [HTTP_STATUS.UNAUTHORIZED]: ERROR_MESSAGES.UNAUTHORIZED,
+    [HTTP_STATUS.FORBIDDEN]: ERROR_MESSAGES.FORBIDDEN,
+    [HTTP_STATUS.NOT_FOUND]: ERROR_MESSAGES.NOT_FOUND,
+    [HTTP_STATUS.TOO_MANY_REQUESTS]: 'Too many requests. Please slow down.',
+    [HTTP_STATUS.INTERNAL_SERVER_ERROR]: ERROR_MESSAGES.SERVER_ERROR,
+    [HTTP_STATUS.SERVICE_UNAVAILABLE]: 'Service temporarily unavailable. Please try again later.'
+  };
+
+  return messages[status] || ERROR_MESSAGES.DEFAULT;
+}
+
+// Helper function to handle unauthorized errors
+function handleUnauthorizedError(error) {
+  // Only redirect if it's NOT an auth request to avoid infinite loops
+  const isAuthRequest = error.config?.url?.includes('/auth/');
+  
+  if (!isAuthRequest) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    
+    // Use setTimeout to avoid React state updates during render
+    setTimeout(() => {
+      // Check if we're not already on login page to avoid unnecessary redirects
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/login?session_expired=true';
+      }
+    }, 100);
+  }
+}
+
+// Helper function to generate unique request ID
+function generateRequestId() {
+  return `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+}
 
 // Add helper methods for common HTTP methods with enhanced functionality
 const apiHelpers = {
@@ -180,24 +278,104 @@ const apiHelpers = {
   },
 
   // File upload with FormData
-  upload: (url, formData, onUploadProgress = null) => {
+  upload: (url, formData, onUploadProgress = null, config = {}) => {
     return api.post(url, formData, {
+      ...config,
       headers: {
         'Content-Type': 'multipart/form-data',
+        ...config.headers,
       },
       onUploadProgress,
     });
   },
 
   // Download file
-  download: (url, params = {}) => {
+  download: (url, params = {}, config = {}) => {
     return api.get(url, {
+      ...config,
       params,
       responseType: 'blob', // Important for file downloads
     });
   },
+
+  // Multiple concurrent requests
+  all: (requests) => {
+    return axios.all(requests);
+  },
+
+  // Spread multiple responses
+  spread: (callback) => {
+    return axios.spread(callback);
+  }
+};
+
+// Utility functions for API
+export const apiUtils = {
+  // Check if error is a specific type
+  isNetworkError: (error) => error.code === 'NETWORK_ERROR',
+  isUnauthorized: (error) => error.status === HTTP_STATUS.UNAUTHORIZED,
+  isServerError: (error) => error.status >= 500,
+  
+  // Extract validation errors from response
+  getValidationErrors: (error) => {
+    if (error.status === HTTP_STATUS.UNPROCESSABLE_ENTITY && error.data.errors) {
+      return error.data.errors;
+    }
+    return null;
+  },
+  
+  // Create cancel token for request cancellation
+  createCancelToken: () => {
+    return axios.CancelToken.source();
+  },
+  
+  // Check if error is due to cancellation
+  isCancel: (error) => axios.isCancel(error),
+  
+  // Format error for display
+  formatError: (error) => {
+    if (typeof error === 'string') return error;
+    return error.message || ERROR_MESSAGES.DEFAULT;
+  }
+};
+
+// Configuration methods
+export const apiConfig = {
+  // Update base URL dynamically
+  setBaseURL: (baseURL) => {
+    api.defaults.baseURL = baseURL;
+  },
+  
+  // Update default headers
+  setHeader: (key, value) => {
+    api.defaults.headers.common[key] = value;
+  },
+  
+  // Remove header
+  removeHeader: (key) => {
+    delete api.defaults.headers.common[key];
+  },
+  
+  // Set authentication token
+  setToken: (token) => {
+    if (token) {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+    } else {
+      delete api.defaults.headers.common.Authorization;
+    }
+  },
+  
+  // Get current configuration
+  getConfig: () => {
+    return {
+      baseURL: api.defaults.baseURL,
+      timeout: api.defaults.timeout,
+      headers: { ...api.defaults.headers.common }
+    };
+  }
 };
 
 // Export both the default api instance and helper methods
 export default api;
-export { apiHelpers };
+export { apiHelpers }
+;

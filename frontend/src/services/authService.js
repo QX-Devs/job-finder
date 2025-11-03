@@ -1,3 +1,4 @@
+// src/services/authService.js
 import api from './api';
 
 const authService = {
@@ -67,22 +68,98 @@ const authService = {
   // Get current user profile
   getCurrentUser: async () => {
     try {
-      const response = await api.get('/auth/me');
+      const response = await api.get('/me');
+      
+      console.log('getCurrentUser response:', response);
+      
+      // Assuming your backend returns: { success: true, data: userObject }
+      if (response.data && response.data.success) {
+        return response.data;
+      }
+      
+      // If backend returns user data directly without wrapper
+      return {
+        success: true,
+        data: response.data
+      };
+    } catch (error) {
+      console.error('Error in getCurrentUser:', error);
+      
+      // Return consistent error format
+      return {
+        success: false,
+        message: error.response?.data?.message || error.message || 'Failed to fetch user profile'
+      };
+    }
+  },
+
+  // Update user profile
+  updateProfile: async (userData) => {
+    try {
+      const response = await api.put('/me', userData);
       return response.data;
     } catch (error) {
-      throw error.response?.data || { message: 'Failed to fetch user' };
+      throw error.response?.data || { message: 'Failed to update profile' };
     }
   },
 
   // Check if user is logged in
   isAuthenticated: () => {
-    return !!localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    return !!token;
   },
 
-  // Get stored user data
-  getUser: () => {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+  // Get stored user data from localStorage
+  getStoredUser: () => {
+    try {
+      const user = localStorage.getItem('user');
+      return user ? JSON.parse(user) : null;
+    } catch (error) {
+      console.error('Error parsing stored user:', error);
+      return null;
+    }
+  },
+
+  // Get authentication token
+  getToken: () => {
+    return localStorage.getItem('token');
+  },
+
+  // Set authentication token (useful for social logins etc.)
+  setToken: (token) => {
+    localStorage.setItem('token', token);
+  },
+
+  // Set user data
+  setUser: (userData) => {
+    localStorage.setItem('user', JSON.stringify(userData));
+  },
+
+  // Clear all auth data
+  clearAuth: () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  },
+
+  // Check if user has specific role (for future role-based features)
+  hasRole: (role) => {
+    const user = authService.getStoredUser();
+    return user && user.roles && user.roles.includes(role);
+  },
+
+  // Refresh token (for future implementation)
+  refreshToken: async () => {
+    try {
+      const response = await api.post('/auth/refresh-token');
+      if (response.data.success) {
+        localStorage.setItem('token', response.data.data.token);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Token refresh failed:', error);
+      return false;
+    }
   }
 };
 

@@ -1,0 +1,14 @@
+{
+  "name": "job-finder-root",
+  "version": "1.0.0",
+  "description": "Root package for running frontend and backend of Job Finder.",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "start:backend": "npm run dev --prefix backend",
+    "start:frontend": "npm start --prefix frontend",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

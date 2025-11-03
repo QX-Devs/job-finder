@@ -7,17 +7,22 @@ export const API_ENDPOINTS = {
     FORGOT_PASSWORD: '/auth/forgot-password',
     RESET_PASSWORD: '/auth/reset-password',
     LOGOUT: '/auth/logout',
-    ME: '/auth/me',
     REFRESH_TOKEN: '/auth/refresh-token',
   },
   USERS: {
     BASE: '/users',
     PROFILE: '/users/profile',
     AVATAR: '/users/avatar',
+    ME: '/me',
   },
+  // ✅ ADD RESUME ENDPOINTS
   RESUMES: {
-    BASE: '/resumes',
+    BASE: '/me/resumes',
+    BY_ID: (id) => `/me/resumes/${id}`,
+    DUPLICATE: (id) => `/me/resumes/${id}/duplicate`,
     TEMPLATES: '/resumes/templates',
+    PREVIEW: (id) => `/resumes/${id}/preview`,
+    EXPORT: (id) => `/resumes/${id}/export`,
   },
   JOBS: {
     BASE: '/jobs',
@@ -49,4 +54,12 @@ export const ERROR_MESSAGES = {
   FORBIDDEN: 'You do not have permission to perform this action.',
   NOT_FOUND: 'The requested resource was not found.',
   DEFAULT: 'An unexpected error occurred. Please try again.',
+};
+
+export const HTTP_METHODS = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  PATCH: 'PATCH',
+  DELETE: 'DELETE',
 };
