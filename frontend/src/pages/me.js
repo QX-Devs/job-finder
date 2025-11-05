@@ -19,12 +19,6 @@ function Me() {
   });
 
   useEffect(() => {
-  console.log('=== Me Page Mounted ===');
-  console.log('Token:', authService.getToken()?.substring(0, 20) + '...');
-  console.log('Stored User:', authService.getStoredUser());
-  fetchUserProfile();
-}, []);
-  useEffect(() => {
     fetchUserProfile();
   }, []);
 
@@ -118,15 +112,40 @@ function Me() {
     );
   }
 
+  const educationCount = user?.education?.length || 0;
+  const experienceCount = user?.experience?.length || 0;
+  const skillsCount = user?.skills?.length || 0;
+  const initials = (user?.fullName || 'U')
+    .split(' ')
+    .map(s => s[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <div className="me-container">
       <div className="me-card">
         <div className="me-header">
-          <h1>My Profile</h1>
+          <div className="me-identity">
+            <div className="me-avatar">{initials}</div>
+            <div>
+              <h1 className="me-title">{user?.fullName || 'My Profile'}</h1>
+              <p className="me-subtitle">{user?.email}</p>
+            </div>
+          </div>
           <div className="me-actions">
-            {!isEditing && <button onClick={() => setIsEditing(true)} className="btn-edit">Edit Profile</button>}
+            {!isEditing && (
+              <button onClick={() => setIsEditing(true)} className="btn-edit-primary">Edit Profile</button>
+            )}
             <button onClick={handleLogout} className="btn-logout">Logout</button>
           </div>
+        </div>
+
+        <div className="me-stats">
+          <div className="stat-pill"><span className="pill-dot" />{educationCount} Education</div>
+          <div className="stat-pill"><span className="pill-dot" />{experienceCount} Experience</div>
+          <div className="stat-pill"><span className="pill-dot" />{skillsCount} Skills</div>
+          <div className="stat-pill"><span className="pill-dot" />Visibility: {user?.resumeVisibility || 'private'}</div>
         </div>
 
         {error && isEditing && <div className="error-message">{error}</div>}
@@ -241,7 +260,6 @@ function Me() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                required
               />
             </div>
 
@@ -294,7 +312,7 @@ function Me() {
             </div>
 
             <div className="form-actions">
-              <button type="submit" className="btn-save" disabled={loading}>
+              <button type="submit" className="btn-save-primary" disabled={loading}>
                 {loading ? 'Saving...' : 'Save Changes'}
               </button>
               <button

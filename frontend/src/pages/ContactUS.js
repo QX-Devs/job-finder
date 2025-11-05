@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ContactUs.css';
-import Layout from '../components/Layout';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -157,7 +156,7 @@ const ContactUs = () => {
   ];
 
   return (
-    <Layout>
+    <>
     <div className="contact-container">
       {/* Floating Background Shapes */}
       <div className="floating-shapes">
@@ -330,7 +329,7 @@ const ContactUs = () => {
         </span>
       </div>
     </div>
-    </Layout>
+    </>
   );
 };
 

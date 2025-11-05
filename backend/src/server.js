@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 const { sequelize, testConnection } = require('../config/database');
 const authRoutes = require('../routes/auth');
 const meRoutes = require('../routes/me');
+const path = require('path');
 
 const app = express();
 
@@ -47,6 +48,9 @@ app.post('/api/test', (req, res) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// Serve generated files for download
+app.use('/api/files', express.static(path.join(__dirname, '..', 'generated')));
 
 // ✅ FIXED Hugging Face Route - Better model and response cleaning
 app.post('/api/ai/career-objective', async (req, res) => {
@@ -175,7 +179,14 @@ app.post('/api/ai/resume-suggestions', async (req, res) => {
     
     switch (section) {
       case 'professional_summary':
-        prompt = `Create a compelling professional summary for a resume based on this information: ${content}. Context: ${context || 'Software engineering role'}. Make it professional, concise (3-4 sentences), and highlight key achievements and skills.`;
+        prompt = `Write ONLY a professional resume summary in 3-4 sentences.
+Requirements:
+- Direct, concise, no preface or headings
+- Tailored to: ${context || 'Software engineering role'}
+- Use strong action verbs and quantifiable impact where possible
+- No markdown, no bullet points, no reasoning, no labels
+
+User input (may be partial, at least 50 chars expected): ${content}`;
         break;
       case 'skills':
         prompt = `Suggest relevant technical and soft skills for someone with this background: ${content}. Context: ${context || 'Software engineering'}. Return a comma-separated list of 8-12 relevant skills. Focus on in-demand technologies and transferable skills.`;
@@ -191,7 +202,7 @@ app.post('/api/ai/resume-suggestions', async (req, res) => {
     }
 
     // Enhanced prompt to prevent thinking
-    const enhancedPrompt = `You are a professional resume writer. Provide ONLY the final answer, no thinking or explanation.
+    const enhancedPrompt = `You are a professional resume writer. Provide ONLY the final answer, no thinking or explanation, no headings.
 
 ${prompt}
 
@@ -211,8 +222,8 @@ Answer:`;
             content: enhancedPrompt
           }],
           model: "meta-llama/Llama-3.2-3B-Instruct",
-          max_tokens: 300,
-          temperature: 0.7,
+          max_tokens: 220,
+          temperature: 0.5,
           stop: ["<think>", "</think>"]
         }),
       }

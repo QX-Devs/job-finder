@@ -103,6 +103,26 @@ const authService = {
     }
   },
 
+  // Change password
+  changePassword: async (currentPassword, newPassword) => {
+    try {
+      const response = await api.post('/me/change-password', { currentPassword, newPassword });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to change password' };
+    }
+  },
+
+  // Delete account
+  deleteAccount: async () => {
+    try {
+      const response = await api.delete('/me');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to delete account' };
+    }
+  },
+
   // Check if user is logged in
   isAuthenticated: () => {
     const token = localStorage.getItem('token');

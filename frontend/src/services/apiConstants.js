@@ -23,10 +23,17 @@ export const API_ENDPOINTS = {
     TEMPLATES: '/resumes/templates',
     PREVIEW: (id) => `/resumes/${id}/preview`,
     EXPORT: (id) => `/resumes/${id}/export`,
+    GENERATE: '/me/resumes/generate',
+    UPLOAD: '/me/resumes/upload',
+    DOWNLOAD_FILE: (filename) => `/me/resumes/file/${filename}`,
   },
   JOBS: {
     BASE: '/jobs',
     APPLICATIONS: '/jobs/applications',
+  },
+  APPLICATIONS: {
+    BASE: '/me/applications',
+    BY_ID: (id) => `/me/applications/${id}`,
   },
 };
 

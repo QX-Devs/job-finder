@@ -1,0 +1,41 @@
+.page-container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+.apps-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
+.apps-title { display: inline-flex; align-items: center; gap: 8px; }
+.apps-title h1 { margin: 0; font-size: clamp(1.4rem, 3vw, 1.8rem); }
+.apps-actions { display: inline-flex; gap: 10px; align-items: center; }
+.apps-search { padding: 10px 12px; border-radius: 10px; border: 2px solid #e5e7eb; min-width: 260px; }
+.apps-filter select { padding: 10px 12px; border-radius: 10px; border: 2px solid #e5e7eb; }
+
+/* creation form removed for read-only page */
+.apps-create { display: none; }
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.apps-loading, .apps-error, .apps-empty { padding: 16px; border-radius: 12px; margin-top: 12px; }
+.apps-loading { display: inline-flex; gap: 8px; align-items: center; color: #6b7280; }
+.apps-error { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.apps-empty { background: #f9fafb; color: #6b7280; border: 1px dashed #e5e7eb; text-align: center; }
+
+.apps-list { display: grid; gap: 10px; }
+.app-card { background: #fff; border: 2px solid #e5e7eb; border-radius: 14px; padding: 14px; display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+.app-main { display: grid; gap: 6px; }
+.app-title { font-weight: 800; color: #111827; }
+.app-meta { display: flex; flex-wrap: wrap; gap: 10px; color: #6b7280; }
+.meta { display: inline-flex; align-items: center; gap: 6px; }
+.meta.link { color: #059669; text-decoration: none; }
+.app-actions { display: inline-flex; gap: 8px; align-items: center; }
+.status { padding: 8px 10px; border-radius: 10px; border: 2px solid #e5e7eb; display: inline-flex; align-items: center; font-weight: 700; }
+.status.applied { background: #ecfeff; border-color: #bae6fd; }
+.status.interview { background: #fef9c3; border-color: #fde68a; }
+.status.offer { background: #dcfce7; border-color: #bbf7d0; }
+.status.rejected { background: #fee2e2; border-color: #fecaca; }
+.status.saved { background: #f3f4f6; border-color: #e5e7eb; }
+.app-notes { grid-column: 1 / -1; background: #f9fafb; border: 1px dashed #e5e7eb; border-radius: 10px; padding: 10px; color: #374151; }
+
+@media (max-width: 900px) {
+  .apps-create .row { grid-template-columns: 1fr 1fr; }
+  .apps-create .row:last-child { grid-template-columns: 1fr; }
+}
+
+
+

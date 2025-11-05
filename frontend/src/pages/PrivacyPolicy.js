@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import './PrivacyPolicy.css';
-import Layout from '../components/Layout';
 
 const PrivacyPolicy = () => {
   const sectionRefs = useRef([]);
@@ -226,7 +225,7 @@ const PrivacyPolicy = () => {
   ];
 
   return (
-    <Layout>
+    <>
     <div className="privacy-container">
       {/* Hero Section */}
       <section className="privacy-hero">
@@ -308,7 +307,7 @@ const PrivacyPolicy = () => {
         </div>
       </footer>
     </div>
-    </Layout>
+    </>
   );
 };
 

@@ -9,27 +9,27 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
-  color: #FFFFFF;
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+  color: #1f2937;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
 /* Color Variables */
 :root {
-  --primary-bg: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
-  --primary-accent: #6C63FF;
-  --secondary-accent: #00C9FF;
-  --tertiary-accent: #0077FF;
-  --success-color: #2e7d32;
-  --error-color: #d32f2f;
-  --text-primary: #FFFFFF;
-  --text-secondary: rgba(255, 255, 255, 0.85);
-  --text-tertiary: rgba(255, 255, 255, 0.7);
-  --text-muted: rgba(255, 255, 255, 0.6);
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-hover: rgba(255, 255, 255, 0.12);
+  --primary-bg: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+  --primary-accent: #10b981;
+  --secondary-accent: #059669;
+  --tertiary-accent: #065f46;
+  --success-color: #059669;
+  --error-color: #ef4444;
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-tertiary: #6b7280;
+  --text-muted: #9ca3af;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: #e5e7eb;
+  --glass-hover: rgba(255, 255, 255, 0.95);
 }
 
 /* Typography */

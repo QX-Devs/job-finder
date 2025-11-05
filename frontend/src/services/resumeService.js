@@ -1,8 +1,34 @@
 // src/services/resumeService.js
-import api from './api';
+import api, { apiHelpers } from './api';
 import { API_ENDPOINTS } from './apiConstants';
 
 const resumeService = {
+  // Upload existing resume file
+  uploadResumeFile: async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const response = await apiHelpers.upload(API_ENDPOINTS.RESUMES.UPLOAD, formData);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to upload resume' };
+    }
+  },
+
+  // Download uploaded resume file (authorized)
+  downloadUploadedFile: async (storedFilename) => {
+    try {
+      const safeName = encodeURIComponent(storedFilename);
+      const response = await api.get(
+        API_ENDPOINTS.RESUMES.DOWNLOAD_FILE(safeName),
+        { responseType: 'blob' } // ✅ critical
+      );
+      return response.data; // now it's a proper Blob
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to download file' };
+    }
+  },
+
   // Get all resumes for current user
   getResumes: async () => {
     try {
@@ -83,6 +109,16 @@ const resumeService = {
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'Failed to export resume' };
+    }
+  },
+
+  // Generate DOCX directly from resume payload (no existing ID)
+  generateDocx: async (resumeData) => {
+    try {
+      const response = await api.post(API_ENDPOINTS.RESUMES.GENERATE, resumeData);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to generate document' };
     }
   },
 

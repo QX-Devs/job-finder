@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import AuthModal from '../components/AuthModal';
 import authService from '../services/authService';
+import applicationService from '../services/applicationService';
 import './Home.css';
 
 const Home = () => {
@@ -18,12 +19,14 @@ const Home = () => {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [savedJobs, setSavedJobs] = useState(new Set());
+  const [jobIdToApplicationId, setJobIdToApplicationId] = useState({});
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState('latest');
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [displayCount, setDisplayCount] = useState(9);
+  const [selectedJob, setSelectedJob] = useState(null);
   
   const [filters, setFilters] = useState({
     jobType: 'all',
@@ -201,23 +204,75 @@ const Home = () => {
     }
 
     setFilteredJobs(result);
+    // Auto-select first job if none selected
+    if (result.length > 0 && !selectedJob) {
+      setSelectedJob(result[0]);
+    }
   }, [filters, searchTerm, selectedCategory, sortBy, jobs]);
 
-  const toggleSaveJob = (jobId) => {
+  const toggleSaveJob = async (jobId) => {
     if (!isLoggedIn) {
       openAuthModal('login');
       return;
     }
 
-    setSavedJobs(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(jobId)) {
-        newSet.delete(jobId);
+    const job = jobs.find(j => j.id === jobId);
+    if (!job) return;
+
+    const isSaved = savedJobs.has(jobId);
+    try {
+      if (!isSaved) {
+        const payload = {
+          jobTitle: job.title,
+          company: job.company,
+          location: job.location,
+          sourceUrl: job.applicationUrl,
+          status: 'saved',
+          notes: '',
+        };
+        const res = await applicationService.create(payload);
+        if (res?.success && res.data?.id) {
+          setSavedJobs(prev => new Set(prev).add(jobId));
+          setJobIdToApplicationId(prev => ({ ...prev, [jobId]: res.data.id }));
+        }
       } else {
-        newSet.add(jobId);
+        let appId = jobIdToApplicationId[jobId];
+        // Fallback: try to find by title/company if we don't have mapping
+        if (!appId) {
+          try {
+            const listRes = await applicationService.list();
+            if (listRes?.success) {
+              const match = (listRes.data || []).find(a => a.status === 'saved' && a.jobTitle === job.title && a.company === job.company);
+              if (match) appId = match.id;
+            }
+          } catch (_) {}
+        }
+        if (appId) {
+          const delRes = await applicationService.remove(appId);
+          if (delRes?.success) {
+            setSavedJobs(prev => {
+              const ns = new Set(prev);
+              ns.delete(jobId);
+              return ns;
+            });
+            setJobIdToApplicationId(prev => {
+              const copy = { ...prev };
+              delete copy[jobId];
+              return copy;
+            });
+          }
+        } else {
+          // If we can't resolve backend id, at least update UI
+          setSavedJobs(prev => {
+            const ns = new Set(prev);
+            ns.delete(jobId);
+            return ns;
+          });
+        }
       }
-      return newSet;
-    });
+    } catch (e) {
+      // no-op: keep UI unchanged on error
+    }
   };
 
   const handleApplyClick = (e, job) => {
@@ -303,27 +358,7 @@ const Home = () => {
   return (
     <>
       <div className="home-container">
-        {/* Quick Stats Banner */}
-        <div className="stats-banner">
-          <div className="stats-banner-content">
-            <div className="stat-chip">
-              <Briefcase size={16} />
-              <span><strong>{jobs.length}+</strong> Active Jobs</span>
-            </div>
-            <div className="stat-chip">
-              <Users size={16} />
-              <span><strong>50K+</strong> Job Seekers</span>
-            </div>
-            <div className="stat-chip">
-              <Building2 size={16} />
-              <span><strong>500+</strong> Companies</span>
-            </div>
-            <div className="stat-chip">
-              <TrendingUp size={16} />
-              <span><strong>95%</strong> Success Rate</span>
-            </div>
-          </div>
-        </div>
+        
 
         {/* Jobs Section - Now at the top */}
         <section className="jobs-section-top" ref={jobsRef}>
@@ -548,148 +583,300 @@ const Home = () => {
             </div>
           ) : (
             <>
-              {/* Jobs Grid */}
-              <div className={`jobs-grid-enhanced ${viewMode}`}>
-                {filteredJobs.slice(0, displayCount).map((job, index) => (
-                  <div
-                    key={job.id}
-                    className={`job-card-enhanced ${job.featured ? 'featured' : ''} ${job.urgent ? 'urgent' : ''}`}
-                    style={{ animationDelay: `${index * 0.05}s` }}
-                  >
-                    {/* Card Header */}
-                    <div className="job-card-header">
-                      <div className="company-logo-wrapper">
-                        <div className="company-logo">{job.companyLogo}</div>
-                        {job.featured && (
-                          <div className="featured-badge-icon">
-                            <Star size={12} fill="currentColor" />
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="job-card-actions">
-                        <button
-                          onClick={() => toggleSaveJob(job.id)}
-                          className={`icon-btn ${savedJobs.has(job.id) ? 'saved' : ''}`}
-                          title="Save job"
-                        >
-                          {savedJobs.has(job.id) ? (
-                            <BookmarkCheck size={20} />
-                          ) : (
-                            <Bookmark size={20} />
-                          )}
-                        </button>
-                        <button className="icon-btn" title="Share job">
-                          <Share2 size={20} />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Badges */}
-                    <div className="job-badges">
-                      {job.urgent && (
-                        <span className="badge urgent-badge">
-                          <Zap size={12} />
-                          Urgent
-                        </span>
-                      )}
-                      {job.featured && (
-                        <span className="badge featured-badge-text">
-                          <Star size={12} />
-                          Featured
-                        </span>
-                      )}
-                      {job.remote && (
-                        <span className="badge remote-badge">
-                          Remote
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Job Info */}
-                    <div className="job-info">
-                      <h3 className="job-title-enhanced">{job.title}</h3>
-                      <div className="company-info-enhanced">
-                        <span className="company-name">{job.company}</span>
-                        <span className="separator">•</span>
-                        <span className="industry">{job.industry}</span>
-                      </div>
-                    </div>
-
-                    {/* Job Meta */}
-                    <div className="job-meta-enhanced">
-                      <div className="meta-item-enhanced">
-                        <MapPin size={14} />
-                        <span>{job.location}</span>
-                      </div>
-                      <div className="meta-item-enhanced">
-                        <Briefcase size={14} />
-                        <span>{job.jobType}</span>
-                      </div>
-                      <div className="meta-item-enhanced">
-                        <DollarSign size={14} />
-                        <span>{job.salary}</span>
-                      </div>
-                    </div>
-
-                    {/* Skills */}
-                    <div className="job-skills">
-                      {job.skills.map((skill, idx) => (
-                        <span key={idx} className="skill-tag">{skill}</span>
-                      ))}
-                    </div>
-
-                    {/* Job Stats */}
-                    <div className="job-stats">
-                      <div className="stat">
-                        <Eye size={14} />
-                        <span>{job.views} views</span>
-                      </div>
-                      <div className="stat">
-                        <Users size={14} />
-                        <span>{job.applicants} applicants</span>
-                      </div>
-                      <div className="stat">
-                        <Clock size={14} />
-                        <span>{job.postedDate}</span>
-                      </div>
-                    </div>
-
-                    {/* Job Footer */}
-                    <div className="job-card-footer">
-                      <span className="experience-level">{job.experienceLevel}</span>
-                      <a
-                        href={job.applicationUrl}
-                        className="apply-btn-enhanced"
-                        onClick={(e) => handleApplyClick(e, job)}
-                        target="_blank"
-                        rel="noopener noreferrer"
+              {/* Jobs Sidebar Layout */}
+              <div className="jobs-sidebar-container">
+                {/* Left Sidebar - Job List */}
+                <div className="jobs-sidebar">
+                  <div className="jobs-list">
+                    {filteredJobs.slice(0, displayCount).map((job) => (
+                      <div
+                        key={job.id}
+                        className={`job-list-item ${selectedJob?.id === job.id ? 'active' : ''}`}
+                        onClick={() => setSelectedJob(job)}
                       >
-                        Apply Now
-                        <ArrowRight size={16} />
-                      </a>
-                    </div>
-
-                    {/* 3D Hover Effect Layer */}
-                    <div className="card-shine"></div>
+                        {/* Company Logo */}
+                        <div className="company-logo-small">{job.companyLogo}</div>
+                        
+                        <div className="job-list-content">
+                          {/* Job Title and Company */}
+                          <div className="job-list-header">
+                            <h4 className="job-list-title">{job.title}</h4>
+                            <div className="job-list-badges">
+                              {job.urgent && (
+                                <span className="mini-badge urgent">
+                                  <Zap size={10} />
+                                </span>
+                              )}
+                              {job.featured && (
+                                <span className="mini-badge featured">
+                                  <Star size={10} fill="currentColor" />
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          
+                          <div className="job-list-company">{job.company}</div>
+                          
+                          {/* Quick Info */}
+                          <div className="job-list-meta">
+                            <span className="meta-item-small">
+                              <MapPin size={12} />
+                              {job.location}
+                            </span>
+                            <span className="meta-item-small">
+                              <DollarSign size={12} />
+                              {job.salary}
+                            </span>
+                          </div>
+                          
+                          <div className="job-list-footer">
+                            <span className="job-list-date">
+                              <Clock size={12} />
+                              {job.postedDate}
+                            </span>
+                            {savedJobs.has(job.id) && (
+                              <BookmarkCheck size={14} className="saved-icon" />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-
-              {/* Load More */}
-              {displayCount < filteredJobs.length && (
-                <div className="load-more-section">
-                  <button onClick={loadMore} className="btn-load-more">
-                    Load More Jobs
-                    <ChevronDown size={20} />
-                  </button>
-                  <p className="load-more-info">
-                    {filteredJobs.length - displayCount} more jobs available
-                  </p>
+                  
+                  {/* Load More in Sidebar */}
+                  {displayCount < filteredJobs.length && (
+                    <button onClick={loadMore} className="btn-load-more-sidebar">
+                      Load More ({filteredJobs.length - displayCount} more)
+                      <ChevronDown size={16} />
+                    </button>
+                  )}
                 </div>
-              )}
+
+                {/* Right Panel - Job Details */}
+                <div className="job-details-panel">
+                  {selectedJob ? (
+                    <div className="job-details">
+                      {/* Header */}
+                      <div className="job-details-header">
+                        <div className="job-details-company-logo">{selectedJob.companyLogo}</div>
+                        <div className="job-details-header-content">
+                          <div className="job-details-badges">
+                            {selectedJob.urgent && (
+                              <span className="badge urgent-badge">
+                                <Zap size={12} />
+                                Urgent
+                              </span>
+                            )}
+                            {selectedJob.featured && (
+                              <span className="badge featured-badge-text">
+                                <Star size={12} />
+                                Featured
+                              </span>
+                            )}
+                            {selectedJob.remote && (
+                              <span className="badge remote-badge">
+                                Remote
+                              </span>
+                            )}
+                          </div>
+                          <h2 className="job-details-title">{selectedJob.title}</h2>
+                          <div className="job-details-company">
+                            <span className="company-name">{selectedJob.company}</span>
+                            <span className="separator">•</span>
+                            <span className="industry">{selectedJob.industry}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="job-details-actions">
+                          <button
+                            onClick={() => toggleSaveJob(selectedJob.id)}
+                            className={`icon-btn-large ${savedJobs.has(selectedJob.id) ? 'saved' : ''}`}
+                            title="Save job"
+                          >
+                            {savedJobs.has(selectedJob.id) ? (
+                              <BookmarkCheck size={24} />
+                            ) : (
+                              <Bookmark size={24} />
+                            )}
+                          </button>
+                          <button className="icon-btn-large" title="Share job">
+                            <Share2 size={24} />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Key Info Grid */}
+                      <div className="job-details-info-grid">
+                        <div className="info-card">
+                          <MapPin size={18} />
+                          <div>
+                            <div className="info-label">Location</div>
+                            <div className="info-value">{selectedJob.location}</div>
+                          </div>
+                        </div>
+                        <div className="info-card">
+                          <Briefcase size={18} />
+                          <div>
+                            <div className="info-label">Job Type</div>
+                            <div className="info-value">{selectedJob.jobType}</div>
+                          </div>
+                        </div>
+                        <div className="info-card">
+                          <DollarSign size={18} />
+                          <div>
+                            <div className="info-label">Salary Range</div>
+                            <div className="info-value">{selectedJob.salary}</div>
+                          </div>
+                        </div>
+                        <div className="info-card">
+                          <Badge size={18} />
+                          <div>
+                            <div className="info-label">Experience</div>
+                            <div className="info-value">{selectedJob.experienceLevel}</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Skills */}
+                      <div className="job-details-section">
+                        <h3 className="section-title">Required Skills</h3>
+                        <div className="job-skills-large">
+                          {selectedJob.skills.map((skill, idx) => (
+                            <span key={idx} className="skill-tag-large">{skill}</span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <div className="job-details-section">
+                        <h3 className="section-title">About This Role</h3>
+                        <p className="job-description">{selectedJob.description}</p>
+                      </div>
+
+                      {/* Stats */}
+                      <div className="job-details-stats">
+                        <div className="stat-item">
+                          <Eye size={18} />
+                          <div>
+                            <div className="stat-value">{selectedJob.views}</div>
+                            <div className="stat-label">Views</div>
+                          </div>
+                        </div>
+                        <div className="stat-item">
+                          <Users size={18} />
+                          <div>
+                            <div className="stat-value">{selectedJob.applicants}</div>
+                            <div className="stat-label">Applicants</div>
+                          </div>
+                        </div>
+                        <div className="stat-item">
+                          <Clock size={18} />
+                          <div>
+                            <div className="stat-value">{selectedJob.postedDate}</div>
+                            <div className="stat-label">Posted</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Apply Button */}
+                      <div className="job-details-footer">
+                        <a
+                          href={selectedJob.applicationUrl}
+                          className="apply-btn-large"
+                          onClick={(e) => handleApplyClick(e, selectedJob)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Apply Now
+                          <ArrowRight size={20} />
+                        </a>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="job-details-empty">
+                      <Briefcase size={64} className="empty-icon" />
+                      <h3>Select a job to view details</h3>
+                      <p>Choose from the list on the left to see more information</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </>
           )}
+        </section>
+
+        {/* Quick Stats Banner */}
+        <div className="stats-banner">
+          <div className="stats-banner-content">
+            <div className="stat-chip">
+              <Briefcase size={16} />
+              <span><strong>{jobs.length}+</strong> Active Jobs</span>
+            </div>
+            <div className="stat-chip">
+              <Users size={16} />
+              <span><strong>50K+</strong> Job Seekers</span>
+            </div>
+            <div className="stat-chip">
+              <Building2 size={16} />
+              <span><strong>500+</strong> Companies</span>
+            </div>
+            <div className="stat-chip">
+              <TrendingUp size={16} />
+              <span><strong>95%</strong> Success Rate</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Resume Generator Showcase (moved directly under jobs) */}
+        <section className="resume-generator-section">
+          <div className="resume-header">
+            <div className="resume-badge">
+              <Sparkles size={16} />
+              <span>Resume Generator</span>
+            </div>
+            <h2 className="resume-title">Stand Out With a Stunning Resume</h2>
+            <p className="resume-subtitle">Pick a modern template and let AI help you craft a professional resume in minutes</p>
+            <div className="resume-cta">
+              <button className="btn-primary" onClick={() => navigate('/cv-generator')}>
+                Create Your Resume <ArrowRight size={18} />
+              </button>
+            </div>
+          </div>
+
+          <div className="resume-grid">
+            {(() => {
+              const publicBase = process.env.PUBLIC_URL || '';
+              const svg1 = `${publicBase}/${encodeURIComponent('Mohammad Kayyali-1.svg')}`;
+              const svg2 = `${publicBase}/${encodeURIComponent('Mohammad Kayyali-2.svg')}`;
+              return (
+                <>
+            <div className="resume-card" onClick={() => navigate('/cv-generator')}>
+              <div className="resume-card-inner">
+                <div className="resume-badge-page">Page 1</div>
+                <img src={svg1} alt="Resume Template Page 1" className="resume-image" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                <div className="resume-shine"></div>
+              </div>
+              <div className="resume-caption">
+                <h3>Modern Professional</h3>
+                <p>Clean layout with strong typography for maximum ATS compatibility</p>
+              </div>
+            </div>
+
+            <div className="resume-card" onClick={() => navigate('/cv-generator')}>
+              <div className="resume-card-inner">
+                <div className="resume-badge-page">Page 2</div>
+                <img src={svg2} alt="Resume Template Page 2" className="resume-image" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                <div className="resume-shine"></div>
+              </div>
+              <div className="resume-caption">
+                <h3>Elegant Minimal</h3>
+                <p>Balanced white space and emphasis on key highlights and skills</p>
+              </div>
+            </div>
+                </>
+              );
+            })()}
+          </div>
         </section>
 
         {/* Features Section */}
@@ -727,6 +914,8 @@ const Home = () => {
             })}
           </div>
         </section>
+
+        
 
         {/* CTA Section */}
         <section className="cta-section-enhanced">

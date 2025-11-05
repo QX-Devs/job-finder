@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { User, Education, Experience, Skill, Language } = require('../models');
+const bcrypt = require('bcryptjs');
 
 // Generate JWT Token
 const generateToken = (id) => {
@@ -13,66 +14,20 @@ const generateToken = (id) => {
 // @access  Public
 const register = async (req, res) => {
   try {
-    const {//email=ahmad@gmail.com exists
-      fullName, email, password, phone, countryCode,
-      github, linkedin, professionalSummary,
-      education, experience, skills, languages,
-      resumeVisibility
-    } = req.body;
+    const { fullName, email, password } = req.body;
+
+    if (!fullName || !email || !password) {
+      return res.status(400).json({ message: 'fullName, email and password are required' });
+    }
 
     // Check if user exists
-    const userExists = await User.email.findOne({ where: { email } });
+    const userExists = await User.findOne({ where: { email } });
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Create user
-    const user = await User.create({
-      fullName,
-      email,
-      password,
-      phone,
-      countryCode,
-      github,
-      linkedin,
-      professionalSummary,
-      resumeVisibility
-    });
-
-    // Create education records
-    if (education && education.length > 0) {
-      await Education.bulkCreate(
-        education.map(edu => ({ ...edu, userId: user.id }))
-      );
-    }
-
-    // Create experience records
-    if (experience && experience.length > 0) {
-      await Experience.bulkCreate(
-        experience.map(exp => ({ ...exp, userId: user.id }))
-      );
-    }
-
-    // Create skills records (handle both string and object formats)
-    if (skills && skills.length > 0) {
-      await Skill.bulkCreate(
-        skills.map(skill => ({ 
-          skillName: typeof skill === 'string' ? skill : skill.skillName,
-          proficiencyLevel: typeof skill === 'string' ? 'Intermediate' : (skill.proficiencyLevel || 'Intermediate'),
-          userId: user.id 
-        }))
-      );
-    }
-
-    // Create language records
-    if (languages && languages.length > 0) {
-      await Language.bulkCreate(
-        languages.map(lang => {
-          const { id, ...langData } = lang;
-          return { ...langData, userId: user.id };
-        })
-      );
-    }
+    // Create user with minimal required fields
+    const user = await User.create({ fullName, email, password });
 
     // Generate token
     const token = generateToken(user.id);
@@ -288,4 +243,46 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getMe, updateProfile };
+// @desc    Change password
+// @route   POST /api/me/change-password
+// @access  Private
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ success: false, message: 'currentPassword and newPassword are required' });
+    }
+    const user = await User.findByPk(req.user.id);
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch) {
+      return res.status(400).json({ success: false, message: 'Current password is incorrect' });
+    }
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+    return res.json({ success: true, message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Change password error:', error);
+    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
+// @desc    Delete account
+// @route   DELETE /api/me
+// @access  Private
+const deleteAccount = async (req, res) => {
+  try {
+    // Cascade delete: remove related records, then user
+    await Education.destroy({ where: { userId: req.user.id } });
+    await Experience.destroy({ where: { userId: req.user.id } });
+    await Skill.destroy({ where: { userId: req.user.id } });
+    await Language.destroy({ where: { userId: req.user.id } });
+    await User.destroy({ where: { id: req.user.id } });
+    return res.json({ success: true, message: 'Account deleted' });
+  } catch (error) {
+    console.error('Delete account error:', error);
+    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
+module.exports = { register, login, getMe, updateProfile, changePassword, deleteAccount };

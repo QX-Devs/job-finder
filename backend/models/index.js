@@ -4,6 +4,7 @@ const Experience = require('./Experience');
 const Skill = require('./Skill');
 const Language = require('./Language');
 const Resume = require('./Resume'); // Add this
+const JobApplication = require('./JobApplication');
 
 // Define associations
 User.hasMany(Education, { foreignKey: 'userId', as: 'education' });
@@ -21,11 +22,15 @@ Language.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Resume, { foreignKey: 'userId', as: 'resumes' }); // Add this
 Resume.belongsTo(User, { foreignKey: 'userId' }); // Add this
 
+User.hasMany(JobApplication, { foreignKey: 'userId', as: 'applications' });
+JobApplication.belongsTo(User, { foreignKey: 'userId' });
+
 module.exports = {
   User,
   Education,
   Experience,
   Skill,
   Language,
-  Resume // Add this
+  Resume, // Add this
+  JobApplication
 };

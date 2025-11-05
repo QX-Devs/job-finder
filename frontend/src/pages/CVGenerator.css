@@ -117,6 +117,43 @@
   font-size: 0.95rem;
 }
 
+/* AI Suggest control */
+.ai-suggest-btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.ai-suggest-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16,185,129,.3); }
+.ai-suggest-btn.disabled, .ai-suggest-btn:disabled { opacity: .6; cursor: not-allowed; box-shadow: none; transform: none; }
+
+/* Summary textarea emphasis */
+.form-group textarea {
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+}
+
+.form-group textarea:focus {
+  border-color: #10b981;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(16,185,129,.12);
+}
+
+.summary-hint {
+  margin-top: 6px;
+  font-size: .875rem;
+  color: #6b7280;
+}
+
 .form-group input,
 .form-group textarea,
 .form-group select {

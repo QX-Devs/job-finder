@@ -1,7 +1,6 @@
 // TermsOfService.js
 import React, { useEffect, useRef } from 'react';
 import './TermsOfService.css';
-import Layout from '../components/Layout';
 
 const TermsOfService = () => {
   const scrollRefs = useRef([]);
@@ -41,7 +40,7 @@ const TermsOfService = () => {
   };
 
   return (
-    <Layout>
+    <>
     <div className="terms-of-service">
       {/* Floating Background Shapes */}
       <div className="floating-shapes">
@@ -487,7 +486,7 @@ const TermsOfService = () => {
         </div>
       </div>
     </div>
-    </Layout>
+    </>
   );
 };
 

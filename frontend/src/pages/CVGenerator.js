@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   User, Briefcase, GraduationCap, Code, Globe, 
-  Plus, X, ArrowRight, ArrowLeft, Save, Github, Linkedin
+  Plus, X, ArrowRight, ArrowLeft, Save, Github, Linkedin, Sparkles
 } from 'lucide-react';
+import api from '../services/api';
+import resumeService from '../services/resumeService';
 import './CVGenerator.css';
 
 const CVGenerator = () => {
@@ -34,6 +36,9 @@ const CVGenerator = () => {
 
   const [newSkill, setNewSkill] = useState('');
   const [errors, setErrors] = useState({});
+  const [downloadReadyUrl, setDownloadReadyUrl] = useState('');
+  const [showDownloadPrompt, setShowDownloadPrompt] = useState(false);
+  const [isSuggesting, setIsSuggesting] = useState(false);
 
   // Handle input changes
   const handleChange = (field, value) => {
@@ -186,11 +191,82 @@ const CVGenerator = () => {
   };
 
   const handleSave = async () => {
-    if (validateStep()) {
-      // Save CV data to backend
-      console.log('Saving CV:', formData);
-      // Navigate to dashboard
-      navigate('/dashboard');
+    if (!validateStep()) return;
+    try {
+      const payload = {
+        title: formData.title,
+        summary: formData.summary,
+        skills: formData.skills,
+        experience: formData.experience.map(e => ({
+          position: e.position,
+          company: e.company,
+          startDate: e.startDate,
+          endDate: e.endDate,
+          description: e.description ? e.description.split('\n').filter(Boolean) : []
+        })),
+        education: formData.education.map(ed => ({
+          degree: ed.degree,
+          institution: ed.institution,
+          graduationDate: ed.graduationDate,
+          fieldOfStudy: ed.fieldOfStudy
+        })),
+        languages: formData.languages.map(l => l.language).filter(Boolean),
+        github: formData.github,
+        linkedin: formData.linkedin
+      };
+
+      const res = await resumeService.generateDocx(payload);
+      if (res.success && res.downloadUrl) {
+        const apiBase = (process.env.REACT_APP_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+        const hostBase = apiBase.replace(/\/api$/, '');
+        const fullUrl = res.downloadUrl.startsWith('http') ? res.downloadUrl : `${hostBase}${res.downloadUrl}`;
+        setDownloadReadyUrl(fullUrl);
+        setShowDownloadPrompt(true);
+      }
+    } catch (e) {
+      console.error('Failed to generate resume:', e);
+    }
+  };
+
+  const suggestProfessionalSummary = async () => {
+    try {
+      const inputText = (formData.summary || '').trim();
+      if (inputText.length < 50) {
+        setErrors(prev => ({ ...prev, summary: 'Please provide at least 50 characters to generate a strong summary.' }));
+        return;
+      }
+      setIsSuggesting(true);
+      // Build a concise content string from current form data
+      const contentPieces = [];
+      if (formData.summary) contentPieces.push(`User Summary Input (>=50 chars): ${formData.summary}`);
+      if (formData.title) contentPieces.push(`Title: ${formData.title}`);
+      if (formData.skills?.length) contentPieces.push(`Skills: ${formData.skills.join(', ')}`);
+      if (formData.experience?.length) {
+        const firstExp = formData.experience[0];
+        const expSummary = [firstExp.position, firstExp.company].filter(Boolean).join(' at ');
+        if (expSummary) contentPieces.push(`Recent Experience: ${expSummary}`);
+      }
+      if (formData.education?.length) {
+        const firstEdu = formData.education[0];
+        const eduSummary = [firstEdu.degree, firstEdu.fieldOfStudy, firstEdu.institution].filter(Boolean).join(' - ');
+        if (eduSummary) contentPieces.push(`Education: ${eduSummary}`);
+      }
+
+      const payload = {
+        section: 'professional_summary',
+        content: contentPieces.join('. ') || 'Entry-level candidate seeking opportunities',
+        context: formData.title || 'Career objective'
+      };
+
+      const response = await api.post('/ai/resume-suggestions', payload);
+      if (response.data?.success && response.data.data?.suggestion) {
+        handleChange('summary', response.data.data.suggestion);
+        setErrors(prev => ({ ...prev, summary: '' }));
+      }
+    } catch (e) {
+      console.error('AI suggest error:', e);
+    } finally {
+      setIsSuggesting(false);
     }
   };
 
@@ -240,14 +316,28 @@ const CVGenerator = () => {
               </div>
 
               <div className="form-group">
-                <label>Professional Summary *</label>
+                <label>Professional Summary *
+                  <button 
+                    type="button" 
+                    className={`ai-suggest-btn ${formData.summary.trim().length < 50 ? 'disabled' : ''}`} 
+                    onClick={suggestProfessionalSummary} 
+                    disabled={isSuggesting || formData.summary.trim().length < 50}
+                    title={formData.summary.trim().length < 50 ? 'Please write at least 50 characters before generating.' : 'Generate with AI'}
+                  >
+                    <Sparkles size={16} /> {isSuggesting ? 'Generating...' : 'AI Suggest'}
+                  </button>
+                </label>
                 <textarea
+                  required
                   value={formData.summary}
                   onChange={(e) => handleChange('summary', e.target.value)}
                   placeholder="Write a brief summary about your professional experience and goals..."
                   rows={5}
                   className={errors.summary ? 'error' : ''}
                 />
+                <div className="summary-hint">
+                  {formData.summary.trim().length < 50 ? `${50 - formData.summary.trim().length} more characters needed for AI generation.` : 'Looks good for AI generation.'}
+                </div>
                 {errors.summary && <span className="error-message">{errors.summary}</span>}
               </div>
 
@@ -542,6 +632,43 @@ const CVGenerator = () => {
           )}
         </div>
       </div>
+
+      {showDownloadPrompt && (
+        <div className="download-modal" role="dialog" aria-modal="true" style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.45)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000}}>
+          <div style={{background:'#fff',borderRadius:16,padding:24,maxWidth:420,width:'90%',boxShadow:'0 20px 60px rgba(0,0,0,0.2)'}}>
+            <h3 style={{margin:'0 0 8px'}}>Your CV is ready</h3>
+            <p style={{margin:'0 0 16px',color:'#4b5563'}}>Do you want to download the generated .docx now?</p>
+            <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
+              <button
+                onClick={() => {
+                  setShowDownloadPrompt(false);
+                  navigate('/dashboard');
+                }}
+                style={{padding:'10px 14px',border:'1px solid #e5e7eb',borderRadius:10,background:'#fff',cursor:'pointer',fontWeight:700,color:'#374151'}}
+              >
+                Go to Dashboard
+              </button>
+              <button
+                onClick={() => {
+                  if (downloadReadyUrl) {
+                    const a = document.createElement('a');
+                    a.href = downloadReadyUrl;
+                    a.download = '';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                  }
+                  setShowDownloadPrompt(false);
+                  navigate('/dashboard');
+                }}
+                style={{padding:'10px 14px',borderRadius:10,border:'none',background:'linear-gradient(135deg,#10b981,#059669)',color:'#fff',cursor:'pointer',fontWeight:800}}
+              >
+                Download & Go
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

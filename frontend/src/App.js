@@ -17,7 +17,18 @@ import TermsOfService from "./pages/TermsOfService";
 import Me from "./pages/me";
 import CVPrompt from "./pages/CVPrompt";
 import CVGenerator from "./pages/CVGenerator";
-import ResumeDashboard from "./pages/ResumeDashboard";
+import Settings from "./pages/Settings";
+import FindJobs from "./pages/FindJobs";
+import Companies from "./pages/Companies";
+import CareerAdvice from "./pages/CareerAdvice";
+import Blog from "./pages/Blog";
+import FAQ from "./pages/FAQ";
+import Cookies from "./pages/Cookies";
+import Accessibility from "./pages/Accessibility";
+import Dashboard from "./pages/Dashboard";
+import Applications from "./pages/Applications";
+import SavedJobs from "./pages/SavedJobs";
+import Notifications from "./pages/Notifications";
 
 function App() {
   return (
@@ -33,6 +44,13 @@ function App() {
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/cv-prompt" element={<CVPrompt />} />
           <Route path="/cv-generator" element={<CVGenerator />} />
+          <Route path="/find-jobs" element={<FindJobs />} />
+          <Route path="/companies" element={<Companies />} />
+          <Route path="/career-advice" element={<CareerAdvice />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/accessibility" element={<Accessibility />} />
           
           {/* Protected routes */}
           <Route 
@@ -47,9 +65,41 @@ function App() {
             path="/dashboard" 
             element={
               <ProtectedRoute>
-                <ResumeDashboard />
+                <Dashboard />
               </ProtectedRoute>
             } 
+          />
+          <Route 
+            path="/applications" 
+            element={
+              <ProtectedRoute>
+                <Applications />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/saved-jobs" 
+            element={
+              <ProtectedRoute>
+                <SavedJobs />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/notifications" 
+            element={
+              <ProtectedRoute>
+                <Notifications />
+              </ProtectedRoute>
+            } 
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
           />
         </Route>
 

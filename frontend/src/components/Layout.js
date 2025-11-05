@@ -18,7 +18,7 @@ const Footer = () => {
     quickLinks: [
       { name: 'Browse Jobs', path: '/find-jobs' },
       { name: 'Companies', path: '/companies' },
-      { name: 'Resume Builder', path: '/resume-builder' },
+      { name: 'Resume Builder', path: '/cv-generator' },
       { name: 'Career Advice', path: '/career-advice' }
     ],
     resources: [
@@ -28,8 +28,8 @@ const Footer = () => {
       { name: 'Contact', path: '/contact-us' }
     ],
     legal: [
-      { name: 'Privacy Policy', path: '/privacy' },
-      { name: 'Terms of Service', path: '/terms' },
+      { name: 'Privacy Policy', path: '/privacy-policy' },
+      { name: 'Terms of Service', path: '/terms-of-service' },
       { name: 'Cookie Policy', path: '/cookies' },
       { name: 'Accessibility', path: '/accessibility' }
     ]
@@ -141,6 +141,7 @@ const Layout = ({ children }) => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState('login');
   const [isLoggedIn, setIsLoggedIn] = useState(authService.isAuthenticated());
+  const [currentUser, setCurrentUser] = useState(authService.getStoredUser());
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
@@ -183,7 +184,41 @@ const Layout = ({ children }) => {
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    // Sync auth state on navigation (handles signup flows outside modal)
+    setIsLoggedIn(authService.isAuthenticated());
+    if (authService.isAuthenticated()) {
+      // Refresh user profile to ensure navbar shows latest info
+      authService.getCurrentUser().then((res) => {
+        if (res?.success && res.data) {
+          setCurrentUser(res.data);
+          authService.setUser(res.data);
+        }
+      }).catch(() => {});
+    } else {
+      setCurrentUser(null);
+    }
   }, [location.pathname]);
+
+  // Sync auth state across tabs and token changes
+  useEffect(() => {
+    const syncAuth = () => setIsLoggedIn(authService.isAuthenticated());
+    window.addEventListener('storage', syncAuth);
+    return () => window.removeEventListener('storage', syncAuth);
+  }, []);
+
+  // On mount, ensure we have the latest user profile if logged in
+  useEffect(() => {
+    if (authService.isAuthenticated()) {
+      const stored = authService.getStoredUser();
+      setCurrentUser(stored);
+      authService.getCurrentUser().then((res) => {
+        if (res?.success && res.data) {
+          setCurrentUser(res.data);
+          authService.setUser(res.data);
+        }
+      }).catch(() => {});
+    }
+  }, []);
 
   // Mock notifications
   const notifications = [
@@ -253,6 +288,7 @@ const Layout = ({ children }) => {
   const navLinks = [
     { name: 'Home', path: '/', icon: Briefcase },
     { name: 'Find Jobs', path: '/find-jobs', icon: Search },
+    { name: 'Resume Builder', path: '/cv-generator', icon: FileText },
     { name: 'About', path: '/about-us', icon: HelpCircle },
     { name: 'Contact', path: '/contact-us', icon: MessageSquare }
   ];
@@ -261,7 +297,7 @@ const Layout = ({ children }) => {
     { name: 'Dashboard', path: '/dashboard', icon: User },
     { name: 'My Applications', path: '/applications', icon: FileText },
     { name: 'Saved Jobs', path: '/saved-jobs', icon: BookmarkCheck },
-    { name: 'Resume Builder', path: '/resume-builder', icon: FileText },
+    { name: 'Resume Builder', path: '/cv-generator', icon: FileText },
     { name: 'Settings', path: '/settings', icon: Settings }
   ];
 
@@ -362,7 +398,7 @@ const Layout = ({ children }) => {
                     <div className="user-avatar">
                       <User size={20} />
                     </div>
-                    <span className="user-name">John Doe</span>
+                    <span className="user-name">{currentUser?.fullName || 'Me'}</span>
                     <ChevronDown
                       size={16}
                       className={`dropdown-arrow ${isUserDropdownOpen ? 'open' : ''}`}
@@ -377,8 +413,8 @@ const Layout = ({ children }) => {
                           <User size={24} />
                         </div>
                         <div className="user-info">
-                          <h4>John Doe</h4>
-                          <p>john.doe@example.com</p>
+                          <h4>{currentUser?.fullName || 'My Account'}</h4>
+                          <p>{currentUser?.email || ''}</p>
                         </div>
                       </div>
 
@@ -451,8 +487,8 @@ const Layout = ({ children }) => {
                     <User size={24} />
                   </div>
                   <div className="mobile-user-details">
-                    <h4>John Doe</h4>
-                    <p>john.doe@example.com</p>
+                    <h4>{currentUser?.fullName || 'My Account'}</h4>
+                    <p>{currentUser?.email || ''}</p>
                   </div>
                 </div>
               )}

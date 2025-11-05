@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import './AboutUs.css';
-import Layout from '../components/Layout';
 const AboutUs = () => {
   const scrollRefs = useRef([]);
 
@@ -93,7 +92,7 @@ const AboutUs = () => {
   };
 
   return (
-    <Layout>
+    <>
     <div className="about-container">
       {/* Floating Background Shapes */}
       <div className="floating-shapes">
@@ -271,7 +270,7 @@ const AboutUs = () => {
         </div>
       </div>
     </div>
-    </Layout>
+    </>
   );
 };
 

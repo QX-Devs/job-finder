@@ -1,14 +1,52 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FileText, Plus, ArrowRight } from 'lucide-react';
 import './CVPrompt.css';
+import resumeService from '../services/resumeService';
+import authService from '../services/authService';
 
 const CVPrompt = () => {
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleHaveCV = () => {
-    // Navigate to CV upload page (you can create this later)
-    navigate('/dashboard');
+    setError('');
+    if (!authService.isAuthenticated()) {
+      setError('Please log in to upload your CV.');
+      navigate('/');
+      return;
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileSelected = async (event) => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    setIsUploading(true);
+    setError('');
+    try {
+      const result = await resumeService.uploadResumeFile(file);
+      if (result?.success) {
+        navigate('/dashboard');
+      } else {
+        setError('Failed to upload CV. Please try again.');
+      }
+    } catch (e) {
+      if (e?.status === 401) {
+        setError('Your session has expired. Please log in to upload your CV.');
+        navigate('/');
+      } else {
+        setError(e?.message || 'Failed to upload CV.');
+      }
+    } finally {
+      setIsUploading(false);
+      // reset the input so the same file can be selected again
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const handleCreateCV = () => {
@@ -39,14 +77,14 @@ const CVPrompt = () => {
           </p>
 
           <div className="options-grid">
-            <button className="option-card" onClick={handleHaveCV}>
+          <button className="option-card" onClick={handleHaveCV} disabled={isUploading}>
               <div className="option-icon">
                 <FileText size={32} />
               </div>
-              <h3>I have a CV</h3>
-              <p>Upload your existing CV and we'll help you optimize it</p>
+            <h3>I have a CV</h3>
+            <p>{isUploading ? 'Uploading your CV...' : "Upload your existing CV and we'll help you optimize it"}</p>
               <div className="option-footer">
-                <span>Upload CV</span>
+              <span>{isUploading ? 'Uploading...' : 'Upload CV'}</span>
                 <ArrowRight size={18} />
               </div>
             </button>
@@ -65,6 +103,12 @@ const CVPrompt = () => {
             </button>
           </div>
 
+        {error && (
+          <div className="error-message" role="alert" style={{ marginTop: 12 }}>
+            {error}
+          </div>
+        )}
+
           <button className="skip-button" onClick={handleSkip}>
             I'll do this later
           </button>
@@ -80,6 +124,14 @@ const CVPrompt = () => {
           </ul>
         </div>
       </div>
+      {/* Hidden file input for CV upload */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".pdf,.doc,.docx,.rtf"
+        style={{ display: 'none' }}
+        onChange={handleFileSelected}
+      />
     </div>
   );
 };
