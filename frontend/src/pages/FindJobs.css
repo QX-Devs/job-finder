@@ -70,7 +70,7 @@
 
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 9px 14px; background: #fff; border: 2px solid var(--primary-200);
+  padding: 9px 14px; background: var(--surface); border: 2px solid var(--primary-200);
   color: var(--primary-700); border-radius: 999px; font-weight: 700;
   box-shadow: 0 8px 24px rgba(16,185,129,0.12);
 }
@@ -141,7 +141,7 @@
 .filters-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .filters-inline { display: flex; flex-wrap: wrap; gap: 10px; }
 .filter-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--gray-100); border: 2px solid var(--gray-200); border-radius: 999px; color: var(--gray-600); font-weight: 600; cursor: pointer; transition: all var(--transition-fast); }
-.filter-chip.active { background: #fff; color: var(--primary-700); border-color: var(--primary-300); box-shadow: 0 4px 14px rgba(16,185,129,0.15); }
+.filter-chip.active { background: var(--surface); color: var(--primary-700); border-color: var(--primary-300); box-shadow: 0 4px 14px rgba(16,185,129,0.15); }
 .clear-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: white; border: 2px solid var(--gray-200); color: var(--gray-600); border-radius: 10px; font-weight: 700; cursor: pointer; transition: all var(--transition-fast); }
 .clear-btn:hover { border-color: var(--primary-400); color: var(--primary-700); }
 

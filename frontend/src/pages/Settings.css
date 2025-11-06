@@ -6,7 +6,7 @@
 }
 
 .settings-card {
-  background: #ffffff;
+  background: var(--surface);
   border: 1px solid #e5e7eb;
   border-radius: 24px;
   box-shadow: 0 20px 60px rgba(16, 185, 129, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(to bottom, #ffffff, #fafafa);
+  background: linear-gradient(to bottom, var(--surface), #fafafa);
 }
 
 .settings-header h1 {
@@ -63,7 +63,7 @@
 }
 
 .settings-tabs button.active {
-  background: #ffffff;
+  background: var(--surface);
   color: #10b981;
   box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -129,7 +129,7 @@
   padding: 14px 16px;
   font-size: 15px;
   color: #111827;
-  background: #ffffff;
+  background: var(--surface);
   transition: all 0.2s ease;
   font-family: inherit;
 }
@@ -139,7 +139,7 @@
   outline: none;
   border-color: #10b981;
   box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-  background: #ffffff;
+  background: var(--surface);
 }
 
 .form-group input[type="text"]:hover,
@@ -160,7 +160,7 @@
   padding: 10px 12px; /* Reduced padding */
   font-size: 14px;
   color: #111827;
-  background: #ffffff;
+  background: var(--surface);
   transition: all 0.2s ease;
   font-family: inherit;
   cursor: pointer;
@@ -187,7 +187,7 @@
   padding: 14px 16px;
   font-size: 15px;
   color: #111827;
-  background: #ffffff;
+  background: var(--surface);
   transition: all 0.2s ease;
   font-family: inherit;
   width: 100%; /* Take full available width */
@@ -248,7 +248,7 @@
 .btn-primary {
   padding: 14px 24px;
   background: linear-gradient(135deg, #10b981, #059669);
-  color: #ffffff;
+  color: var(--surface);
   border: none;
   border-radius: 12px;
   font-weight: 700;
@@ -279,7 +279,7 @@
 .btn-danger {
   padding: 14px 24px;
   background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: #ffffff;
+  color: var(--surface);
   border: none;
   border-radius: 12px;
   font-weight: 700;

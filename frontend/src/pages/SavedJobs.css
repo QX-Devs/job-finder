@@ -67,7 +67,7 @@
   align-items: center;
   gap: 8px;
   padding: 9px 14px;
-  background: #fff;
+  background: var(--surface);
   border: 2px solid var(--primary-200);
   color: var(--primary-700);
   border-radius: 999px;
@@ -661,5 +661,6 @@
     padding: 20px;
   }
 }
+
 
 

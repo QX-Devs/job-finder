@@ -29,83 +29,86 @@ import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
 import SavedJobs from "./pages/SavedJobs";
 import Notifications from "./pages/Notifications";
+import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Single layout route for ALL pages */}
-        <Route element={<MainLayout />}>
-          {/* Public routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/cv-prompt" element={<CVPrompt />} />
-          <Route path="/cv-generator" element={<CVGenerator />} />
-          <Route path="/find-jobs" element={<FindJobs />} />
-          <Route path="/companies" element={<Companies />} />
-          <Route path="/career-advice" element={<CareerAdvice />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/cookies" element={<Cookies />} />
-          <Route path="/accessibility" element={<Accessibility />} />
-          
-          {/* Protected routes */}
-          <Route 
-            path="/me" 
-            element={
-              <ProtectedRoute>
-                <Me />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/applications" 
-            element={
-              <ProtectedRoute>
-                <Applications />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/saved-jobs" 
-            element={
-              <ProtectedRoute>
-                <SavedJobs />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/notifications" 
-            element={
-              <ProtectedRoute>
-                <Notifications />
-              </ProtectedRoute>
-            } 
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <Settings />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          {/* Single layout route for ALL pages */}
+          <Route element={<MainLayout />}>
+            {/* Public routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/cv-prompt" element={<CVPrompt />} />
+            <Route path="/cv-generator" element={<CVGenerator />} />
+            <Route path="/find-jobs" element={<FindJobs />} />
+            <Route path="/companies" element={<Companies />} />
+            <Route path="/career-advice" element={<CareerAdvice />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/cookies" element={<Cookies />} />
+            <Route path="/accessibility" element={<Accessibility />} />
+            
+            {/* Protected routes */}
+            <Route 
+              path="/me" 
+              element={
+                <ProtectedRoute>
+                  <Me />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/applications" 
+              element={
+                <ProtectedRoute>
+                  <Applications />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/saved-jobs" 
+              element={
+                <ProtectedRoute>
+                  <SavedJobs />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/notifications" 
+              element={
+                <ProtectedRoute>
+                  <Notifications />
+                </ProtectedRoute>
+              } 
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

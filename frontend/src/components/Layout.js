@@ -4,11 +4,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Menu, X, User, LogOut, Briefcase, Bell, Settings, 
   Heart, BookmarkCheck, FileText, TrendingUp, ChevronDown,
-  Search, Zap, Shield, HelpCircle, MessageSquare
+  Search, Zap, Shield, HelpCircle, MessageSquare, Sun, Moon
 } from 'lucide-react';
 import AuthModal from './AuthModal';
 import authService from '../services/authService';
 import './Layout.css';
+import { useTheme } from '../context/ThemeContext';
 
 // Footer Component (moved outside Layout)
 const Footer = () => {
@@ -136,6 +137,7 @@ const Footer = () => {
 const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -147,6 +149,7 @@ const Layout = ({ children }) => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [hasNewNotifications, setHasNewNotifications] = useState(true);
+  const isDarkMode = theme === 'dark';
   
   const userDropdownRef = useRef(null);
   const notificationsRef = useRef(null);
@@ -285,6 +288,10 @@ const Layout = ({ children }) => {
     }
   };
 
+  const handleThemeToggle = () => {
+    toggleTheme();
+  };
+
   const navLinks = [
     { name: 'Home', path: '/', icon: Briefcase },
     { name: 'Find Jobs', path: '/find-jobs', icon: Search },
@@ -340,6 +347,16 @@ const Layout = ({ children }) => {
 
           {/* Desktop Auth/User Section */}
           <div className="navbar-actions">
+        <button
+          type="button"
+          onClick={handleThemeToggle}
+          className={`theme-toggle-btn ${isDarkMode ? 'dark' : 'light'}`}
+          aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} theme`}
+        >
+          <Sun size={16} className="theme-icon sun" />
+          <Moon size={16} className="theme-icon moon" />
+          <span className="theme-toggle-thumb" />
+        </button>
             {isLoggedIn ? (
               <>
                 {/* Notifications */}
@@ -480,6 +497,19 @@ const Layout = ({ children }) => {
         {isMobileMenuOpen && (
           <div className="mobile-menu">
             <div className="mobile-menu-content">
+              <div className="mobile-theme-toggle">
+                <span>Theme</span>
+                <button
+                  type="button"
+                  onClick={handleThemeToggle}
+                  className={`theme-toggle-btn ${isDarkMode ? 'dark' : 'light'}`}
+                  aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} theme`}
+                >
+                  <Sun size={16} className="theme-icon sun" />
+                  <Moon size={16} className="theme-icon moon" />
+                  <span className="theme-toggle-thumb" />
+                </button>
+              </div>
               {/* User Info (if logged in) */}
               {isLoggedIn && (
                 <div className="mobile-user-info">
