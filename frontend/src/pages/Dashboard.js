@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import authService from '../services/authService';
 import resumeService from '../services/resumeService';
 import {
@@ -10,6 +11,7 @@ import './Dashboard.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { t, direction } = useLanguage();
   const [user, setUser] = useState(authService.getStoredUser());
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,14 +40,14 @@ const Dashboard = () => {
         }
       } catch (e) {
         if (!mounted) return;
-        setError(e?.message || 'Failed to load dashboard');
+        setError(e?.message || t('loadDashboardFailed'));
       } finally {
         if (mounted) setLoading(false);
       }
     };
     load();
     return () => { mounted = false; };
-  }, []);
+  }, [t]);
 
   const profileCompletion = useMemo(() => {
     if (!user) return 0;
@@ -85,25 +87,25 @@ const Dashboard = () => {
     <div className="page-container">
       <div className="dash-header">
         <div className="dash-greeting">
-          <h1>Welcome back{user?.fullName ? `, ${user.fullName.split(' ')[0]}` : ''} 👋</h1>
-          <p>Here is your personalized overview and quick actions.</p>
+          <h1>{t('welcomeBack')}{user?.fullName ? `, ${user.fullName.split(' ')[0]}` : ''} 👋</h1>
+          <p>{t('dashboardSubtitle')}</p>
         </div>
         <div className="dash-quick-actions">
           <button className="dash-action" onClick={() => navigate('/cv-generator')}>
-            <Sparkles size={16} /> Build Resume
+            <Sparkles size={16} /> {t('buildResume')}
           </button>
           <button className="dash-action" onClick={() => navigate('/find-jobs')}>
-            <Briefcase size={16} /> Find Jobs
+            <Briefcase size={16} /> {t('findJobs')}
           </button>
           <button className="dash-action" onClick={() => navigate('/settings')}>
-            <Settings size={16} /> Settings
+            <Settings size={16} /> {t('settings')}
           </button>
         </div>
       </div>
 
       {loading ? (
         <div className="dash-loading">
-          <Loader2 className="spin" size={24} /> Loading your data...
+          <Loader2 className="spin" size={24} /> {t('loadingYourData')}
         </div>
       ) : (
         <>
@@ -115,35 +117,35 @@ const Dashboard = () => {
             <div className="dash-col">
               <div className="dash-card">
                 <div className="dash-card-header">
-                  <div className="dash-card-title"><User size={18} /> Profile</div>
-                  <button className="link" onClick={() => navigate('/settings')}>Edit</button>
+                  <div className="dash-card-title"><User size={18} /> {t('profile')}</div>
+                  <button className="link" onClick={() => navigate('/settings')}>{t('edit')}</button>
                 </div>
                 <div className="dash-profile">
                   <div className="dash-profile-row">
-                    <span>Name</span>
+                    <span>{t('name')}</span>
                     <strong>{user?.fullName || '—'}</strong>
                   </div>
                   <div className="dash-profile-row">
-                    <span>Email</span>
+                    <span>{t('email')}</span>
                     <strong>{user?.email || '—'}</strong>
                   </div>
                   <div className="dash-profile-row">
-                    <span>Phone</span>
+                    <span>{t('phone')}</span>
                     <strong>{user?.phone || '—'}</strong>
                   </div>
                   <div className="dash-progress">
                     <div className="dash-progress-bar" style={{ width: `${profileCompletion}%` }}></div>
                   </div>
-                  <div className="dash-progress-label">Profile completeness: {profileCompletion}%</div>
+                  <div className="dash-progress-label">{t('profileCompleteness')}: {profileCompletion}%</div>
                 </div>
               </div>
 
               <div className="dash-card">
                 <div className="dash-card-header">
-                  <div className="dash-card-title"><FileText size={18} /> Resumes</div>
+                  <div className="dash-card-title"><FileText size={18} /> {t('resumes')}</div>
                   <div className="dash-card-actions">
                     <button className="btn-small" onClick={() => navigate('/cv-generator')}>
-                      <Plus size={14} /> New
+                      <Plus size={14} /> {t('new')}
                     </button>
                   </div>
                 </div>
@@ -153,10 +155,10 @@ const Dashboard = () => {
                       <div key={r.id} className="dash-list-item">
                         <div className="dash-list-main">
                           <div className="dash-list-title">
-                            {r.title || 'Resume'}
+                            {r.title || t('resume')}
                             {r.content?.uploadedFile?.url && (
                               <span style={{ marginLeft: 8, fontSize: 12, color: '#059669', fontWeight: 700 }}>
-                                Uploaded
+                                {t('uploaded')}
                               </span>
                             )}
                           </div>
@@ -165,51 +167,50 @@ const Dashboard = () => {
                         <div className="dash-list-actions">
                           {r.content?.uploadedFile?.url ? (
                             <button
-                            type="button"
-                            className="link"
-                            onClick={async (e) => {
-                              e.stopPropagation();
-                              if (e.target.disabled) return;
-                              e.target.disabled = true;
+                              type="button"
+                              className="link"
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                if (e.target.disabled) return;
+                                e.target.disabled = true;
 
-                              try {
-                                const file = r.content.uploadedFile;
-                                if (!file || !file.storedFilename) throw new Error('Missing file info');
+                                try {
+                                  const file = r.content.uploadedFile;
+                                  if (!file || !file.storedFilename) throw new Error('Missing file info');
 
-                                const blob = await resumeService.downloadUploadedFile(file.storedFilename);
-                                if (!(blob instanceof Blob)) throw new Error('Invalid file response');
+                                  const blob = await resumeService.downloadUploadedFile(file.storedFilename);
+                                  if (!(blob instanceof Blob)) throw new Error('Invalid file response');
 
-                                // ✅ Create download link
-                                const url = window.URL.createObjectURL(blob);
-                                const a = document.createElement('a');
-                                a.href = url;
+                                  // ✅ Create download link
+                                  const url = window.URL.createObjectURL(blob);
+                                  const a = document.createElement('a');
+                                  a.href = url;
 
-                                // ✅ Use the same name shown on your site (fallback to resume.pdf)
-                                a.download =
-                                  file.originalFilename ||
-                                  file.fileName ||
-                                  file.name ||
-                                  'resume.pdf';
+                                  // ✅ Use the same name shown on your site (fallback to resume.pdf)
+                                  a.download =
+                                    file.originalFilename ||
+                                    file.fileName ||
+                                    file.name ||
+                                    'resume.pdf';
 
-                                document.body.appendChild(a);
-                                a.click();
-                                a.remove();
+                                  document.body.appendChild(a);
+                                  a.click();
+                                  a.remove();
 
-                                // ✅ Clean up URL after 30 seconds
-                                setTimeout(() => window.URL.revokeObjectURL(url), 30000);
-                              } catch (err) {
-                                console.error(err);
-                                alert('Could not download CV. Please try again.');
-                              } finally {
-                                e.target.disabled = false;
-                              }
-                            }}
-
-                          >
-                            Download CV
-                          </button>
+                                  // ✅ Clean up URL after 30 seconds
+                                  setTimeout(() => window.URL.revokeObjectURL(url), 30000);
+                                } catch (err) {
+                                  console.error(err);
+                                  alert(t('downloadFailed'));
+                                } finally {
+                                  e.target.disabled = false;
+                                }
+                              }}
+                            >
+                              {t('downloadCV')}
+                            </button>
                           ) : (
-                            <button className="link" onClick={() => navigate('/cv-generator')}>Open</button>
+                            <button className="link" onClick={() => navigate('/cv-generator')}>{t('open')}</button>
                           )}
                         </div>
                       </div>
@@ -217,9 +218,9 @@ const Dashboard = () => {
                   </div>
                 ) : (
                   <div className="dash-empty">
-                    <p>No resumes yet.</p>
+                    <p>{t('noResumesYet')}</p>
                     <button className="btn-primary" onClick={() => navigate('/cv-prompt')}>
-                      Create or Upload <ArrowRight size={16} />
+                      {t('createOrUpload')} <ArrowRight size={16} />
                     </button>
                   </div>
                 )}
@@ -229,27 +230,48 @@ const Dashboard = () => {
             <div className="dash-col">
               <div className="dash-card">
                 <div className="dash-card-header">
-                  <div className="dash-card-title"><Briefcase size={18} /> Applications</div>
-                  <button className="link" onClick={() => navigate('/applications')}>View all</button>
+                  <div className="dash-card-title"><Briefcase size={18} /> {t('applications')}</div>
+                  <button className="link" onClick={() => navigate('/applications')}>{t('viewAll')}</button>
                 </div>
                 <div className="dash-stats">
-                  <StatCard icon={Briefcase} title="Submitted" value="0" onClick={() => navigate('/applications')} />
-                  <StatCard icon={BookmarkCheck} title="Saved" value="0" onClick={() => navigate('/saved-jobs')} />
-                  <StatCard icon={Bell} title="Updates" value="0" onClick={() => navigate('/notifications')} />
+                  <StatCard 
+                    icon={Briefcase} 
+                    title={t('submitted')} 
+                    value="0" 
+                    onClick={() => navigate('/applications')} 
+                  />
+                  <StatCard 
+                    icon={BookmarkCheck} 
+                    title={t('saved')} 
+                    value="0" 
+                    onClick={() => navigate('/saved-jobs')} 
+                  />
+                  <StatCard 
+                    icon={Bell} 
+                    title={t('updates')} 
+                    value="0" 
+                    onClick={() => navigate('/notifications')} 
+                  />
                 </div>
                 <div className="dash-empty small">
-                  <p>Application tracking coming soon.</p>
+                  <p>{t('applicationTrackingComingSoon')}</p>
                 </div>
               </div>
 
               <div className="dash-card">
                 <div className="dash-card-header">
-                  <div className="dash-card-title"><Settings size={18} /> Quick Settings</div>
+                  <div className="dash-card-title"><Settings size={18} /> {t('quickSettings')}</div>
                 </div>
                 <div className="dash-quick-links">
-                  <button onClick={() => navigate('/settings')}><Settings size={16} /> Account Settings</button>
-                  <button onClick={() => navigate('/cv-generator')}><FileText size={16} /> Edit Resume</button>
-                  <button onClick={() => navigate('/find-jobs')}><Briefcase size={16} /> Explore Jobs</button>
+                  <button onClick={() => navigate('/settings')}>
+                    <Settings size={16} /> {t('accountSettings')}
+                  </button>
+                  <button onClick={() => navigate('/cv-generator')}>
+                    <FileText size={16} /> {t('editResume')}
+                  </button>
+                  <button onClick={() => navigate('/find-jobs')}>
+                    <Briefcase size={16} /> {t('exploreJobs')}
+                  </button>
                 </div>
               </div>
             </div>
@@ -257,14 +279,14 @@ const Dashboard = () => {
 
           <div className="dash-banner">
             <div className="dash-banner-left">
-              <CheckCircle2 size={20} /> Tip: Boost your chances by keeping your resume fresh and tailored.
+              <CheckCircle2 size={20} /> {t('dashboardTip')}
             </div>
             <div className="dash-banner-right">
               <button className="btn-outline" onClick={() => navigate('/cv-prompt')}>
-                <Upload size={16} /> Upload CV
+                <Upload size={16} /> {t('uploadCV')}
               </button>
               <button className="btn-primary" onClick={() => navigate('/cv-generator')}>
-                Build with AI <ArrowRight size={16} />
+                {t('buildWithAI')} <ArrowRight size={16} />
               </button>
             </div>
           </div>
@@ -275,5 +297,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-

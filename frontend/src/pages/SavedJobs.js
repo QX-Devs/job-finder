@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import {
   Search, MapPin, Briefcase, DollarSign, BookmarkCheck,
   ArrowRight, Clock, Eye, Users, Trash2, ExternalLink,
@@ -11,6 +12,7 @@ import './SavedJobs.css';
 
 const SavedJobs = () => {
   const navigate = useNavigate();
+  const { t, direction } = useLanguage();
   const [savedJobs, setSavedJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -54,7 +56,7 @@ const SavedJobs = () => {
         setSavedJobs(saved);
       }
     } catch (err) {
-      setError('Failed to load saved jobs');
+      setError(t('loadSavedJobsFailed'));
       setTimeout(() => setError(''), 3000);
     } finally {
       setIsLoading(false);
@@ -62,7 +64,7 @@ const SavedJobs = () => {
   };
 
   const handleUnsave = async (jobId) => {
-    if (!window.confirm('Are you sure you want to remove this job from your saved list?')) {
+    if (!window.confirm(t('unsaveJobConfirm'))) {
       return;
     }
 
@@ -70,11 +72,11 @@ const SavedJobs = () => {
       const res = await applicationService.remove(jobId);
       if (res.success) {
         setSavedJobs(prev => prev.filter(job => job.id !== jobId));
-        setMessage('Job removed from saved list');
+        setMessage(t('jobRemoved'));
         setTimeout(() => setMessage(''), 3000);
       }
     } catch (err) {
-      setError('Failed to unsave job');
+      setError(t('unsaveJobFailed'));
       setTimeout(() => setError(''), 3000);
     }
   };
@@ -86,18 +88,18 @@ const SavedJobs = () => {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'Recently saved';
+    if (!dateString) return t('recentlySaved');
     const date = new Date(dateString);
     const now = new Date();
     const diffTime = Math.abs(now - date);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
-    return `${Math.floor(diffDays / 365)} years ago`;
+    if (diffDays === 0) return t('today');
+    if (diffDays === 1) return t('yesterday');
+    if (diffDays < 7) return t('daysAgo', { days: diffDays });
+    if (diffDays < 30) return t('weeksAgo', { weeks: Math.floor(diffDays / 7) });
+    if (diffDays < 365) return t('monthsAgo', { months: Math.floor(diffDays / 30) });
+    return t('yearsAgo', { years: Math.floor(diffDays / 365) });
   };
 
   const getCompanyInitial = (company) => {
@@ -116,11 +118,11 @@ const SavedJobs = () => {
         <div className="saved-jobs-hero-content">
           <div className="saved-jobs-badge">
             <BookmarkCheck size={16} />
-            <span>Saved Jobs</span>
+            <span>{t('savedJobs')}</span>
           </div>
-          <h1 className="saved-jobs-title">Your Saved Opportunities</h1>
+          <h1 className="saved-jobs-title">{t('savedJobsTitle')}</h1>
           <p className="saved-jobs-subtitle">
-            Keep track of jobs you're interested in. Apply when you're ready!
+            {t('savedJobsSubtitle')}
           </p>
         </div>
       </section>
@@ -134,7 +136,7 @@ const SavedJobs = () => {
               <Search size={20} />
               <input
                 type="text"
-                placeholder="Search saved jobs..."
+                placeholder={t('searchSavedJobs')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-input-saved"
@@ -143,7 +145,7 @@ const SavedJobs = () => {
 
             <div className="saved-jobs-results-info">
               <p>
-                <strong>{filteredJobs.length}</strong> saved job{filteredJobs.length !== 1 ? 's' : ''}
+                <strong>{filteredJobs.length}</strong> {t('savedJobsCount', { count: filteredJobs.length })}
               </p>
             </div>
 
@@ -151,14 +153,14 @@ const SavedJobs = () => {
               <button
                 onClick={() => setViewMode('grid')}
                 className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                title="Grid View"
+                title={t('gridView')}
               >
                 <Grid3x3 size={18} />
               </button>
               <button
                 onClick={() => setViewMode('list')}
                 className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-                title="List View"
+                title={t('listView')}
               >
                 <List size={18} />
               </button>
@@ -173,25 +175,25 @@ const SavedJobs = () => {
           {isLoading ? (
             <div className="loading-state">
               <div className="loader"></div>
-              <p>Loading your saved jobs...</p>
+              <p>{t('loadingSavedJobs')}</p>
             </div>
           ) : filteredJobs.length === 0 ? (
             /* Empty State */
             <div className="empty-state">
               <div className="empty-icon">📋</div>
-              <h3>No saved jobs yet</h3>
+              <h3>{t('noSavedJobs')}</h3>
               <p>
                 {searchTerm
-                  ? 'Try adjusting your search terms'
-                  : 'Start saving jobs from the home page to see them here'}
+                  ? t('adjustSearchTerms')
+                  : t('startSavingJobs')}
               </p>
               {searchTerm ? (
                 <button onClick={() => setSearchTerm('')} className="btn-primary">
-                  Clear Search
+                  {t('clearSearch')}
                 </button>
               ) : (
                 <button onClick={() => navigate('/')} className="btn-primary">
-                  Browse Jobs
+                  {t('browseJobs')}
                 </button>
               )}
             </div>
@@ -218,7 +220,7 @@ const SavedJobs = () => {
                         <button
                           onClick={() => handleUnsave(job.id)}
                           className="icon-btn unsave-btn"
-                          title="Remove from saved"
+                          title={t('removeFromSaved')}
                         >
                           <Trash2 size={18} />
                         </button>
@@ -227,9 +229,9 @@ const SavedJobs = () => {
 
                     {/* Job Info */}
                     <div className="job-info">
-                      <h3 className="job-title-enhanced">{job.jobTitle || 'Untitled Job'}</h3>
+                      <h3 className="job-title-enhanced">{job.jobTitle || t('untitledJob')}</h3>
                       <div className="company-info-enhanced">
-                        <span className="company-name">{job.company || 'Unknown Company'}</span>
+                        <span className="company-name">{job.company || t('unknownCompany')}</span>
                         {job.location && (
                           <>
                             <span className="separator">•</span>
@@ -249,7 +251,7 @@ const SavedJobs = () => {
                       )}
                       <div className="meta-item-enhanced">
                         <Calendar size={14} />
-                        <span>Saved {formatDate(job.appliedAt || job.createdAt)}</span>
+                        <span>{t('saved')} {formatDate(job.appliedAt || job.createdAt)}</span>
                       </div>
                     </div>
 
@@ -271,7 +273,7 @@ const SavedJobs = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          View Job
+                          {t('viewJob')}
                           <ExternalLink size={16} />
                         </a>
                       ) : (
@@ -279,7 +281,7 @@ const SavedJobs = () => {
                           className="apply-btn-enhanced"
                           onClick={() => navigate('/')}
                         >
-                          Browse Jobs
+                          {t('browseJobs')}
                           <ArrowRight size={16} />
                         </button>
                       )}
@@ -295,11 +297,11 @@ const SavedJobs = () => {
               {displayCount < filteredJobs.length && (
                 <div className="load-more-section">
                   <button onClick={loadMore} className="btn-load-more">
-                    Load More Jobs
+                    {t('loadMoreJobs')}
                     <ChevronDown size={20} />
                   </button>
                   <p className="load-more-info">
-                    {filteredJobs.length - displayCount} more jobs available
+                    {t('moreJobsAvailable', { count: filteredJobs.length - displayCount })}
                   </p>
                 </div>
               )}

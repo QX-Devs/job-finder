@@ -7,8 +7,10 @@ import {
 } from 'lucide-react';
 import authService from '../services/authService';
 import './AuthModal.css';
+import { useTranslate } from '../utils/translate'; // <<< استيراد دالة الترجمة
 
 const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
+  const { t, isRTL, language, toggleLanguage } = useTranslate(); // <<< استخدام الترجمة
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(defaultTab);
   const [showPassword, setShowPassword] = useState(false);

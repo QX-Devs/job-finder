@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import authService from '../services/authService';
 import { apiHelpers } from '../services/api';
 import './me.css';
 
 function Me() {
+  const { t, direction } = useLanguage();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -53,13 +55,13 @@ function Me() {
           resumeVisibility: response.data.resumeVisibility || 'private'
         });
       } else {
-        const errorMsg = response?.message || 'Failed to load profile';
+        const errorMsg = response?.message || t('loadProfileFailed');
         console.error('Error in response:', errorMsg);
         setError(errorMsg);
       }
     } catch (err) {
       console.error('Error fetching profile:', err);
-      setError(err.message || 'Failed to load profile');
+      setError(err.message || t('loadProfileFailed'));
     } finally {
       setLoading(false);
     }
@@ -81,11 +83,11 @@ function Me() {
         setIsEditing(false);
         // Optional: Show success message
       } else {
-        setError(response.data.message || 'Failed to update profile');
+        setError(response.data.message || t('updateProfileFailed'));
       }
     } catch (err) {
       console.error('Error updating profile:', err);
-      setError(err.message || 'Failed to update profile');
+      setError(err.message || t('updateProfileFailed'));
     } finally {
       setLoading(false);
     }
@@ -96,7 +98,11 @@ function Me() {
   };
 
   if (loading) {
-    return <div className="me-container"><div className="loading">Loading...</div></div>;
+    return (
+      <div className="me-container">
+        <div className="loading">{t('loading')}</div>
+      </div>
+    );
   }
 
   if (error && !isEditing) {
@@ -105,7 +111,7 @@ function Me() {
         <div className="error">
           {error}
           <button onClick={fetchUserProfile} style={{marginLeft: '10px'}}>
-            Retry
+            {t('retry')}
           </button>
         </div>
       </div>
@@ -129,23 +135,39 @@ function Me() {
           <div className="me-identity">
             <div className="me-avatar">{initials}</div>
             <div>
-              <h1 className="me-title">{user?.fullName || 'My Profile'}</h1>
+              <h1 className="me-title">{user?.fullName || t('myProfile')}</h1>
               <p className="me-subtitle">{user?.email}</p>
             </div>
           </div>
           <div className="me-actions">
             {!isEditing && (
-              <button onClick={() => setIsEditing(true)} className="btn-edit-primary">Edit Profile</button>
+              <button onClick={() => setIsEditing(true)} className="btn-edit-primary">
+                {t('editProfile')}
+              </button>
             )}
-            <button onClick={handleLogout} className="btn-logout">Logout</button>
+            <button onClick={handleLogout} className="btn-logout">
+              {t('logout')}
+            </button>
           </div>
         </div>
 
         <div className="me-stats">
-          <div className="stat-pill"><span className="pill-dot" />{educationCount} Education</div>
-          <div className="stat-pill"><span className="pill-dot" />{experienceCount} Experience</div>
-          <div className="stat-pill"><span className="pill-dot" />{skillsCount} Skills</div>
-          <div className="stat-pill"><span className="pill-dot" />Visibility: {user?.resumeVisibility || 'private'}</div>
+          <div className="stat-pill">
+            <span className="pill-dot" />
+            {educationCount} {t('education')}
+          </div>
+          <div className="stat-pill">
+            <span className="pill-dot" />
+            {experienceCount} {t('experience')}
+          </div>
+          <div className="stat-pill">
+            <span className="pill-dot" />
+            {skillsCount} {t('skills')}
+          </div>
+          <div className="stat-pill">
+            <span className="pill-dot" />
+            {t('visibility')}: {user?.resumeVisibility || 'private'}
+          </div>
         </div>
 
         {error && isEditing && <div className="error-message">{error}</div>}
@@ -154,30 +176,30 @@ function Me() {
           // View Mode
           <div className="me-content">
             <div className="profile-section">
-              <h2>Personal Information</h2>
+              <h2>{t('personalInformation')}</h2>
               <div className="profile-grid">
                 <div className="profile-item">
-                  <label>Full Name</label>
-                  <p>{user?.fullName || 'Not provided'}</p>
+                  <label>{t('fullName')}</label>
+                  <p>{user?.fullName || t('notProvided')}</p>
                 </div>
                 <div className="profile-item">
-                  <label>Email</label>
-                  <p>{user?.email || 'Not provided'}</p>
+                  <label>{t('email')}</label>
+                  <p>{user?.email || t('notProvided')}</p>
                 </div>
                 <div className="profile-item">
-                  <label>Phone</label>
-                  <p>{user?.phone || 'Not provided'}</p>
+                  <label>{t('phone')}</label>
+                  <p>{user?.phone || t('notProvided')}</p>
                 </div>
                 <div className="profile-item">
-                  <label>Location</label>
-                  <p>{user?.location || 'Not provided'}</p>
+                  <label>{t('location')}</label>
+                  <p>{user?.location || t('notProvided')}</p>
                 </div>
                 <div className="profile-item">
-                  <label>Employment Status</label>
-                  <p>{user?.employmentStatus || 'Not provided'}</p>
+                  <label>{t('employmentStatus')}</label>
+                  <p>{user?.employmentStatus || t('notProvided')}</p>
                 </div>
                 <div className="profile-item">
-                  <label>Resume Visibility</label>
+                  <label>{t('resumeVisibility')}</label>
                   <p className={`visibility ${user?.resumeVisibility}`}>
                     {user?.resumeVisibility || 'private'}
                   </p>
@@ -186,16 +208,16 @@ function Me() {
             </div>
 
             <div className="profile-section">
-              <h2>Career Objective</h2>
-              <p className="career-objective">{user?.careerObjective || 'Not provided'}</p>
+              <h2>{t('careerObjective')}</h2>
+              <p className="career-objective">{user?.careerObjective || t('notProvided')}</p>
             </div>
 
             {user?.education && user.education.length > 0 && (
               <div className="profile-section">
-                <h2>Education</h2>
+                <h2>{t('education')}</h2>
                 {user.education.map((edu, idx) => (
                   <div key={idx} className="list-item">
-                    <h3>{edu.degree} in {edu.major}</h3>
+                    <h3>{edu.degree} {t('in')} {edu.major}</h3>
                     <p>{edu.institution}</p>
                     <p className="year">{edu.graduationYear}</p>
                   </div>
@@ -205,12 +227,12 @@ function Me() {
 
             {user?.experience && user.experience.length > 0 && (
               <div className="profile-section">
-                <h2>Experience</h2>
+                <h2>{t('experience')}</h2>
                 {user.experience.map((exp, idx) => (
                   <div key={idx} className="list-item">
                     <h3>{exp.jobTitle}</h3>
                     <p>{exp.company}</p>
-                    <p className="dates">{exp.startDate} - {exp.isCurrentJob ? 'Present' : exp.endDate}</p>
+                    <p className="dates">{exp.startDate} - {exp.isCurrentJob ? t('present') : exp.endDate}</p>
                     <p>{exp.description}</p>
                   </div>
                 ))}
@@ -219,7 +241,7 @@ function Me() {
 
             {user?.skills && user.skills.length > 0 && (
               <div className="profile-section">
-                <h2>Skills</h2>
+                <h2>{t('skills')}</h2>
                 <div className="skills-container">
                   {user.skills.map((skill, idx) => (
                     <span key={idx} className="skill-tag">{skill.skillName}</span>
@@ -232,7 +254,7 @@ function Me() {
           // Edit Mode
           <form onSubmit={handleSubmit} className="me-form">
             <div className="form-group">
-              <label>Full Name</label>
+              <label>{t('fullName')}</label>
               <input
                 type="text"
                 name="fullName"
@@ -243,18 +265,18 @@ function Me() {
             </div>
 
             <div className="form-group">
-              <label>Email</label>
+              <label>{t('email')}</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 disabled
-                title="Email cannot be changed"
+                title={t('emailCannotChange')}
               />
             </div>
 
             <div className="form-group">
-              <label>Phone</label>
+              <label>{t('phone')}</label>
               <input
                 type="tel"
                 name="phone"
@@ -264,56 +286,56 @@ function Me() {
             </div>
 
             <div className="form-group">
-              <label>Location</label>
+              <label>{t('location')}</label>
               <input
                 type="text"
                 name="location"
                 value={formData.location}
                 onChange={handleInputChange}
-                placeholder="e.g., Amman, Jordan"
+                placeholder={t('locationPlaceholder')}
               />
             </div>
 
             <div className="form-group">
-              <label>Employment Status</label>
+              <label>{t('employmentStatus')}</label>
               <select
                 name="employmentStatus"
                 value={formData.employmentStatus}
                 onChange={handleInputChange}
               >
-                <option value="">Select Status</option>
-                <option value="Student">Student</option>
-                <option value="Graduate">Graduate</option>
-                <option value="Experienced">Experienced</option>
+                <option value="">{t('selectStatus')}</option>
+                <option value="Student">{t('student')}</option>
+                <option value="Graduate">{t('graduate')}</option>
+                <option value="Experienced">{t('experienced')}</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label>Resume Visibility</label>
+              <label>{t('resumeVisibility')}</label>
               <select
                 name="resumeVisibility"
                 value={formData.resumeVisibility}
                 onChange={handleInputChange}
               >
-                <option value="private">Private</option>
-                <option value="public">Public</option>
+                <option value="private">{t('private')}</option>
+                <option value="public">{t('public')}</option>
               </select>
             </div>
 
             <div className="form-group">
-              <label>Career Objective</label>
+              <label>{t('careerObjective')}</label>
               <textarea
                 name="careerObjective"
                 value={formData.careerObjective}
                 onChange={handleInputChange}
-                placeholder="Tell us about your career goals"
+                placeholder={t('careerObjectivePlaceholder')}
                 rows="5"
               />
             </div>
 
             <div className="form-actions">
               <button type="submit" className="btn-save-primary" disabled={loading}>
-                {loading ? 'Saving...' : 'Save Changes'}
+                {loading ? t('saving') : t('saveChanges')}
               </button>
               <button
                 type="button"
@@ -321,7 +343,7 @@ function Me() {
                 onClick={() => setIsEditing(false)}
                 disabled={loading}
               >
-                Cancel
+                {t('cancel')}
               </button>
             </div>
           </form>

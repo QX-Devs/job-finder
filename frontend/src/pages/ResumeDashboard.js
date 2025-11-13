@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   FileText, Plus, Download, Eye, Edit, Trash2, Share2,
   Clock, Star, LayoutTemplate, Sparkles
@@ -9,6 +10,7 @@ import './ResumeDashboard.css';
 
 const ResumeDashboard = () => {
   const navigate = useNavigate();
+  const { t, direction } = useLanguage();
   const [resumes, setResumes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedTemplate, setSelectedTemplate] = useState('modern');
@@ -16,49 +18,49 @@ const ResumeDashboard = () => {
   const resumeTemplates = [
     {
       id: 'modern',
-      name: 'Modern Professional',
-      description: 'Clean, contemporary design perfect for tech roles',
-      category: 'Professional',
+      name: t('templateModern'),
+      description: t('templateModernDesc'),
+      category: t('professional'),
       color: '#667eea',
       preview: '⚡'
     },
     {
       id: 'classic',
-      name: 'Classic Executive',
-      description: 'Traditional format preferred by corporate employers',
-      category: 'Corporate',
+      name: t('templateClassic'),
+      description: t('templateClassicDesc'),
+      category: t('corporate'),
       color: '#10b981',
       preview: '💼'
     },
     {
       id: 'creative',
-      name: 'Creative Portfolio',
-      description: 'Designed for designers and creative professionals',
-      category: 'Creative',
+      name: t('templateCreative'),
+      description: t('templateCreativeDesc'),
+      category: t('creative'),
       color: '#f59e0b',
       preview: '🎨'
     },
     {
       id: 'minimal',
-      name: 'Minimalist',
-      description: 'Simple, clean layout focusing on content',
-      category: 'Minimal',
+      name: t('templateMinimal'),
+      description: t('templateMinimalDesc'),
+      category: t('minimal'),
       color: '#6b7280',
       preview: '📄'
     },
     {
       id: 'ats',
-      name: 'ATS Optimized',
-      description: 'Designed to pass automated tracking systems',
-      category: 'Professional',
+      name: t('templateATS'),
+      description: t('templateATSDesc'),
+      category: t('professional'),
       color: '#ef4444',
       preview: '🤖'
     },
     {
       id: 'academic',
-      name: 'Academic',
-      description: 'Ideal for research and academic positions',
-      category: 'Academic',
+      name: t('templateAcademic'),
+      description: t('templateAcademicDesc'),
+      category: t('academic'),
       color: '#8b5cf6',
       preview: '🎓'
     }
@@ -84,14 +86,14 @@ const ResumeDashboard = () => {
     try {
       const response = await resumeService.createResume({
         template: templateId,
-        title: `My Resume - ${new Date().toLocaleDateString()}`,
+        title: `${t('myResume')} - ${new Date().toLocaleDateString()}`,
         isPublic: false
       });
       
       navigate(`/resume/builder/${response.data.id}`);
     } catch (error) {
       console.error('Error creating resume:', error);
-      alert(error.message || 'Failed to create resume. Please try again.');
+      alert(error.message || t('createResumeFailed'));
     }
   };
 
@@ -101,24 +103,24 @@ const ResumeDashboard = () => {
       fetchUserResumes();
     } catch (error) {
       console.error('Error duplicating resume:', error);
-      alert(error.message || 'Failed to duplicate resume. Please try again.');
+      alert(error.message || t('duplicateResumeFailed'));
     }
   };
 
   const deleteResume = async (resumeId) => {
-    if (!window.confirm('Are you sure you want to delete this resume?')) return;
+    if (!window.confirm(t('deleteResumeConfirm'))) return;
 
     try {
       await resumeService.deleteResume(resumeId);
       setResumes(resumes.filter(resume => resume.id !== resumeId));
     } catch (error) {
       console.error('Error deleting resume:', error);
-      alert(error.message || 'Failed to delete resume. Please try again.');
+      alert(error.message || t('deleteResumeFailed'));
     }
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    return new Date(dateString).toLocaleDateString(direction === 'rtl' ? 'ar' : 'en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
@@ -135,7 +137,7 @@ const ResumeDashboard = () => {
       <div className="resume-dashboard">
         <div className="loading-container">
           <div className="spinner"></div>
-          <p>Loading your resumes...</p>
+          <p>{t('loadingResumes')}</p>
         </div>
       </div>
     );
@@ -147,15 +149,15 @@ const ResumeDashboard = () => {
       <div className="dashboard-header">
         <div className="header-content">
           <div className="header-text">
-            <h1>Resume Dashboard</h1>
-            <p>Create, manage, and perfect your professional resumes</p>
+            <h1>{t('resumeDashboard')}</h1>
+            <p>{t('resumeDashboardDesc')}</p>
           </div>
           <div className="header-stats">
             <div className="stat-card">
               <FileText size={24} />
               <div className="stat-info">
                 <span className="stat-number">{resumes.length}</span>
-                <span className="stat-label">Total Resumes</span>
+                <span className="stat-label">{t('totalResumes')}</span>
               </div>
             </div>
           </div>
@@ -165,26 +167,26 @@ const ResumeDashboard = () => {
       <div className="dashboard-content">
         {/* Quick Actions */}
         <div className="quick-actions-section">
-          <h2>Quick Actions</h2>
+          <h2>{t('quickActions')}</h2>
           <div className="quick-actions-grid">
             <button 
               className="quick-action-card primary"
               onClick={() => document.getElementById('template-modal').showModal()}
             >
               <Plus size={24} />
-              <span>Create New Resume</span>
+              <span>{t('createNewResume')}</span>
             </button>
             <button className="quick-action-card">
               <Sparkles size={24} />
-              <span>AI Resume Review</span>
+              <span>{t('aiResumeReview')}</span>
             </button>
             <button className="quick-action-card">
               <Download size={24} />
-              <span>Export All</span>
+              <span>{t('exportAll')}</span>
             </button>
             <button className="quick-action-card">
               <Share2 size={24} />
-              <span>Share Profile</span>
+              <span>{t('shareProfile')}</span>
             </button>
           </div>
         </div>
@@ -192,21 +194,21 @@ const ResumeDashboard = () => {
         {/* Existing Resumes */}
         <div className="resumes-section">
           <div className="section-header">
-            <h2>Your Resumes</h2>
-            <span className="resume-count">{resumes.length} resumes</span>
+            <h2>{t('yourResumes')}</h2>
+            <span className="resume-count">{resumes.length} {t('resumesCount')}</span>
           </div>
 
           {resumes.length === 0 ? (
             <div className="empty-state">
               <FileText size={64} />
-              <h3>No Resumes Yet</h3>
-              <p>Create your first resume to get started on your job search journey</p>
+              <h3>{t('noResumesYet')}</h3>
+              <p>{t('createFirstResume')}</p>
               <button 
                 className="btn-primary"
                 onClick={() => document.getElementById('template-modal').showModal()}
               >
                 <Plus size={18} />
-                Create Your First Resume
+                {t('createFirstResumeBtn')}
               </button>
             </div>
           ) : (
@@ -219,35 +221,35 @@ const ResumeDashboard = () => {
                         {getTemplatePreview(resume.template)}
                       </span>
                       <span className="template-name">
-                        {resumeTemplates.find(t => t.id === resume.template)?.name || 'Custom'}
+                        {resumeTemplates.find(t => t.id === resume.template)?.name || t('custom')}
                       </span>
                     </div>
                     <div className="resume-actions">
                       <button 
                         className="icon-btn"
                         onClick={() => navigate(`/resume/builder/${resume.id}`)}
-                        title="Edit"
+                        title={t('edit')}
                       >
                         <Edit size={16} />
                       </button>
                       <button 
                         className="icon-btn"
                         onClick={() => navigate(`/resume/preview/${resume.id}`)}
-                        title="Preview"
+                        title={t('preview')}
                       >
                         <Eye size={16} />
                       </button>
                       <button 
                         className="icon-btn"
                         onClick={() => duplicateResume(resume.id)}
-                        title="Duplicate"
+                        title={t('duplicate')}
                       >
                         <Share2 size={16} />
                       </button>
                       <button 
                         className="icon-btn danger"
                         onClick={() => deleteResume(resume.id)}
-                        title="Delete"
+                        title={t('delete')}
                       >
                         <Trash2 size={16} />
                       </button>
@@ -257,7 +259,7 @@ const ResumeDashboard = () => {
                   <div className="resume-card-body">
                     <h3 className="resume-title">{resume.title}</h3>
                     <p className="resume-description">
-                      {resume.lastModified ? `Last modified ${formatDate(resume.lastModified)}` : 'New resume'}
+                      {resume.lastModified ? `${t('lastModified')} ${formatDate(resume.lastModified)}` : t('newResume')}
                     </p>
                     
                     <div className="resume-meta">
@@ -268,7 +270,7 @@ const ResumeDashboard = () => {
                       {resume.isPublic && (
                         <div className="meta-item public">
                           <Eye size={14} />
-                          <span>Public</span>
+                          <span>{t('public')}</span>
                         </div>
                       )}
                     </div>
@@ -280,14 +282,14 @@ const ResumeDashboard = () => {
                       onClick={() => navigate(`/resume/builder/${resume.id}`)}
                     >
                       <Edit size={16} />
-                      Edit
+                      {t('edit')}
                     </button>
                     <button 
                       className="btn-primary"
                       onClick={() => navigate(`/resume/preview/${resume.id}`)}
                     >
                       <Eye size={16} />
-                      Preview
+                      {t('preview')}
                     </button>
                   </div>
                 </div>
@@ -299,7 +301,7 @@ const ResumeDashboard = () => {
         {/* Recent Activity */}
         {resumes.length > 0 && (
           <div className="activity-section">
-            <h2>Recent Activity</h2>
+            <h2>{t('recentActivity')}</h2>
             <div className="activity-list">
               {resumes.slice(0, 3).map((resume) => (
                 <div key={resume.id} className="activity-item">
@@ -307,9 +309,9 @@ const ResumeDashboard = () => {
                     <Edit size={16} />
                   </div>
                   <div className="activity-content">
-                    <p>You updated <strong>{resume.title}</strong></p>
+                    <p>{t('updatedResume')} <strong>{resume.title}</strong></p>
                     <span className="activity-time">
-                      {resume.lastModified ? formatDate(resume.lastModified) : 'Recently'}
+                      {resume.lastModified ? formatDate(resume.lastModified) : t('recently')}
                     </span>
                   </div>
                 </div>
@@ -323,7 +325,7 @@ const ResumeDashboard = () => {
       <dialog id="template-modal" className="template-modal">
         <div className="modal-content">
           <div className="modal-header">
-            <h2>Choose a Resume Template</h2>
+            <h2>{t('chooseTemplate')}</h2>
             <button 
               onClick={() => document.getElementById('template-modal').close()}
               className="close-btn"
@@ -362,7 +364,7 @@ const ResumeDashboard = () => {
               className="btn-outline"
               onClick={() => document.getElementById('template-modal').close()}
             >
-              Cancel
+              {t('cancel')}
             </button>
             <button 
               className="btn-primary"
@@ -372,7 +374,7 @@ const ResumeDashboard = () => {
               }}
             >
               <LayoutTemplate size={18} />
-              Use This Template
+              {t('useThisTemplate')}
             </button>
           </div>
         </div>

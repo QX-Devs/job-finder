@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import authService from '../services/authService';
 import './Settings.css';
 
@@ -52,13 +53,14 @@ const countryCodes = [
 ];
 
 const Settings = () => {
+  const { t, direction } = useLanguage();
   const [activeTab, setActiveTab] = useState('account');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
   const [profile, setProfile] = useState({ fullName: '', phone: '', github: '', linkedin: '', resumeVisibility: 'private' });
-  const [countryCode, setCountryCode] = useState('+1');
+  const [countryCode, setCountryCode] = useState('+962');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [usernames, setUsernames] = useState({ github: '', linkedin: '' });
   const [passwords, setPasswords] = useState({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
@@ -71,7 +73,7 @@ const Settings = () => {
         const u = res.data;
         
         // Parse phone number to extract country code and number
-        let parsedCode = '+1';
+        let parsedCode = '+962';
         let parsedNumber = u.phone || '';
         
         if (u.phone) {
@@ -117,15 +119,15 @@ const Settings = () => {
         linkedin: usernames.linkedin ? `https://linkedin.com/in/${usernames.linkedin}` : '',
       };
       const res = await authService.updateProfile(payload);
-      if (res?.success) showMsg('Profile updated');
+      if (res?.success) showMsg(t('profileUpdated'));
     } catch (e) {
-      showErr(e.message || 'Failed to update profile');
+      showErr(e.message || t('updateProfileFailed'));
     } finally { setLoading(false); }
   };
 
   const changePassword = async () => {
     if (!passwords.newPassword || passwords.newPassword !== passwords.confirmNewPassword) {
-      showErr('New passwords do not match');
+      showErr(t('passwordsDoNotMatch'));
       return;
     }
     try {
@@ -133,11 +135,11 @@ const Settings = () => {
       setError('');
       const res = await authService.changePassword(passwords.currentPassword, passwords.newPassword);
       if (res?.success) {
-        showMsg('Password updated');
+        showMsg(t('passwordUpdated'));
         setPasswords({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
       }
     } catch (e) {
-      showErr(e.message || 'Failed to change password');
+      showErr(e.message || t('changePasswordFailed'));
     } finally { setLoading(false); }
   };
 
@@ -145,14 +147,14 @@ const Settings = () => {
     try {
       setLoading(true);
       const res = await authService.updateProfile({ resumeVisibility: privacy.isPublic ? 'public' : 'private' });
-      if (res?.success) showMsg('Privacy settings saved');
+      if (res?.success) showMsg(t('privacySettingsSaved'));
     } catch (e) {
-      showErr(e.message || 'Failed to save privacy');
+      showErr(e.message || t('savePrivacyFailed'));
     } finally { setLoading(false); }
   };
 
   const deleteAccount = async () => {
-    if (!window.confirm('Are you sure you want to delete your account? This cannot be undone.')) return;
+    if (!window.confirm(t('deleteAccountConfirm'))) return;
     try {
       setLoading(true);
       const res = await authService.deleteAccount();
@@ -161,7 +163,7 @@ const Settings = () => {
         window.location.href = '/';
       }
     } catch (e) {
-      showErr(e.message || 'Failed to delete account');
+      showErr(e.message || t('deleteAccountFailed'));
     } finally { setLoading(false); }
   };
 
@@ -169,11 +171,17 @@ const Settings = () => {
     <div className="settings-container">
       <div className="settings-card">
         <div className="settings-header">
-          <h1>Settings</h1>
+          <h1>{t('settings')}</h1>
           <div className="settings-tabs">
-            <button className={activeTab==='account'?'active':''} onClick={()=>setActiveTab('account')}>Account</button>
-            <button className={activeTab==='security'?'active':''} onClick={()=>setActiveTab('security')}>Security</button>
-            <button className={activeTab==='privacy'?'active':''} onClick={()=>setActiveTab('privacy')}>Privacy</button>
+            <button className={activeTab==='account'?'active':''} onClick={()=>setActiveTab('account')}>
+              {t('account')}
+            </button>
+            <button className={activeTab==='security'?'active':''} onClick={()=>setActiveTab('security')}>
+              {t('security')}
+            </button>
+            <button className={activeTab==='privacy'?'active':''} onClick={()=>setActiveTab('privacy')}>
+              {t('privacy')}
+            </button>
           </div>
         </div>
 
@@ -184,11 +192,15 @@ const Settings = () => {
           <div className="settings-section">
             <div className="form-row">
               <div className="form-group">
-                <label>Full Name</label>
-                <input value={profile.fullName} onChange={(e)=>setProfile({...profile, fullName:e.target.value})} />
+                <label>{t('fullName')}</label>
+                <input 
+                  value={profile.fullName} 
+                  onChange={(e)=>setProfile({...profile, fullName:e.target.value})} 
+                  placeholder={t('enterFullName')}
+                />
               </div>
               <div className="form-group">
-                <label>Phone Number</label>
+                <label>{t('phoneNumber')}</label>
                 <div className="phone-input-container">
                   <select 
                     className="country-code-select" 
@@ -206,29 +218,39 @@ const Settings = () => {
                     className="phone-number-input"
                     value={phoneNumber} 
                     onChange={(e)=>setPhoneNumber(e.target.value.replace(/\D/g, ''))} 
-                    placeholder="123456789"
+                    placeholder={t('phonePlaceholder')}
                   />
                 </div>
               </div>
             </div>
             <div className="form-row">
               <div className="form-group">
-                <label>GitHub Username</label>
+                <label>{t('githubUsername')}</label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ whiteSpace: 'nowrap', color: '#6b7280' }}>github.com/</span>
-                  <input value={usernames.github} onChange={(e)=>setUsernames({...usernames, github:e.target.value.replace(/\s+/g,'')})} placeholder="username" />
+                  <input 
+                    value={usernames.github} 
+                    onChange={(e)=>setUsernames({...usernames, github:e.target.value.replace(/\s+/g,'')})} 
+                    placeholder={t('username')}
+                  />
                 </div>
               </div>
               <div className="form-group">
-                <label>LinkedIn Username</label>
+                <label>{t('linkedinUsername')}</label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ whiteSpace: 'nowrap', color: '#6b7280' }}>linkedin.com/in/</span>
-                  <input value={usernames.linkedin} onChange={(e)=>setUsernames({...usernames, linkedin:e.target.value.replace(/\s+/g,'')})} placeholder="username" />
+                  <input 
+                    value={usernames.linkedin} 
+                    onChange={(e)=>setUsernames({...usernames, linkedin:e.target.value.replace(/\s+/g,'')})} 
+                    placeholder={t('username')}
+                  />
                 </div>
               </div>
             </div>
             <div className="actions">
-              <button className="btn-primary" onClick={saveProfile} disabled={loading}>{loading?'Saving...':'Save Changes'}</button>
+              <button className="btn-primary" onClick={saveProfile} disabled={loading}>
+                {loading ? t('saving') : t('saveChanges')}
+              </button>
             </div>
           </div>
         )}
@@ -236,22 +258,41 @@ const Settings = () => {
         {activeTab === 'security' && (
           <div className="settings-section">
             <div className="form-group">
-              <label>Current Password</label>
-              <input type="password" value={passwords.currentPassword} onChange={(e)=>setPasswords({...passwords, currentPassword:e.target.value})} />
+              <label>{t('currentPassword')}</label>
+              <input 
+                type="password" 
+                value={passwords.currentPassword} 
+                onChange={(e)=>setPasswords({...passwords, currentPassword:e.target.value})}
+                placeholder={t('enterCurrentPassword')}
+              />
             </div>
             <div className="form-row">
               <div className="form-group">
-                <label>New Password</label>
-                <input type="password" value={passwords.newPassword} onChange={(e)=>setPasswords({...passwords, newPassword:e.target.value})} />
+                <label>{t('newPassword')}</label>
+                <input 
+                  type="password" 
+                  value={passwords.newPassword} 
+                  onChange={(e)=>setPasswords({...passwords, newPassword:e.target.value})}
+                  placeholder={t('enterNewPassword')}
+                />
               </div>
               <div className="form-group">
-                <label>Confirm New Password</label>
-                <input type="password" value={passwords.confirmNewPassword} onChange={(e)=>setPasswords({...passwords, confirmNewPassword:e.target.value})} />
+                <label>{t('confirmNewPassword')}</label>
+                <input 
+                  type="password" 
+                  value={passwords.confirmNewPassword} 
+                  onChange={(e)=>setPasswords({...passwords, confirmNewPassword:e.target.value})}
+                  placeholder={t('confirmNewPassword')}
+                />
               </div>
             </div>
             <div className="actions">
-              <button className="btn-primary" onClick={changePassword} disabled={loading}>{loading?'Saving...':'Update Password'}</button>
-              <button className="btn-danger" onClick={deleteAccount} disabled={loading}>Delete Account</button>
+              <button className="btn-primary" onClick={changePassword} disabled={loading}>
+                {loading ? t('saving') : t('updatePassword')}
+              </button>
+              <button className="btn-danger" onClick={deleteAccount} disabled={loading}>
+                {t('deleteAccount')}
+              </button>
             </div>
           </div>
         )}
@@ -259,11 +300,20 @@ const Settings = () => {
         {activeTab === 'privacy' && (
           <div className="settings-section">
             <div className="form-group inline">
-              <label>Public Profile</label>
-              <input type="checkbox" checked={privacy.isPublic} onChange={(e)=>setPrivacy({ isPublic: e.target.checked })} />
+              <label>{t('publicProfile')}</label>
+              <input 
+                type="checkbox" 
+                checked={privacy.isPublic} 
+                onChange={(e)=>setPrivacy({ isPublic: e.target.checked })} 
+              />
             </div>
+            <p className="privacy-description">
+              {t('publicProfileDescription')}
+            </p>
             <div className="actions">
-              <button className="btn-primary" onClick={savePrivacy} disabled={loading}>{loading?'Saving...':'Save Privacy'}</button>
+              <button className="btn-primary" onClick={savePrivacy} disabled={loading}>
+                {loading ? t('saving') : t('savePrivacy')}
+              </button>
             </div>
           </div>
         )}

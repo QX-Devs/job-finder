@@ -411,12 +411,12 @@ const Home = () => {
               
               <div className="header-actions">
                 {/* Language Toggle Button */}
-                <button 
+               {/* <button 
                   className="language-toggle-btn"
                   onClick={toggleLanguage}
                 >
                   {language === 'en' ? 'العربية' : 'English'}
-                </button>
+                </button>*/}
                 
                 {!isLoggedIn && (
                   <button onClick={() => openAuthModal('signup')} className="header-cta-btn">
