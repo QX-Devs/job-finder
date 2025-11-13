@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   User, Briefcase, GraduationCap, Code, Globe, 
   Plus, X, ArrowRight, ArrowLeft, Save, Github, Linkedin, Sparkles
@@ -9,6 +10,7 @@ import resumeService from '../services/resumeService';
 import './CVGenerator.css';
 
 const CVGenerator = () => {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -161,17 +163,17 @@ const CVGenerator = () => {
     const newErrors = {};
 
     if (currentStep === 1) {
-      if (!formData.title.trim()) newErrors.title = 'Professional title is required';
-      if (!formData.summary.trim()) newErrors.summary = 'Professional summary is required';
+      if (!formData.title.trim()) newErrors.title = t('titleRequired');
+      if (!formData.summary.trim()) newErrors.summary = t('summaryRequired');
     } else if (currentStep === 2) {
       formData.experience.forEach((exp, index) => {
-        if (!exp.position.trim()) newErrors[`experience_${index}_position`] = 'Position is required';
-        if (!exp.company.trim()) newErrors[`experience_${index}_company`] = 'Company is required';
+        if (!exp.position.trim()) newErrors[`experience_${index}_position`] = t('positionRequired');
+        if (!exp.company.trim()) newErrors[`experience_${index}_company`] = t('companyRequired');
       });
     } else if (currentStep === 3) {
       formData.education.forEach((edu, index) => {
-        if (!edu.degree.trim()) newErrors[`education_${index}_degree`] = 'Degree is required';
-        if (!edu.institution.trim()) newErrors[`education_${index}_institution`] = 'Institution is required';
+        if (!edu.degree.trim()) newErrors[`education_${index}_degree`] = t('degreeRequired');
+        if (!edu.institution.trim()) newErrors[`education_${index}_institution`] = t('institutionRequired');
       });
     }
 
@@ -232,7 +234,7 @@ const CVGenerator = () => {
     try {
       const inputText = (formData.summary || '').trim();
       if (inputText.length < 50) {
-        setErrors(prev => ({ ...prev, summary: 'Please provide at least 50 characters to generate a strong summary.' }));
+        setErrors(prev => ({ ...prev, summary: t('summaryMinLength') }));
         return;
       }
       setIsSuggesting(true);
@@ -271,10 +273,10 @@ const CVGenerator = () => {
   };
 
   const steps = [
-    { number: 1, title: 'Profile', icon: User },
-    { number: 2, title: 'Experience', icon: Briefcase },
-    { number: 3, title: 'Education', icon: GraduationCap },
-    { number: 4, title: 'Skills', icon: Code }
+    { number: 1, title: t('profile'), icon: User },
+    { number: 2, title: t('experience'), icon: Briefcase },
+    { number: 3, title: t('education'), icon: GraduationCap },
+    { number: 4, title: t('skills'), icon: Code }
   ];
 
   return (
@@ -300,49 +302,51 @@ const CVGenerator = () => {
           {/* Step 1: Profile */}
           {currentStep === 1 && (
             <div className="step-section">
-              <h2><User size={28} /> Professional Profile</h2>
-              <p className="step-description">Tell us about your professional identity</p>
+              <h2><User size={28} /> {t('professionalProfile')}</h2>
+              <p className="step-description">{t('professionalProfile')}</p>
 
               <div className="form-group">
-                <label>Professional Title *</label>
+                <label>{t('professionalTitle')} *</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => handleChange('title', e.target.value)}
-                  placeholder="e.g., Software Engineer, Data Analyst"
+                  placeholder={t('titlePlaceholder')}
                   className={errors.title ? 'error' : ''}
                 />
                 {errors.title && <span className="error-message">{errors.title}</span>}
               </div>
 
               <div className="form-group">
-                <label>Professional Summary *
+                <label>{t('professionalSummary')} *
                   <button 
                     type="button" 
                     className={`ai-suggest-btn ${formData.summary.trim().length < 50 ? 'disabled' : ''}`} 
                     onClick={suggestProfessionalSummary} 
                     disabled={isSuggesting || formData.summary.trim().length < 50}
-                    title={formData.summary.trim().length < 50 ? 'Please write at least 50 characters before generating.' : 'Generate with AI'}
+                    title={formData.summary.trim().length < 50 ? t('summaryMinLength') : t('aiSuggestTooltip')}
                   >
-                    <Sparkles size={16} /> {isSuggesting ? 'Generating...' : 'AI Suggest'}
+                    <Sparkles size={16} /> {isSuggesting ? t('generating') : t('aiSuggest')}
                   </button>
                 </label>
                 <textarea
                   required
                   value={formData.summary}
                   onChange={(e) => handleChange('summary', e.target.value)}
-                  placeholder="Write a brief summary about your professional experience and goals..."
+                  placeholder={t('summaryPlaceholder')}
                   rows={5}
                   className={errors.summary ? 'error' : ''}
                 />
                 <div className="summary-hint">
-                  {formData.summary.trim().length < 50 ? `${50 - formData.summary.trim().length} more characters needed for AI generation.` : 'Looks good for AI generation.'}
+                  {formData.summary.trim().length < 50 ? 
+                    `${50 - formData.summary.trim().length} ${t('moreCharactersNeeded')}` : 
+                    t('looksGood')}
                 </div>
                 {errors.summary && <span className="error-message">{errors.summary}</span>}
               </div>
 
               <div className="form-group">
-                <label><Github size={18} /> GitHub Profile (Optional)</label>
+                <label><Github size={18} /> {t('githubProfile')}</label>
                 <input
                   type="url"
                   value={formData.github}
@@ -352,7 +356,7 @@ const CVGenerator = () => {
               </div>
 
               <div className="form-group">
-                <label><Linkedin size={18} /> LinkedIn Profile (Optional)</label>
+                <label><Linkedin size={18} /> {t('linkedinProfile')}</label>
                 <input
                   type="url"
                   value={formData.linkedin}
@@ -366,32 +370,32 @@ const CVGenerator = () => {
           {/* Step 2: Experience */}
           {currentStep === 2 && (
             <div className="step-section">
-              <h2><Briefcase size={28} /> Work Experience</h2>
-              <p className="step-description">Add your professional experience</p>
+              <h2><Briefcase size={28} /> {t('workExperience')}</h2>
+              <p className="step-description">{t('workExperience')}</p>
 
               {formData.experience.map((exp, index) => (
                 <div key={index} className="dynamic-section">
                   <div className="section-header">
-                    <h3>Experience #{index + 1}</h3>
+                    <h3>{t('experience')} #{index + 1}</h3>
                     {formData.experience.length > 1 && (
                       <button 
                         type="button" 
                         className="remove-btn"
                         onClick={() => removeExperience(index)}
                       >
-                        <X size={18} /> Remove
+                        <X size={18} /> {t('remove')}
                       </button>
                     )}
                   </div>
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>Position *</label>
+                      <label>{t('position')} *</label>
                       <input
                         type="text"
                         value={exp.position}
                         onChange={(e) => updateExperience(index, 'position', e.target.value)}
-                        placeholder="e.g., Software Engineer"
+                        placeholder={t('positionPlaceholder')}
                         className={errors[`experience_${index}_position`] ? 'error' : ''}
                       />
                       {errors[`experience_${index}_position`] && (
@@ -400,12 +404,12 @@ const CVGenerator = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>Company *</label>
+                      <label>{t('company')} *</label>
                       <input
                         type="text"
                         value={exp.company}
                         onChange={(e) => updateExperience(index, 'company', e.target.value)}
-                        placeholder="e.g., Tech Corp"
+                        placeholder={t('companyPlaceholder')}
                         className={errors[`experience_${index}_company`] ? 'error' : ''}
                       />
                       {errors[`experience_${index}_company`] && (
@@ -416,7 +420,7 @@ const CVGenerator = () => {
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>Start Date</label>
+                      <label>{t('startDate')}</label>
                       <input
                         type="month"
                         value={exp.startDate}
@@ -425,7 +429,7 @@ const CVGenerator = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>End Date</label>
+                      <label>{t('endDate')}</label>
                       <input
                         type="month"
                         value={exp.endDate}
@@ -442,15 +446,15 @@ const CVGenerator = () => {
                       checked={exp.current}
                       onChange={(e) => updateExperience(index, 'current', e.target.checked)}
                     />
-                    <label htmlFor={`current-${index}`}>I currently work here</label>
+                    <label htmlFor={`current-${index}`}>{t('currentlyWorkHere')}</label>
                   </div>
 
                   <div className="form-group">
-                    <label>Description</label>
+                    <label>{t('description')}</label>
                     <textarea
                       value={exp.description}
                       onChange={(e) => updateExperience(index, 'description', e.target.value)}
-                      placeholder="Describe your responsibilities and achievements..."
+                      placeholder={t('descriptionPlaceholder')}
                       rows={4}
                     />
                   </div>
@@ -458,7 +462,7 @@ const CVGenerator = () => {
               ))}
 
               <button type="button" className="add-btn" onClick={addExperience}>
-                <Plus size={18} /> Add Another Experience
+                <Plus size={18} /> {t('addExperience')}
               </button>
             </div>
           )}
@@ -466,31 +470,31 @@ const CVGenerator = () => {
           {/* Step 3: Education */}
           {currentStep === 3 && (
             <div className="step-section">
-              <h2><GraduationCap size={28} /> Education</h2>
-              <p className="step-description">Add your educational background</p>
+              <h2><GraduationCap size={28} /> {t('education')}</h2>
+              <p className="step-description">{t('educationalBackground')}</p>
 
               {formData.education.map((edu, index) => (
                 <div key={index} className="dynamic-section">
                   <div className="section-header">
-                    <h3>Education #{index + 1}</h3>
+                    <h3>{t('education')} #{index + 1}</h3>
                     {formData.education.length > 1 && (
                       <button 
                         type="button" 
                         className="remove-btn"
                         onClick={() => removeEducation(index)}
                       >
-                        <X size={18} /> Remove
+                        <X size={18} /> {t('remove')}
                       </button>
                     )}
                   </div>
 
                   <div className="form-group">
-                    <label>Degree *</label>
+                    <label>{t('degree')} *</label>
                     <input
                       type="text"
                       value={edu.degree}
                       onChange={(e) => updateEducation(index, 'degree', e.target.value)}
-                      placeholder="e.g., Bachelor of Computer Science"
+                      placeholder={t('degreePlaceholder')}
                       className={errors[`education_${index}_degree`] ? 'error' : ''}
                     />
                     {errors[`education_${index}_degree`] && (
@@ -499,12 +503,12 @@ const CVGenerator = () => {
                   </div>
 
                   <div className="form-group">
-                    <label>Institution *</label>
+                    <label>{t('institution')} *</label>
                     <input
                       type="text"
                       value={edu.institution}
                       onChange={(e) => updateEducation(index, 'institution', e.target.value)}
-                      placeholder="e.g., University Name"
+                      placeholder={t('institutionPlaceholder')}
                       className={errors[`education_${index}_institution`] ? 'error' : ''}
                     />
                     {errors[`education_${index}_institution`] && (
@@ -514,17 +518,17 @@ const CVGenerator = () => {
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>Field of Study</label>
+                      <label>{t('fieldOfStudy')}</label>
                       <input
                         type="text"
                         value={edu.fieldOfStudy}
                         onChange={(e) => updateEducation(index, 'fieldOfStudy', e.target.value)}
-                        placeholder="e.g., Computer Science"
+                        placeholder={t('fieldOfStudyPlaceholder')}
                       />
                     </div>
 
                     <div className="form-group">
-                      <label>Graduation Date</label>
+                      <label>{t('graduationDate')}</label>
                       <input
                         type="month"
                         value={edu.graduationDate}
@@ -536,7 +540,7 @@ const CVGenerator = () => {
               ))}
 
               <button type="button" className="add-btn" onClick={addEducation}>
-                <Plus size={18} /> Add Another Education
+                <Plus size={18} /> {t('addEducation')}
               </button>
             </div>
           )}
@@ -544,18 +548,18 @@ const CVGenerator = () => {
           {/* Step 4: Skills & Languages */}
           {currentStep === 4 && (
             <div className="step-section">
-              <h2><Code size={28} /> Skills & Languages</h2>
-              <p className="step-description">Showcase your expertise</p>
+              <h2><Code size={28} /> {t('skillsLanguages')}</h2>
+              <p className="step-description">{t('showcaseExpertise')}</p>
 
               <div className="form-group">
-                <label>Technical Skills</label>
+                <label>{t('technicalSkills')}</label>
                 <div className="skills-input">
                   <input
                     type="text"
                     value={newSkill}
                     onChange={(e) => setNewSkill(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addSkill())}
-                    placeholder="Type a skill and press Enter"
+                    placeholder={t('skillPlaceholder')}
                   />
                   <button type="button" onClick={addSkill} className="add-skill-btn">
                     <Plus size={18} />
@@ -572,23 +576,23 @@ const CVGenerator = () => {
               </div>
 
               <div className="form-group">
-                <label><Globe size={18} /> Languages</label>
+                <label><Globe size={18} /> {t('languages')}</label>
                 {formData.languages.map((lang, index) => (
                   <div key={index} className="language-row">
                     <input
                       type="text"
                       value={lang.language}
                       onChange={(e) => updateLanguage(index, 'language', e.target.value)}
-                      placeholder="Language (e.g., English)"
+                      placeholder={t('languagePlaceholder')}
                     />
                     <select
                       value={lang.proficiency}
                       onChange={(e) => updateLanguage(index, 'proficiency', e.target.value)}
                     >
-                      <option value="Native">Native</option>
-                      <option value="Fluent">Fluent</option>
-                      <option value="Professional">Professional</option>
-                      <option value="Limited">Limited</option>
+                      <option value="Native">{t('native')}</option>
+                      <option value="Fluent">{t('fluent')}</option>
+                      <option value="Professional">{t('professional')}</option>
+                      <option value="Limited">{t('limited')}</option>
                     </select>
                     {formData.languages.length > 1 && (
                       <button 
@@ -602,7 +606,7 @@ const CVGenerator = () => {
                   </div>
                 ))}
                 <button type="button" className="add-btn" onClick={addLanguage}>
-                  <Plus size={18} /> Add Language
+                  <Plus size={18} /> {t('addLanguage')}
                 </button>
               </div>
             </div>
@@ -613,21 +617,21 @@ const CVGenerator = () => {
         <div className="form-actions">
           {currentStep > 1 && (
             <button type="button" className="back-btn" onClick={handleBack}>
-              <ArrowLeft size={18} /> Back
+              <ArrowLeft size={18} /> {t('back')}
             </button>
           )}
           
           <div className="step-indicator">
-            Step {currentStep} of 4
+            {t('step')} {currentStep} {t('of')} 4
           </div>
 
           {currentStep < 4 ? (
             <button type="button" className="next-btn" onClick={handleNext}>
-              Next <ArrowRight size={18} />
+              {t('next')} <ArrowRight size={18} />
             </button>
           ) : (
             <button type="button" className="save-btn" onClick={handleSave}>
-              <Save size={18} /> Save CV
+              <Save size={18} /> {t('saveCV')}
             </button>
           )}
         </div>
@@ -636,8 +640,8 @@ const CVGenerator = () => {
       {showDownloadPrompt && (
         <div className="download-modal" role="dialog" aria-modal="true" style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.45)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000}}>
           <div style={{background:'#fff',borderRadius:16,padding:24,maxWidth:420,width:'90%',boxShadow:'0 20px 60px rgba(0,0,0,0.2)'}}>
-            <h3 style={{margin:'0 0 8px'}}>Your CV is ready</h3>
-            <p style={{margin:'0 0 16px',color:'#4b5563'}}>Do you want to download the generated .docx now?</p>
+            <h3 style={{margin:'0 0 8px'}}>{t('cvReady')}</h3>
+            <p style={{margin:'0 0 16px',color:'#4b5563'}}>{t('downloadPrompt')}</p>
             <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
               <button
                 onClick={() => {
@@ -646,7 +650,7 @@ const CVGenerator = () => {
                 }}
                 style={{padding:'10px 14px',border:'1px solid #e5e7eb',borderRadius:10,background:'#fff',cursor:'pointer',fontWeight:700,color:'#374151'}}
               >
-                Go to Dashboard
+                {t('goToDashboard')}
               </button>
               <button
                 onClick={() => {
@@ -663,7 +667,7 @@ const CVGenerator = () => {
                 }}
                 style={{padding:'10px 14px',borderRadius:10,border:'none',background:'linear-gradient(135deg,#10b981,#059669)',color:'#fff',cursor:'pointer',fontWeight:800}}
               >
-                Download & Go
+                {t('downloadGo')}
               </button>
             </div>
           </div>

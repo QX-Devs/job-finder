@@ -11,16 +11,18 @@ import {
 import AuthModal from '../components/AuthModal';
 import authService from '../services/authService';
 import applicationService from '../services/applicationService';
+import { useTranslate } from '../utils/translate'; // <<< استيراد دالة الترجمة
 import './Home.css';
 
 const Home = () => {
+  const { t, isRTL, language, toggleLanguage } = useTranslate(); // <<< استخدام الترجمة
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [savedJobs, setSavedJobs] = useState(new Set());
   const [jobIdToApplicationId, setJobIdToApplicationId] = useState({});
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+  const [viewMode, setViewMode] = useState('grid');
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState('latest');
   const [isLoading, setIsLoading] = useState(true);
@@ -46,12 +48,12 @@ const Home = () => {
 
   // Job Categories with icons
   const categories = [
-    { id: 'all', name: 'All Jobs', icon: Briefcase, count: 0 },
-    { id: 'engineering', name: 'Engineering', icon: Rocket, count: 0 },
-    { id: 'design', name: 'Design', icon: Target, count: 0 },
-    { id: 'marketing', name: 'Marketing', icon: TrendingUp, count: 0 },
-    { id: 'sales', name: 'Sales', icon: Users, count: 0 },
-    { id: 'product', name: 'Product', icon: Zap, count: 0 }
+    { id: 'all', name: t('allJobs'), icon: Briefcase, count: 0 },
+    { id: 'engineering', name: t('engineering'), icon: Rocket, count: 0 },
+    { id: 'design', name: t('design'), icon: Target, count: 0 },
+    { id: 'marketing', name: t('marketing'), icon: TrendingUp, count: 0 },
+    { id: 'sales', name: t('sales'), icon: Users, count: 0 },
+    { id: 'product', name: t('product'), icon: Zap, count: 0 }
   ];
 
   // Mock job data with more details
@@ -121,9 +123,11 @@ const Home = () => {
         experienceLevel: levels[Math.floor(Math.random() * levels.length)],
         category: position.category,
         skills: position.skills,
-        postedDate: `${Math.floor(Math.random() * 14 + 1)} days ago`,
+        postedDate: `${Math.floor(Math.random() * 14 + 1)} ${language === 'en' ? 'days ago' : 'أيام'}`,
         postedTimestamp: Date.now() - (Math.floor(Math.random() * 14 + 1) * 86400000),
-        description: 'Join our innovative team to build cutting-edge solutions that impact millions of users worldwide. We offer competitive compensation, great benefits, and opportunities for growth.',
+        description: language === 'en' 
+          ? 'Join our innovative team to build cutting-edge solutions that impact millions of users worldwide. We offer competitive compensation, great benefits, and opportunities for growth.'
+          : 'انضم إلى فريقنا المبتكر لبناء حلول متطورة تؤثر على ملايين المستخدمين حول العالم. نقدم تعويضات تنافسية ومزايا رائعة وفرص للنمو.',
         applicants: Math.floor(Math.random() * 200 + 50),
         views: Math.floor(Math.random() * 1000 + 500),
         applicationUrl: 'https://example.com/apply',
@@ -208,7 +212,7 @@ const Home = () => {
     if (result.length > 0 && !selectedJob) {
       setSelectedJob(result[0]);
     }
-  }, [filters, searchTerm, selectedCategory, sortBy, jobs]);
+  }, [filters, searchTerm, selectedCategory, sortBy, jobs, language]);
 
   const toggleSaveJob = async (jobId) => {
     if (!isLoggedIn) {
@@ -315,38 +319,50 @@ const Home = () => {
   const features = [
     {
       icon: Brain,
-      title: 'AI-Powered Matching',
-      description: 'Smart algorithms match you with jobs that fit your skills and experience perfectly',
+      title: t('aiMatching'),
+      description: language === 'en' 
+        ? 'Smart algorithms match you with jobs that fit your skills and experience perfectly'
+        : 'خوارزميات ذكية تطابقك مع الوظائف التي تناسب مهاراتك وخبراتك بشكل مثالي',
       color: 'from-blue-500 to-cyan-500'
     },
     {
       icon: FileText,
-      title: 'Resume Builder',
-      description: 'Create professional, ATS-friendly resumes in minutes with our AI-powered builder',
+      title: t('resumeBuilder'),
+      description: language === 'en'
+        ? 'Create professional, ATS-friendly resumes in minutes with our AI-powered builder'
+        : 'أنشئ سير ذاتية احترافية وصديقة لأنظمة التتبع في دقائق باستخدام منشئنا المدعوم بالذكاء الاصطناعي',
       color: 'from-purple-500 to-pink-500'
     },
     {
       icon: Target,
-      title: 'Career Guidance',
-      description: 'Get personalized career advice and skill recommendations based on market trends',
+      title: t('careerGuidance'),
+      description: language === 'en'
+        ? 'Get personalized career advice and skill recommendations based on market trends'
+        : 'احصل على نصائح مهنية مخصصة وتوصيات مهارات بناءً على اتجاهات السوق',
       color: 'from-orange-500 to-red-500'
     },
     {
       icon: Zap,
-      title: 'Instant Applications',
-      description: 'Apply to multiple jobs with one click using your saved profile',
+      title: t('instantApplications'),
+      description: language === 'en'
+        ? 'Apply to multiple jobs with one click using your saved profile'
+        : 'تقدم إلى وظائف متعددة بنقرة واحدة باستخدام ملفك الشخصي المحفوظ',
       color: 'from-green-500 to-emerald-500'
     },
     {
       icon: TrendingUp,
-      title: 'Salary Insights',
-      description: 'Know your worth with real-time salary data and negotiation tips',
+      title: t('salaryInsights'),
+      description: language === 'en'
+        ? 'Know your worth with real-time salary data and negotiation tips'
+        : 'اعرف قيمتك مع بيانات الرواتب في الوقت الفعلي ونصائح التفاوض',
       color: 'from-yellow-500 to-orange-500'
     },
     {
       icon: Award,
-      title: 'Skill Assessment',
-      description: 'Prove your expertise with verified skill assessments and certifications',
+      title: t('skillAssessment'),
+      description: language === 'en'
+        ? 'Prove your expertise with verified skill assessments and certifications'
+        : 'أثبت خبرتك مع تقييمات المهارات الموثقة والشهادات',
       color: 'from-indigo-500 to-purple-500'
     }
   ];
@@ -357,8 +373,28 @@ const Home = () => {
 
   return (
     <>
-      <div className="home-container">
-        
+      <div className="home-container" dir={isRTL ? 'rtl' : 'ltr'}>
+        {/* Quick Stats Banner */}
+        <div className="stats-banner">
+          <div className="stats-banner-content">
+            <div className="stat-chip">
+              <Briefcase size={16} />
+              <span><strong>{jobs.length}+</strong> {t('activeJobs')}</span>
+            </div>
+            <div className="stat-chip">
+              <Users size={16} />
+              <span><strong>50K+</strong> {t('jobSeekers')}</span>
+            </div>
+            <div className="stat-chip">
+              <Building2 size={16} />
+              <span><strong>500+</strong> {t('companiesCount')}</span>
+            </div>
+            <div className="stat-chip">
+              <TrendingUp size={16} />
+              <span><strong>95%</strong> {t('successRate')}</span>
+            </div>
+          </div>
+        </div>
 
         {/* Jobs Section - Now at the top */}
         <section className="jobs-section-top" ref={jobsRef}>
@@ -366,19 +402,29 @@ const Home = () => {
             <div className="jobs-header-content">
               <div className="jobs-title-section">
                 <h1 className="jobs-main-title">
-                  Discover Your <span className="gradient-text">Dream Career</span>
+                  {language === 'en' ? 'Discover Your' : 'اكتشف'} <span className="gradient-text">{language === 'en' ? 'Dream Career' : 'مسيرتك المهنية الحلم'}</span>
                 </h1>
                 <p className="jobs-subtitle">
-                  {filteredJobs.length} opportunities waiting for talented people like you
+                  {filteredJobs.length} {t('opportunities')}
                 </p>
               </div>
               
-              {!isLoggedIn && (
-                <button onClick={() => openAuthModal('signup')} className="header-cta-btn">
-                  <Sparkles size={18} />
-                  Get Personalized Jobs
+              <div className="header-actions">
+                {/* Language Toggle Button */}
+                <button 
+                  className="language-toggle-btn"
+                  onClick={toggleLanguage}
+                >
+                  {language === 'en' ? 'العربية' : 'English'}
                 </button>
-              )}
+                
+                {!isLoggedIn && (
+                  <button onClick={() => openAuthModal('signup')} className="header-cta-btn">
+                    <Sparkles size={18} />
+                    {t('personalizedJobs')}
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Enhanced Search Bar */}
@@ -387,7 +433,7 @@ const Home = () => {
                 <Search size={22} className="search-icon" />
                 <input
                   type="text"
-                  placeholder="Search by job title, company, or skills..."
+                  placeholder={t('searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="search-input-enhanced"
@@ -404,7 +450,7 @@ const Home = () => {
                 className={`filter-toggle-btn ${activeFiltersCount > 0 ? 'active' : ''}`}
               >
                 <SlidersHorizontal size={20} />
-                Filters
+                {t('filter')}
                 {activeFiltersCount > 0 && (
                   <span className="filter-badge">{activeFiltersCount}</span>
                 )}
@@ -438,10 +484,10 @@ const Home = () => {
           {showFilters && (
             <div className="filters-panel">
               <div className="filters-panel-header">
-                <h3>Advanced Filters</h3>
+                <h3>{t('advancedFilters')}</h3>
                 <div className="filters-actions">
                   <button onClick={clearFilters} className="clear-filters-btn">
-                    Clear All
+                    {t('clearAll')}
                   </button>
                   <button onClick={() => setShowFilters(false)} className="close-filters-btn">
                     <X size={18} />
@@ -451,13 +497,13 @@ const Home = () => {
 
               <div className="filters-grid">
                 <div className="filter-group">
-                  <label>Job Type</label>
+                  <label>{t('jobTypeFilter')}</label>
                   <select
                     value={filters.jobType}
                     onChange={(e) => setFilters({ ...filters, jobType: e.target.value })}
                     className="filter-select-enhanced"
                   >
-                    <option value="all">All Types</option>
+                    <option value="all">{t('allTypes')}</option>
                     <option value="Full-time">Full-time</option>
                     <option value="Part-time">Part-time</option>
                     <option value="Contract">Contract</option>
@@ -466,13 +512,13 @@ const Home = () => {
                 </div>
 
                 <div className="filter-group">
-                  <label>Location</label>
+                  <label>{t('locationFilter')}</label>
                   <select
                     value={filters.location}
                     onChange={(e) => setFilters({ ...filters, location: e.target.value })}
                     className="filter-select-enhanced"
                   >
-                    <option value="all">All Locations</option>
+                    <option value="all">{t('allLocations')}</option>
                     <option value="remote">Remote</option>
                     <option value="San Francisco, CA">San Francisco, CA</option>
                     <option value="New York, NY">New York, NY</option>
@@ -482,13 +528,13 @@ const Home = () => {
                 </div>
 
                 <div className="filter-group">
-                  <label>Experience Level</label>
+                  <label>{t('experienceLevel')}</label>
                   <select
                     value={filters.experienceLevel}
                     onChange={(e) => setFilters({ ...filters, experienceLevel: e.target.value })}
                     className="filter-select-enhanced"
                   >
-                    <option value="all">All Levels</option>
+                    <option value="all">{t('allLevels')}</option>
                     <option value="Entry Level">Entry Level</option>
                     <option value="Mid Level">Mid Level</option>
                     <option value="Senior">Senior</option>
@@ -497,13 +543,13 @@ const Home = () => {
                 </div>
 
                 <div className="filter-group">
-                  <label>Salary Range</label>
+                  <label>{t('salaryRange')}</label>
                   <select
                     value={filters.salaryRange}
                     onChange={(e) => setFilters({ ...filters, salaryRange: e.target.value })}
                     className="filter-select-enhanced"
                   >
-                    <option value="all">All Salaries</option>
+                    <option value="all">{t('allSalaries')}</option>
                     <option value="0-80">Under $80K</option>
                     <option value="80-120">$80K - $120K</option>
                     <option value="120-160">$120K - $160K</option>
@@ -518,7 +564,7 @@ const Home = () => {
                       checked={filters.remote}
                       onChange={(e) => setFilters({ ...filters, remote: e.target.checked })}
                     />
-                    <span>Remote Only</span>
+                    <span>{t('remoteOnly')}</span>
                   </label>
                 </div>
               </div>
@@ -529,8 +575,8 @@ const Home = () => {
           <div className="results-bar">
             <div className="results-info">
               <p>
-                Showing <strong>{Math.min(displayCount, filteredJobs.length)}</strong> of{' '}
-                <strong>{filteredJobs.length}</strong> jobs
+                {t('showing')} <strong>{Math.min(displayCount, filteredJobs.length)}</strong> {t('of')}{' '}
+                <strong>{filteredJobs.length}</strong> {t('jobs')}
               </p>
             </div>
 
@@ -540,10 +586,10 @@ const Home = () => {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="sort-select"
               >
-                <option value="latest">Latest</option>
-                <option value="salary-high">Salary: High to Low</option>
-                <option value="salary-low">Salary: Low to High</option>
-                <option value="popular">Most Popular</option>
+                <option value="latest">{t('latest')}</option>
+                <option value="salary-high">{t('salaryHigh')}</option>
+                <option value="salary-low">{t('salaryLow')}</option>
+                <option value="popular">{t('popular')}</option>
               </select>
 
               <div className="view-toggle">
@@ -565,20 +611,20 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Loading State */}
+                    {/* Loading State */}
           {isLoading ? (
             <div className="loading-state">
               <div className="loader"></div>
-              <p>Finding the best opportunities for you...</p>
+              <p>{t('findingOpportunities')}</p>
             </div>
           ) : filteredJobs.length === 0 ? (
             /* Empty State */
             <div className="empty-state">
               <div className="empty-icon">🔍</div>
-              <h3>No jobs found</h3>
-              <p>Try adjusting your filters or search terms</p>
+              <h3>{t('noJobsFound')}</h3>
+              <p>{t('tryAdjusting')}</p>
               <button onClick={clearFilters} className="btn-primary">
-                Clear All Filters
+                {t('clearAllFilters')}
               </button>
             </div>
           ) : (
@@ -646,7 +692,10 @@ const Home = () => {
                   {/* Load More in Sidebar */}
                   {displayCount < filteredJobs.length && (
                     <button onClick={loadMore} className="btn-load-more-sidebar">
-                      Load More ({filteredJobs.length - displayCount} more)
+                      {language === 'en' 
+                        ? `Load More (${filteredJobs.length - displayCount} more)`
+                        : `تحميل المزيد (${filteredJobs.length - displayCount} أخرى)`
+                      }
                       <ChevronDown size={16} />
                     </button>
                   )}
@@ -664,18 +713,18 @@ const Home = () => {
                             {selectedJob.urgent && (
                               <span className="badge urgent-badge">
                                 <Zap size={12} />
-                                Urgent
+                                {language === 'en' ? 'Urgent' : 'عاجل'}
                               </span>
                             )}
                             {selectedJob.featured && (
                               <span className="badge featured-badge-text">
                                 <Star size={12} />
-                                Featured
+                                {language === 'en' ? 'Featured' : 'مميز'}
                               </span>
                             )}
                             {selectedJob.remote && (
                               <span className="badge remote-badge">
-                                Remote
+                                {language === 'en' ? 'Remote' : 'عن بُعد'}
                               </span>
                             )}
                           </div>
@@ -691,7 +740,7 @@ const Home = () => {
                           <button
                             onClick={() => toggleSaveJob(selectedJob.id)}
                             className={`icon-btn-large ${savedJobs.has(selectedJob.id) ? 'saved' : ''}`}
-                            title="Save job"
+                            title={t('save')}
                           >
                             {savedJobs.has(selectedJob.id) ? (
                               <BookmarkCheck size={24} />
@@ -699,7 +748,7 @@ const Home = () => {
                               <Bookmark size={24} />
                             )}
                           </button>
-                          <button className="icon-btn-large" title="Share job">
+                          <button className="icon-btn-large" title={t('share')}>
                             <Share2 size={24} />
                           </button>
                         </div>
@@ -710,28 +759,28 @@ const Home = () => {
                         <div className="info-card">
                           <MapPin size={18} />
                           <div>
-                            <div className="info-label">Location</div>
+                            <div className="info-label">{t('location')}</div>
                             <div className="info-value">{selectedJob.location}</div>
                           </div>
                         </div>
                         <div className="info-card">
                           <Briefcase size={18} />
                           <div>
-                            <div className="info-label">Job Type</div>
+                            <div className="info-label">{t('jobType')}</div>
                             <div className="info-value">{selectedJob.jobType}</div>
                           </div>
                         </div>
                         <div className="info-card">
                           <DollarSign size={18} />
                           <div>
-                            <div className="info-label">Salary Range</div>
+                            <div className="info-label">{t('salary')}</div>
                             <div className="info-value">{selectedJob.salary}</div>
                           </div>
                         </div>
                         <div className="info-card">
                           <Badge size={18} />
                           <div>
-                            <div className="info-label">Experience</div>
+                            <div className="info-label">{t('experience')}</div>
                             <div className="info-value">{selectedJob.experienceLevel}</div>
                           </div>
                         </div>
@@ -739,7 +788,7 @@ const Home = () => {
 
                       {/* Skills */}
                       <div className="job-details-section">
-                        <h3 className="section-title">Required Skills</h3>
+                        <h3 className="section-title">{t('skillsRequired')}</h3>
                         <div className="job-skills-large">
                           {selectedJob.skills.map((skill, idx) => (
                             <span key={idx} className="skill-tag-large">{skill}</span>
@@ -749,7 +798,7 @@ const Home = () => {
 
                       {/* Description */}
                       <div className="job-details-section">
-                        <h3 className="section-title">About This Role</h3>
+                        <h3 className="section-title">{t('jobDescription')}</h3>
                         <p className="job-description">{selectedJob.description}</p>
                       </div>
 
@@ -759,21 +808,21 @@ const Home = () => {
                           <Eye size={18} />
                           <div>
                             <div className="stat-value">{selectedJob.views}</div>
-                            <div className="stat-label">Views</div>
+                            <div className="stat-label">{t('views')}</div>
                           </div>
                         </div>
                         <div className="stat-item">
                           <Users size={18} />
                           <div>
                             <div className="stat-value">{selectedJob.applicants}</div>
-                            <div className="stat-label">Applicants</div>
+                            <div className="stat-label">{t('applicants')}</div>
                           </div>
                         </div>
                         <div className="stat-item">
                           <Clock size={18} />
                           <div>
                             <div className="stat-value">{selectedJob.postedDate}</div>
-                            <div className="stat-label">Posted</div>
+                            <div className="stat-label">{t('posted')}</div>
                           </div>
                         </div>
                       </div>
@@ -787,7 +836,7 @@ const Home = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          Apply Now
+                          {t('applyNow')}
                           <ArrowRight size={20} />
                         </a>
                       </div>
@@ -795,8 +844,8 @@ const Home = () => {
                   ) : (
                     <div className="job-details-empty">
                       <Briefcase size={64} className="empty-icon" />
-                      <h3>Select a job to view details</h3>
-                      <p>Choose from the list on the left to see more information</p>
+                      <h3>{t('selectJob')}</h3>
+                      <p>{t('selectJobPrompt')}</p>
                     </div>
                   )}
                 </div>
@@ -805,40 +854,18 @@ const Home = () => {
           )}
         </section>
 
-        {/* Quick Stats Banner */}
-        <div className="stats-banner">
-          <div className="stats-banner-content">
-            <div className="stat-chip">
-              <Briefcase size={16} />
-              <span><strong>{jobs.length}+</strong> Active Jobs</span>
-            </div>
-            <div className="stat-chip">
-              <Users size={16} />
-              <span><strong>50K+</strong> Job Seekers</span>
-            </div>
-            <div className="stat-chip">
-              <Building2 size={16} />
-              <span><strong>500+</strong> Companies</span>
-            </div>
-            <div className="stat-chip">
-              <TrendingUp size={16} />
-              <span><strong>95%</strong> Success Rate</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Resume Generator Showcase (moved directly under jobs) */}
+        {/* Resume Generator Showcase */}
         <section className="resume-generator-section">
           <div className="resume-header">
             <div className="resume-badge">
               <Sparkles size={16} />
-              <span>Resume Generator</span>
+              <span>{t('resumeGenerator')}</span>
             </div>
-            <h2 className="resume-title">Stand Out With a Stunning Resume</h2>
-            <p className="resume-subtitle">Pick a modern template and let AI help you craft a professional resume in minutes</p>
+            <h2 className="resume-title">{t('standOut')}</h2>
+            <p className="resume-subtitle">{t('resumeSubtitle')}</p>
             <div className="resume-cta">
               <button className="btn-primary" onClick={() => navigate('/cv-generator')}>
-                Create Your Resume <ArrowRight size={18} />
+                {t('createYourResume')} <ArrowRight size={18} />
               </button>
             </div>
           </div>
@@ -850,29 +877,43 @@ const Home = () => {
               const svg2 = `${publicBase}/${encodeURIComponent('Mohammad Kayyali-2.svg')}`;
               return (
                 <>
-            <div className="resume-card" onClick={() => navigate('/cv-generator')}>
-              <div className="resume-card-inner">
-                <div className="resume-badge-page">Page 1</div>
-                <img src={svg1} alt="Resume Template Page 1" className="resume-image" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-                <div className="resume-shine"></div>
-              </div>
-              <div className="resume-caption">
-                <h3>Modern Professional</h3>
-                <p>Clean layout with strong typography for maximum ATS compatibility</p>
-              </div>
-            </div>
+                  <div className="resume-card" onClick={() => navigate('/cv-generator')}>
+                    <div className="resume-card-inner">
+                      <div className="resume-badge-page">
+                        {language === 'en' ? 'Page 1' : 'الصفحة 1'}
+                      </div>
+                      <img src={svg1} alt="Resume Template Page 1" className="resume-image" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                      <div className="resume-shine"></div>
+                    </div>
+                    <div className="resume-caption">
+                      <h3>{t('modernProfessional')}</h3>
+                      <p>
+                        {language === 'en' 
+                          ? 'Clean layout with strong typography for maximum ATS compatibility'
+                          : 'تصميم نظيف مع طباعة قوية لأقصى توافق مع أنظمة التتبع الآلي'
+                        }
+                      </p>
+                    </div>
+                  </div>
 
-            <div className="resume-card" onClick={() => navigate('/cv-generator')}>
-              <div className="resume-card-inner">
-                <div className="resume-badge-page">Page 2</div>
-                <img src={svg2} alt="Resume Template Page 2" className="resume-image" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-                <div className="resume-shine"></div>
-              </div>
-              <div className="resume-caption">
-                <h3>Elegant Minimal</h3>
-                <p>Balanced white space and emphasis on key highlights and skills</p>
-              </div>
-            </div>
+                  <div className="resume-card" onClick={() => navigate('/cv-generator')}>
+                    <div className="resume-card-inner">
+                      <div className="resume-badge-page">
+                        {language === 'en' ? 'Page 2' : 'الصفحة 2'}
+                      </div>
+                      <img src={svg2} alt="Resume Template Page 2" className="resume-image" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                      <div className="resume-shine"></div>
+                    </div>
+                    <div className="resume-caption">
+                      <h3>{t('elegantMinimal')}</h3>
+                      <p>
+                        {language === 'en'
+                          ? 'Balanced white space and emphasis on key highlights and skills'
+                          : 'مساحة بيضاء متوازنة وتركيز على النقاط البارزة والمهارات الرئيسية'
+                        }
+                      </p>
+                    </div>
+                  </div>
                 </>
               );
             })()}
@@ -884,13 +925,16 @@ const Home = () => {
           <div className="features-header">
             <div className="features-badge">
               <Sparkles size={16} />
-              <span>Powerful Features</span>
+              <span>{language === 'en' ? 'Powerful Features' : 'ميزات قوية'}</span>
             </div>
             <h2 className="features-title">
-              Everything You Need to <span className="gradient-text">Succeed</span>
+              {language === 'en' ? 'Everything You Need to' : 'كل ما تحتاجه ل'} <span className="gradient-text">{language === 'en' ? 'Succeed' : 'النجاح'}</span>
             </h2>
             <p className="features-subtitle">
-              Cutting-edge tools and AI-powered features to accelerate your career
+              {language === 'en'
+                ? 'Cutting-edge tools and AI-powered features to accelerate your career'
+                : 'أدوات متطورة وميزات مدعومة بالذكاء الاصطناعي لتسريع مسيرتك المهنية'
+              }
             </p>
           </div>
 
@@ -915,8 +959,6 @@ const Home = () => {
           </div>
         </section>
 
-        
-
         {/* CTA Section */}
         <section className="cta-section-enhanced">
           <div className="cta-background">
@@ -929,20 +971,19 @@ const Home = () => {
             <div className="cta-icon">
               <Rocket size={48} />
             </div>
-            <h2>Ready to Launch Your Career?</h2>
+            <h2>{t('readyToLaunch')}</h2>
             <p>
-              Join over 50,000 job seekers who found their dream jobs with GradJob.
-              Start your journey today!
+              {t('joinCommunity')}
             </p>
             
             {!isLoggedIn && (
               <div className="cta-buttons">
                 <button onClick={() => openAuthModal('signup')} className="btn-cta-primary">
-                  Get Started Free
+                  {t('getStartedFree')}
                   <ArrowRight size={20} />
                 </button>
                 <button onClick={() => openAuthModal('login')} className="btn-cta-secondary">
-                  Sign In
+                  {t('signIn')}
                 </button>
               </div>
             )}
@@ -950,15 +991,15 @@ const Home = () => {
             <div className="cta-features">
               <div className="cta-feature">
                 <CheckCircle size={18} />
-                <span>Free Forever</span>
+                <span>{t('freeForever')}</span>
               </div>
               <div className="cta-feature">
                 <CheckCircle size={18} />
-                <span>No Credit Card</span>
+                <span>{t('noCreditCard')}</span>
               </div>
               <div className="cta-feature">
                 <CheckCircle size={18} />
-                <span>Instant Access</span>
+                <span>{t('instantAccess')}</span>
               </div>
             </div>
           </div>

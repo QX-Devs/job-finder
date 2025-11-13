@@ -23,6 +23,9 @@ const {
 const fs = require('fs');
 const path = require('path');
 
+// Import translation system from separate file
+const translations = require('./translations');
+
 const app = express();
 const PORT = 3000;
 
@@ -36,6 +39,10 @@ if (!fs.existsSync(generatedDir)) {
 }
 
 function createCV(data) {
+    const language = data.language || 'en';
+    const t = translations[language];
+    const isRTL = language === 'ar';
+    
     const doc = new Document({
         styles: {
             default: {
@@ -43,6 +50,7 @@ function createCV(data) {
                     run: {
                         font: "Arial",
                         size: 20,
+                        rightToLeft: isRTL
                     },
                     paragraph: {
                         spacing: { 
@@ -50,6 +58,7 @@ function createCV(data) {
                             line: 270,
                             lineRule: "auto" 
                         },
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                     },
                 },
             },
@@ -60,9 +69,11 @@ function createCV(data) {
                     run: {
                         font: "Arial",
                         size: 20,
+                        rightToLeft: isRTL
                     },
                     paragraph: {
                         spacing: { after: 90, line: 270, lineRule: "auto" },
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                     },
                 },
                 {
@@ -72,6 +83,7 @@ function createCV(data) {
                         font: "Arial",
                         size: 28,
                         bold: true,
+                        rightToLeft: isRTL
                     },
                     paragraph: {
                         spacing: { 
@@ -80,6 +92,7 @@ function createCV(data) {
                         },
                         keepNext: true,
                         keepLines: true,
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                     },
                 },
                 {
@@ -89,6 +102,7 @@ function createCV(data) {
                         font: "Arial",
                         size: 20,
                         bold: true,
+                        rightToLeft: isRTL
                     },
                     paragraph: {
                         spacing: { 
@@ -97,6 +111,7 @@ function createCV(data) {
                         },
                         keepNext: true,
                         keepLines: true,
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                     },
                 },
                 {
@@ -106,10 +121,12 @@ function createCV(data) {
                         font: "Arial",
                         size: 22,
                         bold: true,
+                        rightToLeft: isRTL
                     },
                     paragraph: {
                         spacing: { after: 60 },
                         keepNext: true,
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                     },
                 },
                 {
@@ -119,15 +136,17 @@ function createCV(data) {
                         font: "Arial",
                         size: 19,
                         bold: true,
+                        rightToLeft: isRTL
                     },
                     paragraph: {
                         spacing: { after: 80 },
                         tabStops: [
                             {
-                                type: TabStopType.RIGHT,
+                                type: isRTL ? TabStopType.LEFT : TabStopType.RIGHT,
                                 position: convertInchesToTwip(7.0),
                             },
                         ],
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                     },
                 },
             ],
@@ -141,10 +160,14 @@ function createCV(data) {
                             level: 0,
                             format: "bullet",
                             text: "•",
-                            alignment: AlignmentType.LEFT,
+                            alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT,
                             style: {
                                 paragraph: {
-                                    indent: { left: 360, hanging: 260 },
+                                    indent: { 
+                                        left: isRTL ? 0 : 360, 
+                                        right: isRTL ? 360 : 0,
+                                        hanging: 260 
+                                    },
                                 },
                             },
                         },
@@ -177,12 +200,13 @@ function createCV(data) {
                             bold: true,
                             size: 68,
                             font: "Arial",
+                            rightToLeft: isRTL
                         }),
                     ],
                     spacing: { after: 80, line: 270 },
                 }),
 
-                // Title centered
+                // Job title centered
                 new Paragraph({
                     alignment: AlignmentType.CENTER,
                     children: [
@@ -191,17 +215,19 @@ function createCV(data) {
                             bold: true,
                             size: 26,
                             font: "Arial",
+                            rightToLeft: isRTL
                         }),
                     ],
                     spacing: { after: 170 },
                 }),
 
-                // CONTACT INFORMATION
+                // Contact Information
                 new Paragraph({
                     style: "SectionHeading",
                     children: [
                         new TextRun({
-                            text: "CONTACT INFORMATION",
+                            text: t.contactInformation,
+                            rightToLeft: isRTL
                         }),
                     ],
                     border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: "000000" } },
@@ -228,11 +254,12 @@ function createCV(data) {
                                     children: [
                                         new Paragraph({
                                             children: [
-                                                new TextRun({ text: "• ", size: 20 }),
-                                                new TextRun({ text: "Mobile", bold: true, size: 20 }),
-                                                new TextRun({ text: ": " + data.phone, size: 20 }),
+                                                new TextRun({ text: "• ", size: 20, rightToLeft: isRTL }),
+                                                new TextRun({ text: t.mobile, bold: true, size: 20, rightToLeft: isRTL }),
+                                                new TextRun({ text: ": " + data.phone, size: 20, rightToLeft: isRTL }),
                                             ],
                                             spacing: { line: 270, after: 50 },
+                                            alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                                         }),
                                     ],
                                     borders: {
@@ -246,21 +273,23 @@ function createCV(data) {
                                     children: [
                                         new Paragraph({
                                             children: [
-                                                new TextRun({ text: "• ", size: 20 }),
-                                                new TextRun({ text: "GitHub", bold: true, size: 20 }),
-                                                new TextRun({ text: ": ", size: 20 }),
+                                                new TextRun({ text: "• ", size: 20, rightToLeft: isRTL }),
+                                                new TextRun({ text: t.github, bold: true, size: 20, rightToLeft: isRTL }),
+                                                new TextRun({ text: ": ", size: 20, rightToLeft: isRTL }),
                                                 new ExternalHyperlink({
                                                     children: [
                                                         new TextRun({
                                                             text: data.github.display,
                                                             style: "Hyperlink",
                                                             size: 20,
+                                                            rightToLeft: isRTL
                                                         }),
                                                     ],
                                                     link: data.github.url,
                                                 }),
                                             ],
                                             spacing: { line: 270, after: 50 },
+                                            alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                                         }),
                                     ],
                                     borders: {
@@ -278,11 +307,12 @@ function createCV(data) {
                                     children: [
                                         new Paragraph({
                                             children: [
-                                                new TextRun({ text: "• ", size: 20 }),
-                                                new TextRun({ text: "Email", bold: true, size: 20 }),
-                                                new TextRun({ text: ": " + data.email, size: 20 }),
+                                                new TextRun({ text: "• ", size: 20, rightToLeft: isRTL }),
+                                                new TextRun({ text: t.email, bold: true, size: 20, rightToLeft: isRTL }),
+                                                new TextRun({ text: ": " + data.email, size: 20, rightToLeft: isRTL }),
                                             ],
                                             spacing: { line: 270, after: 50 },
+                                            alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                                         }),
                                     ],
                                     borders: {
@@ -296,21 +326,23 @@ function createCV(data) {
                                     children: [
                                         new Paragraph({
                                             children: [
-                                                new TextRun({ text: "• ", size: 20 }),
-                                                new TextRun({ text: "LinkedIn", bold: true, size: 20 }),
-                                                new TextRun({ text: ": ", size: 20 }),
+                                                new TextRun({ text: "• ", size: 20, rightToLeft: isRTL }),
+                                                new TextRun({ text: t.linkedin, bold: true, size: 20, rightToLeft: isRTL }),
+                                                new TextRun({ text: ": ", size: 20, rightToLeft: isRTL }),
                                                 new ExternalHyperlink({
                                                     children: [
                                                         new TextRun({
                                                             text: data.linkedin.display,
                                                             style: "Hyperlink",
                                                             size: 20,
+                                                            rightToLeft: isRTL
                                                         }),
                                                     ],
                                                     link: data.linkedin.url,
                                                 }),
                                             ],
                                             spacing: { line: 270, after: 50 },
+                                            alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                                         }),
                                     ],
                                     borders: {
@@ -325,12 +357,13 @@ function createCV(data) {
                     ],
                 }),
 
-                // PROFESSIONAL SUMMARY
+                // Professional Summary
                 new Paragraph({
                     style: "SectionHeading",
                     children: [
                         new TextRun({
-                            text: "PROFESSIONAL SUMMARY",
+                            text: t.professionalSummary,
+                            rightToLeft: isRTL
                         }),
                     ],
                     border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: "000000" } },
@@ -342,18 +375,20 @@ function createCV(data) {
                             text: data.summary,
                             size: 20,
                             font: "Arial",
+                            rightToLeft: isRTL
                         }),
                     ],
-                    alignment: AlignmentType.JUSTIFIED,
+                    alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.JUSTIFIED,
                     spacing: { after: 170, line: 290, lineRule: "auto" },
                 }),
 
-                // WORK EXPERIENCE
+                // Work Experience
                 new Paragraph({
                     style: "SectionHeading",
                     children: [
                         new TextRun({
-                            text: "WORK EXPERIENCE",
+                            text: t.workExperience,
+                            rightToLeft: isRTL
                         }),
                     ],
                     border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: "000000" } },
@@ -365,6 +400,7 @@ function createCV(data) {
                         children: [
                             new TextRun({
                                 text: job.title,
+                                rightToLeft: isRTL
                             }),
                         ],
                     }),
@@ -373,9 +409,11 @@ function createCV(data) {
                         children: [
                             new TextRun({
                                 text: job.company,
+                                rightToLeft: isRTL
                             }),
                             new TextRun({
-                                text: "\t" + job.period,
+                                text: (isRTL ? job.period + "\t" : "\t" + job.period),
+                                rightToLeft: isRTL
                             }),
                         ],
                     }),
@@ -386,6 +424,7 @@ function createCV(data) {
                                     text: resp,
                                     size: 19,
                                     font: "Arial",
+                                    rightToLeft: isRTL
                                 }),
                             ],
                             numbering: { level: 0, reference: "bullet" },
@@ -395,17 +434,18 @@ function createCV(data) {
                                 line: 270,
                                 lineRule: "auto"
                             },
-                            alignment: AlignmentType.JUSTIFIED,
+                            alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.JUSTIFIED,
                         })
                     ),
                 ]),
 
-                // EDUCATION
+                // Education
                 new Paragraph({
                     style: "SectionHeading",
                     children: [
                         new TextRun({
-                            text: "EDUCATION",
+                            text: t.education,
+                            rightToLeft: isRTL
                         }),
                     ],
                     border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: "000000" } },
@@ -418,9 +458,11 @@ function createCV(data) {
                             bold: true,
                             size: 22,
                             font: "Arial",
+                            rightToLeft: isRTL
                         }),
                     ],
                     spacing: { after: 60 },
+                    alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                 }),
 
                 new Paragraph({
@@ -428,25 +470,28 @@ function createCV(data) {
                     children: [
                         new TextRun({
                             text: data.education.university,
+                            rightToLeft: isRTL
                         }),
                         new TextRun({
-                            text: "\tGraduated: " + data.education.graduation,
+                            text: (isRTL ? data.education.graduation + "\t" + t.graduated + ": " : "\t" + t.graduated + ": " + data.education.graduation),
+                            rightToLeft: isRTL
                         }),
                     ],
                     spacing: { after: 0 },
                 }),
 
-                // Page break before SKILLS
+                // Page break before skills
                 new Paragraph({
                     children: [new PageBreak()],
                 }),
 
-                // SKILLS
+                // Skills
                 new Paragraph({
                     style: "SectionHeading",
                     children: [
                         new TextRun({
-                            text: "SKILLS",
+                            text: t.skills,
+                            rightToLeft: isRTL
                         }),
                     ],
                     border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: "000000" } },
@@ -457,7 +502,8 @@ function createCV(data) {
                     style: "SubHeading",
                     children: [
                         new TextRun({
-                            text: "Languages & Databases",
+                            text: t.languagesDatabases,
+                            rightToLeft: isRTL
                         }),
                     ],
                 }),
@@ -469,6 +515,7 @@ function createCV(data) {
                                 text: skill,
                                 size: 19,
                                 font: "Arial",
+                                rightToLeft: isRTL
                             }),
                         ],
                         numbering: { level: 0, reference: "bullet" },
@@ -477,7 +524,7 @@ function createCV(data) {
                             line: 250,
                             lineRule: "auto"
                         },
-                        alignment: AlignmentType.JUSTIFIED,
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.JUSTIFIED,
                     })
                 ),
 
@@ -486,7 +533,8 @@ function createCV(data) {
                     style: "SubHeading",
                     children: [
                         new TextRun({
-                            text: "Tools & Technologies",
+                            text: t.toolsTechnologies,
+                            rightToLeft: isRTL
                         }),
                     ],
                 }),
@@ -498,6 +546,7 @@ function createCV(data) {
                                 text: skill,
                                 size: 19,
                                 font: "Arial",
+                                rightToLeft: isRTL
                             }),
                         ],
                         numbering: { level: 0, reference: "bullet" },
@@ -506,7 +555,7 @@ function createCV(data) {
                             line: 250,
                             lineRule: "auto"
                         },
-                        alignment: AlignmentType.JUSTIFIED,
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.JUSTIFIED,
                     })
                 ),
 
@@ -515,7 +564,8 @@ function createCV(data) {
                     style: "SubHeading",
                     children: [
                         new TextRun({
-                            text: "Core Competencies",
+                            text: t.coreCompetencies,
+                            rightToLeft: isRTL
                         }),
                     ],
                 }),
@@ -527,6 +577,7 @@ function createCV(data) {
                                 text: skill,
                                 size: 19,
                                 font: "Arial",
+                                rightToLeft: isRTL
                             }),
                         ],
                         numbering: { level: 0, reference: "bullet" },
@@ -535,7 +586,7 @@ function createCV(data) {
                             line: 250,
                             lineRule: "auto"
                         },
-                        alignment: AlignmentType.JUSTIFIED,
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.JUSTIFIED,
                     })
                 ),
 
@@ -544,7 +595,8 @@ function createCV(data) {
                     style: "SubHeading",
                     children: [
                         new TextRun({
-                            text: "Professional Skills",
+                            text: t.professionalSkills,
+                            rightToLeft: isRTL
                         }),
                     ],
                 }),
@@ -556,6 +608,7 @@ function createCV(data) {
                                 text: skill,
                                 size: 19,
                                 font: "Arial",
+                                rightToLeft: isRTL
                             }),
                         ],
                         numbering: { level: 0, reference: "bullet" },
@@ -564,16 +617,17 @@ function createCV(data) {
                             line: 250,
                             lineRule: "auto"
                         },
-                        alignment: AlignmentType.JUSTIFIED,
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.JUSTIFIED,
                     })
                 ),
 
-                // LANGUAGES
+                // Languages
                 new Paragraph({
                     style: "SectionHeading",
                     children: [
                         new TextRun({
-                            text: "LANGUAGES",
+                            text: t.languages,
+                            rightToLeft: isRTL
                         }),
                     ],
                     border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: "000000" } },
@@ -587,6 +641,7 @@ function createCV(data) {
                                 bold: true,
                                 size: 19,
                                 font: "Arial",
+                                rightToLeft: isRTL
                             }),
                         ],
                         numbering: { level: 0, reference: "bullet" },
@@ -595,6 +650,7 @@ function createCV(data) {
                             line: 250,
                             lineRule: "auto"
                         },
+                        alignment: isRTL ? AlignmentType.RIGHT : AlignmentType.LEFT
                     })
                 ),
             ],
@@ -610,7 +666,7 @@ app.post('/generate-cv', async (req, res) => {
         const doc = createCV(cvData);
 
         const buffer = await Packer.toBuffer(doc);
-        const filename = `${cvData.name.replace(/\s+/g, '_')}_CV.docx`;
+        const filename = `${cvData.name.replace(/\s+/g, '_')}_CV_${cvData.language || 'en'}.docx`;
         const filepath = path.join(generatedDir, filename);
 
         fs.writeFileSync(filepath, buffer);
@@ -618,7 +674,8 @@ app.post('/generate-cv', async (req, res) => {
         res.json({
             success: true,
             filename: filename,
-            downloadUrl: `/download/${filename}`
+            downloadUrl: `/download/${filename}`,
+            language: cvData.language || 'en'
         });
     } catch (error) {
         console.error('Error generating CV:', error);
@@ -637,7 +694,7 @@ app.get('/download/:filename', (req, res) => {
         res.download(filepath, filename, (err) => {
             if (err) {
                 console.error('Download error:', err);
-                res.status(500).send('Error downloading file');
+                res.status(500).send('File download error');
             }
         });
     } else {
@@ -650,5 +707,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`CV Generator server running at http://localhost:${PORT}`);
+    console.log(`CV Generator server running on http://localhost:${PORT}`);
 });

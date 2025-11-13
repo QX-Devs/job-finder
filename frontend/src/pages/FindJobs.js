@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import {
   Search, MapPin, Briefcase, DollarSign, Building2,
   Star, ArrowRight, Filter, X, TrendingUp, Clock, Users,
@@ -11,6 +12,7 @@ import applicationService from '../services/applicationService';
 import './FindJobs.css';
 
 const FindJobs = () => {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -36,13 +38,13 @@ const FindJobs = () => {
   const jobsRef = useRef(null);
 
   const categories = useMemo(() => ([
-    { id: 'all', name: 'All Jobs', icon: Briefcase, count: 0 },
-    { id: 'engineering', name: 'Engineering', icon: Rocket, count: 0 },
-    { id: 'design', name: 'Design', icon: Target, count: 0 },
-    { id: 'marketing', name: 'Marketing', icon: TrendingUp, count: 0 },
-    { id: 'sales', name: 'Sales', icon: Users, count: 0 },
-    { id: 'product', name: 'Product', icon: Zap, count: 0 }
-  ]), []);
+    { id: 'all', name: t('allJobs'), icon: Briefcase, count: 0 },
+    { id: 'engineering', name: t('engineering'), icon: Rocket, count: 0 },
+    { id: 'design', name: t('design'), icon: Target, count: 0 },
+    { id: 'marketing', name: t('marketing'), icon: TrendingUp, count: 0 },
+    { id: 'sales', name: t('sales'), icon: Users, count: 0 },
+    { id: 'product', name: t('product'), icon: Zap, count: 0 }
+  ]), [t]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -86,7 +88,7 @@ const FindJobs = () => {
     ];
 
     const locations = [
-      'Remote', 'San Francisco, CA', 'New York, NY', 'Seattle, WA',
+      t('remote'), 'San Francisco, CA', 'New York, NY', 'Seattle, WA',
       'Austin, TX', 'Boston, MA', 'Chicago, IL', 'Denver, CO'
     ];
 
@@ -114,9 +116,9 @@ const FindJobs = () => {
         experienceLevel: levels[Math.floor(Math.random() * levels.length)],
         category: position.category,
         skills: position.skills,
-        postedDate: `${Math.floor(Math.random() * 14 + 1)} days ago`,
+        postedDate: `${Math.floor(Math.random() * 14 + 1)} ${t('daysAgo')}`,
         postedTimestamp: Date.now() - (Math.floor(Math.random() * 14 + 1) * 86400000),
-        description: 'Help build and scale delightful products used worldwide. Competitive compensation, great benefits, and growth opportunities.',
+        description: t('jobDescription'),
         applicants: Math.floor(Math.random() * 200 + 50),
         views: Math.floor(Math.random() * 1000 + 500),
         applicationUrl: 'https://example.com/apply',
@@ -269,10 +271,10 @@ const FindJobs = () => {
         <div className="hero-content-wrap">
           <div className="hero-badge">
             <Briefcase size={16} />
-            <span>Find Jobs</span>
+            <span>{t('findJobs')}</span>
           </div>
-          <h1 className="hero-title">Discover Your Next Role</h1>
-          <p className="hero-subtitle">Search and filter thousands of opportunities tailored to your skills.</p>
+          <h1 className="hero-title">{t('discoverNextRole')}</h1>
+          <p className="hero-subtitle">{t('searchOpportunities')}</p>
         </div>
       </section>
 
@@ -281,16 +283,16 @@ const FindJobs = () => {
         <div className="results-inner">
           <div className="results-info">
             <p>
-              Showing <strong>{filteredJobs.length}</strong> results
+              {t('showingResults')} <strong>{filteredJobs.length}</strong> {t('results')}
             </p>
           </div>
 
           <div className="results-controls">
             <select className="sort-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option value="latest">Latest</option>
-              <option value="salary-high">Salary: High to Low</option>
-              <option value="salary-low">Salary: Low to High</option>
-              <option value="popular">Most Popular</option>
+              <option value="latest">{t('latest')}</option>
+              <option value="salary-high">{t('salaryHighToLow')}</option>
+              <option value="salary-low">{t('salaryLowToHigh')}</option>
+              <option value="popular">{t('mostPopular')}</option>
             </select>
           </div>
         </div>
@@ -305,11 +307,11 @@ const FindJobs = () => {
               <input
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search by title, company, or skill"
+                placeholder={t('searchPlaceholder')}
               />
             </div>
             <button className="btn-primary" onClick={() => jobsRef.current?.scrollIntoView({ behavior: 'smooth' })}>
-              Search
+              {t('search')}
               <ArrowRight size={16} />
             </button>
           </div>
@@ -317,24 +319,24 @@ const FindJobs = () => {
           <div className="filters-bar">
             <button className="filter-chip" onClick={() => setShowFilters(v => !v)}>
               <SlidersHorizontal size={16} />
-              Filters
+              {t('filters')}
             </button>
             <div className="filters-inline">
               <button className={`filter-chip ${filters.jobType !== 'all' ? 'active' : ''}`} onClick={() => setFilters({ ...filters, jobType: filters.jobType === 'all' ? 'Full-time' : 'all' })}>
-                <Briefcase size={14} /> Job Type
+                <Briefcase size={14} /> {t('jobType')}
               </button>
               <button className={`filter-chip ${filters.location !== 'all' ? 'active' : ''}`} onClick={() => setFilters({ ...filters, location: filters.location === 'all' ? 'Remote' : 'all' })}>
-                <MapPin size={14} /> Location
+                <MapPin size={14} /> {t('location')}
               </button>
               <button className={`filter-chip ${filters.experienceLevel !== 'all' ? 'active' : ''}`} onClick={() => setFilters({ ...filters, experienceLevel: filters.experienceLevel === 'all' ? 'Senior' : 'all' })}>
-                <Award size={14} /> Experience
+                <Award size={14} /> {t('experience')}
               </button>
               <button className={`filter-chip ${filters.remote ? 'active' : ''}`} onClick={() => setFilters({ ...filters, remote: !filters.remote })}>
-                <Building2 size={14} /> Remote Only
+                <Building2 size={14} /> {t('remoteOnly')}
               </button>
             </div>
             <button className="clear-btn" onClick={clearFilters}>
-              <X size={14} /> Clear
+              <X size={14} /> {t('clear')}
             </button>
           </div>
         </div>
@@ -345,22 +347,22 @@ const FindJobs = () => {
         {isLoading ? (
           <div className="loading-state">
             <div className="loader"></div>
-            <p>Finding the best opportunities for you...</p>
+            <p>{t('findingOpportunities')}</p>
           </div>
         ) : filteredJobs.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">🔎</div>
-            <h3>No jobs found</h3>
-            <p>Try adjusting your filters or search terms</p>
-            <button onClick={clearFilters} className="btn-primary">Clear All Filters</button>
+            <h3>{t('noJobsFound')}</h3>
+            <p>{t('tryAdjusting')}</p>
+            <button onClick={clearFilters} className="btn-primary">{t('clearFilters')}</button>
           </div>
         ) : (
           <div className="split-container">
             {/* Left Sidebar - Job List */}
             <div className="jobs-list-sidebar">
               <div className="jobs-list-header">
-                <h3>Job Listings</h3>
-                <span className="job-count">{filteredJobs.length} jobs</span>
+                <h3>{t('jobListings')}</h3>
+                <span className="job-count">{filteredJobs.length} {t('jobs')}</span>
               </div>
               <div className="jobs-list-content">
                 {filteredJobs.map((job) => (
@@ -378,7 +380,7 @@ const FindJobs = () => {
                             toggleSaveJob(job.id);
                           }}
                           className={`job-item-save-btn ${savedJobs.has(job.id) ? 'saved' : ''}`}
-                          title="Save job"
+                          title={t('saveJob')}
                         >
                           {savedJobs.has(job.id) ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
                         </button>
@@ -392,9 +394,9 @@ const FindJobs = () => {
                         <span><DollarSign size={12} /> {job.salary}</span>
                       </div>
                       <div className="job-item-badges">
-                        {job.urgent && <span className="badge-small urgent-badge">Urgent</span>}
-                        {job.featured && <span className="badge-small featured-badge-text">Featured</span>}
-                        {job.remote && <span className="badge-small remote-badge">Remote</span>}
+                        {job.urgent && <span className="badge-small urgent-badge">{t('urgent')}</span>}
+                        {job.featured && <span className="badge-small featured-badge-text">{t('featured')}</span>}
+                        {job.remote && <span className="badge-small remote-badge">{t('remote')}</span>}
                       </div>
                     </div>
                   </div>
@@ -422,61 +424,61 @@ const FindJobs = () => {
                       <button
                         onClick={() => toggleSaveJob(selectedJob.id)}
                         className={`btn-icon ${savedJobs.has(selectedJob.id) ? 'saved' : ''}`}
-                        title="Save job"
+                        title={t('saveJob')}
                       >
                         {savedJobs.has(selectedJob.id) ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
                       </button>
-                      <button className="btn-icon" title="Share job">
+                      <button className="btn-icon" title={t('shareJob')}>
                         <Share2 size={20} />
                       </button>
                     </div>
                   </div>
 
                   <div className="job-details-badges">
-                    {selectedJob.urgent && <span className="badge urgent-badge"><Zap size={14} />Urgent</span>}
-                    {selectedJob.featured && <span className="badge featured-badge-text"><Star size={14} />Featured</span>}
-                    {selectedJob.remote && <span className="badge remote-badge">Remote</span>}
+                    {selectedJob.urgent && <span className="badge urgent-badge"><Zap size={14} />{t('urgent')}</span>}
+                    {selectedJob.featured && <span className="badge featured-badge-text"><Star size={14} />{t('featured')}</span>}
+                    {selectedJob.remote && <span className="badge remote-badge">{t('remote')}</span>}
                   </div>
 
                   <div className="job-details-meta-grid">
                     <div className="meta-card">
                       <MapPin size={18} />
                       <div>
-                        <span className="meta-label">Location</span>
+                        <span className="meta-label">{t('location')}</span>
                         <span className="meta-value">{selectedJob.location}</span>
                       </div>
                     </div>
                     <div className="meta-card">
                       <Briefcase size={18} />
                       <div>
-                        <span className="meta-label">Job Type</span>
+                        <span className="meta-label">{t('jobType')}</span>
                         <span className="meta-value">{selectedJob.jobType}</span>
                       </div>
                     </div>
                     <div className="meta-card">
                       <DollarSign size={18} />
                       <div>
-                        <span className="meta-label">Salary</span>
+                        <span className="meta-label">{t('salary')}</span>
                         <span className="meta-value">{selectedJob.salary}</span>
                       </div>
                     </div>
                     <div className="meta-card">
                       <Award size={18} />
                       <div>
-                        <span className="meta-label">Experience</span>
+                        <span className="meta-label">{t('experienceLevel')}</span>
                         <span className="meta-value">{selectedJob.experienceLevel}</span>
                       </div>
                     </div>
                   </div>
 
                   <div className="job-details-section">
-                    <h3>Description</h3>
+                    <h3>{t('description')}</h3>
                     <p>{selectedJob.description}</p>
-                    <p>We are looking for a talented individual to join our team and help build innovative solutions that make a difference. You'll work with cutting-edge technologies and collaborate with a diverse, passionate team.</p>
+                    <p>{t('jobDescription')}</p>
                   </div>
 
                   <div className="job-details-section">
-                    <h3>Required Skills</h3>
+                    <h3>{t('requiredSkills')}</h3>
                     <div className="job-skills-list">
                       {selectedJob.skills.map((skill, idx) => (
                         <span key={idx} className="skill-tag-large">{skill}</span>
@@ -485,15 +487,15 @@ const FindJobs = () => {
                   </div>
 
                   <div className="job-details-section">
-                    <h3>Job Statistics</h3>
+                    <h3>{t('jobStatistics')}</h3>
                     <div className="job-stats-grid">
                       <div className="stat-item">
                         <Eye size={18} />
-                        <span>{selectedJob.views} views</span>
+                        <span>{selectedJob.views} {t('views')}</span>
                       </div>
                       <div className="stat-item">
                         <Users size={18} />
-                        <span>{selectedJob.applicants} applicants</span>
+                        <span>{selectedJob.applicants} {t('applicants')}</span>
                       </div>
                       <div className="stat-item">
                         <Clock size={18} />
@@ -510,7 +512,7 @@ const FindJobs = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Apply Now
+                      {t('applyNow')}
                       <ArrowRight size={20} />
                     </a>
                   </div>
@@ -518,8 +520,8 @@ const FindJobs = () => {
               ) : (
                 <div className="job-details-empty">
                   <div className="empty-icon-large">💼</div>
-                  <h2>Select a job to view details</h2>
-                  <p>Click on any job from the list to see full details, requirements, and application information.</p>
+                  <h2>{t('selectJob')}</h2>
+                  <p>{t('selectJobPrompt')}</p>
                 </div>
               )}
             </div>
@@ -531,6 +533,3 @@ const FindJobs = () => {
 };
 
 export default FindJobs;
-
-
-

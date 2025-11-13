@@ -1313,3 +1313,96 @@ a:focus-visible {
 .mobile-menu-content::-webkit-scrollbar-thumb:hover {
   background: var(--gray-500);
 }
+
+/* Language Toggle Styles */
+.language-toggle-wrapper {
+  position: relative;
+}
+
+.icon-action-btn.language-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  color: var(--gray-700);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.icon-action-btn.language-toggle:hover {
+  background: var(--gray-200);
+  border-color: var(--primary-500);
+  color: var(--primary-600);
+}
+
+.language-code {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* Mobile Language Toggle */
+.mobile-language-toggle {
+  padding: 16px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.mobile-language-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  color: var(--gray-700);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.mobile-language-btn:hover {
+  background: var(--gray-200);
+  border-color: var(--primary-500);
+  color: var(--primary-600);
+}
+
+/* RTL Support for Layout */
+[dir="rtl"] .navbar-links {
+  direction: rtl;
+}
+
+[dir="rtl"] .navbar-actions {
+  direction: rtl;
+}
+
+[dir="rtl"] .mobile-menu-content {
+  direction: rtl;
+}
+
+[dir="rtl"] .footer-grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .user-dropdown {
+  direction: rtl;
+}
+
+[dir="rtl"] .notifications-dropdown {
+  direction: rtl;
+}
+
+[dir="rtl"] .mobile-menu-links {
+  direction: rtl;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .language-toggle-wrapper {
+    display: none;
+  }
+}

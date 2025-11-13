@@ -4,34 +4,36 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Menu, X, User, LogOut, Briefcase, Bell, Settings, 
   Heart, BookmarkCheck, FileText, TrendingUp, ChevronDown,
-  Search, Zap, Shield, HelpCircle, MessageSquare
+  Search, Zap, Shield, HelpCircle, MessageSquare, Languages
 } from 'lucide-react';
 import AuthModal from './AuthModal';
 import authService from '../services/authService';
+import { useTranslate } from '../utils/translate'; // <<< أضف هذا
 import './Layout.css';
 
-// Footer Component (moved outside Layout)
+// Footer Component
 const Footer = () => {
   const navigate = useNavigate();
+  const { t, isRTL, language } = useTranslate(); // <<< أضف الترجمة
 
   const footerLinks = {
     quickLinks: [
-      { name: 'Browse Jobs', path: '/find-jobs' },
-      { name: 'Companies', path: '/companies' },
-      { name: 'Resume Builder', path: '/cv-generator' },
-      { name: 'Career Advice', path: '/career-advice' }
+      { name: t('browseJobs'), path: '/find-jobs' },
+      { name: t('companies'), path: '/companies' },
+      { name: t('resumeBuilder'), path: '/cv-generator' },
+      { name: t('careerAdvice'), path: '/career-advice' }
     ],
     resources: [
-      { name: 'About Us', path: '/about-us' },
-      { name: 'Blog', path: '/blog' },
-      { name: 'FAQ', path: '/faq' },
-      { name: 'Contact', path: '/contact-us' }
+      { name: t('about'), path: '/about-us' },
+      { name: t('blog'), path: '/blog' },
+      { name: t('faq'), path: '/faq' },
+      { name: t('contact'), path: '/contact-us' }
     ],
     legal: [
-      { name: 'Privacy Policy', path: '/privacy-policy' },
-      { name: 'Terms of Service', path: '/terms-of-service' },
-      { name: 'Cookie Policy', path: '/cookies' },
-      { name: 'Accessibility', path: '/accessibility' }
+      { name: t('privacyPolicy'), path: '/privacy-policy' },
+      { name: t('termsOfService'), path: '/terms-of-service' },
+      { name: t('cookiePolicy'), path: '/cookies' },
+      { name: t('accessibility'), path: '/accessibility' }
     ]
   };
 
@@ -43,7 +45,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="footer">
+    <footer className="footer" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="footer-container">
         <div className="footer-grid">
           {/* Company Info */}
@@ -55,7 +57,10 @@ const Footer = () => {
               <span className="footer-logo-text">GradJob</span>
             </div>
             <p className="footer-description">
-              Your AI-powered career companion. Find your dream job and build your future with confidence.
+              {language === 'en' 
+                ? 'Your AI-powered career companion. Find your dream job and build your future with confidence.'
+                : 'رفيقك المهني المدعوم بالذكاء الاصطناعي. ابحث عن وظيفة أحلامك وابنِ مستقبلك بثقة.'
+              }
             </p>
             <div className="footer-social">
               {socialLinks.map((social) => (
@@ -73,7 +78,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="footer-column">
-            <h4>Quick Links</h4>
+            <h4>{t('quickLinks')}</h4>
             <ul>
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.path}>
@@ -87,7 +92,7 @@ const Footer = () => {
 
           {/* Resources */}
           <div className="footer-column">
-            <h4>Resources</h4>
+            <h4>{t('resources')}</h4>
             <ul>
               {footerLinks.resources.map((link) => (
                 <li key={link.path}>
@@ -101,7 +106,7 @@ const Footer = () => {
 
           {/* Legal */}
           <div className="footer-column">
-            <h4>Legal</h4>
+            <h4>{t('legal')}</h4>
             <ul>
               {footerLinks.legal.map((link) => (
                 <li key={link.path}>
@@ -115,15 +120,15 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} GradJob. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} GradJob. {t('allRightsReserved')}</p>
           <div className="footer-badges">
             <div className="badge-item">
               <Shield size={16} />
-              <span>Secure</span>
+              <span>{t('secure')}</span>
             </div>
             <div className="badge-item">
               <Heart size={16} />
-              <span>Made with Love</span>
+              <span>{t('madeWithLove')}</span>
             </div>
           </div>
         </div>
@@ -136,6 +141,7 @@ const Footer = () => {
 const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t, isRTL, language, toggleLanguage } = useTranslate(); // <<< أضف الترجمة
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -150,6 +156,7 @@ const Layout = ({ children }) => {
   
   const userDropdownRef = useRef(null);
   const notificationsRef = useRef(null);
+  const languageRef = useRef(null);
 
   // Handle scroll effects
   useEffect(() => {
@@ -175,6 +182,9 @@ const Layout = ({ children }) => {
       if (notificationsRef.current && !notificationsRef.current.contains(event.target)) {
         setIsNotificationsOpen(false);
       }
+      if (languageRef.current && !languageRef.current.contains(event.target)) {
+        setIsUserDropdownOpen(false);
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -184,10 +194,8 @@ const Layout = ({ children }) => {
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    // Sync auth state on navigation (handles signup flows outside modal)
     setIsLoggedIn(authService.isAuthenticated());
     if (authService.isAuthenticated()) {
-      // Refresh user profile to ensure navbar shows latest info
       authService.getCurrentUser().then((res) => {
         if (res?.success && res.data) {
           setCurrentUser(res.data);
@@ -199,14 +207,14 @@ const Layout = ({ children }) => {
     }
   }, [location.pathname]);
 
-  // Sync auth state across tabs and token changes
+  // Sync auth state across tabs
   useEffect(() => {
     const syncAuth = () => setIsLoggedIn(authService.isAuthenticated());
     window.addEventListener('storage', syncAuth);
     return () => window.removeEventListener('storage', syncAuth);
   }, []);
 
-  // On mount, ensure we have the latest user profile if logged in
+  // On mount, ensure we have the latest user profile
   useEffect(() => {
     if (authService.isAuthenticated()) {
       const stored = authService.getStoredUser();
@@ -220,31 +228,37 @@ const Layout = ({ children }) => {
     }
   }, []);
 
-  // Mock notifications
+  // Mock notifications with translation
   const notifications = [
     {
       id: 1,
-      title: 'New job match!',
-      message: 'Senior Developer at Google matches your profile',
-      time: '5 min ago',
+      title: language === 'en' ? 'New job match!' : 'وظيفة جديدة مناسبة!',
+      message: language === 'en' 
+        ? 'Senior Developer at Google matches your profile'
+        : 'مطور كبير في Google يناسب ملفك الشخصي',
+      time: language === 'en' ? '5 min ago' : 'منذ 5 دقائق',
       unread: true,
       icon: Zap,
       color: 'blue'
     },
     {
       id: 2,
-      title: 'Application viewed',
-      message: 'Microsoft viewed your application for Software Engineer',
-      time: '1 hour ago',
+      title: language === 'en' ? 'Application viewed' : 'تم عرض طلبك',
+      message: language === 'en'
+        ? 'Microsoft viewed your application for Software Engineer'
+        : 'مايكروسوفت عرضت طلبك لوظيفة مهندس برمجيات',
+      time: language === 'en' ? '1 hour ago' : 'منذ ساعة',
       unread: true,
       icon: FileText,
       color: 'green'
     },
     {
       id: 3,
-      title: 'Profile suggestion',
-      message: 'Add 2 more skills to increase your visibility',
-      time: '3 hours ago',
+      title: language === 'en' ? 'Profile suggestion' : 'اقتراح للملف الشخصي',
+      message: language === 'en'
+        ? 'Add 2 more skills to increase your visibility'
+        : 'أضف مهارتين إضافيتين لزيادة ظهورك',
+      time: language === 'en' ? '3 hours ago' : 'منذ 3 ساعات',
       unread: false,
       icon: TrendingUp,
       color: 'purple'
@@ -286,25 +300,25 @@ const Layout = ({ children }) => {
   };
 
   const navLinks = [
-    { name: 'Home', path: '/', icon: Briefcase },
-    { name: 'Find Jobs', path: '/find-jobs', icon: Search },
-    { name: 'Resume Builder', path: '/cv-generator', icon: FileText },
-    { name: 'About', path: '/about-us', icon: HelpCircle },
-    { name: 'Contact', path: '/contact-us', icon: MessageSquare }
+    { name: t('home'), path: '/', icon: Briefcase },
+    { name: t('findJobs'), path: '/find-jobs', icon: Search },
+    { name: t('resumeBuilder'), path: '/cv-generator', icon: FileText },
+    { name: t('about'), path: '/about-us', icon: HelpCircle },
+    { name: t('contact'), path: '/contact-us', icon: MessageSquare }
   ];
 
   const userMenuItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: User },
-    { name: 'My Applications', path: '/applications', icon: FileText },
-    { name: 'Saved Jobs', path: '/saved-jobs', icon: BookmarkCheck },
-    { name: 'Resume Builder', path: '/cv-generator', icon: FileText },
-    { name: 'Settings', path: '/settings', icon: Settings }
+    { name: t('dashboard'), path: '/dashboard', icon: User },
+    { name: t('myApplications'), path: '/applications', icon: FileText },
+    { name: t('savedJobs'), path: '/saved-jobs', icon: BookmarkCheck },
+    { name: t('resumeBuilder'), path: '/cv-generator', icon: FileText },
+    { name: t('settings'), path: '/settings', icon: Settings }
   ];
 
   const isActivePath = (path) => location.pathname === path;
 
   return (
-    <div className="layout">
+    <div className="layout" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Scroll Progress Bar */}
       <div className="scroll-progress-bar" style={{ width: `${scrollProgress}%` }}></div>
 
@@ -338,8 +352,20 @@ const Layout = ({ children }) => {
             })}
           </div>
 
-          {/* Desktop Auth/User Section */}
+          {/* Desktop Actions */}
           <div className="navbar-actions">
+            {/* Language Toggle */}
+            <div className="language-toggle-wrapper" ref={languageRef}>
+              <button
+                onClick={toggleLanguage}
+                className="icon-action-btn language-toggle"
+                title={language === 'en' ? 'Switch to Arabic' : 'التغيير إلى الإنجليزية'}
+              >
+                <Languages size={20} />
+                <span className="language-code">{language === 'en' ? 'AR' : 'EN'}</span>
+              </button>
+            </div>
+
             {isLoggedIn ? (
               <>
                 {/* Notifications */}
@@ -356,8 +382,8 @@ const Layout = ({ children }) => {
                   {isNotificationsOpen && (
                     <div className="notifications-dropdown">
                       <div className="notifications-header">
-                        <h3>Notifications</h3>
-                        <button className="mark-read-btn">Mark all read</button>
+                        <h3>{t('notifications')}</h3>
+                        <button className="mark-read-btn">{t('markAllRead')}</button>
                       </div>
                       <div className="notifications-list">
                         {notifications.map((notif) => {
@@ -382,7 +408,7 @@ const Layout = ({ children }) => {
                       </div>
                       <div className="notifications-footer">
                         <button onClick={() => navigate('/notifications')}>
-                          View all notifications
+                          {t('viewAllNotifications')}
                         </button>
                       </div>
                     </div>
@@ -398,7 +424,7 @@ const Layout = ({ children }) => {
                     <div className="user-avatar">
                       <User size={20} />
                     </div>
-                    <span className="user-name">{currentUser?.fullName || 'Me'}</span>
+                    <span className="user-name">{currentUser?.fullName || t('me')}</span>
                     <ChevronDown
                       size={16}
                       className={`dropdown-arrow ${isUserDropdownOpen ? 'open' : ''}`}
@@ -413,7 +439,7 @@ const Layout = ({ children }) => {
                           <User size={24} />
                         </div>
                         <div className="user-info">
-                          <h4>{currentUser?.fullName || 'My Account'}</h4>
+                          <h4>{currentUser?.fullName || t('myAccount')}</h4>
                           <p>{currentUser?.email || ''}</p>
                         </div>
                       </div>
@@ -440,7 +466,7 @@ const Layout = ({ children }) => {
                       <div className="user-dropdown-footer">
                         <button onClick={handleLogout} className="logout-btn">
                           <LogOut size={18} />
-                          Logout
+                          {t('logout')}
                         </button>
                       </div>
                     </div>
@@ -453,14 +479,14 @@ const Layout = ({ children }) => {
                   onClick={() => openAuthModal('login')}
                   className="nav-btn-secondary"
                 >
-                  Login
+                  {t('login')}
                 </button>
                 <button
                   onClick={() => openAuthModal('signup')}
                   className="nav-btn-primary"
                 >
                   <Zap size={18} />
-                  Sign Up Free
+                  {t('signUpFree')}
                 </button>
               </>
             )}
@@ -480,6 +506,17 @@ const Layout = ({ children }) => {
         {isMobileMenuOpen && (
           <div className="mobile-menu">
             <div className="mobile-menu-content">
+              {/* Language Toggle in Mobile Menu */}
+              <div className="mobile-language-toggle">
+                <button
+                  onClick={toggleLanguage}
+                  className="mobile-language-btn"
+                >
+                  <Languages size={20} />
+                  <span>{language === 'en' ? 'العربية' : 'English'}</span>
+                </button>
+              </div>
+
               {/* User Info (if logged in) */}
               {isLoggedIn && (
                 <div className="mobile-user-info">
@@ -487,7 +524,7 @@ const Layout = ({ children }) => {
                     <User size={24} />
                   </div>
                   <div className="mobile-user-details">
-                    <h4>{currentUser?.fullName || 'My Account'}</h4>
+                    <h4>{currentUser?.fullName || t('myAccount')}</h4>
                     <p>{currentUser?.email || ''}</p>
                   </div>
                 </div>
@@ -495,7 +532,7 @@ const Layout = ({ children }) => {
 
               {/* Navigation Links */}
               <div className="mobile-menu-section">
-                <h5 className="mobile-menu-title">Navigation</h5>
+                <h5 className="mobile-menu-title">{t('navigation')}</h5>
                 <div className="mobile-menu-links">
                   {navLinks.map((link) => {
                     const Icon = link.icon;
@@ -517,7 +554,7 @@ const Layout = ({ children }) => {
               {/* User Menu (if logged in) */}
               {isLoggedIn && (
                 <div className="mobile-menu-section">
-                  <h5 className="mobile-menu-title">Account</h5>
+                  <h5 className="mobile-menu-title">{t('account')}</h5>
                   <div className="mobile-menu-links">
                     {userMenuItems.map((item) => {
                       const ItemIcon = item.icon;
@@ -541,7 +578,7 @@ const Layout = ({ children }) => {
                 {isLoggedIn ? (
                   <button onClick={handleLogout} className="mobile-btn-outline">
                     <LogOut size={20} />
-                    Logout
+                    {t('logout')}
                   </button>
                 ) : (
                   <>
@@ -549,14 +586,14 @@ const Layout = ({ children }) => {
                       onClick={() => openAuthModal('login')}
                       className="mobile-btn-secondary"
                     >
-                      Login
+                      {t('login')}
                     </button>
                     <button
                       onClick={() => openAuthModal('signup')}
                       className="mobile-btn-primary"
                     >
                       <Zap size={18} />
-                      Sign Up Free
+                      {t('signUpFree')}
                     </button>
                   </>
                 )}

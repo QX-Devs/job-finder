@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import './AboutUs.css';
+
 const AboutUs = () => {
+  const { t } = useLanguage();
   const scrollRefs = useRef([]);
 
   useEffect(() => {
@@ -38,49 +41,49 @@ const AboutUs = () => {
   const data = {
     team: [
       { 
-        name: "Frontend Developer", 
-        role: "UI/UX & React Development", 
+        name: t('frontendDeveloper'), 
+        role: t('frontendRole'), 
         avatar: "FD", 
         skills: ["React", "Material-UI", "Figma", "TypeScript"], 
-        bio: "Designs and builds the user interface with React, creating intuitive and beautiful experiences.", 
+        bio: t('frontendBio'), 
         color: "#0077FF" 
       },
       { 
-        name: "Backend Developer", 
-        role: "API & Database Management", 
+        name: t('backendDeveloper'), 
+        role: t('backendRole'), 
         avatar: "BD", 
         skills: ["Node.js", "API", "Authentication", "PostgreSQL"], 
-        bio: "Manages the API, authentication, and database systems for scalable performance.", 
+        bio: t('backendBio'), 
         color: "#00C9FF" 
       },
       { 
-        name: "AI Specialist", 
-        role: "AI Integration & Smart Matching", 
+        name: t('aiSpecialist'), 
+        role: t('aiRole'), 
         avatar: "AI", 
         skills: ["Machine Learning", "AI Tools", "Data Analysis", "Recommendations"], 
-        bio: "Integrates AI tools for resume suggestions and intelligent job matching algorithms.", 
+        bio: t('aiBio'), 
         color: "#6C63FF" 
       },
       { 
-        name: "Project Moderator", 
-        role: "Task Organization & Collaboration", 
+        name: t('projectModerator'), 
+        role: t('projectRole'), 
         avatar: "PM", 
         skills: ["GitHub", "Project Management", "Team Coordination", "Quality Assurance"], 
-        bio: "Organizes tasks, manages GitHub, and ensures smooth collaboration across the team.", 
+        bio: t('projectBio'), 
         color: "#92FE9D" 
       }
     ],
     values: [
-      { icon: "⚡", title: "Speed", desc: "Fast execution without compromising quality" },
-      { icon: "👥", title: "Collaboration", desc: "Every member contributes equally" },
-      { icon: "🚀", title: "Innovation", desc: "Using the latest tools and technologies" },
-      { icon: "🎯", title: "Impact", desc: "Building solutions that make a real difference" }
+      { icon: "⚡", title: t('speed'), desc: t('speedDesc') },
+      { icon: "👥", title: t('collaboration'), desc: t('collaborationDesc') },
+      { icon: "🚀", title: t('innovation'), desc: t('innovationDesc') },
+      { icon: "🎯", title: t('impact'), desc: t('impactDesc') }
     ],
     features: [
-      { icon: "📄", title: "ATS-Friendly Resumes", desc: "Build professional resumes that pass automated tracking systems in minutes" },
-      { icon: "🤖", title: "AI-Powered Recommendations", desc: "Get smart suggestions for skills, career objectives, and improvements" },
-      { icon: "💼", title: "Curated Job Opportunities", desc: "Explore opportunities from LinkedIn, Google Jobs, and company sites" },
-      { icon: "✨", title: "One-Click Applications", desc: "Apply to multiple jobs easily, all in one place" }
+      { icon: "📄", title: t('atsFriendlyResumes'), desc: t('atsFriendlyDesc') },
+      { icon: "🤖", title: t('aiRecommendations'), desc: t('aiRecommendationsDesc') },
+      { icon: "💼", title: t('curatedJobs'), desc: t('curatedJobsDesc') },
+      { icon: "✨", title: t('oneClickApply'), desc: t('oneClickApplyDesc') }
     ],
     tech: [
       { name: "React", icon: "⚛️" },
@@ -107,11 +110,10 @@ const AboutUs = () => {
           <div className="scroll-trigger text-center mb-6" ref={addToRefs}>
             <div className="hero-icon float-animation">👥</div>
             <h1 className="hero-title gradient-text">
-              QX — Quick Execution Group
+              {t('qxGroup')}
             </h1>
             <p className="body-text">
-              A student-led software development team from Jordan, transforming innovative ideas into real-world solutions 
-              with speed, collaboration, and precision.
+              {t('aboutSubtitle')}
             </p>
           </div>
 
@@ -120,15 +122,14 @@ const AboutUs = () => {
             <div className="scroll-trigger mb-6" ref={addToRefs}>
               <h2 className="section-title">
                 <span className="section-icon">🏢</span>
-                Who We Are
+                {t('whoWeAre')}
               </h2>
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                We are <strong style={{color: 'var(--primary-accent)'}}>QX — Quick Execution Group</strong>, 
-                a student-led software development team based in Jordan.
+                {t('whoWeAreDesc1')} <strong style={{color: 'var(--primary-accent)'}}>{t('qxGroup')}</strong>, 
+                {t('whoWeAreDesc2')}
               </p>
               <p className="body-text">
-                Founded by four passionate Computer Science students, our mission is to transform innovative ideas into 
-                real-world solutions with speed, collaboration, and precision.
+                {t('whoWeAreDesc3')}
               </p>
             </div>
 
@@ -138,11 +139,10 @@ const AboutUs = () => {
             <div className="scroll-trigger mb-6" ref={addToRefs}>
               <h2 className="section-title">
                 <span className="section-icon">🚀</span>
-                Our Mission
+                {t('ourMission')}
               </h2>
               <p className="body-text" style={{fontStyle: 'italic', fontSize: '1.3rem', lineHeight: '1.8'}}>
-                "To empower graduates and young professionals by creating smart, accessible, and modern career tools 
-                that help them transition smoothly into the job market."
+                "{t('missionQuote')}"
               </p>
             </div>
 
@@ -152,7 +152,7 @@ const AboutUs = () => {
             <div className="scroll-trigger" ref={addToRefs}>
               <h2 className="section-title text-center">
                 <span className="section-icon">💡</span>
-                What We Do - GradJob
+                {t('whatWeDo')}
               </h2>
               <div className="features-grid">
                 {data.features.map((item, i) => (
@@ -171,10 +171,10 @@ const AboutUs = () => {
             <div className="scroll-trigger" ref={addToRefs}>
               <h2 className="section-title text-center">
                 <span className="section-icon">👨‍💻</span>
-                Our Team
+                {t('ourTeam')}
               </h2>
               <p className="body-text text-center" style={{marginBottom: '2rem', color: 'var(--text-tertiary)'}}>
-                Four passionate Computer Science students, each specializing in different aspects of the project
+                {t('teamSubtitle')}
               </p>
               <div className="team-grid">
                 {data.team.map((member, i) => (
@@ -201,7 +201,7 @@ const AboutUs = () => {
             <div className="scroll-trigger" ref={addToRefs}>
               <h2 className="section-title text-center">
                 <span className="section-icon">🌟</span>
-                Our Values
+                {t('ourValues')}
               </h2>
               <div className="values-grid">
                 {data.values.map((value, i) => (
@@ -222,7 +222,7 @@ const AboutUs = () => {
             <div className="scroll-trigger" ref={addToRefs}>
               <h2 className="section-title text-center">
                 <span className="section-icon">🛠️</span>
-                Our Technology Stack
+                {t('techStack')}
               </h2>
               <div className="tech-grid">
                 {data.tech.map((tech, i) => (
@@ -240,23 +240,23 @@ const AboutUs = () => {
             <div className="scroll-trigger" ref={addToRefs}>
               <h2 className="section-title text-center">
                 <span className="section-icon">🔥</span>
-                Get Involved
+                {t('getInvolved')}
               </h2>
               <p className="body-text text-center" style={{marginBottom: '2rem', color: 'var(--text-tertiary)'}}>
-                Join us in empowering graduates and shaping the future of career development
+                {t('ctaSubtitle')}
               </p>
               <div className="cta-buttons">
                 <button className="btn btn-primary" disabled>
                   <span className="btn-icon">📱</span>
-                  Download on Google Play (Coming Soon)
+                  {t('downloadApp')}
                 </button>
                 <button className="btn btn-secondary">
                   <span className="btn-icon">💻</span>
-                  Follow on GitHub
+                  {t('followGithub')}
                 </button>
               </div>
               <p className="cta-note">
-                Be among the first graduates to shape your career path with GradJob
+                {t('ctaNote')}
               </p>
             </div>
           </div>
@@ -264,7 +264,7 @@ const AboutUs = () => {
           {/* Footer Note */}
           <div className="scroll-trigger text-center" ref={addToRefs}>
             <p className="small-text">
-              © 2024 QX — Quick Execution Group | Empowering graduates through innovative technology
+              {t('copyright')}
             </p>
           </div>
         </div>

@@ -1,9 +1,11 @@
 // TermsOfService.js
 import React, { useEffect, useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import './TermsOfService.css';
 
 const TermsOfService = () => {
   const scrollRefs = useRef([]);
+  const { t, direction } = useLanguage();
 
   useEffect(() => {
     // Intersection Observer for scroll animations
@@ -40,7 +42,6 @@ const TermsOfService = () => {
   };
 
   return (
-    <>
     <div className="terms-of-service">
       {/* Floating Background Shapes */}
       <div className="floating-shapes">
@@ -60,10 +61,10 @@ const TermsOfService = () => {
               ⚖️
             </div>
             <h1 className="hero-title gradient-text">
-              Terms of Service
+              {t('termsOfService')}
             </h1>
             <p className="small-text">
-              Last Updated: September 2025
+              {t('lastUpdated')}: {t('september2025')}
             </p>
           </div>
 
@@ -75,15 +76,13 @@ const TermsOfService = () => {
             >
               <h2 className="section-title">
                 <span className="section-icon">📜</span>
-                Introduction
+                {t('termsIntroduction')}
               </h2>
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                Welcome to GradJob! These Terms of Service ("Terms") govern your use of the GradJob application 
-                and services provided by Team QX. By accessing or using GradJob, you agree to be bound by these Terms.
+                {t('termsIntro1')}
               </p>
               <p className="body-text">
-                If you do not agree to these Terms, please do not use our services. We reserve the right to modify 
-                these Terms at any time, and such modifications will be effective immediately upon posting.
+                {t('termsIntro2')}
               </p>
             </div>
 
@@ -95,11 +94,10 @@ const TermsOfService = () => {
               ref={addToRefs}
             >
               <h2 className="section-title">
-                Acceptance of Terms
+                {t('acceptanceOfTerms')}
               </h2>
               <p className="body-text">
-                By creating an account or using GradJob, you acknowledge that you have read, understood, and agree 
-                to be bound by these Terms. You must be at least 16 years old to use our services.
+                {t('acceptanceDesc')}
               </p>
             </div>
 
@@ -112,29 +110,29 @@ const TermsOfService = () => {
             >
               <h2 className="section-title">
                 <span className="section-icon">👤</span>
-                User Accounts
+                {t('userAccounts')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                When you create an account with GradJob, you agree to:
+                {t('accountAgreement')}
               </p>
               
               <ul className="custom-list">
                 <li className="custom-list-item">
                   <div className="list-icon check">✓</div>
-                  <span className="body-text">Provide accurate and complete information</span>
+                  <span className="body-text">{t('accountReq1')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon check">✓</div>
-                  <span className="body-text">Maintain the security of your password</span>
+                  <span className="body-text">{t('accountReq2')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon check">✓</div>
-                  <span className="body-text">Accept responsibility for all activities under your account</span>
+                  <span className="body-text">{t('accountReq3')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon check">✓</div>
-                  <span className="body-text">Notify us immediately of any unauthorized use</span>
+                  <span className="body-text">{t('accountReq4')}</span>
                 </li>
               </ul>
             </div>
@@ -147,33 +145,33 @@ const TermsOfService = () => {
               ref={addToRefs}
             >
               <h2 className="section-title">
-                Acceptable Use
+                {t('acceptableUse')}
               </h2>
               
               <h3 className="subsection-title">
-                You agree not to use GradJob to:
+                {t('acceptableUseDesc')}
               </h3>
               
               <ul className="custom-list">
                 <li className="custom-list-item">
                   <div className="list-icon cross">✗</div>
-                  <span className="body-text">Violate any applicable laws or regulations</span>
+                  <span className="body-text">{t('useProhibition1')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon cross">✗</div>
-                  <span className="body-text">Infringe upon intellectual property rights</span>
+                  <span className="body-text">{t('useProhibition2')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon cross">✗</div>
-                  <span className="body-text">Harass, abuse, or harm other users</span>
+                  <span className="body-text">{t('useProhibition3')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon cross">✗</div>
-                  <span className="body-text">Distribute malware or malicious code</span>
+                  <span className="body-text">{t('useProhibition4')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon cross">✗</div>
-                  <span className="body-text">Attempt to gain unauthorized access to our systems</span>
+                  <span className="body-text">{t('useProhibition5')}</span>
                 </li>
               </ul>
             </div>
@@ -187,19 +185,15 @@ const TermsOfService = () => {
             >
               <h2 className="section-title">
                 <span className="section-icon">©️</span>
-                Intellectual Property
+                {t('intellectualProperty')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                The GradJob application, including all source code, databases, functionality, software, website designs, 
-                audio, video, text, photographs, and graphics, are owned by Team QX and are protected by copyright and 
-                other intellectual property laws.
+                {t('ipDescription1')}
               </p>
               
               <p className="body-text">
-                You retain ownership of all content you create using GradJob, including resumes and job applications. 
-                However, by using our services, you grant us a worldwide, non-exclusive, royalty-free license to use, 
-                reproduce, and display your content solely for the purpose of providing our services to you.
+                {t('ipDescription2')}
               </p>
             </div>
 
@@ -212,31 +206,30 @@ const TermsOfService = () => {
             >
               <h2 className="section-title">
                 <span className="section-icon">📄</span>
-                User Content
+                {t('userContent')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                You are solely responsible for the content you create and share through GradJob. You agree that your 
-                content will not:
+                {t('userContentDesc1')}
               </p>
               
               <ul className="custom-list">
                 <li className="custom-list-item">
                   <div className="list-icon cross">✗</div>
-                  <span className="body-text">Violate any third-party rights</span>
+                  <span className="body-text">{t('contentProhibition1')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon cross">✗</div>
-                  <span className="body-text">Contain false or misleading information</span>
+                  <span className="body-text">{t('contentProhibition2')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon cross">✗</div>
-                  <span className="body-text">Be illegal, offensive, or inappropriate</span>
+                  <span className="body-text">{t('contentProhibition3')}</span>
                 </li>
               </ul>
               
               <p className="body-text" style={{marginTop: '1.5rem'}}>
-                We reserve the right to remove any content that violates these Terms without prior notice.
+                {t('contentRemoval')}
               </p>
             </div>
 
@@ -248,26 +241,25 @@ const TermsOfService = () => {
               ref={addToRefs}
             >
               <h2 className="section-title">
-                AI-Powered Services
+                {t('aiServices')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                GradJob utilizes artificial intelligence to provide resume building and job matching services. 
-                You acknowledge that:
+                {t('aiServicesDesc')}
               </p>
               
               <ul className="custom-list">
                 <li className="custom-list-item">
                   <div className="list-icon warning">⚠️</div>
-                  <span className="body-text">AI-generated content should be reviewed for accuracy</span>
+                  <span className="body-text">{t('aiAcknowledgment1')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon warning">⚠️</div>
-                  <span className="body-text">Job matches are suggestions based on algorithms</span>
+                  <span className="body-text">{t('aiAcknowledgment2')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon warning">⚠️</div>
-                  <span className="body-text">We cannot guarantee job placement outcomes</span>
+                  <span className="body-text">{t('aiAcknowledgment3')}</span>
                 </li>
               </ul>
             </div>
@@ -281,18 +273,15 @@ const TermsOfService = () => {
             >
               <h2 className="section-title">
                 <span className="section-icon">🔒</span>
-                Privacy and Data
+                {t('privacyAndData')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your 
-                personal information. By using GradJob, you consent to our data practices as described in the 
-                Privacy Policy.
+                {t('privacyDesc1')}
               </p>
               
               <p className="body-text">
-                We implement security measures to protect your data, but cannot guarantee absolute security. 
-                You are responsible for maintaining the confidentiality of your account information.
+                {t('privacyDesc2')}
               </p>
             </div>
 
@@ -305,17 +294,15 @@ const TermsOfService = () => {
             >
               <h2 className="section-title">
                 <span className="section-icon">🏢</span>
-                Third-Party Services
+                {t('thirdPartyServices')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                GradJob may integrate with third-party services such as LinkedIn, Google Jobs, and other job platforms. 
-                These services have their own terms and privacy policies, and we are not responsible for their content 
-                or practices.
+                {t('thirdPartyDesc1')}
               </p>
               
               <p className="body-text">
-                You are responsible for complying with the terms of any third-party services you access through GradJob.
+                {t('thirdPartyDesc2')}
               </p>
             </div>
 
@@ -327,18 +314,15 @@ const TermsOfService = () => {
               ref={addToRefs}
             >
               <h2 className="section-title">
-                Termination
+                {t('termination')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                We may suspend or terminate your account at our sole discretion if you violate these Terms or for 
-                any other reason. You may also terminate your account at any time by contacting us or using the 
-                account deletion feature.
+                {t('terminationDesc1')}
               </p>
               
               <p className="body-text">
-                Upon termination, your right to use GradJob will immediately cease, and we may delete your account 
-                data in accordance with our data retention policies.
+                {t('terminationDesc2')}
               </p>
             </div>
 
@@ -350,25 +334,25 @@ const TermsOfService = () => {
               ref={addToRefs}
             >
               <h2 className="section-title">
-                Disclaimer of Warranties
+                {t('disclaimerWarranties')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                GradJob is provided "as is" and "as available" without warranties of any kind. We do not warrant that:
+                {t('warrantiesDesc')}
               </p>
               
               <ul className="custom-list">
                 <li className="custom-list-item">
                   <div className="list-icon warning">⚠️</div>
-                  <span className="body-text">The service will be uninterrupted or error-free</span>
+                  <span className="body-text">{t('warranty1')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon warning">⚠️</div>
-                  <span className="body-text">Job matches will result in employment</span>
+                  <span className="body-text">{t('warranty2')}</span>
                 </li>
                 <li className="custom-list-item">
                   <div className="list-icon warning">⚠️</div>
-                  <span className="body-text">Resumes will pass specific ATS systems</span>
+                  <span className="body-text">{t('warranty3')}</span>
                 </li>
               </ul>
             </div>
@@ -381,26 +365,25 @@ const TermsOfService = () => {
               ref={addToRefs}
             >
               <h2 className="section-title">
-                Limitation of Liability
+                {t('limitationLiability')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                To the maximum extent permitted by law, Team QX shall not be liable for any indirect, incidental, 
-                special, consequential, or punitive damages resulting from:
+                {t('liabilityDesc')}
               </p>
               
               <ul className="custom-list">
                 <li className="custom-list-item">
-                  <span className="body-text">Your use or inability to use GradJob</span>
+                  <span className="body-text">{t('liability1')}</span>
                 </li>
                 <li className="custom-list-item">
-                  <span className="body-text">Any conduct or content of third parties</span>
+                  <span className="body-text">{t('liability2')}</span>
                 </li>
                 <li className="custom-list-item">
-                  <span className="body-text">Unauthorized access to or use of your data</span>
+                  <span className="body-text">{t('liability3')}</span>
                 </li>
                 <li className="custom-list-item">
-                  <span className="body-text">Any errors or omissions in our services</span>
+                  <span className="body-text">{t('liability4')}</span>
                 </li>
               </ul>
             </div>
@@ -413,12 +396,11 @@ const TermsOfService = () => {
               ref={addToRefs}
             >
               <h2 className="section-title">
-                Governing Law
+                {t('governingLaw')}
               </h2>
               
               <p className="body-text">
-                These Terms shall be governed by and construed in accordance with the laws of the jurisdiction where 
-                Team QX is based, without regard to its conflict of law provisions.
+                {t('governingLawDesc')}
               </p>
             </div>
 
@@ -430,16 +412,15 @@ const TermsOfService = () => {
               ref={addToRefs}
             >
               <h2 className="section-title">
-                Changes to Terms
+                {t('changesToTerms')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                We may update these Terms from time to time. We will notify you of any changes by posting the new 
-                Terms on this page and updating the "Last Updated" date.
+                {t('changesDesc1')}
               </p>
               
               <p className="body-text">
-                Your continued use of GradJob after any changes constitutes your acceptance of the new Terms.
+                {t('changesDesc2')}
               </p>
             </div>
 
@@ -451,23 +432,23 @@ const TermsOfService = () => {
               ref={addToRefs}
             >
               <h2 className="section-title">
-                Contact Information
+                {t('contactInformation')}
               </h2>
               
               <p className="body-text" style={{marginBottom: '1.5rem'}}>
-                If you have any questions about these Terms of Service, please contact us:
+                {t('termsQuestions')}
               </p>
               
               <div style={{marginBottom: '1.5rem'}}>
-                <h3 className="subsection-title">Team QX - GradJob</h3>
+                <h3 className="subsection-title">{t('teamQXGradJob')}</h3>
                 <p className="body-text">
-                  Email: <a href="mailto:legal@gradjob.com" className="animated-link">legal@gradjob.com</a>
+                  {t('email')}: <a href="mailto:legal@gradjob.com" className="animated-link">legal@gradjob.com</a>
                 </p>
                 <p className="body-text">
-                  Privacy Policy: <a href="/privacy-policy" className="animated-link">View Privacy Policy</a>
+                  {t('privacyPolicy')}: <a href="/privacy-policy" className="animated-link">{t('viewPrivacyPolicy')}</a>
                 </p>
                 <p className="body-text">
-                  Contact: <a href="/contact-us" className="animated-link">Contact Us</a>
+                  {t('contact')}: <a href="/contact-us" className="animated-link">{t('contactUs')}</a>
                 </p>
               </div>
             </div>
@@ -479,14 +460,12 @@ const TermsOfService = () => {
             ref={addToRefs}
           >
             <p className="small-text">
-              These Terms of Service are effective as of December 2024. By using GradJob, you acknowledge that 
-              you have read, understood, and agree to be bound by these Terms.
+              {t('termsEffective')}
             </p>
           </div>
         </div>
       </div>
     </div>
-    </>
   );
 };
 

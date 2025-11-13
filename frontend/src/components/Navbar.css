@@ -367,3 +367,65 @@
     content: none; /* Remove the old pseudo-element separator */
   }
 }
+
+/* Language Toggle Button in Navbar */
+.navbar-actions .language-toggle-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  color: var(--gray-700);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-size: 0.9rem;
+  margin-right: 12px;
+}
+
+.navbar-actions .language-toggle-btn:hover {
+  background: var(--gray-100);
+  border-color: var(--primary-500);
+  color: var(--primary-600);
+}
+
+.mobile-language-toggle {
+  padding: 16px;
+  border-top: 1px solid var(--gray-200);
+  display: none;
+}
+
+.mobile-language-toggle .language-toggle-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  color: var(--gray-700);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+/* RTL Support for Navbar */
+[dir="rtl"] .navbar-actions .language-toggle-btn {
+  margin-right: 0;
+  margin-left: 12px;
+}
+
+[dir="rtl"] .navbar-links {
+  direction: rtl;
+}
+
+[dir="rtl"] .mobile-actions {
+  direction: rtl;
+}
+
+@media (max-width: 768px) {
+  .mobile-language-toggle {
+    display: block;
+  }
+  
+  .navbar-actions .language-toggle-btn {
+    display: none;
+  }
+}

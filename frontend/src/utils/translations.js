@@ -1,0 +1,1449 @@
+// src/utils/translations.js
+export const translations = {
+  en: {
+    // Navigation & Common
+    home: "Home",
+    jobs: "Jobs",
+    companies: "Companies",
+    about: "About Us",
+    contact: "Contact",
+    login: "Login",
+    signup: "Sign Up",
+    logout: "Logout",
+    search: "Search",
+    filter: "Filter",
+    apply: "Apply",
+    save: "Save",
+    share: "Share",
+    view: "View",
+    edit: "Edit",
+    delete: "Delete",
+    cancel: "Cancel",
+    confirm: "Confirm",
+    loading: "Loading...",
+    
+    // Layout
+    dashboard: "Dashboard",
+    browseJobs: "Browse Jobs",
+    resumeBuilder: "Resume Builder",
+    careerAdvice: "Career Advice",
+    blog: "Blog",
+    faq: "FAQ",
+    privacy: "Privacy",
+    terms: "Terms",
+    privacyPolicy: "Privacy Policy",
+    termsOfService: "Terms of Service",
+    cookiePolicy: "Cookie Policy",
+    accessibility: "Accessibility",
+    
+    // Footer
+    quickLinks: "Quick Links",
+    resources: "Resources",
+    legal: "Legal",
+    allRightsReserved: "All rights reserved",
+    secure: "Secure",
+    madeWithLove: "Made with Love",
+    
+    // User Menu
+    myApplications: "My Applications",
+    savedJobs: "Saved Jobs",
+    settings: "Settings",
+    me: "Me",
+    myAccount: "My Account",
+    
+    // Notifications
+    notifications: "Notifications",
+    markAllRead: "Mark all read",
+    viewAllNotifications: "View all notifications",
+    
+    // Auth
+    signUpFree: "Sign Up Free",
+    
+    // Navigation Titles
+    navigation: "Navigation",
+    account: "Account",
+    
+    // Home Page
+    discoverCareer: "Discover Your Dream Career",
+    opportunities: "opportunities waiting for talented people like you",
+    searchPlaceholder: "Search by job title, company, or skills...",
+    allJobs: "All Jobs",
+    engineering: "Engineering",
+    design: "Design",
+    marketing: "Marketing",
+    sales: "Sales",
+    product: "Product",
+    
+    // Jobs List
+    availableJobs: "Available Jobs",
+    job: "job",
+    jobs: "jobs",
+    selectJob: "Select a Job",
+    selectJobPrompt: "Click on a job from the list to view details",
+    
+    // Job Details
+    location: "Location",
+    jobType: "Job Type",
+    salary: "Salary",
+    experience: "Experience",
+    skillsRequired: "Skills Required",
+    jobDescription: "Job Description",
+    applyNow: "Apply Now",
+    applicants: "Applicants",
+    views: "Views",
+    posted: "Posted",
+    
+    // Stats
+    activeJobs: "Active Jobs",
+    jobSeekers: "Job Seekers",
+    companiesCount: "Companies",
+    successRate: "Success Rate",
+    
+    // Features
+    personalizedJobs: "Get Personalized Jobs",
+    aiMatching: "AI-Powered Matching",
+    resumeBuilder: "Resume Builder",
+    careerGuidance: "Career Guidance",
+    instantApplications: "Instant Applications",
+    salaryInsights: "Salary Insights",
+    skillAssessment: "Skill Assessment",
+    
+    // Resume Section
+    resumeGenerator: "Resume Generator",
+    standOut: "Stand Out With a Stunning Resume",
+    resumeSubtitle: "Pick a modern template and let AI help you craft a professional resume in minutes",
+    createYourResume: "Create Your Resume",
+    modernProfessional: "Modern Professional",
+    elegantMinimal: "Elegant Minimal",
+    
+    // CTA
+    readyToLaunch: "Ready to Launch Your Career?",
+    joinCommunity: "Join over 50,000 job seekers who found their dream jobs with GradJob",
+    getStartedFree: "Get Started Free",
+    signIn: "Sign In",
+    freeForever: "Free Forever",
+    noCreditCard: "No Credit Card",
+    instantAccess: "Instant Access",
+    
+    // Filters
+    advancedFilters: "Advanced Filters",
+    clearAll: "Clear All",
+    jobTypeFilter: "Job Type",
+    locationFilter: "Location",
+    experienceLevel: "Experience Level",
+    salaryRange: "Salary Range",
+    remoteOnly: "Remote Only",
+    allTypes: "All Types",
+    allLocations: "All Locations",
+    allLevels: "All Levels",
+    allSalaries: "All Salaries",
+    
+    // Results
+    showing: "Showing",
+    of: "of",
+    sortBy: "Sort by",
+    latest: "Latest",
+    salaryHigh: "Salary: High to Low",
+    salaryLow: "Salary: Low to High",
+    popular: "Most Popular",
+    
+    // States
+    findingOpportunities: "Finding the best opportunities for you...",
+    noJobsFound: "No jobs found",
+    tryAdjusting: "Try adjusting your filters or search terms",
+    clearAllFilters: "Clear All Filters",
+    
+    // Success Messages
+    applicationSubmitted: "Application submitted successfully!",
+    jobSaved: "Job saved successfully!",
+    changesSaved: "Changes saved successfully!",
+    
+    // Error Messages
+    errorOccurred: "An error occurred",
+    tryAgain: "Please try again",
+    requiredField: "This field is required",
+    invalidEmail: "Please enter a valid email",
+    
+    // Form Labels
+    fullName: "Full Name",
+    email: "Email",
+    password: "Password",
+    confirmPassword: "Confirm Password",
+    phone: "Phone Number",
+    coverLetter: "Cover Letter",
+    uploadResume: "Upload Resume",
+    chooseFile: "Choose File",
+    noFileChosen: "No file chosen",
+
+    // Login Page Specific
+    welcomeBack: "Welcome Back to GradJob",
+    loginSubtitle: "Your career starts here – build resumes, apply, and succeed.",
+    forgotPasswordTitle: "Reset Your Password", 
+    forgotPasswordSubtitle: "Enter your email and we'll send you a reset link.",
+    
+    // Form Placeholders & Labels
+    enterEmail: "Enter your email",
+    enterPassword: "Enter your password",
+    emailAddress: "Email Address",
+    
+    // Buttons & Links
+    loginButton: "Login",
+    sendResetLink: "Send Reset Link",
+    forgotPassword: "Forgot Password?",
+    backToLogin: "Back to Login",
+    createNewAccount: "Create New Account",
+    dontHaveAccount: "Don't have an account?",
+    
+    // Validation Messages
+    validEmail: "Please enter a valid email address.",
+    validPassword: "Please enter a valid password.",
+    
+    // Loading States
+    loggingIn: "Logging in...",
+    sending: "Sending...",
+    
+    // API Messages
+    loginFailed: "Login failed. Please check your credentials.",
+    resetLinkSent: "Password reset link has been sent to your email.",
+    resetLinkFailed: "Failed to send reset link. Please try again.",
+    
+    // Error Messages
+    unexpectedError: "An unexpected error occurred. Please try again.",
+    
+    // === ADDITIONAL AUTH TRANSLATIONS ===
+    welcome: "Welcome",
+    createAccount: "Create Account",
+    confirmPassword: "Confirm Password", 
+    rememberMe: "Remember me",
+    alreadyHaveAccount: "Already have an account?",
+    signInWith: "Or sign in with",
+    signUpWith: "Or sign up with",
+    bySigningUp: "By signing up, you agree to our",
+    
+    // === NEW COMMON TRANSLATIONS ===
+    or: "Or",
+    continue: "Continue",
+    submit: "Submit",
+    back: "Back",
+    next: "Next",
+    previous: "Previous",
+    finish: "Finish",
+    skip: "Skip",
+    done: "Done",
+    
+    // === NEW FORM VALIDATION ===
+    fieldRequired: "This field is required",
+    invalidEmailFormat: "Please enter a valid email format",
+    passwordTooShort: "Password must be at least 6 characters",
+    passwordsDontMatch: "Passwords do not match",
+    
+    // === NEW SUCCESS MESSAGES ===
+    success: "Success",
+    operationCompleted: "Operation completed successfully",
+    changesSaved: "Changes saved successfully",
+
+    // === SIGNUP PAGE TRANSLATIONS ===
+    createAccount: "Create Your Account",
+    joinGradJob: "Join GradJob and start your career journey today",
+    fullName: "Full Name",
+    enterFullName: "Enter your full name",
+    phoneNumber: "Phone Number", 
+    enterPhone: "Enter your phone number",
+    createStrongPassword: "Create a strong password",
+    confirmYourPassword: "Confirm your password",
+    creatingAccount: "Creating Account...",
+    alreadyHaveAccount: "Already have an account?",
+    loginHere: "Login here",
+    
+    // Validation Messages for Signup
+    fullNameRequired: "Full name is required",
+    nameTooShort: "Name must be at least 2 characters",
+    phoneRequired: "Phone number is required",
+    invalidPhone: "Please enter a valid phone number (10-15 digits)",
+    passwordRequirements: "Password must contain uppercase, lowercase, and number",
+    confirmPasswordRequired: "Please confirm your password",
+    
+    // Benefits Section
+    welcomeToGradJob: "Welcome to GradJob",
+    buildYourCV: "Build Your CV",
+    buildCVDesc: "Create an ATS-friendly resume in minutes",
+    findJobs: "Find Jobs", 
+    findJobsDesc: "Access thousands of job opportunities",
+    aiPowered: "AI-Powered",
+    aiPoweredDesc: "Get personalized career recommendations",
+    
+    // API Messages
+    registrationFailed: "Registration failed. Please try again.",
+    // === ABOUT US PAGE TRANSLATIONS ===
+    // Header Section
+    aboutUs: "About Us",
+    qxGroup: "QX — Quick Execution Group",
+    aboutSubtitle: "A student-led software development team from Jordan, transforming innovative ideas into real-world solutions with speed, collaboration, and precision.",
+    
+    // Who We Are Section
+    whoWeAre: "Who We Are",
+    whoWeAreDesc1: "We are",
+    whoWeAreDesc2: "a student-led software development team based in Jordan.",
+    whoWeAreDesc3: "Founded by four passionate Computer Science students, our mission is to transform innovative ideas into real-world solutions with speed, collaboration, and precision.",
+    
+    // Mission Section
+    ourMission: "Our Mission",
+    missionQuote: "To empower graduates and young professionals by creating smart, accessible, and modern career tools that help them transition smoothly into the job market.",
+    
+    // What We Do Section
+    whatWeDo: "What We Do - GradJob",
+    atsFriendlyResumes: "ATS-Friendly Resumes",
+    atsFriendlyDesc: "Build professional resumes that pass automated tracking systems in minutes",
+    aiRecommendations: "AI-Powered Recommendations",
+    aiRecommendationsDesc: "Get smart suggestions for skills, career objectives, and improvements",
+    curatedJobs: "Curated Job Opportunities",
+    curatedJobsDesc: "Explore opportunities from LinkedIn, Google Jobs, and company sites",
+    oneClickApply: "One-Click Applications",
+    oneClickApplyDesc: "Apply to multiple jobs easily, all in one place",
+    
+    // Team Section
+    ourTeam: "Our Team",
+    teamSubtitle: "Four passionate Computer Science students, each specializing in different aspects of the project",
+    frontendDeveloper: "Frontend Developer",
+    frontendRole: "UI/UX & React Development",
+    frontendBio: "Designs and builds the user interface with React, creating intuitive and beautiful experiences.",
+    backendDeveloper: "Backend Developer", 
+    backendRole: "API & Database Management",
+    backendBio: "Manages the API, authentication, and database systems for scalable performance.",
+    aiSpecialist: "AI Specialist",
+    aiRole: "AI Integration & Smart Matching", 
+    aiBio: "Integrates AI tools for resume suggestions and intelligent job matching algorithms.",
+    projectModerator: "Project Moderator",
+    projectRole: "Task Organization & Collaboration",
+    projectBio: "Organizes tasks, manages GitHub, and ensures smooth collaboration across the team.",
+    
+    // Values Section
+    ourValues: "Our Values",
+    speed: "Speed",
+    speedDesc: "Fast execution without compromising quality",
+    collaboration: "Collaboration", 
+    collaborationDesc: "Every member contributes equally",
+    innovation: "Innovation",
+    innovationDesc: "Using the latest tools and technologies", 
+    impact: "Impact",
+    impactDesc: "Building solutions that make a real difference",
+    
+    // Tech Stack Section
+    techStack: "Our Technology Stack",
+    
+    // CTA Section
+    getInvolved: "Get Involved",
+    ctaSubtitle: "Join us in empowering graduates and shaping the future of career development",
+    downloadApp: "Download on Google Play (Coming Soon)",
+    followGithub: "Follow on GitHub",
+    ctaNote: "Be among the first graduates to shape your career path with GradJob",
+    
+    // Footer
+    copyright: "© 2024 QX — Quick Execution Group | Empowering graduates through innovative technology",
+    // === CONTACT US PAGE TRANSLATIONS ===
+    // Header Section
+    contactUs: "Contact Us",
+    contactSubtitle: "Have questions about GradJob? We're here to help! Reach out to Team QX and let's build better careers together.",
+    
+    // Contact Methods
+    getInTouch: "Get In Touch",
+    emailUs: "Email Us",
+    emailResponse: "We'll reply within 24 hours",
+    liveChat: "Live Chat",
+    chatAvailability: "Chat with our support team",
+    callUs: "Call Us",
+    callHours: "Mon-Fri from 9am to 6pm",
+    
+    // Team Information
+    aboutTeamQX: "About Team QX",
+    teamQXDesc: "Four passionate Computer Science students building the future of career development",
+    location: "Location",
+    locationDesc: "Based in our university innovation lab, working remotely to serve students worldwide",
+    
+    // Response Time
+    responseTime: "Response Time",
+    responseTimeDesc: "We typically respond to all inquiries within 24 hours during business days. For urgent matters, please use the live chat feature.",
+    
+    // Contact Form
+    sendMessage: "Send us a Message",
+    yourName: "Your Name",
+    namePlaceholder: "John Doe",
+    emailAddress: "Email Address",
+    emailPlaceholder: "john@example.com",
+    subject: "Subject",
+    subjectPlaceholder: "How can we help?",
+    yourMessage: "Your Message",
+    messagePlaceholder: "Tell us more about your inquiry...",
+    sendMessageButton: "Send Message",
+    
+    // Form Validation
+    nameRequired: "Name is required",
+    emailRequired: "Email is required",
+    emailInvalid: "Email is invalid",
+    subjectRequired: "Subject is required",
+    messageRequired: "Message is required",
+    
+    // FAQ Section
+    frequentlyAskedQuestions: "Frequently Asked Questions",
+    faq1Question: "How long does it take to get a response?",
+    faq1Answer: "We typically respond within 24 hours during weekdays. For urgent matters, use the live chat.",
+    faq2Question: "Can I schedule a demo of GradJob?",
+    faq2Answer: "Absolutely! Contact us to schedule a personalized demo of our platform.",
+    faq3Question: "Do you offer support for universities?",
+    faq3Answer: "Yes, we offer special programs for universities. Contact us for partnership opportunities.",
+    
+    // Success Message
+    messageSent: "Your message has been sent successfully! We'll get back to you soon.",
+
+    // === FIND JOBS PAGE TRANSLATIONS ===
+    // Hero Section
+    findJobs: "Find Jobs",
+    discoverNextRole: "Discover Your Next Role",
+    searchOpportunities: "Search and filter thousands of opportunities tailored to your skills.",
+    
+    // Results & Controls
+    showingResults: "Showing",
+    results: "results",
+    sortBy: "Sort by",
+    latest: "Latest",
+    salaryHighToLow: "Salary: High to Low",
+    salaryLowToHigh: "Salary: Low to High",
+    mostPopular: "Most Popular",
+    
+    // Search & Filters
+    searchPlaceholder: "Search by title, company, or skill",
+    search: "Search",
+    filters: "Filters",
+    jobType: "Job Type",
+    location: "Location",
+    experience: "Experience",
+    remoteOnly: "Remote Only",
+    clearFilters: "Clear All Filters",
+    clear: "Clear",
+    
+    // Job Categories
+    allJobs: "All Jobs",
+    engineering: "Engineering",
+    design: "Design",
+    marketing: "Marketing",
+    sales: "Sales",
+    product: "Product",
+    
+    // Job List
+    jobListings: "Job Listings",
+    jobs: "jobs",
+    
+    // Job Details
+    selectJob: "Select a job to view details",
+    selectJobPrompt: "Click on any job from the list to see full details, requirements, and application information.",
+    industry: "Industry",
+    description: "Description",
+    requiredSkills: "Required Skills",
+    jobStatistics: "Job Statistics",
+    views: "views",
+    applicants: "applicants",
+    posted: "posted",
+    
+    // Job Badges
+    urgent: "Urgent",
+    featured: "Featured",
+    remote: "Remote",
+    
+    // Actions
+    saveJob: "Save job",
+    shareJob: "Share job",
+    applyNow: "Apply Now",
+    
+    // States
+    findingOpportunities: "Finding the best opportunities for you...",
+    noJobsFound: "No jobs found",
+    tryAdjusting: "Try adjusting your filters or search terms",
+    
+    // Job Meta
+    salary: "Salary",
+    experienceLevel: "Experience",
+    
+    // Additional Job Details
+    jobDescription: "We are looking for a talented individual to join our team and help build innovative solutions that make a difference. You'll work with cutting-edge technologies and collaborate with a diverse, passionate team.",
+
+    // === CV GENERATOR PAGE TRANSLATIONS ===
+    // Steps & Navigation
+    profile: "Profile",
+    experience: "Experience",
+    education: "Education",
+    skills: "Skills",
+    step: "Step",
+    of: "of",
+    next: "Next",
+    back: "Back",
+    
+    // Step 1: Profile
+    professionalProfile: "Professional Profile",
+    professionalTitle: "Professional Title",
+    professionalSummary: "Professional Summary",
+    githubProfile: "GitHub Profile",
+    linkedinProfile: "LinkedIn Profile",
+    titlePlaceholder: "e.g., Software Engineer, Data Analyst",
+    summaryPlaceholder: "Write a brief summary about your professional experience and goals...",
+    aiSuggest: "AI Suggest",
+    generating: "Generating...",
+    aiSuggestTooltip: "Generate with AI",
+    moreCharactersNeeded: "more characters needed for AI generation.",
+    looksGood: "Looks good for AI generation.",
+    
+    // Step 2: Experience
+    workExperience: "Work Experience",
+    addExperience: "Add Another Experience",
+    position: "Position",
+    company: "Company",
+    startDate: "Start Date",
+    endDate: "End Date",
+    description: "Description",
+    currentlyWorkHere: "I currently work here",
+    positionPlaceholder: "e.g., Software Engineer",
+    companyPlaceholder: "e.g., Tech Corp",
+    descriptionPlaceholder: "Describe your responsibilities and achievements...",
+    remove: "Remove",
+    
+    // Step 3: Education
+    educationalBackground: "Educational Background",
+    addEducation: "Add Another Education",
+    degree: "Degree",
+    institution: "Institution",
+    fieldOfStudy: "Field of Study",
+    graduationDate: "Graduation Date",
+    degreePlaceholder: "e.g., Bachelor of Computer Science",
+    institutionPlaceholder: "e.g., University Name",
+    fieldOfStudyPlaceholder: "e.g., Computer Science",
+    
+    // Step 4: Skills & Languages
+    skillsLanguages: "Skills & Languages",
+    showcaseExpertise: "Showcase your expertise",
+    technicalSkills: "Technical Skills",
+    languages: "Languages",
+    addLanguage: "Add Language",
+    skillPlaceholder: "Type a skill and press Enter",
+    languagePlaceholder: "Language (e.g., English)",
+    proficiency: "Proficiency",
+    native: "Native",
+    fluent: "Fluent",
+    professional: "Professional",
+    limited: "Limited",
+    
+    // Actions
+    saveCV: "Save CV",
+    
+    // Validation Messages
+    titleRequired: "Professional title is required",
+    summaryRequired: "Professional summary is required",
+    positionRequired: "Position is required",
+    companyRequired: "Company is required",
+    degreeRequired: "Degree is required",
+    institutionRequired: "Institution is required",
+    summaryMinLength: "Please provide at least 50 characters to generate a strong summary.",
+    
+    // Download Modal
+    cvReady: "Your CV is ready",
+    downloadPrompt: "Do you want to download the generated .docx now?",
+    goToDashboard: "Go to Dashboard",
+    downloadGo: "Download & Go",
+//cv generator v1
+     contactInformation: "CONTACT INFORMATION",
+        mobile: "Mobile",
+        email: "Email",
+        github: "GitHub",
+        linkedin: "LinkedIn",
+        professionalSummary: "PROFESSIONAL SUMMARY",
+        workExperience: "WORK EXPERIENCE",
+        education: "EDUCATION",
+        graduated: "Graduated",
+        skills: "SKILLS",
+        languagesDatabases: "Languages & Databases",
+        toolsTechnologies: "Tools & Technologies",
+        coreCompetencies: "Core Competencies",
+        professionalSkills: "Professional Skills",
+        languages: "LANGUAGES",
+
+        // CVPrompt Translations
+  welcomeToGradJob: "Welcome to GradJob!",
+  setupProfilePrompt: "Let's set up your profile to help you find the best opportunities",
+  haveCVQuestion: "Do you have a CV/Resume?",
+  cvBenefits: "Having a complete CV increases your chances of getting hired by 80%",
+  iHaveCV: "I have a CV",
+  uploadExistingCV: "Upload your existing CV and we'll help you optimize it",
+  uploadingCV: "Uploading your CV...",
+  uploading: "Uploading...",
+  uploadCV: "Upload CV",
+  createNewCV: "Create a New CV",
+  createCVDescription: "Build an ATS-friendly CV with our AI-powered generator",
+  startBuilding: "Start Building",
+  doThisLater: "I'll do this later",
+  whyCreateCVNow: "Why create a CV now?",
+  benefit1: "Get matched with relevant job opportunities",
+  benefit2: "Stand out to employers with an ATS-optimized format",
+  benefit3: "Save time with AI-powered suggestions",
+  benefit4: "Update anytime from your dashboard",
+  recommended: "Recommended",
+  pleaseLoginToUploadCV: "Please log in to upload your CV.",
+  uploadFailed: "Failed to upload CV. Please try again.",
+  sessionExpired: "Your session has expired. Please log in to upload your CV.",
+
+  // Privacy Policy Translations
+  privacyPolicy: "Privacy Policy",
+  lastUpdated: "Last Updated",
+  september2025: "September 2025",
+  privacyPriority: "Your privacy is our priority. Learn how we protect your data.",
+  privacyIntroduction: "Introduction",
+  privacyIntro1: "At",
+  privacyIntro2: ", we take your privacy seriously. This Privacy Policy explains how Team QX collects, uses, discloses, and safeguards your information when you use our GradJob application and services.",
+  privacyIntro3: "By using GradJob, you consent to the data practices described in this policy. If you do not agree with the terms of this policy, please do not access or use our services.",
+  informationWeCollect: "Information We Collect",
+  personalInformation: "Personal Information",
+  personalInfoDesc: "We may collect personal information that you voluntarily provide to us, including:",
+  personalInfo1: "Full name and contact information",
+  personalInfo2: "Email address and password",
+  personalInfo3: "Resume/CV content and employment history",
+  personalInfo4: "Educational background and qualifications",
+  personalInfo5: "Job preferences and search criteria",
+  automaticallyCollected: "Automatically Collected Information",
+  autoCollectedDesc: "When you use GradJob, we automatically collect certain information, including:",
+  autoCollected1: "Device information and IP address",
+  autoCollected2: "Usage patterns and feature interactions",
+  autoCollected3: "Application performance data",
+  autoCollected4: "Cookies and similar technologies",
+  howWeUseInfo: "How We Use Your Information",
+  infoUsageDesc: "We use the information we collect for various purposes, including:",
+  infoUsage1: "To provide and maintain our services",
+  infoUsage2: "To create and optimize your resume/CV",
+  infoUsage3: "To match you with relevant job opportunities",
+  infoUsage4: "To improve our AI-powered features",
+  infoUsage5: "To communicate with you about updates and features",
+  infoUsage6: "To ensure application security and prevent fraud",
+  infoUsage7: "To comply with legal obligations",
+  dataSharing: "Data Sharing and Disclosure",
+  dataSharingDesc: "We do not sell your personal information to third parties. We may share your information in the following circumstances:",
+  withConsent: "With Your Consent",
+  withConsentDesc: "We may share your resume and profile information with potential employers only when you explicitly authorize us to do so.",
+  serviceProviders: "Service Providers",
+  serviceProvidersDesc: "We may employ third-party companies to facilitate our service, provide the service on our behalf, or assist us in analyzing how our service is used.",
+  legalRequirements: "Legal Requirements",
+  legalRequirementsDesc: "We may disclose your information where required to do so by law or in response to valid requests by public authorities.",
+  dataSecurity: "Data Security",
+  dataSecurityDesc: "We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include:",
+  securityMeasure1: "Encryption of sensitive data in transit and at rest",
+  securityMeasure2: "Regular security assessments and updates",
+  securityMeasure3: "Access controls and authentication mechanisms",
+  securityMeasure4: "Secure data storage practices",
+  yourRights: "Your Rights",
+  yourRightsDesc: "You have certain rights regarding your personal information, including:",
+  right1: "Right to access and review your data",
+  right2: "Right to correct inaccurate information",
+  right3: "Right to delete your account and data",
+  right4: "Right to withdraw consent",
+  right5: "Right to data portability",
+  right6: "Right to object to processing",
+  exerciseRights: "To exercise these rights, please contact us at",
+  dataRetention: "Data Retention",
+  dataRetentionDesc: "We retain your personal information only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law.",
+  internationalTransfers: "International Transfers",
+  internationalTransfersDesc: "Your information may be transferred to and maintained on computers located outside of your state, province, country, or other governmental jurisdiction where the data protection laws may differ from those of your jurisdiction.",
+  childrenPrivacy: "Children's Privacy",
+  childrenPrivacyDesc: "Our service is not intended for individuals under the age of 16. We do not knowingly collect personal information from children under 16. If we become aware that we have collected personal information from a child under 16, we will take steps to delete such information.",
+  policyChanges: "Changes to This Policy",
+  policyChangesDesc: "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the 'Last Updated' date.",
+  privacyQuestions: "If you have any questions about this Privacy Policy or our data practices, please contact us:",
+  teamQXGradJob: "Team QX - GradJob",
+  support: "Support",
+  privacyEffective: "This Privacy Policy is effective as of December 2024 and will remain in effect except with respect to any changes in its provisions in the future, which will be in effect immediately after being posted on this page.",
+  privacyCopyright: "© 2024 QX – Quick Execution Group | Your privacy, our commitment",
+
+      // Terms of Service Translations
+  termsOfService: "Terms of Service",
+  termsIntroduction: "Introduction",
+  termsIntro1: "Welcome to GradJob! These Terms of Service ('Terms') govern your use of the GradJob application and services provided by Team QX. By accessing or using GradJob, you agree to be bound by these Terms.",
+  termsIntro2: "If you do not agree to these Terms, please do not use our services. We reserve the right to modify these Terms at any time, and such modifications will be effective immediately upon posting.",
+  acceptanceOfTerms: "Acceptance of Terms",
+  acceptanceDesc: "By creating an account or using GradJob, you acknowledge that you have read, understood, and agree to be bound by these Terms. You must be at least 16 years old to use our services.",
+  userAccounts: "User Accounts",
+  accountAgreement: "When you create an account with GradJob, you agree to:",
+  accountReq1: "Provide accurate and complete information",
+  accountReq2: "Maintain the security of your password",
+  accountReq3: "Accept responsibility for all activities under your account",
+  accountReq4: "Notify us immediately of any unauthorized use",
+  acceptableUse: "Acceptable Use",
+  acceptableUseDesc: "You agree not to use GradJob to:",
+  useProhibition1: "Violate any applicable laws or regulations",
+  useProhibition2: "Infringe upon intellectual property rights",
+  useProhibition3: "Harass, abuse, or harm other users",
+  useProhibition4: "Distribute malware or malicious code",
+  useProhibition5: "Attempt to gain unauthorized access to our systems",
+  intellectualProperty: "Intellectual Property",
+  ipDescription1: "The GradJob application, including all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics, are owned by Team QX and are protected by copyright and other intellectual property laws.",
+  ipDescription2: "You retain ownership of all content you create using GradJob, including resumes and job applications. However, by using our services, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, and display your content solely for the purpose of providing our services to you.",
+  userContent: "User Content",
+  userContentDesc1: "You are solely responsible for the content you create and share through GradJob. You agree that your content will not:",
+  contentProhibition1: "Violate any third-party rights",
+  contentProhibition2: "Contain false or misleading information",
+  contentProhibition3: "Be illegal, offensive, or inappropriate",
+  contentRemoval: "We reserve the right to remove any content that violates these Terms without prior notice.",
+  aiServices: "AI-Powered Services",
+  aiServicesDesc: "GradJob utilizes artificial intelligence to provide resume building and job matching services. You acknowledge that:",
+  aiAcknowledgment1: "AI-generated content should be reviewed for accuracy",
+  aiAcknowledgment2: "Job matches are suggestions based on algorithms",
+  aiAcknowledgment3: "We cannot guarantee job placement outcomes",
+  privacyAndData: "Privacy and Data",
+  privacyDesc1: "Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your personal information. By using GradJob, you consent to our data practices as described in the Privacy Policy.",
+  privacyDesc2: "We implement security measures to protect your data, but cannot guarantee absolute security. You are responsible for maintaining the confidentiality of your account information.",
+  thirdPartyServices: "Third-Party Services",
+  thirdPartyDesc1: "GradJob may integrate with third-party services such as LinkedIn, Google Jobs, and other job platforms. These services have their own terms and privacy policies, and we are not responsible for their content or practices.",
+  thirdPartyDesc2: "You are responsible for complying with the terms of any third-party services you access through GradJob.",
+  termination: "Termination",
+  terminationDesc1: "We may suspend or terminate your account at our sole discretion if you violate these Terms or for any other reason. You may also terminate your account at any time by contacting us or using the account deletion feature.",
+  terminationDesc2: "Upon termination, your right to use GradJob will immediately cease, and we may delete your account data in accordance with our data retention policies.",
+  disclaimerWarranties: "Disclaimer of Warranties",
+  warrantiesDesc: "GradJob is provided 'as is' and 'as available' without warranties of any kind. We do not warrant that:",
+  warranty1: "The service will be uninterrupted or error-free",
+  warranty2: "Job matches will result in employment",
+  warranty3: "Resumes will pass specific ATS systems",
+  limitationLiability: "Limitation of Liability",
+  liabilityDesc: "To the maximum extent permitted by law, Team QX shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from:",
+  liability1: "Your use or inability to use GradJob",
+  liability2: "Any conduct or content of third parties",
+  liability3: "Unauthorized access to or use of your data",
+  liability4: "Any errors or omissions in our services",
+  governingLaw: "Governing Law",
+  governingLawDesc: "These Terms shall be governed by and construed in accordance with the laws of the jurisdiction where Team QX is based, without regard to its conflict of law provisions.",
+  changesToTerms: "Changes to Terms",
+  changesDesc1: "We may update these Terms from time to time. We will notify you of any changes by posting the new Terms on this page and updating the 'Last Updated' date.",
+  changesDesc2: "Your continued use of GradJob after any changes constitutes your acceptance of the new Terms.",
+  termsQuestions: "If you have any questions about these Terms of Service, please contact us:",
+  viewPrivacyPolicy: "View Privacy Policy",
+  termsEffective: "These Terms of Service are effective as of December 2024. By using GradJob, you acknowledge that you have read, understood, and agree to be bound by these Terms."
+  },
+  
+  ar: {
+    // Navigation & Common
+    home: "الرئيسية",
+    jobs: "وظائف",
+    companies: "شركات",
+    about: "من نحن",
+    contact: "اتصل بنا",
+    login: "تسجيل الدخول",
+    signup: "اشتراك",
+    logout: "تسجيل الخروج",
+    search: "بحث",
+    filter: "تصفية",
+    apply: "تقديم",
+    save: "حفظ",
+    share: "مشاركة",
+    view: "عرض",
+    edit: "تعديل",
+    delete: "حذف",
+    cancel: "إلغاء",
+    confirm: "تأكيد",
+    loading: "جاري التحميل...",
+    
+    // Layout
+    dashboard: "لوحة التحكم",
+    browseJobs: "تصفح الوظائف",
+    resumeBuilder: "منشئ السيرة الذاتية",
+    careerAdvice: "نصائح مهنية",
+    blog: "المدونة",
+    faq: "الأسئلة الشائعة",
+    privacy: "الخصوصية",
+    terms: "الشروط",
+    privacyPolicy: "سياسة الخصوصية",
+    termsOfService: "شروط الخدمة",
+    cookiePolicy: "سياسة الكوكيز",
+    accessibility: "إمكانية الوصول",
+    
+    // Footer
+    quickLinks: "روابط سريعة",
+    resources: "المصادر",
+    legal: "قانوني",
+    allRightsReserved: "جميع الحقوق محفوظة",
+    secure: "آمن",
+    madeWithLove: "مصنوع بحب",
+    
+    // User Menu
+    myApplications: "طلباتي",
+    savedJobs: "الوظائف المحفوظة",
+    settings: "الإعدادات",
+    me: "أنا",
+    myAccount: "حسابي",
+    
+    // Notifications
+    notifications: "الإشعارات",
+    markAllRead: "تعيين الكل كمقروء",
+    viewAllNotifications: "عرض جميع الإشعارات",
+    
+    // Auth
+    signUpFree: "اشتراك مجاني",
+    
+    // Navigation Titles
+    navigation: "التنقل",
+    account: "الحساب",
+    
+    // Home Page
+    discoverCareer: "اكتشف مسيرتك المهنية الحلم",
+    opportunities: "فرصة تنتظر الأشخاص الموهوبين مثلك",
+    searchPlaceholder: "ابحث باسم الوظيفة، الشركة، أو المهارات...",
+    allJobs: "جميع الوظائف",
+    engineering: "هندسة",
+    design: "تصميم",
+    marketing: "تسويق",
+    sales: "مبيعات",
+    product: "منتجات",
+    
+    // Jobs List
+    availableJobs: "الوظائف المتاحة",
+    job: "وظيفة",
+    jobs: "وظائف",
+    selectJob: "اختر وظيفة",
+    selectJobPrompt: "انقر على وظيفة من القائمة لعرض التفاصيل",
+    
+    // Job Details
+    location: "الموقع",
+    jobType: "نوع الوظيفة",
+    salary: "الراتب",
+    experience: "الخبرة",
+    skillsRequired: "المهارات المطلوبة",
+    jobDescription: "وصف الوظيفة",
+    applyNow: "قدم الآن",
+    applicants: "المتقدمين",
+    views: "المشاهدات",
+    posted: "تاريخ النشر",
+    
+    // Stats
+    activeJobs: "وظائف نشطة",
+    jobSeekers: "باحثين عن عمل",
+    companiesCount: "شركات",
+    successRate: "معدل النجاح",
+    
+    // Features
+    personalizedJobs: "احصل على وظائف مخصصة",
+    aiMatching: "مطابقة بالذكاء الاصطناعي",
+    resumeBuilder: "منشئ السيرة الذاتية",
+    careerGuidance: "إرشادات مهنية",
+    instantApplications: "تقديم فوري",
+    salaryInsights: "معلومات الرواتب",
+    skillAssessment: "تقييم المهارات",
+    
+    // Resume Section
+    resumeGenerator: "منشئ السيرة الذاتية",
+    standOut: "تميز بسيرة ذاتية رائعة",
+    resumeSubtitle: "اختر قالبًا حديثًا ودع الذكاء الاصطناعي يساعدك في إنشاء سيرة ذاتية احترافية في دقائق",
+    createYourResume: "أنشئ سيرتك الذاتية",
+    modernProfessional: "احترافي حديث",
+    elegantMinimal: "أنيق بسيط",
+    
+    // CTA
+    readyToLaunch: "مستعد لبدء مسيرتك المهنية؟",
+    joinCommunity: "انضم إلى أكثر من 50,000 باحث عن عمل وجدوا وظائف أحلامهم مع GradJob",
+    getStartedFree: "ابدأ مجاناً",
+    signIn: "تسجيل الدخول",
+    freeForever: "مجاني للأبد",
+    noCreditCard: "لا توجد بطاقة ائتمان",
+    instantAccess: "وصول فوري",
+    
+    // Filters
+    advancedFilters: "فلاتر متقدمة",
+    clearAll: "مسح الكل",
+    jobTypeFilter: "نوع الوظيفة",
+    locationFilter: "الموقع",
+    experienceLevel: "مستوى الخبرة",
+    salaryRange: "نطاق الراتب",
+    remoteOnly: "عمل عن بُعد فقط",
+    allTypes: "جميع الأنواع",
+    allLocations: "جميع المواقع",
+    allLevels: "جميع المستويات",
+    allSalaries: "جميع الرواتب",
+    
+    // Results
+    showing: "عرض",
+    of: "من",
+    sortBy: "ترتيب حسب",
+    latest: "الأحدث",
+    salaryHigh: "الراتب: من الأعلى للأدنى",
+    salaryLow: "الراتب: من الأدنى للأعلى",
+    popular: "الأكثر شيوعاً",
+    
+    // States
+    findingOpportunities: "جاري البحث عن أفضل الفرص لك...",
+    noJobsFound: "لم يتم العثور على وظائف",
+    tryAdjusting: "حاول تعديل الفلاتر أو مصطلحات البحث",
+    clearAllFilters: "مسح جميع الفلاتر",
+    
+    // Success Messages
+    applicationSubmitted: "تم تقديم الطلب بنجاح!",
+    jobSaved: "تم حفظ الوظيفة بنجاح!",
+    changesSaved: "تم حفظ التغييرات بنجاح!",
+    
+    // Error Messages
+    errorOccurred: "حدث خطأ",
+    tryAgain: "يرجى المحاولة مرة أخرى",
+    requiredField: "هذا الحقل مطلوب",
+    invalidEmail: "يرجى إدخال بريد إلكتروني صحيح",
+    
+    // Form Labels
+    fullName: "الاسم الكامل",
+    email: "البريد الإلكتروني",
+    password: "كلمة المرور",
+    confirmPassword: "تأكيد كلمة المرور",
+    phone: "رقم الهاتف",
+    coverLetter: "خطاب التقديم",
+    uploadResume: "رفع السيرة الذاتية",
+    chooseFile: "اختر ملف",
+    noFileChosen: "لم يتم اختيار ملف",
+  
+  // Login Page Specific
+    welcomeBack: "مرحباً بك في GradJob",
+    loginSubtitle: "مسيرتك المهنية تبدأ من هنا - أنشئ سيرتك الذاتية، تقدم للوظائف، وكن ناجحاً.",
+    forgotPasswordTitle: "إعادة تعيين كلمة المرور",
+    forgotPasswordSubtitle: "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين.",
+    
+    // Form Placeholders & Labels
+    enterEmail: "أدخل بريدك الإلكتروني",
+    enterPassword: "أدخل كلمة المرور",
+    emailAddress: "البريد الإلكتروني",
+    
+    // Buttons & Links
+    loginButton: "تسجيل الدخول",
+    sendResetLink: "إرسال رابط التعيين",
+    forgotPassword: "نسيت كلمة المرور؟",
+    backToLogin: "العودة لتسجيل الدخول",
+    createNewAccount: "إنشاء حساب جديد",
+    dontHaveAccount: "ليس لديك حساب؟",
+    
+    // Validation Messages
+    validEmail: "يرجى إدخال بريد إلكتروني صحيح.",
+    validPassword: "يرجى إدخال كلمة مرور صحيحة.",
+    
+    // Loading States
+    loggingIn: "جاري تسجيل الدخول...",
+    sending: "جاري الإرسال...",
+    
+    // API Messages
+    loginFailed: "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك.",
+    resetLinkSent: "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.",
+    resetLinkFailed: "فشل إرسال رابط التعيين. يرجى المحاولة مرة أخرى.",
+    
+    // Error Messages
+    unexpectedError: "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
+    
+    // === ADDITIONAL AUTH TRANSLATIONS ===
+    welcome: "أهلاً بك",
+    createAccount: "إنشاء حساب",
+    confirmPassword: "تأكيد كلمة المرور",
+    rememberMe: "تذكرني",
+    alreadyHaveAccount: "لديك حساب بالفعل؟",
+    signInWith: "أو سجل الدخول باستخدام",
+    signUpWith: "أو اشترك باستخدام", 
+    bySigningUp: "بإنشاء حساب، فإنك توافق على",
+    
+    // === NEW COMMON TRANSLATIONS ===
+    or: "أو",
+    continue: "متابعة",
+    submit: "إرسال",
+    back: "رجوع",
+    next: "التالي",
+    previous: "السابق",
+    finish: "إنهاء",
+    skip: "تخطي",
+    done: "تم",
+    
+    // === NEW FORM VALIDATION ===
+    fieldRequired: "هذا الحقل مطلوب",
+    invalidEmailFormat: "يرجى إدخال صيغة بريد إلكتروني صحيحة",
+    passwordTooShort: "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+    passwordsDontMatch: "كلمات المرور غير متطابقة",
+    
+    // === NEW SUCCESS MESSAGES ===
+    success: "نجح",
+    operationCompleted: "تمت العملية بنجاح",
+    changesSaved: "تم حفظ التغييرات بنجاح",
+
+    // === SIGNUP PAGE TRANSLATIONS ===
+    createAccount: "إنشاء حسابك",
+    joinGradJob: "انضم إلى GradJob وابدأ رحلتك المهنية اليوم",
+    fullName: "الاسم الكامل",
+    enterFullName: "أدخل اسمك الكامل",
+    phoneNumber: "رقم الهاتف",
+    enterPhone: "أدخل رقم هاتفك",
+    createStrongPassword: "أنشئ كلمة مرور قوية",
+    confirmYourPassword: "تأكيد كلمة المرور",
+    creatingAccount: "جاري إنشاء الحساب...",
+    alreadyHaveAccount: "لديك حساب بالفعل؟",
+    loginHere: "سجل الدخول من هنا",
+    
+    // Validation Messages for Signup
+    fullNameRequired: "الاسم الكامل مطلوب",
+    nameTooShort: "الاسم يجب أن يكون على الأقل حرفين",
+    phoneRequired: "رقم الهاتف مطلوب",
+    invalidPhone: "يرجى إدخال رقم هاتف صحيح (10-15 رقم)",
+    passwordRequirements: "كلمة المرور يجب أن تحتوي على أحرف كبيرة وصغيرة وأرقام",
+    confirmPasswordRequired: "يرجى تأكيد كلمة المرور",
+    
+    // Benefits Section
+    welcomeToGradJob: "مرحباً بك في GradJob",
+    buildYourCV: "أنشئ سيرتك الذاتية",
+    buildCVDesc: "أنشئ سيرة ذاتية متوافقة مع أنظمة التتبع في دقائق",
+    findJobs: "ابحث عن وظائف",
+    findJobsDesc: "الوصول إلى آلاف فرص العمل",
+    aiPowered: "مدعوم بالذكاء الاصطناعي",
+    aiPoweredDesc: "احصل على توصيات مهنية مخصصة",
+    
+    // API Messages
+    registrationFailed: "فشل التسجيل. يرجى المحاولة مرة أخرى.",
+    // === ABOUT US PAGE TRANSLATIONS ===
+    // Header Section
+    aboutUs: "من نحن",
+    qxGroup: "QX — مجموعة التنفيذ السريع",
+    aboutSubtitle: "فريق تطوير برمجيات بقيادة طلابية من الأردن، يحول الأفكار المبتكرة إلى حلول عملية بسرعة وتعاون ودقة.",
+    
+    // Who We Are Section
+    whoWeAre: "من نحن",
+    whoWeAreDesc1: "نحن",
+    whoWeAreDesc2: "فريق تطوير برمجيات بقيادة طلابية مقره في الأردن.",
+    whoWeAreDesc3: "تأسس على يد أربعة طلاب متحمسين في علوم الحاسوب، مهمتنا هي تحويل الأفكار المبتكرة إلى حلول عملية بسرعة وتعاون ودقة.",
+    
+    // Mission Section
+    ourMission: "مهمتنا",
+    missionQuote: "تمكين الخريجين والمهنيين الشباب من خلال إنشاء أدوات مهنية ذكية وسهلة الوصول وحديثة تساعدهم على الانتقال بسلاسة إلى سوق العمل.",
+    
+    // What We Do Section
+    whatWeDo: "ما نفعله - GradJob",
+    atsFriendlyResumes: "سير ذاتية متوافقة مع الأنظمة",
+    atsFriendlyDesc: "أنشئ سير ذاتية احترافية تجتاز أنظمة التتبع الآلي في دقائق",
+    aiRecommendations: "توصيات بالذكاء الاصطناعي",
+    aiRecommendationsDesc: "احصل على اقتراحات ذكية للمهارات والأهداف المهنية والتحسينات",
+    curatedJobs: "فرص عمل مختارة",
+    curatedJobsDesc: "استكشف الفرص من LinkedIn وGoogle Jobs ومواقع الشركات",
+    oneClickApply: "تقديم بنقرة واحدة",
+    oneClickApplyDesc: "تقدم للعديد من الوظائف بسهولة، كل ذلك في مكان واحد",
+    
+    // Team Section
+    ourTeam: "فريقنا",
+    teamSubtitle: "أربعة طلاب متحمسين في علوم الحاسوب، كل منهم متخصص في جوانب مختلفة من المشروع",
+    frontendDeveloper: "مطور واجهة أمامية",
+    frontendRole: "تطوير واجهة المستخدم وتجربته",
+    frontendBio: "يصمم ويبني واجهة المستخدم باستخدام React، مما يخلق تجارب بديهية وجميلة.",
+    backendDeveloper: "مطور خلفي",
+    backendRole: "إدارة API وقواعد البيانات", 
+    backendBio: "يدير واجهة البرمجة، المصادقة، وأنظمة قواعد البيانات لأداء قابل للتوسع.",
+    aiSpecialist: "أخصائي الذكاء الاصطناعي",
+    aiRole: "دمج الذكاء الاصطناعي والمطابقة الذكية",
+    aiBio: "يدمج أدوات الذكاء الاصطناعي لاقتراحات السيرة الذاتية وخوارزميات مطابقة الوظائف الذكية.",
+    projectModerator: "منسق المشروع",
+    projectRole: "تنظيم المهام والتعاون",
+    projectBio: "ينظم المهام، يدير GitHub، ويضمن التعاون السلس عبر الفريق.",
+    
+    // Values Section
+    ourValues: "قيمنا",
+    speed: "السرعة",
+    speedDesc: "تنفيذ سريع دون المساس بالجودة",
+    collaboration: "التعاون",
+    collaborationDesc: "كل عضو يساهم بالتساوي", 
+    innovation: "الابتكار",
+    innovationDesc: "استخدام أحدث الأدوات والتقنيات",
+    impact: "التأثير",
+    impactDesc: "بناء حلول تحدث فرقًا حقيقيًا",
+    
+    // Tech Stack Section
+    techStack: "مجموعة التقنيات لدينا",
+    
+    // CTA Section
+    getInvolved: "انضم إلينا",
+    ctaSubtitle: "انضم إلينا في تمكين الخريجين وتشكيل مستقبل التطور المهني",
+    downloadApp: "تنزيل على Google Play (قريباً)",
+    followGithub: "تابعنا على GitHub",
+    ctaNote: "كن من أوائل الخريجين الذين يشكلون مسارهم المهني مع GradJob",
+    
+    // Footer
+    copyright: "© 2024 QX — مجموعة التنفيذ السريع | تمكين الخريجين من خلال التكنولوجيا المبتكرة",
+
+    // === CONTACT US PAGE TRANSLATIONS ===
+    // Header Section
+    contactUs: "اتصل بنا",
+    contactSubtitle: "هل لديك أسئلة حول GradJob؟ نحن هنا لمساعدتك! تواصل مع فريق QX ودعونا نبني مسارات مهنية أفضل معًا.",
+    
+    // Contact Methods
+    getInTouch: "تواصل معنا",
+    emailUs: "راسلنا عبر البريد",
+    emailResponse: "سنجيب خلال 24 ساعة",
+    liveChat: "الدردشة المباشرة",
+    chatAvailability: "تحدث مع فريق الدعم لدينا",
+    callUs: "اتصل بنا",
+    callHours: "من الإثنين إلى الجمعة من 9 صباحًا إلى 6 مساءً",
+    
+    // Team Information
+    aboutTeamQX: "عن فريق QX",
+    teamQXDesc: "أربعة طلاب متحمسين في علوم الحاسوب يبنون مستقبل التطور المهني",
+    location: "الموقع",
+    locationDesc: "مقره في مختبر الابتكار الجامعي، نعمل عن بُعد لخدمة الطلاب حول العالم",
+    
+    // Response Time
+    responseTime: "وقت الاستجابة",
+    responseTimeDesc: "نستجيب عادة لجميع الاستفسارات خلال 24 ساعة في أيام العمل. للشؤون العاجلة، يرجى استخدام ميزة الدردشة المباشرة.",
+    
+    // Contact Form
+    sendMessage: "أرسل لنا رسالة",
+    yourName: "اسمك",
+    namePlaceholder: "جون دو",
+    emailAddress: "البريد الإلكتروني",
+    emailPlaceholder: "john@example.com",
+    subject: "الموضوع",
+    subjectPlaceholder: "كيف يمكننا المساعدة؟",
+    yourMessage: "رسالتك",
+    messagePlaceholder: "أخبرنا المزيد عن استفسارك...",
+    sendMessageButton: "إرسال الرسالة",
+    
+    // Form Validation
+    nameRequired: "الاسم مطلوب",
+    emailRequired: "البريد الإلكتروني مطلوب",
+    emailInvalid: "البريد الإلكتروني غير صالح",
+    subjectRequired: "الموضوع مطلوب",
+    messageRequired: "الرسالة مطلوبة",
+    
+    // FAQ Section
+    frequentlyAskedQuestions: "الأسئلة الشائعة",
+    faq1Question: "كم من الوقت يستغرق الحصول على رد؟",
+    faq1Answer: "نستجيب عادة خلال 24 ساعة في أيام الأسبوع. للشؤون العاجلة، استخدم الدردشة المباشرة.",
+    faq2Question: "هل يمكنني جدولة عرض توضيحي لـ GradJob؟",
+    faq2Answer: "بالتأكيد! اتصل بنا لجدولة عرض توضيحي مخصص لمنصتنا.",
+    faq3Question: "هل تقدمون الدعم للجامعات؟",
+    faq3Answer: "نعم، نقدم برامج خاصة للجامعات. اتصل بنا لفرص الشراكة.",
+    
+    // Success Message
+    messageSent: "تم إرسال رسالتك بنجاح! سنعود إليك قريبًا.",
+
+    // === FIND JOBS PAGE TRANSLATIONS ===
+    // Hero Section
+    findJobs: "ابحث عن وظائف",
+    discoverNextRole: "اكتشف دورك القادم",
+    searchOpportunities: "ابحث وفلتر آلاف الفرص المصممة خصيصًا لمهاراتك.",
+    
+    // Results & Controls
+    showingResults: "عرض",
+    results: "نتيجة",
+    sortBy: "ترتيب حسب",
+    latest: "الأحدث",
+    salaryHighToLow: "الراتب: من الأعلى للأدنى",
+    salaryLowToHigh: "الراتب: من الأدنى للأعلى",
+    mostPopular: "الأكثر شيوعاً",
+    
+    // Search & Filters
+    searchPlaceholder: "ابحث باسم الوظيفة، الشركة، أو المهارة",
+    search: "بحث",
+    filters: "فلاتر",
+    jobType: "نوع الوظيفة",
+    location: "الموقع",
+    experience: "الخبرة",
+    remoteOnly: "عمل عن بُعد فقط",
+    clearFilters: "مسح جميع الفلاتر",
+    clear: "مسح",
+    
+    // Job Categories
+    allJobs: "جميع الوظائف",
+    engineering: "هندسة",
+    design: "تصميم",
+    marketing: "تسويق",
+    sales: "مبيعات",
+    product: "منتجات",
+    
+    // Job List
+    jobListings: "قائمة الوظائف",
+    jobs: "وظائف",
+    
+    // Job Details
+    selectJob: "اختر وظيفة لعرض التفاصيل",
+    selectJobPrompt: "انقر على أي وظيفة من القائمة لرؤية التفاصيل الكاملة والمتطلبات ومعلومات التقديم.",
+    industry: "المجال",
+    description: "الوصف",
+    requiredSkills: "المهارات المطلوبة",
+    jobStatistics: "إحصائيات الوظيفة",
+    views: "مشاهدة",
+    applicants: "مقدم",
+    posted: "نشر",
+    
+    // Job Badges
+    urgent: "عاجل",
+    featured: "مميز",
+    remote: "عن بُعد",
+    
+    // Actions
+    saveJob: "حفظ الوظيفة",
+    shareJob: "مشاركة الوظيفة",
+    applyNow: "قدم الآن",
+    
+    // States
+    findingOpportunities: "جاري البحث عن أفضل الفرص لك...",
+    noJobsFound: "لم يتم العثور على وظائف",
+    tryAdjusting: "حاول تعديل الفلاتر أو مصطلحات البحث",
+    
+    // Job Meta
+    salary: "الراتب",
+    experienceLevel: "المستوى",
+    
+    // Additional Job Details
+    jobDescription: "نحن نبحث عن فرد موهوب لينضم إلى فريقنا ويساعد في بناء حلول مبتكرة تحدث فرقًا. ستعمل مع أحدث التقنيات وتتعاون مع فريق متنوع ومتحمس.",
+
+    // === CV GENERATOR PAGE TRANSLATIONS ===
+    // Steps & Navigation
+    profile: "الملف الشخصي",
+    experience: "الخبرة",
+    education: "التعليم",
+    skills: "المهارات",
+    step: "خطوة",
+    of: "من",
+    next: "التالي",
+    back: "رجوع",
+    
+    // Step 1: Profile
+    professionalProfile: "الملف المهني",
+    professionalTitle: "المسمى الوظيفي",
+    professionalSummary: "الملخص المهني",
+    githubProfile: "حساب GitHub",
+    linkedinProfile: "حساب LinkedIn",
+    titlePlaceholder: "مثال: مهندس برمجيات، محلل بيانات",
+    summaryPlaceholder: "اكتب ملخصًا موجزًا عن خبرتك المهنية وأهدافك...",
+    aiSuggest: "اقتراح بالذكاء الاصطناعي",
+    generating: "جاري التوليد...",
+    aiSuggestTooltip: "توليد بالذكاء الاصطناعي",
+    moreCharactersNeeded: "حرف إضافي مطلوب للتوليد بالذكاء الاصطناعي.",
+    looksGood: "جيد للتوليد بالذكاء الاصطناعي.",
+    
+    // Step 2: Experience
+    workExperience: "الخبرة العملية",
+    addExperience: "إضافة خبرة أخرى",
+    position: "المنصب",
+    company: "الشركة",
+    startDate: "تاريخ البدء",
+    endDate: "تاريخ الانتهاء",
+    description: "الوصف",
+    currentlyWorkHere: "أعمل هنا حاليًا",
+    positionPlaceholder: "مثال: مهندس برمجيات",
+    companyPlaceholder: "مثال: شركة التقنية",
+    descriptionPlaceholder: "صف مسؤولياتك وإنجازاتك...",
+    remove: "إزالة",
+    
+    // Step 3: Education
+    educationalBackground: "الخلفية التعليمية",
+    addEducation: "إضافة تعليم آخر",
+    degree: "الدرجة العلمية",
+    institution: "المؤسسة التعليمية",
+    fieldOfStudy: "مجال الدراسة",
+    graduationDate: "تاريخ التخرج",
+    degreePlaceholder: "مثال: بكالوريوس علوم الحاسوب",
+    institutionPlaceholder: "مثال: اسم الجامعة",
+    fieldOfStudyPlaceholder: "مثال: علوم الحاسوب",
+    
+    // Step 4: Skills & Languages
+    skillsLanguages: "المهارات واللغات",
+    showcaseExpertise: "استعرض خبرتك",
+    technicalSkills: "المهارات التقنية",
+    languages: "اللغات",
+    addLanguage: "إضافة لغة",
+    skillPlaceholder: "اكتب مهارة واضغط Enter",
+    languagePlaceholder: "اللغة (مثال: الإنجليزية)",
+    proficiency: "مستوى الإتقان",
+    native: "اللغة الأم",
+    fluent: "طلاقة",
+    professional: "مهني",
+    limited: "محدود",
+    
+    // Actions
+    saveCV: "حفظ السيرة الذاتية",
+    
+    // Validation Messages
+    titleRequired: "المسمى الوظيفي مطلوب",
+    summaryRequired: "الملخص المهني مطلوب",
+    positionRequired: "المنصب مطلوب",
+    companyRequired: "الشركة مطلوبة",
+    degreeRequired: "الدرجة العلمية مطلوبة",
+    institutionRequired: "المؤسسة التعليمية مطلوبة",
+    summaryMinLength: "يرجى تقديم 50 حرفًا على الأقل لتوليد ملخص قوي.",
+    
+    // Download Modal
+    cvReady: "سيرتك الذاتية جاهزة",
+    downloadPrompt: "هل تريد تحميل ملف .docx المُنشئ الآن؟",
+    goToDashboard: "الذهاب للوحة التحكم",
+    downloadGo: "تحميل والذهاب",
+//cv generator v1
+    contactInformation: "معلومات الاتصال",
+        mobile: "الجوال",
+        email: "البريد الإلكتروني",
+        github: "جيت هاب",
+        linkedin: "لينكد إن",
+        professionalSummary: "ملخص مهني",
+        workExperience: "الخبرة العملية",
+        education: "التعليم",
+        graduated: "تاريخ التخرج",
+        skills: "المهارات",
+        languagesDatabases: "اللغات وقواعد البيانات",
+        toolsTechnologies: "الأدوات والتقنيات",
+        coreCompetencies: "الكفاءات الأساسية",
+        professionalSkills: "المهارات المهنية",
+        languages: "اللغات",
+
+        // CVPrompt Translations
+  welcomeToGradJob: "مرحباً بك في GradJob!",
+  setupProfilePrompt: "لنقم بإعداد ملفك الشخصي لمساعدتك في العثور على أفضل الفرص",
+  haveCVQuestion: "هل تمتلك سيرة ذاتية؟",
+  cvBenefits: "امتلاك سيرة ذاتية كاملة يزيد من فرصك في الحصول على وظيفة بنسبة 80%",
+  iHaveCV: "لدي سيرة ذاتية",
+  uploadExistingCV: "ارفع سيرتك الذاتية الحالية وسنساعدك في تحسينها",
+  uploadingCV: "جاري رفع سيرتك الذاتية...",
+  uploading: "جاري الرفع...",
+  uploadCV: "رفع السيرة الذاتية",
+  createNewCV: "إنشاء سيرة ذاتية جديدة",
+  createCVDescription: "أنشئ سيرة ذاتية متوافقة مع أنظمة التتبع باستخدام منشئنا المدعوم بالذكاء الاصطناعي",
+  startBuilding: "بدء الإنشاء",
+  doThisLater: "سأفعل هذا لاحقاً",
+  whyCreateCVNow: "لماذا تنشئ سيرة ذاتية الآن؟",
+  benefit1: "احصل على مطابقة مع فرص العمل المناسبة",
+  benefit2: "تميز أمام أصحاب العمل بتنسيق متوافق مع أنظمة التتبع",
+  benefit3: "وفر الوقت مع اقتراحات مدعومة بالذكاء الاصطناعي",
+  benefit4: "قم بالتحديث في أي وقت من لوحة التحكم",
+  recommended: "مُوصى به",
+  pleaseLoginToUploadCV: "يرجى تسجيل الدخول لرفع سيرتك الذاتية.",
+  uploadFailed: "فشل في رفع السيرة الذاتية. يرجى المحاولة مرة أخرى.",
+  sessionExpired: "انتهت جلستك. يرجى تسجيل الدخول لرفع سيرتك الذاتية.",
+
+  // Privacy Policy Translations
+  privacyPolicy: "سياسة الخصوصية",
+  lastUpdated: "آخر تحديث",
+  september2025: "سبتمبر 2025",
+  privacyPriority: "خصوصيتك هي أولويتنا. تعرف على كيفية حماية بياناتك.",
+  privacyIntroduction: "المقدمة",
+  privacyIntro1: "في",
+  privacyIntro2: "، نأخذ خصوصيتك على محمل الجد. تشرح سياسة الخصوصية هذه كيف يقوم فريق QX بجمع واستخدام وكشف وحماية معلوماتك عند استخدامك لتطبيق GradJob وخدماتنا.",
+  privacyIntro3: "باستخدام GradJob، فإنك توافق على ممارسات البيانات الموضحة في هذه السياسة. إذا لم توافق على شروط هذه السياسة، يرجى عدم الوصول إلى خدماتنا أو استخدامها.",
+  informationWeCollect: "المعلومات التي نجمعها",
+  personalInformation: "المعلومات الشخصية",
+  personalInfoDesc: "قد نجمع المعلومات الشخصية التي تقدمها لنا طواعية، بما في ذلك:",
+  personalInfo1: "الاسم الكامل ومعلومات الاتصال",
+  personalInfo2: "عنوان البريد الإلكتروني وكلمة المرور",
+  personalInfo3: "محتويات السيرة الذاتية والتاريخ الوظيفي",
+  personalInfo4: "الخلفية التعليمية والمؤهلات",
+  personalInfo5: "تفضيلات الوظائف ومعايير البحث",
+  automaticallyCollected: "المعلومات المجمعة تلقائياً",
+  autoCollectedDesc: "عند استخدام GradJob، نقوم تلقائياً بجمع معلومات معينة، بما في ذلك:",
+  autoCollected1: "معلومات الجهاز وعنوان IP",
+  autoCollected2: "أنماط الاستخدام وتفاعلات الميزات",
+  autoCollected3: "بيانات أداء التطبيق",
+  autoCollected4: "الكوكيز والتقنيات المماثلة",
+  howWeUseInfo: "كيف نستخدم معلوماتك",
+  infoUsageDesc: "نستخدم المعلومات التي نجمعها لأغراض مختلفة، بما في ذلك:",
+  infoUsage1: "توفير خدماتنا والحفاظ عليها",
+  infoUsage2: "إنشاء وتحسين سيرتك الذاتية",
+  infoUsage3: "مطابقتك مع فرص العمل المناسبة",
+  infoUsage4: "تحسين ميزاتنا المدعومة بالذكاء الاصطناعي",
+  infoUsage5: "التواصل معك حول التحديثات والميزات",
+  infoUsage6: "ضمان أمان التطبيق ومنع الاحتيال",
+  infoUsage7: "الامتثال للالتزامات القانونية",
+  dataSharing: "مشاركة البيانات والإفصاح",
+  dataSharingDesc: "لا نبيع معلوماتك الشخصية لأطراف ثالثة. قد نشارك معلوماتك في الظروف التالية:",
+  withConsent: "بموافقتك",
+  withConsentDesc: "قد نشارك سيرتك الذاتية ومعلومات ملفك الشخصي مع أصحاب العمل المحتملين فقط عندما تسمح لنا بذلك صراحةً.",
+  serviceProviders: "مزودو الخدمة",
+  serviceProvidersDesc: "قد نستخدم شركات خارجية لتسهيل خدمتنا، أو تقديم الخدمة نيابة عنا، أو مساعدتنا في تحليل كيفية استخدام خدمتنا.",
+  legalRequirements: "المتطلبات القانونية",
+  legalRequirementsDesc: "قد نكشف عن معلوماتك عندما يقتضي القانون ذلك أو استجابة لطلبات صالحة من السلطات العامة.",
+  dataSecurity: "أمان البيانات",
+  dataSecurityDesc: "ننفذ تدابير أمنية فنية وتنظيمية مناسبة لحماية معلوماتك الشخصية من الوصول غير المصرح به أو التعديل أو الكشف أو التدمير. تشمل هذه التدابير:",
+  securityMeasure1: "تشفير البيانات الحساسة أثناء النقل والتخزين",
+  securityMeasure2: "التقييمات والتحديثات الأمنية المنتظمة",
+  securityMeasure3: "ضوابط الوصول وآليات المصادقة",
+  securityMeasure4: "ممارسات التخزين الآمن للبيانات",
+  yourRights: "حقوقك",
+  yourRightsDesc: "لديك حقوق معينة فيما يتعلق بمعلوماتك الشخصية، بما في ذلك:",
+  right1: "الحق في الوصول إلى بياناتك ومراجعتها",
+  right2: "الحق في تصحيح المعلومات غير الدقيقة",
+  right3: "الحق في حذف حسابك وبياناتك",
+  right4: "الحق في سحب الموافقة",
+  right5: "الحق في نقل البيانات",
+  right6: "الحق في الاعتراض على المعالجة",
+  exerciseRights: "لممارسة هذه الحقوق، يرجى الاتصال بنا على",
+  dataRetention: "احتفاظ البيانات",
+  dataRetentionDesc: "نحتفظ بمعلوماتك الشخصية فقط طالما كان ذلك ضرورياً لتحقيق الأغراض الموضحة في سياسة الخصوصية هذه، ما لم تكن هناك فترة احتفاظ أطول مطلوبة أو مسموح بها بموجب القانون.",
+  internationalTransfers: "التحويلات الدولية",
+  internationalTransfersDesc: "قد يتم نقل معلوماتك والاحتفاظ بها على أجهزة كمبيوتر تقع خارج ولايتك أو مقاطعتك أو بلدك أو ولاية قضائية حكومية أخرى حيث قد تختلف قوانين حماية البيانات عن تلك الموجودة في ولايتك القضائية.",
+  childrenPrivacy: "خصوصية الأطفال",
+  childrenPrivacyDesc: "خدمتنا غير مخصصة للأفراد الذين تقل أعمارهم عن 16 عاماً. نحن لا نجمع عن علم المعلومات الشخصية من الأطفال دون سن 16. إذا علمنا أننا جمعنا معلومات شخصية من طفل دون سن 16، فسنتخذ خطوات لحذف هذه المعلومات.",
+  policyChanges: "التغييرات على هذه السياسة",
+  policyChangesDesc: "قد نقوم بتحديث سياسة الخصوصية الخاصة بنا من وقت لآخر. سنخطرك بأي تغييرات عن طريق نشر سياسة الخصوصية الجديدة على هذه الصفحة وتحديث تاريخ 'آخر تحديث'.",
+  privacyQuestions: "إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه أو ممارسات البيانات الخاصة بنا، يرجى الاتصال بنا:",
+  teamQXGradJob: "فريق QX - GradJob",
+  support: "الدعم",
+  privacyEffective: "سارية سياسة الخصوصية هذه اعتباراً من ديسمبر 2024 وستظل سارية المفعول فيما عدا أي تغييرات في أحكامها في المستقبل، والتي ستكون سارية المفعول فور نشرها على هذه الصفحة.",
+  privacyCopyright: "© 2024 QX — مجموعة التنفيذ السريع | خصوصيتك، التزامنا",
+
+
+  // Terms of Service Translations
+  termsOfService: "شروط الخدمة",
+  termsIntroduction: "المقدمة",
+  termsIntro1: "مرحباً بك في GradJob! تحكم شروط الخدمة هذه ('الشروط') استخدامك لتطبيق GradJob والخدمات المقدمة من فريق QX. من خلال الوصول إلى GradJob أو استخدامه، فإنك توافق على الالتزام بهذه الشروط.",
+  termsIntro2: "إذا لم توافق على هذه الشروط، يرجى عدم استخدام خدماتنا. نحتفظ بالحق في تعديل هذه الشروط في أي وقت، وستكون هذه التعديلات سارية المفعول فور نشرها.",
+  acceptanceOfTerms: "قبول الشروط",
+  acceptanceDesc: "من خلال إنشاء حساب أو استخدام GradJob، فإنك تقر بأنك قد قرأت وفهمت وتوافق على الالتزام بهذه الشروط. يجب أن تكون على الأقل 16 عاماً لاستخدام خدماتنا.",
+  userAccounts: "حسابات المستخدمين",
+  accountAgreement: "عند إنشاء حساب مع GradJob، فإنك توافق على:",
+  accountReq1: "تقديم معلومات دقيقة وكاملة",
+  accountReq2: "الحفاظ على أمان كلمة المرور الخاصة بك",
+  accountReq3: "تحمل المسؤولية عن جميع الأنشطة تحت حسابك",
+  accountReq4: "إخطارنا فوراً بأي استخدام غير مصرح به",
+  acceptableUse: "الاستخدام المقبول",
+  acceptableUseDesc: "تتعهد بعدم استخدام GradJob لـ:",
+  useProhibition1: "انتهاك أي قوانين أو لوائح سارية",
+  useProhibition2: "التعدي على حقوق الملكية الفكرية",
+  useProhibition3: "مضايقة المستخدمين الآخرين أو إساءة معاملتهم أو إيذائهم",
+  useProhibition4: "توزيع البرامج الضارة أو التعليمات البرمجية الخبيثة",
+  useProhibition5: "محاولة الحصول على وصول غير مصرح به لأنظمتنا",
+  intellectualProperty: "الملكية الفكرية",
+  ipDescription1: "تطبيق GradJob، بما في ذلك جميع الكود المصدري وقواعد البيانات والوظائف والبرامج وتصميمات المواقع والصوت والفيديو والنصوص والصور الفوتوغرافية والرسومات، مملوكة لفريق QX ومحمية بقوانين حقوق النشر وقوانين الملكية الفكرية الأخرى.",
+  ipDescription2: "تحتفظ بملكية جميع المحتوى الذي تنشئه باستخدام GradJob، بما في ذلك السير الذاتية وطلبات التوظيف. ومع ذلك، باستخدام خدماتنا، فإنك تمنحنا ترخيصاً عالمياً غير حصري وخالياً من الإتاوات لاستخدام محتواك واستنساخه وعرضه فقط لغرض تقديم خدماتنا لك.",
+  userContent: "محتوى المستخدم",
+  userContentDesc1: "أنت المسؤول الوحيد عن المحتوى الذي تنشئه وتشاركه من خلال GradJob. توافق على أن محتواك لن:",
+  contentProhibition1: "ينتهك أي حقوق لأطراف ثالثة",
+  contentProhibition2: "يحتوي على معلومات كاذبة أو مضللة",
+  contentProhibition3: "يكون غير قانوني أو مسيئاً أو غير لائق",
+  contentRemoval: "نحتفظ بالحق في إزالة أي محتوى ينتهك هذه الشروط دون إشعار مسبق.",
+  aiServices: "الخدمات المدعومة بالذكاء الاصطناعي",
+  aiServicesDesc: "يستخدم GradJob الذكاء الاصطناعي لتقديم خدمات بناء السيرة الذاتية ومطابقة الوظائف. أنت تقر بأن:",
+  aiAcknowledgment1: "يجب مراجعة المحتوى الذي يولده الذكاء الاصطناعي للتأكد من دقته",
+  aiAcknowledgment2: "مطابقات الوظائف هي اقتراحات تعتمد على الخوارزميات",
+  aiAcknowledgment3: "لا يمكننا ضمان نتائج التوظيف",
+  privacyAndData: "الخصوصية والبيانات",
+  privacyDesc1: "خصوصيتك مهمة بالنسبة لنا. تشرح سياسة الخصوصية الخاصة بنا كيف نجمع معلوماتك الشخصية ونستخدمها ونحميها. باستخدام GradJob، فإنك توافق على ممارسات البيانات الخاصة بنا كما هو موضح في سياسة الخصوصية.",
+  privacyDesc2: "ننفذ إجراءات أمنية لحماية بياناتك، لكن لا يمكننا ضمان الأمان المطلق. أنت مسؤول عن الحفاظ على سرية معلومات حسابك.",
+  thirdPartyServices: "خدمات الطرف الثالث",
+  thirdPartyDesc1: "قد يدمج GradJob مع خدمات الطرف الثالث مثل LinkedIn وGoogle Jobs ومنصات الوظائف الأخرى. هذه الخدمات لها شروط وسياسات خصوصية خاصة بها، ونحن لسنا مسؤولين عن محتواها أو ممارساتها.",
+  thirdPartyDesc2: "أنت مسؤول عن الامتثال لشروط أي خدمات تابعة لجهات خارجية تصل إليها من خلال GradJob.",
+  termination: "إنهاء الخدمة",
+  terminationDesc1: "يجوز لنا تعليق حسابك أو إنهاؤه وفقاً لتقديرنا الخاص إذا انتهكت هذه الشروط أو لأي سبب آخر. يمكنك أيضاً إنهاء حسابك في أي وقت عن طريق الاتصال بنا أو استخدام ميزة حذف الحساب.",
+  terminationDesc2: "عند الإنهاء، سيتوقف حقك في استخدام GradJob على الفور، ويمكننا حذف بيانات حسابك وفقاً لسياسات الاحتفاظ بالبيانات الخاصة بنا.",
+  disclaimerWarranties: "إخلاء مسؤولية الضمانات",
+  warrantiesDesc: "يتم توفير GradJob 'كما هو' و'كما هو متاح' دون أي ضمانات من أي نوع. نحن لا نضمن أن:",
+  warranty1: "ستكون الخدمة غير منقطعة أو خالية من الأخطاء",
+  warranty2: "ستؤدي مطابقات الوظائف إلى التوظيف",
+  warranty3: "ستجتاز السير الذاتية أنظمة ATS محددة",
+  limitationLiability: "تحديد المسؤولية",
+  liabilityDesc: "إلى أقصى حد يسمح به القانون، لا يكون فريق QX مسؤولاً عن أي أضرار غير مباشرة أو عرضية أو خاصة أو تبعية أو عقابية ناتجة عن:",
+  liability1: "استخدامك أو عدم قدرتك على استخدام GradJob",
+  liability2: "أي سلوك أو محتوى من أطراف ثالثة",
+  liability3: "الوصول غير المصرح به إلى بياناتك أو استخدامها",
+  liability4: "أي أخطاء أو سهو في خدماتنا",
+  governingLaw: "القانون الحاكم",
+  governingLawDesc: "يخضع هذه الشروط ويتم تفسيرها وفقاً لقوانين الولاية القضائية التي يوجد فيها فريق QX، دون اعتبار لأحكام تنازع القوانين الخاصة بها.",
+  changesToTerms: "التغييرات على الشروط",
+  changesDesc1: "قد نقوم بتحديث هذه الشروط من وقت لآخر. سنخطرك بأي تغييرات عن طريق نشر الشروط الجديدة على هذه الصفحة وتحديث تاريخ 'آخر تحديث'.",
+  changesDesc2: "يُعد استمرارك في استخدام GradJob بعد أي تغييرات موافقة منك على الشروط الجديدة.",
+  termsQuestions: "إذا كان لديك أي أسئلة حول شروط الخدمة هذه، يرجى الاتصال بنا:",
+  viewPrivacyPolicy: "عرض سياسة الخصوصية",
+  termsEffective: "سارية شروط الخدمة هذه اعتباراً من ديسمبر 2024. باستخدام GradJob، فإنك تقر بأنك قد قرأت وفهمت وتوافق على الالتزام بهذه الشروط."
+
+
+
+  }
+  };

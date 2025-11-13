@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext"; // <<< يجب يكون قبل الـ hooks
 import authService from "../services/authService";
 import {
   Eye,
@@ -16,6 +17,7 @@ import "./Login.css";
 import { ValidEmail, ValidPassword } from "../ValidInputs";
 
 const Login = () => {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [mode, setMode] = useState("login");
   const [formData, setFormData] = useState({
@@ -57,15 +59,15 @@ const Login = () => {
     const newErrors = {};
 
     if (mode !== "forgot" && !ValidEmail(formData.email)) {
-      newErrors.email = "Please enter a valid email address.";
+      newErrors.email = t('validEmail');
     }
 
     if (mode === "login" && !ValidPassword(formData.password)) {
-      newErrors.password = "Please enter a valid password.";
+      newErrors.password = t('validPassword');
     }
 
     if (mode === "forgot" && !ValidEmail(formData.email)) {
-      newErrors.email = "Please enter a valid email.";
+      newErrors.email = t('validEmail');
     }
 
     setErrors(newErrors);
@@ -88,22 +90,22 @@ const Login = () => {
         if (response.success) {
           navigate('/');
         } else {
-          setApiError(response.message || 'Login failed. Please check your credentials.');
+          setApiError(response.message || t('loginFailed'));
         }
       } else if (mode === "forgot") {
         // Handle forgot password logic
         const response = await authService.forgotPassword(formData.email);
         
         if (response.success) {
-          alert('Password reset link has been sent to your email.');
+          alert(t('resetLinkSent'));
           setMode("login");
         } else {
-          setApiError(response.message || 'Failed to send reset link. Please try again.');
+          setApiError(response.message || t('resetLinkFailed'));
         }
       }
     } catch (error) {
       console.error(`${mode} error:`, error);
-      setApiError(error.message || 'An unexpected error occurred. Please try again.');
+      setApiError(error.message || t('unexpectedError'));
     } finally {
       setIsLoading(false);
     }
@@ -126,15 +128,15 @@ const Login = () => {
 
   const formConfig = {
     login: {
-      title: "Welcome Back to GradJob",
-      subtitle: "Your career starts here – build resumes, apply, and succeed.",
-      buttonText: "Login",
+      title: t('welcomeBack'),
+      subtitle: t('loginSubtitle'),
+      buttonText: t('loginButton'),
       fields: ["email", "password"],
     },
     forgot: {
-      title: "Reset Your Password",
-      subtitle: "Enter your email and we'll send you a reset link.",
-      buttonText: "Send Reset Link",
+      title: t('forgotPasswordTitle'),
+      subtitle: t('forgotPasswordSubtitle'),
+      buttonText: t('sendResetLink'),
       fields: ["email"],
     },
   };
@@ -157,8 +159,8 @@ const Login = () => {
             onChange={(e) => handleChange(field, e.target.value)}
             placeholder={
               field === "email"
-                ? "Enter your email"
-                : "Enter your password"
+                ? t('enterEmail')
+                : t('enterPassword')
             }
             className="form-input"
             required
@@ -253,7 +255,7 @@ const Login = () => {
                   onClick={() => switchMode("forgot")} 
                   className="link-btn"
                 >
-                  Forgot Password?
+                  {t('forgotPassword')}
                 </button>
               </div>
             )}
@@ -265,7 +267,7 @@ const Login = () => {
             >
               <span>
                 {isLoading 
-                  ? (mode === "login" ? 'Logging in...' : 'Sending...') 
+                  ? (mode === "login" ? t('loggingIn') : t('sending')) 
                   : config.buttonText
                 }
               </span>
@@ -279,19 +281,19 @@ const Login = () => {
                 onClick={() => switchMode("login")} 
                 className="link-btn"
               >
-                Back to Login
+                {t('backToLogin')}
               </button>
             )}
             
             <div className="divider">
-              <span>Don't have an account?</span>
+              <span>{t('dontHaveAccount')}</span>
             </div>
             
             <button
               onClick={redirectToSignUp}
               className="signup-redirect-btn"
             >
-              Create New Account
+              {t('createNewAccount')}
               <ArrowRight size={16} />
             </button>
           </div>

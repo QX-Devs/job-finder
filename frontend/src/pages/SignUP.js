@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import authService from '../services/authService';
 import { User, Mail, Lock, Phone, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import './SignUP.css';
 
 const SignUP = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -26,41 +29,41 @@ const SignUP = () => {
 
     // Full Name validation
     if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Full name is required';
+      newErrors.fullName = t('fullNameRequired');
     } else if (formData.fullName.trim().length < 2) {
-      newErrors.fullName = 'Name must be at least 2 characters';
+      newErrors.fullName = t('nameTooShort');
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('requiredField');
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = t('validEmail');
     }
 
     // Phone validation
     const phoneRegex = /^[0-9]{10,15}$/;
     if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
+      newErrors.phone = t('phoneRequired');
     } else if (!phoneRegex.test(formData.phone.replace(/[\s-]/g, ''))) {
-      newErrors.phone = 'Please enter a valid phone number (10-15 digits)';
+      newErrors.phone = t('invalidPhone');
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = t('requiredField');
     } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
+      newErrors.password = t('passwordTooShort');
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      newErrors.password = 'Password must contain uppercase, lowercase, and number';
+      newErrors.password = t('passwordRequirements');
     }
 
     // Confirm Password validation
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
+      newErrors.confirmPassword = t('confirmPasswordRequired');
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = t('passwordsDontMatch');
     }
 
     setErrors(newErrors);
@@ -106,7 +109,7 @@ const SignUP = () => {
         navigate('/cv-prompt');
       }
     } catch (error) {
-      setApiError(error.message || 'Registration failed. Please try again.');
+      setApiError(error.message || t('registrationFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -119,8 +122,8 @@ const SignUP = () => {
           <div className="logo-circle">
             <CheckCircle size={40} />
           </div>
-          <h1>Create Your Account</h1>
-          <p>Join GradJob and start your career journey today</p>
+          <h1>{t('createAccount')}</h1>
+          <p>{t('joinGradJob')}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="signup-form">
@@ -128,7 +131,7 @@ const SignUP = () => {
           <div className="form-group">
             <label htmlFor="fullName">
               <User size={18} />
-              Full Name
+              {t('fullName')}
             </label>
             <input
               type="text"
@@ -136,7 +139,7 @@ const SignUP = () => {
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              placeholder="Enter your full name"
+              placeholder={t('enterFullName')}
               className={errors.fullName ? 'error' : ''}
             />
             {errors.fullName && <span className="error-message">{errors.fullName}</span>}
@@ -146,7 +149,7 @@ const SignUP = () => {
           <div className="form-group">
             <label htmlFor="email">
               <Mail size={18} />
-              Email Address
+              {t('email')}
             </label>
             <input
               type="email"
@@ -154,7 +157,7 @@ const SignUP = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email"
+              placeholder={t('enterEmail')}
               className={errors.email ? 'error' : ''}
             />
             {errors.email && <span className="error-message">{errors.email}</span>}
@@ -164,7 +167,7 @@ const SignUP = () => {
           <div className="form-group">
             <label htmlFor="phone">
               <Phone size={18} />
-              Phone Number
+              {t('phoneNumber')}
             </label>
             <input
               type="tel"
@@ -172,7 +175,7 @@ const SignUP = () => {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              placeholder="Enter your phone number"
+              placeholder={t('enterPhone')}
               className={errors.phone ? 'error' : ''}
             />
             {errors.phone && <span className="error-message">{errors.phone}</span>}
@@ -182,7 +185,7 @@ const SignUP = () => {
           <div className="form-group">
             <label htmlFor="password">
               <Lock size={18} />
-              Password
+              {t('password')}
             </label>
             <div className="password-input">
               <input
@@ -191,7 +194,7 @@ const SignUP = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Create a strong password"
+                placeholder={t('createStrongPassword')}
                 className={errors.password ? 'error' : ''}
               />
               <button
@@ -209,7 +212,7 @@ const SignUP = () => {
           <div className="form-group">
             <label htmlFor="confirmPassword">
               <Lock size={18} />
-              Confirm Password
+              {t('confirmPassword')}
             </label>
             <div className="password-input">
               <input
@@ -218,7 +221,7 @@ const SignUP = () => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                placeholder="Confirm your password"
+                placeholder={t('confirmYourPassword')}
                 className={errors.confirmPassword ? 'error' : ''}
               />
               <button
@@ -244,18 +247,18 @@ const SignUP = () => {
             {isLoading ? (
               <>
                 <span className="spinner"></span>
-                Creating Account...
+                {t('creatingAccount')}
               </>
             ) : (
               <>
-                Create Account
+                {t('createAccount')}
               </>
             )}
           </button>
 
           {/* Login Link */}
           <div className="form-footer">
-            Already have an account? <a href="/login">Login here</a>
+            {t('alreadyHaveAccount')} <a href="/login">{t('loginHere')}</a>
           </div>
         </form>
       </div>
@@ -263,27 +266,27 @@ const SignUP = () => {
       {/* Side Panel */}
       <div className="signup-side-panel">
         <div className="panel-content">
-          <h2>Welcome to GradJob</h2>
+          <h2>{t('welcomeToGradJob')}</h2>
           <div className="benefits">
             <div className="benefit-item">
               <CheckCircle size={24} />
               <div>
-                <h3>Build Your CV</h3>
-                <p>Create an ATS-friendly resume in minutes</p>
+                <h3>{t('buildYourCV')}</h3>
+                <p>{t('buildCVDesc')}</p>
               </div>
             </div>
             <div className="benefit-item">
               <CheckCircle size={24} />
               <div>
-                <h3>Find Jobs</h3>
-                <p>Access thousands of job opportunities</p>
+                <h3>{t('findJobs')}</h3>
+                <p>{t('findJobsDesc')}</p>
               </div>
             </div>
             <div className="benefit-item">
               <CheckCircle size={24} />
               <div>
-                <h3>AI-Powered</h3>
-                <p>Get personalized career recommendations</p>
+                <h3>{t('aiPowered')}</h3>
+                <p>{t('aiPoweredDesc')}</p>
               </div>
             </div>
           </div>

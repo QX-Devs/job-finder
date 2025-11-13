@@ -4,17 +4,19 @@ import { FileText, Plus, ArrowRight } from 'lucide-react';
 import './CVPrompt.css';
 import resumeService from '../services/resumeService';
 import authService from '../services/authService';
+import { useLanguage } from '../context/LanguageContext';
 
 const CVPrompt = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
+  const { t, isRTL } = useLanguage();
 
   const handleHaveCV = () => {
     setError('');
     if (!authService.isAuthenticated()) {
-      setError('Please log in to upload your CV.');
+      setError(t('pleaseLoginToUploadCV'));
       navigate('/');
       return;
     }
@@ -33,14 +35,14 @@ const CVPrompt = () => {
       if (result?.success) {
         navigate('/dashboard');
       } else {
-        setError('Failed to upload CV. Please try again.');
+        setError(t('uploadFailed'));
       }
     } catch (e) {
       if (e?.status === 401) {
-        setError('Your session has expired. Please log in to upload your CV.');
+        setError(t('sessionExpired'));
         navigate('/');
       } else {
-        setError(e?.message || 'Failed to upload CV.');
+        setError(e?.message || t('uploadFailed'));
       }
     } finally {
       setIsUploading(false);
@@ -66,61 +68,61 @@ const CVPrompt = () => {
           <div className="icon-circle">
             <FileText size={48} />
           </div>
-          <h1>Welcome to GradJob!</h1>
-          <p>Let's set up your profile to help you find the best opportunities</p>
+          <h1>{t('welcomeToGradJob')}</h1>
+          <p>{t('setupProfilePrompt')}</p>
         </div>
 
         <div className="prompt-content">
-          <h2>Do you have a CV/Resume?</h2>
+          <h2>{t('haveCVQuestion')}</h2>
           <p className="subtitle">
-            Having a complete CV increases your chances of getting hired by 80%
+            {t('cvBenefits')}
           </p>
 
           <div className="options-grid">
-          <button className="option-card" onClick={handleHaveCV} disabled={isUploading}>
+            <button className="option-card" onClick={handleHaveCV} disabled={isUploading}>
               <div className="option-icon">
                 <FileText size={32} />
               </div>
-            <h3>I have a CV</h3>
-            <p>{isUploading ? 'Uploading your CV...' : "Upload your existing CV and we'll help you optimize it"}</p>
+              <h3>{t('iHaveCV')}</h3>
+              <p>{isUploading ? t('uploadingCV') : t('uploadExistingCV')}</p>
               <div className="option-footer">
-              <span>{isUploading ? 'Uploading...' : 'Upload CV'}</span>
+                <span>{isUploading ? t('uploading') : t('uploadCV')}</span>
                 <ArrowRight size={18} />
               </div>
             </button>
 
             <button className="option-card featured" onClick={handleCreateCV}>
-              <div className="featured-badge">Recommended</div>
+              <div className="featured-badge">{t('recommended')}</div>
               <div className="option-icon">
                 <Plus size={32} />
               </div>
-              <h3>Create a New CV</h3>
-              <p>Build an ATS-friendly CV with our AI-powered generator</p>
+              <h3>{t('createNewCV')}</h3>
+              <p>{t('createCVDescription')}</p>
               <div className="option-footer">
-                <span>Start Building</span>
+                <span>{t('startBuilding')}</span>
                 <ArrowRight size={18} />
               </div>
             </button>
           </div>
 
-        {error && (
-          <div className="error-message" role="alert" style={{ marginTop: 12 }}>
-            {error}
-          </div>
-        )}
+          {error && (
+            <div className="error-message" role="alert" style={{ marginTop: 12 }}>
+              {error}
+            </div>
+          )}
 
           <button className="skip-button" onClick={handleSkip}>
-            I'll do this later
+            {t('doThisLater')}
           </button>
         </div>
 
         <div className="benefits-section">
-          <h3>Why create a CV now?</h3>
+          <h3>{t('whyCreateCVNow')}</h3>
           <ul>
-            <li>✓ Get matched with relevant job opportunities</li>
-            <li>✓ Stand out to employers with an ATS-optimized format</li>
-            <li>✓ Save time with AI-powered suggestions</li>
-            <li>✓ Update anytime from your dashboard</li>
+            <li>✓ {t('benefit1')}</li>
+            <li>✓ {t('benefit2')}</li>
+            <li>✓ {t('benefit3')}</li>
+            <li>✓ {t('benefit4')}</li>
           </ul>
         </div>
       </div>

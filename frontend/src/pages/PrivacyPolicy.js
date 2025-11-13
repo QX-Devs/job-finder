@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import './PrivacyPolicy.css';
 
 const PrivacyPolicy = () => {
   const sectionRefs = useRef([]);
+  const { t, direction } = useLanguage();
 
   useEffect(() => {
     const observerOptions = {
@@ -29,17 +31,14 @@ const PrivacyPolicy = () => {
     {
       id: 'introduction',
       icon: '🔒',
-      title: 'Introduction',
+      title: t('privacyIntroduction'),
       content: (
         <>
           <p className="policy-text">
-            At <span className="highlight">GradJob</span>, we take your privacy seriously. This Privacy Policy explains how Team QX 
-            collects, uses, discloses, and safeguards your information when you use our GradJob 
-            application and services.
+            {t('privacyIntro1')} <span className="highlight">GradJob</span> {t('privacyIntro2')}
           </p>
           <p className="policy-text">
-            By using GradJob, you consent to the data practices described in this policy. 
-            If you do not agree with the terms of this policy, please do not access or use our services.
+            {t('privacyIntro3')}
           </p>
         </>
       )
@@ -47,33 +46,33 @@ const PrivacyPolicy = () => {
     {
       id: 'collection',
       icon: '📊',
-      title: 'Information We Collect',
+      title: t('informationWeCollect'),
       content: (
         <>
           <div className="subsection">
-            <h3 className="subsection-title">Personal Information</h3>
+            <h3 className="subsection-title">{t('personalInformation')}</h3>
             <p className="policy-text">
-              We may collect personal information that you voluntarily provide to us, including:
+              {t('personalInfoDesc')}
             </p>
             <ul className="policy-list">
-              <li>Full name and contact information</li>
-              <li>Email address and password</li>
-              <li>Resume/CV content and employment history</li>
-              <li>Educational background and qualifications</li>
-              <li>Job preferences and search criteria</li>
+              <li>{t('personalInfo1')}</li>
+              <li>{t('personalInfo2')}</li>
+              <li>{t('personalInfo3')}</li>
+              <li>{t('personalInfo4')}</li>
+              <li>{t('personalInfo5')}</li>
             </ul>
           </div>
 
           <div className="subsection">
-            <h3 className="subsection-title">Automatically Collected Information</h3>
+            <h3 className="subsection-title">{t('automaticallyCollected')}</h3>
             <p className="policy-text">
-              When you use GradJob, we automatically collect certain information, including:
+              {t('autoCollectedDesc')}
             </p>
             <ul className="policy-list">
-              <li>Device information and IP address</li>
-              <li>Usage patterns and feature interactions</li>
-              <li>Application performance data</li>
-              <li>Cookies and similar technologies</li>
+              <li>{t('autoCollected1')}</li>
+              <li>{t('autoCollected2')}</li>
+              <li>{t('autoCollected3')}</li>
+              <li>{t('autoCollected4')}</li>
             </ul>
           </div>
         </>
@@ -82,20 +81,20 @@ const PrivacyPolicy = () => {
     {
       id: 'usage',
       icon: '🎯',
-      title: 'How We Use Your Information',
+      title: t('howWeUseInfo'),
       content: (
         <>
           <p className="policy-text">
-            We use the information we collect for various purposes, including:
+            {t('infoUsageDesc')}
           </p>
           <ul className="policy-list">
-            <li>To provide and maintain our services</li>
-            <li>To create and optimize your resume/CV</li>
-            <li>To match you with relevant job opportunities</li>
-            <li>To improve our AI-powered features</li>
-            <li>To communicate with you about updates and features</li>
-            <li>To ensure application security and prevent fraud</li>
-            <li>To comply with legal obligations</li>
+            <li>{t('infoUsage1')}</li>
+            <li>{t('infoUsage2')}</li>
+            <li>{t('infoUsage3')}</li>
+            <li>{t('infoUsage4')}</li>
+            <li>{t('infoUsage5')}</li>
+            <li>{t('infoUsage6')}</li>
+            <li>{t('infoUsage7')}</li>
           </ul>
         </>
       )
@@ -103,32 +102,31 @@ const PrivacyPolicy = () => {
     {
       id: 'sharing',
       icon: '🤝',
-      title: 'Data Sharing and Disclosure',
+      title: t('dataSharing'),
       content: (
         <>
           <p className="policy-text">
-            We do not sell your personal information to third parties. We may share your information in the following circumstances:
+            {t('dataSharingDesc')}
           </p>
 
           <div className="subsection">
-            <h3 className="subsection-title">With Your Consent</h3>
+            <h3 className="subsection-title">{t('withConsent')}</h3>
             <p className="policy-text">
-              We may share your resume and profile information with potential employers only when you explicitly authorize us to do so.
+              {t('withConsentDesc')}
             </p>
           </div>
 
           <div className="subsection">
-            <h3 className="subsection-title">Service Providers</h3>
+            <h3 className="subsection-title">{t('serviceProviders')}</h3>
             <p className="policy-text">
-              We may employ third-party companies to facilitate our service, provide the service on our behalf, 
-              or assist us in analyzing how our service is used.
+              {t('serviceProvidersDesc')}
             </p>
           </div>
 
           <div className="subsection">
-            <h3 className="subsection-title">Legal Requirements</h3>
+            <h3 className="subsection-title">{t('legalRequirements')}</h3>
             <p className="policy-text">
-              We may disclose your information where required to do so by law or in response to valid requests by public authorities.
+              {t('legalRequirementsDesc')}
             </p>
           </div>
         </>
@@ -137,18 +135,17 @@ const PrivacyPolicy = () => {
     {
       id: 'security',
       icon: '🛡️',
-      title: 'Data Security',
+      title: t('dataSecurity'),
       content: (
         <>
           <p className="policy-text">
-            We implement appropriate technical and organizational security measures to protect your personal information 
-            against unauthorized access, alteration, disclosure, or destruction. These measures include:
+            {t('dataSecurityDesc')}
           </p>
           <ul className="policy-list">
-            <li>Encryption of sensitive data in transit and at rest</li>
-            <li>Regular security assessments and updates</li>
-            <li>Access controls and authentication mechanisms</li>
-            <li>Secure data storage practices</li>
+            <li>{t('securityMeasure1')}</li>
+            <li>{t('securityMeasure2')}</li>
+            <li>{t('securityMeasure3')}</li>
+            <li>{t('securityMeasure4')}</li>
           </ul>
         </>
       )
@@ -156,22 +153,22 @@ const PrivacyPolicy = () => {
     {
       id: 'rights',
       icon: '⚖️',
-      title: 'Your Rights',
+      title: t('yourRights'),
       content: (
         <>
           <p className="policy-text">
-            You have certain rights regarding your personal information, including:
+            {t('yourRightsDesc')}
           </p>
           <ul className="policy-list">
-            <li>Right to access and review your data</li>
-            <li>Right to correct inaccurate information</li>
-            <li>Right to delete your account and data</li>
-            <li>Right to withdraw consent</li>
-            <li>Right to data portability</li>
-            <li>Right to object to processing</li>
+            <li>{t('right1')}</li>
+            <li>{t('right2')}</li>
+            <li>{t('right3')}</li>
+            <li>{t('right4')}</li>
+            <li>{t('right5')}</li>
+            <li>{t('right6')}</li>
           </ul>
           <p className="policy-text highlight-text">
-            To exercise these rights, please contact us at <a href="mailto:privacy@gradjob.com" className="policy-link">privacy@gradjob.com</a>
+            {t('exerciseRights')} <a href="mailto:privacy@gradjob.com" className="policy-link">privacy@gradjob.com</a>
           </p>
         </>
       )
@@ -179,62 +176,55 @@ const PrivacyPolicy = () => {
     {
       id: 'retention',
       icon: '⏱️',
-      title: 'Data Retention',
+      title: t('dataRetention'),
       content: (
         <p className="policy-text">
-          We retain your personal information only for as long as necessary to fulfill the purposes 
-          outlined in this Privacy Policy, unless a longer retention period is required or permitted by law.
+          {t('dataRetentionDesc')}
         </p>
       )
     },
     {
       id: 'transfers',
       icon: '🌐',
-      title: 'International Transfers',
+      title: t('internationalTransfers'),
       content: (
         <p className="policy-text">
-          Your information may be transferred to and maintained on computers located outside of your 
-          state, province, country, or other governmental jurisdiction where the data protection laws 
-          may differ from those of your jurisdiction.
+          {t('internationalTransfersDesc')}
         </p>
       )
     },
     {
       id: 'children',
       icon: '👶',
-      title: "Children's Privacy",
+      title: t('childrenPrivacy'),
       content: (
         <p className="policy-text">
-          Our service is not intended for individuals under the age of 16. We do not knowingly 
-          collect personal information from children under 16. If we become aware that we have 
-          collected personal information from a child under 16, we will take steps to delete such information.
+          {t('childrenPrivacyDesc')}
         </p>
       )
     },
     {
       id: 'changes',
       icon: '📝',
-      title: 'Changes to This Policy',
+      title: t('policyChanges'),
       content: (
         <p className="policy-text">
-          We may update our Privacy Policy from time to time. We will notify you of any changes 
-          by posting the new Privacy Policy on this page and updating the "Last Updated" date.
+          {t('policyChangesDesc')}
         </p>
       )
     }
   ];
 
   return (
-    <>
     <div className="privacy-container">
       {/* Hero Section */}
       <section className="privacy-hero">
         <div className="hero-content animate-fade-in">
           <div className="hero-icon">🔐</div>
-          <h1 className="hero-title">Privacy Policy</h1>
-          <p className="hero-subtitle">Last Updated: September 2025</p>
+          <h1 className="hero-title">{t('privacyPolicy')}</h1>
+          <p className="hero-subtitle">{t('lastUpdated')}: {t('september2025')}</p>
           <div className="hero-tagline">
-            Your privacy is our priority. Learn how we protect your data.
+            {t('privacyPriority')}
           </div>
         </div>
         <div className="floating-shapes">
@@ -269,22 +259,22 @@ const PrivacyPolicy = () => {
           <div className="policy-card card-3d gradient-border">
             <div className="section-header">
               <span className="section-icon">📧</span>
-              <h2 className="section-title">Contact Us</h2>
+              <h2 className="section-title">{t('contactUs')}</h2>
             </div>
             <div className="section-content">
               <p className="policy-text">
-                If you have any questions about this Privacy Policy or our data practices, please contact us:
+                {t('privacyQuestions')}
               </p>
               <div className="contact-info">
                 <div className="contact-item">
-                  <strong>Team QX - GradJob</strong>
+                  <strong>{t('teamQXGradJob')}</strong>
                 </div>
                 <div className="contact-item">
-                  <span className="contact-label">Email:</span>
+                  <span className="contact-label">{t('email')}:</span>
                   <a href="mailto:privacy@gradjob.com" className="policy-link">privacy@gradjob.com</a>
                 </div>
                 <div className="contact-item">
-                  <span className="contact-label">Support:</span>
+                  <span className="contact-label">{t('support')}:</span>
                   <a href="mailto:support@gradjob.com" className="policy-link">support@gradjob.com</a>
                 </div>
               </div>
@@ -297,17 +287,15 @@ const PrivacyPolicy = () => {
       <footer className="privacy-footer">
         <div className="footer-content">
           <p className="footer-text">
-            This Privacy Policy is effective as of December 2024 and will remain in effect except with respect to any 
-            changes in its provisions in the future, which will be in effect immediately after being posted on this page.
+            {t('privacyEffective')}
           </p>
           <div className="footer-divider"></div>
           <p className="footer-copyright">
-            © 2024 QX – Quick Execution Group | Your privacy, our commitment
+            {t('privacyCopyright')}
           </p>
         </div>
       </footer>
     </div>
-    </>
   );
 };
 
