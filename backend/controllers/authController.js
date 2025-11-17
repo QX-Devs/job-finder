@@ -139,16 +139,40 @@ const updateProfile = async (req, res) => {
     // Update user basic info
     const updateData = {};
     if (fullName !== undefined) updateData.fullName = fullName;
-    if (phone !== undefined) updateData.phone = phone;
-    if (countryCode !== undefined) updateData.countryCode = countryCode;
-    if (github !== undefined) updateData.github = github;
-    if (linkedin !== undefined) updateData.linkedin = linkedin;
-    if (professionalSummary !== undefined) updateData.professionalSummary = professionalSummary;
+    if (phone !== undefined) updateData.phone = phone || null;
+    if (countryCode !== undefined) updateData.countryCode = countryCode || null;
+    // Handle github and linkedin - convert empty strings to null
+    if (github !== undefined) {
+      const githubValue = github && github.trim() !== '' ? github.trim() : null;
+      // Only validate URL if value is provided
+      if (githubValue && !githubValue.match(/^https?:\/\/.+/)) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'GitHub must be a valid URL (starting with http:// or https://)' 
+        });
+      }
+      updateData.github = githubValue;
+    }
+    if (linkedin !== undefined) {
+      const linkedinValue = linkedin && linkedin.trim() !== '' ? linkedin.trim() : null;
+      // Only validate URL if value is provided
+      if (linkedinValue && !linkedinValue.match(/^https?:\/\/.+/)) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'LinkedIn must be a valid URL (starting with http:// or https://)' 
+        });
+      }
+      updateData.linkedin = linkedinValue;
+    }
+    if (professionalSummary !== undefined) updateData.professionalSummary = professionalSummary || null;
     if (resumeVisibility !== undefined) updateData.resumeVisibility = resumeVisibility;
 
-    await User.update(updateData, {
-      where: { id: req.user.id }
-    });
+    // Only update if there's data to update
+    if (Object.keys(updateData).length > 0) {
+      await User.update(updateData, {
+        where: { id: req.user.id }
+      });
+    }
 
     // Update education if provided
     if (education && Array.isArray(education)) {

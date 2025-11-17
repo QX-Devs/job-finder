@@ -4,6 +4,8 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
   padding: 40px 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .cv-generator-card {
@@ -431,47 +433,205 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .cv-generator-container {
+    padding: 8px !important;
+  }
+  
   .cv-generator-card {
-    padding: 24px;
+    padding: 10px 8px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .progress-stepper {
-    margin-bottom: 30px;
+    margin-bottom: 12px !important;
+    gap: 2px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 4px !important;
+  }
+  
+  .progress-stepper::-webkit-scrollbar {
+    height: 2px !important;
+  }
+
+  .step {
+    min-width: 45px !important;
+    flex-shrink: 0 !important;
   }
 
   .step-title {
-    font-size: 0.75rem;
+    font-size: 0.6rem !important;
+    display: none !important;
+  }
+  
+  @media (min-width: 480px) {
+    .step-title {
+      display: block !important;
+    }
   }
 
   .step-number {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.75rem !important;
+    margin-bottom: 3px !important;
   }
 
   .form-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+  
+  .form-group {
+    width: 100% !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .form-group label {
+    font-size: 0.7rem !important;
+    margin-bottom: 3px !important;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100% !important;
+    min-height: 34px !important;
+    font-size: 14px !important;
+    padding: 6px 8px !important;
+  }
+  
+  .form-group textarea {
+    min-height: 70px !important;
+  }
+  
+  .skills-input {
+    flex-direction: row !important;
+    gap: 6px !important;
+  }
+  
+  .skills-input input {
+    flex: 1 !important;
+  }
+  
+  .add-skill-btn {
+    min-width: 55px !important;
+    min-height: 34px !important;
+    padding: 6px 8px !important;
+    font-size: 0.7rem !important;
+  }
+  
+  .skills-tags {
+    gap: 4px !important;
+    margin-top: 6px !important;
+  }
+  
+  .skill-tag {
+    font-size: 0.7rem !important;
+    padding: 3px 6px !important;
+  }
+  
+  .language-row {
+    flex-direction: row !important;
+    gap: 4px !important;
+    align-items: center !important;
+    margin-bottom: 6px !important;
+  }
+  
+  .language-row input {
+    flex: 2 !important;
+    min-height: 34px !important;
+  }
+  
+  .language-row select {
+    flex: 1.5 !important;
+    min-height: 34px !important;
+    font-size: 14px !important;
+  }
+  
+  .remove-lang-btn {
+    min-width: 34px !important;
+    min-height: 34px !important;
+    padding: 5px !important;
   }
 
   .step-section h2 {
-    font-size: 1.6rem;
+    font-size: 1.05rem !important;
+    margin-bottom: 10px !important;
+  }
+  
+  .step-description {
+    font-size: 0.75rem !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .step-section {
+    padding: 0 !important;
+  }
+  
+  .dynamic-section {
+    margin-bottom: 12px !important;
+    padding: 10px 8px !important;
   }
 
   .form-actions {
-    flex-wrap: wrap;
-    gap: 12px;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    padding: 8px 0 !important;
   }
 
   .back-btn,
   .next-btn,
   .save-btn {
-    flex: 1;
-    justify-content: center;
+    flex: 1 !important;
+    min-width: 70px !important;
+    min-height: 36px !important;
+    padding: 7px 10px !important;
+    font-size: 0.8rem !important;
+    justify-content: center !important;
   }
 
   .step-indicator {
-    width: 100%;
-    text-align: center;
-    order: -1;
+    width: auto !important;
+    text-align: center !important;
+    order: 0 !important;
+    margin: 0 !important;
+    font-size: 0.7rem !important;
+    padding: 0 6px !important;
+  }
+  
+  .ai-suggest-btn {
+    min-height: 28px !important;
+    padding: 5px 8px !important;
+    font-size: 0.65rem !important;
+    margin-left: 4px !important;
+  }
+  
+  .add-btn {
+    width: 100% !important;
+    min-height: 36px !important;
+    margin-top: 6px !important;
+    padding: 7px 12px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .remove-btn {
+    min-height: 28px !important;
+    padding: 5px 8px !important;
+    font-size: 0.7rem !important;
+  }
+  
+  .section-header {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 6px !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .section-header h3 {
+    font-size: 0.85rem !important;
   }
 }

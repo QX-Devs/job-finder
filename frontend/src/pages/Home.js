@@ -29,6 +29,7 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [displayCount, setDisplayCount] = useState(9);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   
   const [filters, setFilters] = useState({
     jobType: 'all',
@@ -55,6 +56,15 @@ const Home = () => {
     { id: 'sales', name: t('sales'), icon: Users, count: 0 },
     { id: 'product', name: t('product'), icon: Zap, count: 0 }
   ];
+
+  // Track window resize for mobile detection
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Mock job data with more details
   useEffect(() => {
@@ -638,7 +648,13 @@ const Home = () => {
                       <div
                         key={job.id}
                         className={`job-list-item ${selectedJob?.id === job.id ? 'active' : ''}`}
-                        onClick={() => setSelectedJob(job)}
+                        onClick={() => {
+                          setSelectedJob(job);
+                          // On mobile, navigate to Find Jobs page with details
+                          if (isMobile) {
+                            navigate('/find-jobs');
+                          }
+                        }}
                       >
                         {/* Company Logo */}
                         <div className="company-logo-small">{job.companyLogo}</div>

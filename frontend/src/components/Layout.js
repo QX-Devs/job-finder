@@ -157,6 +157,7 @@ const Layout = ({ children }) => {
   const userDropdownRef = useRef(null);
   const notificationsRef = useRef(null);
   const languageRef = useRef(null);
+  const mobileMenuRef = useRef(null);
 
   // Handle scroll effects
   useEffect(() => {
@@ -176,20 +177,44 @@ const Layout = ({ children }) => {
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (userDropdownRef.current && !userDropdownRef.current.contains(event.target)) {
-        setIsUserDropdownOpen(false);
+      // Check if click is inside dropdown (including buttons and SVGs inside)
+      const clickedInsideUserDropdown = userDropdownRef.current?.contains(event.target) || 
+                                        event.target.closest('.user-dropdown');
+      const clickedInsideNotifications = notificationsRef.current?.contains(event.target) ||
+                                         event.target.closest('.notifications-dropdown');
+      const clickedInsideMobileMenu = mobileMenuRef.current?.contains(event.target) ||
+                                      event.target.closest('.mobile-menu-content') ||
+                                      event.target.closest('.mobile-menu-toggle');
+      
+      // Don't close if clicking inside the dropdown or mobile menu
+      if (clickedInsideUserDropdown || clickedInsideNotifications || clickedInsideMobileMenu) {
+        return;
       }
-      if (notificationsRef.current && !notificationsRef.current.contains(event.target)) {
-        setIsNotificationsOpen(false);
-      }
-      if (languageRef.current && !languageRef.current.contains(event.target)) {
-        setIsUserDropdownOpen(false);
-      }
+      
+      // Close dropdowns if clicking outside
+      setIsUserDropdownOpen(false);
+      setIsNotificationsOpen(false);
+      // Don't close mobile menu on outside click - let user close it explicitly
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
   }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -407,7 +432,13 @@ const Layout = ({ children }) => {
                         })}
                       </div>
                       <div className="notifications-footer">
-                        <button onClick={() => navigate('/notifications')}>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate('/notifications');
+                            setIsNotificationsOpen(false);
+                          }}
+                        >
                           {t('viewAllNotifications')}
                         </button>
                       </div>
@@ -450,7 +481,8 @@ const Layout = ({ children }) => {
                           return (
                             <button
                               key={item.path}
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.stopPropagation();
                                 navigate(item.path);
                                 setIsUserDropdownOpen(false);
                               }}
@@ -464,7 +496,13 @@ const Layout = ({ children }) => {
                       </div>
 
                       <div className="user-dropdown-footer">
-                        <button onClick={handleLogout} className="logout-btn">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleLogout();
+                          }} 
+                          className="logout-btn"
+                        >
                           <LogOut size={18} />
                           {t('logout')}
                         </button>
@@ -498,21 +536,40 @@ const Layout = ({ children }) => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
+      </nav>
 
-        {/* Enhanced Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="mobile-menu">
-            <div className="mobile-menu-content">
+      {/* Enhanced Mobile Menu - Outside navbar for proper positioning */}
+      {isMobileMenuOpen && (
+        <div 
+          className="mobile-menu" 
+          ref={mobileMenuRef}
+          onClick={(e) => {
+            // Close menu when clicking the overlay (dark background)
+            if (e.target === e.currentTarget || e.target.classList.contains('mobile-menu')) {
+              setIsMobileMenuOpen(false);
+            }
+          }}
+        >
+          <div className="mobile-menu-content" onClick={(e) => e.stopPropagation()}>
+              {/* Close Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="mobile-menu-close"
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </button>
+
               {/* Language Toggle in Mobile Menu */}
               <div className="mobile-language-toggle">
                 <button
                   onClick={toggleLanguage}
                   className="mobile-language-btn"
                 >
-                  <Languages size={20} />
+                  <Languages size={18} />
                   <span>{language === 'en' ? 'العربية' : 'English'}</span>
                 </button>
               </div>
@@ -521,7 +578,7 @@ const Layout = ({ children }) => {
               {isLoggedIn && (
                 <div className="mobile-user-info">
                   <div className="mobile-user-avatar">
-                    <User size={24} />
+                    <User size={20} />
                   </div>
                   <div className="mobile-user-details">
                     <h4>{currentUser?.fullName || t('myAccount')}</h4>
@@ -542,7 +599,7 @@ const Layout = ({ children }) => {
                         onClick={() => navigate(link.path)}
                         className={`mobile-nav-link ${isActivePath(link.path) ? 'active' : ''}`}
                       >
-                        <Icon size={20} />
+                        <Icon size={18} />
                         {link.name}
                         {isActivePath(link.path) && <div className="mobile-active-indicator"></div>}
                       </button>
@@ -564,7 +621,7 @@ const Layout = ({ children }) => {
                           onClick={() => navigate(item.path)}
                           className="mobile-nav-link"
                         >
-                          <ItemIcon size={20} />
+                          <ItemIcon size={18} />
                           {item.name}
                         </button>
                       );
@@ -577,7 +634,7 @@ const Layout = ({ children }) => {
               <div className="mobile-menu-auth">
                 {isLoggedIn ? (
                   <button onClick={handleLogout} className="mobile-btn-outline">
-                    <LogOut size={20} />
+                    <LogOut size={18} />
                     {t('logout')}
                   </button>
                 ) : (
@@ -592,7 +649,7 @@ const Layout = ({ children }) => {
                       onClick={() => openAuthModal('signup')}
                       className="mobile-btn-primary"
                     >
-                      <Zap size={18} />
+                      <Zap size={16} />
                       {t('signUpFree')}
                     </button>
                   </>
@@ -601,7 +658,6 @@ const Layout = ({ children }) => {
             </div>
           </div>
         )}
-      </nav>
 
       {/* Auth Modal */}
       <AuthModal
@@ -613,7 +669,9 @@ const Layout = ({ children }) => {
 
       {/* Page Content */}
       <main className="main-content">
-        {children}
+        <div className="content-wrapper">
+          {children}
+        </div>
       </main>
 
       {/* Enhanced Footer */}

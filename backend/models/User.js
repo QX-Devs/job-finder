@@ -60,14 +60,22 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
     validate: {
-      isUrl: true
+      isUrl: {
+        msg: 'GitHub must be a valid URL',
+        args: true
+      },
+      notEmpty: false // Allow empty strings (will be converted to null)
     }
   },
   linkedin: {
     type: DataTypes.STRING,
     allowNull: true,
     validate: {
-      isUrl: true
+      isUrl: {
+        msg: 'LinkedIn must be a valid URL',
+        args: true
+      },
+      notEmpty: false // Allow empty strings (will be converted to null)
     }
   },
   professionalSummary: {

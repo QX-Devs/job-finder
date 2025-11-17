@@ -120,9 +120,29 @@
 }
 
 @media (max-width: 768px) {
+  .saved-jobs-container {
+    padding: 8px !important;
+    overflow-x: hidden !important;
+  }
+  
   .saved-jobs-controls {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  
+  .search-bar-saved {
+    min-height: 36px !important;
+    padding: 8px 10px !important;
+  }
+  
+  .search-bar-saved input {
+    font-size: 14px !important;
+  }
+  
+  .saved-jobs-controls select {
+    min-height: 36px !important;
+    font-size: 14px !important;
+    padding: 8px 10px !important;
   }
 }
 
@@ -645,20 +665,56 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .jobs-grid-enhanced {
-    grid-template-columns: 1fr;
-  }
-
   .saved-jobs-hero {
-    padding: 60px 16px 32px;
+    padding: 32px 8px 16px !important;
+  }
+  
+  .saved-jobs-title {
+    font-size: 1.3rem !important;
+  }
+  
+  .saved-jobs-subtitle {
+    font-size: 0.75rem !important;
   }
 
   .saved-jobs-section {
-    padding: 32px 16px 60px;
+    padding: 16px 8px 24px !important;
+  }
+
+  .jobs-grid-enhanced {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    padding: 8px !important;
   }
 
   .job-card-enhanced {
-    padding: 20px;
+    padding: 10px !important;
+    width: 100% !important;
+    margin: 6px 0 !important;
+  }
+  
+  .job-card-enhanced button {
+    min-height: 34px !important;
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .saved-jobs-results-info {
+    flex-direction: row !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+    padding: 8px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .saved-jobs-view-controls {
+    gap: 4px !important;
+  }
+  
+  .view-btn {
+    min-height: 32px !important;
+    padding: 6px 8px !important;
+    font-size: 0.7rem !important;
   }
 }
 

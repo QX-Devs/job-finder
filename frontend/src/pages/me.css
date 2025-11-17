@@ -249,43 +249,99 @@ button:disabled {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .profile-container {
+    padding: 12px;
+  }
+  
+  .profile-header {
+    padding: 16px 12px;
+  }
+  
+  .profile-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .profile-content {
+    padding: 16px 12px;
+  }
+  
+  .profile-section {
+    padding: 16px 12px;
+    margin-bottom: 16px;
+  }
+  
+  .profile-section h2 {
+    font-size: 1.1rem;
+  }
+  
+  .profile-actions {
+    flex-direction: row;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .profile-actions button {
+    flex: 1;
+    min-width: 120px;
+    min-height: 40px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+  
   .me-container {
-    margin: 20px auto;
-    padding: 10px;
+    margin: 10px auto;
+    padding: 8px;
   }
 
   .me-header {
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 12px 10px;
   }
 
   .me-header h1 {
-    font-size: 22px;
+    font-size: 1.2rem;
+    flex: 1;
   }
 
   .me-actions {
-    width: 100%;
-    justify-content: center;
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  
+  .me-actions button {
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
   }
 
   .me-content,
   .me-form {
-    padding: 20px;
+    padding: 12px 10px;
   }
 
   .profile-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 
   .form-actions {
-    flex-direction: column-reverse;
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: wrap;
   }
 
   .btn-edit,
   .btn-logout,
   .btn-save,
   .btn-cancel {
-    width: 100%;
+    flex: 1;
+    min-width: 100px;
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
   }
 }

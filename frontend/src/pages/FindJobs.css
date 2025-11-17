@@ -763,39 +763,71 @@
 }
 
 @media (max-width: 768px) {
+  .find-jobs-container {
+    overflow-x: hidden !important;
+  }
+  
   .hero-section {
-    padding: 60px 16px 32px;
+    padding: 40px 8px 20px !important;
   }
 
   .search-section {
-    padding: 16px;
+    padding: 10px 8px !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .search-section input {
+    min-height: 36px !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+  }
+  
+  .search-section button {
+    min-height: 36px !important;
+    padding: 8px 12px !important;
+    font-size: 0.75rem !important;
   }
 
   .jobs-list-sidebar {
-    max-height: 300px;
+    max-height: 200px !important;
+    width: 100% !important;
   }
 
   .jobs-list-header {
-    padding: 16px;
+    padding: 10px 8px !important;
   }
 
   .job-list-item {
-    padding: 12px;
+    padding: 8px !important;
   }
 
   .job-details-content {
-    padding: 24px 20px;
+    padding: 12px 8px !important;
   }
 
   .job-details-title {
-    font-size: 1.5rem;
+    font-size: 1.1rem !important;
+    margin-bottom: 10px !important;
   }
 
   .job-details-meta-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
   }
 
   .job-stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+  
+  .split-container {
+    flex-direction: column !important;
+  }
+  
+  .jobs-list-sidebar,
+  .job-details-panel {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }

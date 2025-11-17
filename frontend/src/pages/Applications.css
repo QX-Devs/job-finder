@@ -37,5 +37,91 @@
   .apps-create .row:last-child { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 768px) {
+  .page-container {
+    padding: 8px !important;
+    overflow-x: hidden !important;
+  }
+  
+  .apps-header {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .apps-title h1 {
+    font-size: 1.05rem !important;
+  }
+  
+  .apps-actions {
+    flex-direction: row !important;
+    gap: 6px !important;
+    flex: 1;
+    min-width: 0;
+    flex-wrap: wrap !important;
+  }
+  
+  .apps-search {
+    flex: 1;
+    min-width: 100px !important;
+    min-height: 34px !important;
+    font-size: 14px !important;
+    padding: 6px 8px !important;
+  }
+  
+  .apps-filter select {
+    min-width: 90px !important;
+    min-height: 34px !important;
+    font-size: 14px !important;
+    padding: 6px 8px !important;
+  }
+  
+  .apps-list {
+    gap: 8px !important;
+  }
+  
+  .app-card {
+    grid-template-columns: 1fr auto !important;
+    padding: 10px !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 6px 0 !important;
+  }
+  
+  .app-title {
+    font-size: 0.8rem !important;
+  }
+  
+  .app-meta {
+    font-size: 0.65rem !important;
+    gap: 4px !important;
+  }
+  
+  .app-actions {
+    flex-direction: column !important;
+    gap: 4px !important;
+    align-items: flex-end !important;
+  }
+  
+  .app-actions button {
+    min-width: 60px !important;
+    min-height: 28px !important;
+    padding: 4px 8px !important;
+    font-size: 0.65rem !important;
+  }
+  
+  .status {
+    min-height: 24px !important;
+    padding: 3px 6px !important;
+    font-size: 0.65rem !important;
+  }
+  
+  .app-notes {
+    font-size: 0.7rem !important;
+    padding: 6px !important;
+  }
+}
+
 
 
