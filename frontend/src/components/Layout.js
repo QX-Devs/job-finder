@@ -620,23 +620,26 @@ const Layout = ({ children }) => {
           }}
         >
           <div className="mobile-menu-content" onClick={(e) => e.stopPropagation()}>
-              {/* Close Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="mobile-menu-close"
-                aria-label="Close menu"
-              >
-                <X size={isMobileView ? 18 : 24} />
-              </button>
+              {/* Mobile Menu Header */}
+              <div className="mobile-menu-header">
+                {/* Language Toggle */}
+                <div className="mobile-language-toggle">
+                  <button
+                    onClick={toggleLanguage}
+                    className="mobile-language-btn"
+                  >
+                    <Languages size={actionIconSize} />
+                    <span>{language === 'en' ? 'العربية' : 'English'}</span>
+                  </button>
+                </div>
 
-              {/* Language Toggle in Mobile Menu */}
-              <div className="mobile-language-toggle">
+                {/* Close Button */}
                 <button
-                  onClick={toggleLanguage}
-                  className="mobile-language-btn"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="mobile-close-btn"
+                  aria-label="Close menu"
                 >
-                  <Languages size={actionIconSize} />
-                  <span>{language === 'en' ? 'العربية' : 'English'}</span>
+                  <X size={22} />
                 </button>
               </div>
 

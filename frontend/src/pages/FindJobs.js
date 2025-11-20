@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import authService from '../services/authService';
 import applicationService from '../services/applicationService';
+import jobService from '../services/jobService';
 import './FindJobs.css';
 
 const FindJobs = () => {
@@ -47,97 +48,114 @@ const FindJobs = () => {
   ]), [t]);
 
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      const mockJobs = generateMockJobs();
-      setJobs(mockJobs);
-      setFilteredJobs(mockJobs);
-      setIsLoading(false);
-      // Auto-select first job
-      if (mockJobs.length > 0 && !selectedJob) {
-        setSelectedJob(mockJobs[0]);
+    const fetchJobs = async () => {
+      setIsLoading(true);
+      try {
+        console.log('FindJobs: Fetching jobs from API...');
+        const response = await jobService.getAll();
+        console.log('FindJobs: API response:', { success: response.success, count: response.data?.length || 0 });
+        
+        if (response.success && response.data) {
+          // Transform API jobs to match frontend format (only real fields from backend)
+          const transformedJobs = response.data.map((job) => {
+            // Parse salary to extract min/max if available
+            let salaryMin = 0;
+            let salaryMax = 0;
+            if (job.salary) {
+              const salaryMatch = job.salary.match(/\$?(\d+)[Kk]?\s*-\s*\$?(\d+)[Kk]?/);
+              if (salaryMatch) {
+                salaryMin = parseInt(salaryMatch[1]) * (salaryMatch[1].length < 3 ? 1000 : 1);
+                salaryMax = parseInt(salaryMatch[2]) * (salaryMatch[2].length < 3 ? 1000 : 1);
+              }
+            }
+
+            // Flatten tags array (handle nested arrays from API)
+            const flattenTags = (tags) => {
+              if (!tags || !Array.isArray(tags)) return [];
+              return tags.flat().filter(t => typeof t === 'string' && t.trim().length > 0);
+            };
+            const flatTags = flattenTags(job.tags);
+
+            // Infer category from title/tags
+            const titleLower = (job.title || '').toLowerCase();
+            const tagsLower = flatTags.map(t => t.toLowerCase()).join(' ');
+            let category = 'engineering';
+            if (titleLower.includes('design') || tagsLower.includes('design')) category = 'design';
+            else if (titleLower.includes('market') || tagsLower.includes('market')) category = 'marketing';
+            else if (titleLower.includes('sales') || tagsLower.includes('sales')) category = 'sales';
+            else if (titleLower.includes('product') || tagsLower.includes('product')) category = 'product';
+
+            // Generate company logo emoji (simple hash-based)
+            const companyLogos = ['🏢', '🔍', '📦', '👁️', '🍎', '🎬', '🎨', '☁️', '🔮', '💼'];
+            const logoIndex = (job.company || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % companyLogos.length;
+
+            // Format posted date
+            const postedDate = job.posted_at 
+              ? new Date(job.posted_at)
+              : (job.createdAt ? new Date(job.createdAt) : new Date());
+            const daysAgo = Math.floor((Date.now() - postedDate.getTime()) / (1000 * 60 * 60 * 24));
+            const postedDateStr = daysAgo === 0 
+              ? t('today')
+              : daysAgo === 1
+              ? t('oneDayAgo')
+              : `${daysAgo} ${t('daysAgo')}`;
+
+            return {
+              id: job.id,
+              title: job.title,
+              company: job.company,
+              companyLogo: companyLogos[logoIndex],
+              industry: 'Technology',
+              location: job.location || t('remote'),
+              salary: job.salary || 'Salary not specified',
+              salaryMin,
+              salaryMax,
+              jobType: 'Full-time',
+              experienceLevel: 'Mid Level',
+              category,
+              skills: flatTags,
+              postedDate: postedDateStr,
+              postedTimestamp: postedDate.getTime(),
+              description: job.description || '',
+              applicationUrl: job.apply_url,
+              remote: (job.location || '').toLowerCase().includes('remote')
+            };
+          });
+
+          console.log(`FindJobs: Transformed ${transformedJobs.length} jobs`);
+          setJobs(transformedJobs);
+          setFilteredJobs(transformedJobs);
+          // Auto-select first job
+          if (transformedJobs.length > 0 && !selectedJob) {
+            setSelectedJob(transformedJobs[0]);
+          }
+        } else {
+          console.warn('FindJobs: No jobs in response or response not successful');
+          setJobs([]);
+          setFilteredJobs([]);
+        }
+      } catch (error) {
+        console.error('FindJobs: Error fetching jobs:', error);
+        setJobs([]);
+        setFilteredJobs([]);
+      } finally {
+        setIsLoading(false);
       }
-    }, 600);
-  }, []);
+    };
 
-  const generateMockJobs = () => {
-    const companies = [
-      { name: 'Microsoft', logo: '🏢', industry: 'Technology' },
-      { name: 'Google', logo: '🔍', industry: 'Technology' },
-      { name: 'Amazon', logo: '📦', industry: 'E-commerce' },
-      { name: 'Meta', logo: '👁️', industry: 'Social Media' },
-      { name: 'Apple', logo: '🍎', industry: 'Technology' },
-      { name: 'Netflix', logo: '🎬', industry: 'Entertainment' },
-      { name: 'Adobe', logo: '🎨', industry: 'Software' },
-      { name: 'Salesforce', logo: '☁️', industry: 'CRM' },
-      { name: 'Oracle', logo: '🔮', industry: 'Database' },
-      { name: 'IBM', logo: '💼', industry: 'Technology' }
-    ];
-
-    const positions = [
-      { title: 'Senior Software Engineer', category: 'engineering', skills: ['React', 'Node.js', 'AWS'] },
-      { title: 'Frontend Developer', category: 'engineering', skills: ['Vue.js', 'TypeScript', 'CSS'] },
-      { title: 'Backend Developer', category: 'engineering', skills: ['Python', 'Django', 'PostgreSQL'] },
-      { title: 'Full Stack Developer', category: 'engineering', skills: ['JavaScript', 'MongoDB', 'Express'] },
-      { title: 'DevOps Engineer', category: 'engineering', skills: ['Docker', 'Kubernetes', 'Jenkins'] },
-      { title: 'UX/UI Designer', category: 'design', skills: ['Figma', 'Sketch', 'Adobe XD'] },
-      { title: 'Product Designer', category: 'design', skills: ['Prototyping', 'User Research', 'Design Systems'] },
-      { title: 'Marketing Manager', category: 'marketing', skills: ['SEO', 'Analytics', 'Content Strategy'] },
-      { title: 'Sales Executive', category: 'sales', skills: ['B2B Sales', 'CRM', 'Negotiation'] },
-      { title: 'Product Manager', category: 'product', skills: ['Agile', 'Roadmapping', 'Stakeholder Management'] }
-    ];
-
-    const locations = [
-      t('remote'), 'San Francisco, CA', 'New York, NY', 'Seattle, WA',
-      'Austin, TX', 'Boston, MA', 'Chicago, IL', 'Denver, CO'
-    ];
-
-    const types = ['Full-time', 'Part-time', 'Contract', 'Internship'];
-    const levels = ['Entry Level', 'Mid Level', 'Senior', 'Lead'];
-
-    const mockData = [];
-    for (let i = 0; i < 30; i++) {
-      const company = companies[Math.floor(Math.random() * companies.length)];
-      const position = positions[Math.floor(Math.random() * positions.length)];
-      const minSalary = Math.floor(Math.random() * 50 + 80);
-      const maxSalary = minSalary + Math.floor(Math.random() * 50 + 40);
-
-      mockData.push({
-        id: i + 1001,
-        title: position.title,
-        company: company.name,
-        companyLogo: company.logo,
-        industry: company.industry,
-        location: locations[Math.floor(Math.random() * locations.length)],
-        salary: `$${minSalary}K - $${maxSalary}K`,
-        salaryMin: minSalary,
-        salaryMax: maxSalary,
-        jobType: types[Math.floor(Math.random() * types.length)],
-        experienceLevel: levels[Math.floor(Math.random() * levels.length)],
-        category: position.category,
-        skills: position.skills,
-        postedDate: `${Math.floor(Math.random() * 14 + 1)} ${t('daysAgo')}`,
-        postedTimestamp: Date.now() - (Math.floor(Math.random() * 14 + 1) * 86400000),
-        description: t('jobDescription'),
-        applicants: Math.floor(Math.random() * 200 + 50),
-        views: Math.floor(Math.random() * 1000 + 500),
-        applicationUrl: 'https://example.com/apply',
-        featured: i < 2,
-        urgent: i % 7 === 0,
-        remote: Math.random() > 0.5
-      });
-    }
-    return mockData;
-  };
+    fetchJobs();
+  }, [t]);
 
   useEffect(() => {
     let result = jobs;
 
     if (searchTerm) {
       result = result.filter(job =>
-        job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
+        job.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.company?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (job.skills && Array.isArray(job.skills) && job.skills.some(skill => 
+          typeof skill === 'string' && skill.toLowerCase().includes(searchTerm.toLowerCase())
+        ))
       );
     }
 
@@ -177,7 +195,7 @@ const FindJobs = () => {
         result.sort((a, b) => a.salaryMin - b.salaryMin);
         break;
       case 'popular':
-        result.sort((a, b) => b.applicants - a.applicants);
+        result.sort((a, b) => b.postedTimestamp - a.postedTimestamp);
         break;
       default:
         break;
@@ -249,6 +267,7 @@ const FindJobs = () => {
       openAuthModal();
       return;
     }
+    // Allow default behavior - link will open in new tab
   };
 
   const clearFilters = () => {
@@ -368,7 +387,7 @@ const FindJobs = () => {
                 {filteredJobs.map((job) => (
                   <div
                     key={job.id}
-                    className={`job-list-item ${selectedJob?.id === job.id ? 'active' : ''} ${job.featured ? 'featured' : ''} ${job.urgent ? 'urgent' : ''}`}
+                    className={`job-list-item ${selectedJob?.id === job.id ? 'active' : ''}`}
                     onClick={() => setSelectedJob(job)}
                   >
                     <div className="job-item-header">
@@ -394,8 +413,6 @@ const FindJobs = () => {
                         <span><DollarSign size={12} /> {job.salary}</span>
                       </div>
                       <div className="job-item-badges">
-                        {job.urgent && <span className="badge-small urgent-badge">{t('urgent')}</span>}
-                        {job.featured && <span className="badge-small featured-badge-text">{t('featured')}</span>}
                         {job.remote && <span className="badge-small remote-badge">{t('remote')}</span>}
                       </div>
                     </div>
@@ -435,8 +452,6 @@ const FindJobs = () => {
                   </div>
 
                   <div className="job-details-badges">
-                    {selectedJob.urgent && <span className="badge urgent-badge"><Zap size={14} />{t('urgent')}</span>}
-                    {selectedJob.featured && <span className="badge featured-badge-text"><Star size={14} />{t('featured')}</span>}
                     {selectedJob.remote && <span className="badge remote-badge">{t('remote')}</span>}
                   </div>
 
@@ -489,14 +504,6 @@ const FindJobs = () => {
                   <div className="job-details-section">
                     <h3>{t('jobStatistics')}</h3>
                     <div className="job-stats-grid">
-                      <div className="stat-item">
-                        <Eye size={18} />
-                        <span>{selectedJob.views} {t('views')}</span>
-                      </div>
-                      <div className="stat-item">
-                        <Users size={18} />
-                        <span>{selectedJob.applicants} {t('applicants')}</span>
-                      </div>
                       <div className="stat-item">
                         <Clock size={18} />
                         <span>{selectedJob.postedDate}</span>

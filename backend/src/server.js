@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 const { sequelize, testConnection } = require('../config/database');
 const authRoutes = require('../routes/auth');
 const meRoutes = require('../routes/me');
+const jobRoutes = require('../routes/jobRoutes');
 const path = require('path');
 
 const app = express();
@@ -330,6 +331,7 @@ Answer:`;
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/me', meRoutes);
+app.use('/api/jobs', jobRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
