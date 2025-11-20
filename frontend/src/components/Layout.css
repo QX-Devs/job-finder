@@ -481,6 +481,13 @@
   overflow-y: auto;
 }
 
+.notification-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--gray-500);
+  font-size: 0.9rem;
+}
+
 .notification-item {
   display: flex;
   align-items: flex-start;
@@ -525,6 +532,10 @@
 
 .notification-icon.purple {
   background: linear-gradient(135deg, #a855f7, #9333ea);
+}
+
+.notification-icon.orange {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 
 .notification-content {

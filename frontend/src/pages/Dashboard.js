@@ -5,7 +5,8 @@ import authService from '../services/authService';
 import resumeService from '../services/resumeService';
 import {
   User, FileText, Plus, ArrowRight, TrendingUp, BookmarkCheck, Bell,
-  Briefcase, Settings, Upload, CheckCircle2, Loader2, Sparkles
+  Briefcase, Settings, Upload, CheckCircle2, Loader2, Sparkles, 
+  AlertCircle, Mail, Shield
 } from 'lucide-react';
 import './Dashboard.css';
 
@@ -17,6 +18,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [downloadingId, setDownloadingId] = useState(null);
+  const [resendingVerification, setResendingVerification] = useState(false);
+  const [verificationMessage, setVerificationMessage] = useState('');
 
   useEffect(() => {
     let mounted = true;
@@ -65,6 +68,24 @@ const Dashboard = () => {
 
   const hasResume = resumes && resumes.length > 0;
   const latestResume = hasResume ? resumes[0] : null;
+  const isVerified = user?.isVerified || false;
+
+  const handleResendVerification = async () => {
+    setResendingVerification(true);
+    setVerificationMessage('');
+    try {
+      const response = await authService.resendVerificationEmail();
+      if (response.success) {
+        setVerificationMessage('Verification email sent! Please check your inbox.');
+        setTimeout(() => setVerificationMessage(''), 5000);
+      }
+    } catch (err) {
+      setVerificationMessage(err.message || 'Failed to send verification email');
+      setTimeout(() => setVerificationMessage(''), 5000);
+    } finally {
+      setResendingVerification(false);
+    }
+  };
 
   const StatCard = ({ icon: Icon, title, value, trend, onClick }) => (
     <button className="dash-stat-card" onClick={onClick}>
@@ -113,6 +134,43 @@ const Dashboard = () => {
             <div className="dash-error" role="alert">{error}</div>
           )}
 
+          {/* Email Verification Banner */}
+          {!isVerified && (
+            <div className="dash-verification-banner" role="alert">
+              <div className="dash-verification-content">
+                <div className="dash-verification-icon">
+                  <AlertCircle size={20} />
+                </div>
+                <div className="dash-verification-text">
+                  <h4>Email Not Verified</h4>
+                  <p>Please verify your email address to access all features and secure your account.</p>
+                </div>
+                <div className="dash-verification-actions">
+                  <button
+                    onClick={handleResendVerification}
+                    disabled={resendingVerification}
+                    className="btn-primary"
+                  >
+                    {resendingVerification ? (
+                      <>
+                        <Loader2 className="spin" size={16} /> {t('sending')}
+                      </>
+                    ) : (
+                      <>
+                        <Mail size={16} /> Resend Email
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+              {verificationMessage && (
+                <div className={`dash-verification-message ${verificationMessage.includes('Failed') ? 'error' : 'success'}`}>
+                  {verificationMessage}
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="dash-grid">
             <div className="dash-col">
               <div className="dash-card">
@@ -127,7 +185,34 @@ const Dashboard = () => {
                   </div>
                   <div className="dash-profile-row">
                     <span>{t('email')}</span>
-                    <strong>{user?.email || '—'}</strong>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <strong>{user?.email || '—'}</strong>
+                      {isVerified ? (
+                        <span style={{ 
+                          display: 'inline-flex', 
+                          alignItems: 'center', 
+                          gap: '4px',
+                          color: '#10b981',
+                          fontSize: '12px',
+                          fontWeight: 600
+                        }}>
+                          <CheckCircle2 size={14} />
+                          Verified
+                        </span>
+                      ) : (
+                        <span style={{ 
+                          display: 'inline-flex', 
+                          alignItems: 'center', 
+                          gap: '4px',
+                          color: '#f59e0b',
+                          fontSize: '12px',
+                          fontWeight: 600
+                        }}>
+                          <AlertCircle size={14} />
+                          Not Verified
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="dash-profile-row">
                     <span>{t('phone')}</span>

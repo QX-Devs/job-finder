@@ -122,6 +122,16 @@ const authService = {
     }
   },
 
+  // Resend verification email
+  resendVerificationEmail: async () => {
+    try {
+      const response = await api.post('/auth/resend-verification');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to resend verification email' };
+    }
+  },
+
   // Check if user is logged in
   isAuthenticated: () => {
     const token = localStorage.getItem('token');

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,7 +6,10 @@ import {
   Navigate,
   Outlet,
   useParams,
+  useSearchParams,
 } from "react-router-dom";
+import api from "./services/api";
+import "./components/AuthModal.css";
 import { LanguageProvider } from "./context/LanguageContext"; // <<< أضف هذا
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -111,6 +114,18 @@ function App() {
             element={<ResetPasswordRedirect />} 
           />
 
+          {/* Email Verification Route - processes verification and redirects to home */}
+          <Route 
+            path="/verify/:token" 
+            element={<VerifyEmailRedirect />} 
+          />
+
+          {/* Email Verification Status Route - shows status modal */}
+          <Route 
+            path="/verify" 
+            element={<VerifyEmailStatusRedirect />} 
+          />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
@@ -122,6 +137,69 @@ function App() {
 const ResetPasswordRedirect = () => {
   const { token } = useParams();
   return <Navigate to={`/?token=${token}`} replace />;
+};
+
+// Component to handle email verification - calls API and redirects to home with status
+const VerifyEmailRedirect = () => {
+  const { token } = useParams();
+  const [isProcessing, setIsProcessing] = useState(true);
+
+  useEffect(() => {
+    const verifyEmail = async () => {
+      try {
+        const response = await api.get(`/auth/verify/${token}`);
+        if (response.data.success) {
+          // Redirect to home with success status
+          window.location.href = `/?verify=success&message=${encodeURIComponent(response.data.message || 'Email verified successfully')}`;
+        } else {
+          // Redirect to home with error status
+          window.location.href = `/?verify=error&message=${encodeURIComponent(response.data.message || 'Verification failed')}`;
+        }
+      } catch (error) {
+        // Redirect to home with error status
+        const errorMessage = error.response?.data?.message || error.message || 'Verification failed';
+        window.location.href = `/?verify=error&message=${encodeURIComponent(errorMessage)}`;
+      }
+    };
+
+    if (token) {
+      verifyEmail();
+    } else {
+      window.location.href = `/?verify=error&message=${encodeURIComponent('Verification token is required')}`;
+    }
+  }, [token]);
+
+  return (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '100vh',
+      flexDirection: 'column',
+      gap: '16px'
+    }}>
+      <div className="spinner" style={{ width: '40px', height: '40px' }}></div>
+      <p>Verifying your email...</p>
+    </div>
+  );
+};
+
+// Component to handle verification status redirect (from backend redirect)
+const VerifyEmailStatusRedirect = () => {
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get('status');
+  const message = searchParams.get('message');
+
+  useEffect(() => {
+    if (status && message) {
+      // Redirect to home with verification status
+      window.location.href = `/?verify=${status}&message=${encodeURIComponent(message)}`;
+    } else {
+      window.location.href = '/';
+    }
+  }, [status, message]);
+
+  return null;
 };
 
 // Single layout component that wraps ALL pages

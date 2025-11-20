@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import AuthModal from '../components/AuthModal';
 import ResetPasswordModal from '../components/ResetPasswordModal';
+import VerificationStatusModal from '../components/VerificationStatusModal';
 import authService from '../services/authService';
 import applicationService from '../services/applicationService';
 import { useTranslate } from '../utils/translate'; // <<< استيراد دالة الترجمة
@@ -52,6 +53,11 @@ const Home = () => {
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
   const [resetToken, setResetToken] = useState(null);
   
+  // Verification Status Modal State
+  const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
+  const [verificationStatus, setVerificationStatus] = useState(null);
+  const [verificationMessage, setVerificationMessage] = useState('');
+  
   const isLoggedIn = authService.isAuthenticated();
   const heroRef = useRef(null);
   const jobsRef = useRef(null);
@@ -69,10 +75,21 @@ const Home = () => {
   // Check for reset password token in URL
   useEffect(() => {
     const token = searchParams.get('token');
+    const verifyStatus = searchParams.get('verify');
+    const verifyMessage = searchParams.get('message');
+    
     if (token) {
       setResetToken(token);
       setIsResetPasswordModalOpen(true);
       // Remove token from URL but keep it in state
+      setSearchParams({}, { replace: true });
+    }
+    
+    if (verifyStatus) {
+      setVerificationStatus(verifyStatus);
+      setVerificationMessage(verifyMessage ? decodeURIComponent(verifyMessage) : '');
+      setIsVerificationModalOpen(true);
+      // Remove verification params from URL
       setSearchParams({}, { replace: true });
     }
   }, [searchParams, setSearchParams]);
@@ -1151,6 +1168,17 @@ const Home = () => {
           setResetToken(null);
         }}
         token={resetToken}
+      />
+      
+      <VerificationStatusModal
+        isOpen={isVerificationModalOpen}
+        onClose={() => {
+          setIsVerificationModalOpen(false);
+          setVerificationStatus(null);
+          setVerificationMessage('');
+        }}
+        status={verificationStatus}
+        message={verificationMessage}
       />
     </>
   );

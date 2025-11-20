@@ -48,7 +48,7 @@ const register = async (req, res) => {
     user.verificationTokenExpires = new Date(Date.now() + TOKEN_EXPIRATION_MS);
     await user.save();
 
-    const verifyUrl = `${getApiBaseUrl()}/auth/verify/${verificationToken}`;
+    const verifyUrl = `${getFrontendBaseUrl().replace(/\/$/, '')}/verify/${verificationToken}`;
     const htmlBody = `
   <div style="
     font-family: Arial, sans-serif;
@@ -452,7 +452,7 @@ const resendVerificationEmail = async (req, res) => {
     user.verificationTokenExpires = new Date(Date.now() + TOKEN_EXPIRATION_MS);
     await user.save();
 
-    const verifyUrl = `${getApiBaseUrl()}/auth/verify/${verificationToken}`;
+    const verifyUrl = `${getFrontendBaseUrl().replace(/\/$/, '')}/verify/${verificationToken}`;
     const htmlBody = `
       <p>Hi ${user.fullName || 'there'},</p>
       <p>You requested a new verification email. Please verify your email by clicking the button below within the next hour.</p>

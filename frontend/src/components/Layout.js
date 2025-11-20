@@ -1,5 +1,5 @@
 // src/components/Layout.js
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Menu, X, User, LogOut, Briefcase, Bell, Settings, 
@@ -156,7 +156,7 @@ const Layout = ({ children }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const [hasNewNotifications, setHasNewNotifications] = useState(true);
+  const [hasNewNotifications, setHasNewNotifications] = useState(false);
   const [isMobileView, setIsMobileView] = useState(initialMobileState);
   const [isCompactView, setIsCompactView] = useState(initialCompactState);
   const navIconSize = isMobileView ? 14 : 18;
@@ -268,47 +268,44 @@ const Layout = ({ children }) => {
         if (res?.success && res.data) {
           setCurrentUser(res.data);
           authService.setUser(res.data);
+          // Update notification badge based on verification status
+          setHasNewNotifications(!res.data.isVerified);
         }
       }).catch(() => {});
     }
   }, []);
 
-  // Mock notifications with translation
-  const notifications = [
-    {
-      id: 1,
-      title: language === 'en' ? 'New job match!' : 'وظيفة جديدة مناسبة!',
-      message: language === 'en' 
-        ? 'Senior Developer at Google matches your profile'
-        : 'مطور كبير في Google يناسب ملفك الشخصي',
-      time: language === 'en' ? '5 min ago' : 'منذ 5 دقائق',
-      unread: true,
-      icon: Zap,
-      color: 'blue'
-    },
-    {
-      id: 2,
-      title: language === 'en' ? 'Application viewed' : 'تم عرض طلبك',
-      message: language === 'en'
-        ? 'Microsoft viewed your application for Software Engineer'
-        : 'مايكروسوفت عرضت طلبك لوظيفة مهندس برمجيات',
-      time: language === 'en' ? '1 hour ago' : 'منذ ساعة',
-      unread: true,
-      icon: FileText,
-      color: 'green'
-    },
-    {
-      id: 3,
-      title: language === 'en' ? 'Profile suggestion' : 'اقتراح للملف الشخصي',
-      message: language === 'en'
-        ? 'Add 2 more skills to increase your visibility'
-        : 'أضف مهارتين إضافيتين لزيادة ظهورك',
-      time: language === 'en' ? '3 hours ago' : 'منذ 3 ساعات',
-      unread: false,
-      icon: TrendingUp,
-      color: 'purple'
+  // Update notification badge when user verification status changes
+  useEffect(() => {
+    if (isLoggedIn && currentUser) {
+      setHasNewNotifications(!currentUser.isVerified);
+    } else {
+      setHasNewNotifications(false);
     }
-  ];
+  }, [isLoggedIn, currentUser]);
+
+  // Notifications - only show verification notification if user is not verified
+  const notifications = useMemo(() => {
+    const notifs = [];
+    
+    // Only show verification notification if user is logged in and not verified
+    if (isLoggedIn && currentUser && !currentUser.isVerified) {
+      notifs.push({
+        id: 'verification',
+        title: language === 'en' ? 'Verify Your Email' : 'تحقق من بريدك الإلكتروني',
+        message: language === 'en'
+          ? 'Please verify your email address to access all features'
+          : 'يرجى التحقق من عنوان بريدك الإلكتروني للوصول إلى جميع الميزات',
+        time: language === 'en' ? 'Action required' : 'إجراء مطلوب',
+        unread: true,
+        icon: Shield,
+        color: 'orange',
+        action: () => navigate('/dashboard')
+      });
+    }
+    
+    return notifs;
+  }, [isLoggedIn, currentUser, language, navigate]);
 
   const openAuthModal = (tab = 'login') => {
     setAuthModalTab(tab);
@@ -339,7 +336,8 @@ const Layout = ({ children }) => {
   const toggleNotifications = () => {
     setIsNotificationsOpen(!isNotificationsOpen);
     setIsUserDropdownOpen(false);
-    if (isNotificationsOpen === false) {
+    // Only clear notification badge if user is verified
+    if (isNotificationsOpen === false && currentUser?.isVerified) {
       setHasNewNotifications(false);
     }
   };
@@ -438,25 +436,38 @@ const Layout = ({ children }) => {
                           <button className="mark-read-btn">{t('markAllRead')}</button>
                         </div>
                         <div className="notifications-list">
-                          {notifications.map((notif) => {
-                            const NotifIcon = notif.icon;
-                            return (
-                              <div
-                                key={notif.id}
-                                className={`notification-item ${notif.unread ? 'unread' : ''}`}
-                              >
-                              <div className={`notification-icon ${notif.color}`}>
-                                <NotifIcon size={navIconSize} />
+                          {notifications.length > 0 ? (
+                            notifications.map((notif) => {
+                              const NotifIcon = notif.icon;
+                              return (
+                                <div
+                                  key={notif.id}
+                                  className={`notification-item ${notif.unread ? 'unread' : ''}`}
+                                  onClick={() => {
+                                    if (notif.action) {
+                                      notif.action();
+                                      setIsNotificationsOpen(false);
+                                    }
+                                  }}
+                                  style={{ cursor: notif.action ? 'pointer' : 'default' }}
+                                >
+                                <div className={`notification-icon ${notif.color}`}>
+                                  <NotifIcon size={navIconSize} />
+                                  </div>
+                                  <div className="notification-content">
+                                    <h4>{notif.title}</h4>
+                                    <p>{notif.message}</p>
+                                    <span className="notification-time">{notif.time}</span>
+                                  </div>
+                                  {notif.unread && <div className="unread-dot"></div>}
                                 </div>
-                                <div className="notification-content">
-                                  <h4>{notif.title}</h4>
-                                  <p>{notif.message}</p>
-                                  <span className="notification-time">{notif.time}</span>
-                                </div>
-                                {notif.unread && <div className="unread-dot"></div>}
-                              </div>
-                            );
-                          })}
+                              );
+                            })
+                          ) : (
+                            <div className="notification-empty">
+                              <p>{language === 'en' ? 'No notifications' : 'لا توجد إشعارات'}</p>
+                            </div>
+                          )}
                         </div>
                         <div className="notifications-footer">
                           <button 
