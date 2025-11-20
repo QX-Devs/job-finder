@@ -29,8 +29,10 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [displayCount, setDisplayCount] = useState(9);
   const [selectedJob, setSelectedJob] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  
+  const initialIsMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  const [isMobile, setIsMobile] = useState(initialIsMobile);
+  const [expandedJobId, setExpandedJobId] = useState(null);
+
   const [filters, setFilters] = useState({
     jobType: 'all',
     location: 'all',
@@ -65,6 +67,12 @@ const Home = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setExpandedJobId(null);
+    }
+  }, [isMobile]);
 
   // Mock job data with more details
   useEffect(() => {
@@ -324,6 +332,13 @@ const Home = () => {
 
   const loadMore = () => {
     setDisplayCount(prev => prev + 9);
+  };
+
+  const renderedJobs = filteredJobs.slice(0, displayCount);
+
+  const handleMobileJobToggle = (job) => {
+    setSelectedJob(job);
+    setExpandedJobId(prev => (prev === job.id ? null : job.id));
   };
 
   const features = [
@@ -639,88 +654,82 @@ const Home = () => {
             </div>
           ) : (
             <>
-              {/* Jobs Sidebar Layout */}
-              <div className="jobs-sidebar-container">
-                {/* Left Sidebar - Job List */}
-                <div className="jobs-sidebar">
-                  <div className="jobs-list">
-                    {filteredJobs.slice(0, displayCount).map((job) => (
-                      <div
-                        key={job.id}
-                        className={`job-list-item ${selectedJob?.id === job.id ? 'active' : ''}`}
-                        onClick={() => {
-                          setSelectedJob(job);
-                          // On mobile, navigate to Find Jobs page with details
-                          if (isMobile) {
-                            navigate('/find-jobs');
-                          }
-                        }}
-                      >
-                        {/* Company Logo */}
-                        <div className="company-logo-small">{job.companyLogo}</div>
-                        
-                        <div className="job-list-content">
-                          {/* Job Title and Company */}
-                          <div className="job-list-header">
-                            <h4 className="job-list-title">{job.title}</h4>
-                            <div className="job-list-badges">
-                              {job.urgent && (
-                                <span className="mini-badge urgent">
-                                  <Zap size={10} />
-                                </span>
-                              )}
-                              {job.featured && (
-                                <span className="mini-badge featured">
-                                  <Star size={10} fill="currentColor" />
-                                </span>
+              {!isMobile ? (
+                <div className="jobs-sidebar-container">
+                  {/* Left Sidebar - Job List */}
+                  <div className="jobs-sidebar">
+                    <div className="jobs-list">
+                      {renderedJobs.map((job) => (
+                        <div
+                          key={job.id}
+                          className={`job-list-item ${selectedJob?.id === job.id ? 'active' : ''}`}
+                          onClick={() => setSelectedJob(job)}
+                        >
+                          {/* Company Logo */}
+                          <div className="company-logo-small">{job.companyLogo}</div>
+                          
+                          <div className="job-list-content">
+                            {/* Job Title and Company */}
+                            <div className="job-list-header">
+                              <h4 className="job-list-title">{job.title}</h4>
+                              <div className="job-list-badges">
+                                {job.urgent && (
+                                  <span className="mini-badge urgent">
+                                    <Zap size={10} />
+                                  </span>
+                                )}
+                                {job.featured && (
+                                  <span className="mini-badge featured">
+                                    <Star size={10} fill="currentColor" />
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            
+                            <div className="job-list-company">{job.company}</div>
+                            
+                            {/* Quick Info */}
+                            <div className="job-list-meta">
+                              <span className="meta-item-small">
+                                <MapPin size={12} />
+                                {job.location}
+                              </span>
+                              <span className="meta-item-small">
+                                <DollarSign size={12} />
+                                {job.salary}
+                              </span>
+                            </div>
+                            
+                            <div className="job-list-footer">
+                              <span className="job-list-date">
+                                <Clock size={12} />
+                                {job.postedDate}
+                              </span>
+                              {savedJobs.has(job.id) && (
+                                <BookmarkCheck size={14} className="saved-icon" />
                               )}
                             </div>
                           </div>
-                          
-                          <div className="job-list-company">{job.company}</div>
-                          
-                          {/* Quick Info */}
-                          <div className="job-list-meta">
-                            <span className="meta-item-small">
-                              <MapPin size={12} />
-                              {job.location}
-                            </span>
-                            <span className="meta-item-small">
-                              <DollarSign size={12} />
-                              {job.salary}
-                            </span>
-                          </div>
-                          
-                          <div className="job-list-footer">
-                            <span className="job-list-date">
-                              <Clock size={12} />
-                              {job.postedDate}
-                            </span>
-                            {savedJobs.has(job.id) && (
-                              <BookmarkCheck size={14} className="saved-icon" />
-                            )}
-                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                    
+                    {/* Load More in Sidebar */}
+                    {displayCount < filteredJobs.length && (
+                      <button onClick={loadMore} className="btn-load-more-sidebar">
+                        {language === 'en' 
+                          ? `Load More (${filteredJobs.length - displayCount} more)`
+                          : `تحميل المزيد (${filteredJobs.length - displayCount} أخرى)`
+                        }
+                        <ChevronDown size={16} />
+                      </button>
+                    )}
                   </div>
-                  
-                  {/* Load More in Sidebar */}
-                  {displayCount < filteredJobs.length && (
-                    <button onClick={loadMore} className="btn-load-more-sidebar">
-                      {language === 'en' 
-                        ? `Load More (${filteredJobs.length - displayCount} more)`
-                        : `تحميل المزيد (${filteredJobs.length - displayCount} أخرى)`
-                      }
-                      <ChevronDown size={16} />
-                    </button>
-                  )}
-                </div>
 
-                {/* Right Panel - Job Details */}
-                <div className="job-details-panel">
-                  {selectedJob ? (
-                    <div className="job-details">
+                  {/* Right Panel - Job Details */}
+                  <div className="job-details-panel">
+                    {selectedJob ? (
+                      <div className="job-details">
                       {/* Header */}
                       <div className="job-details-header">
                         <div className="job-details-company-logo">{selectedJob.companyLogo}</div>
@@ -856,16 +865,103 @@ const Home = () => {
                           <ArrowRight size={20} />
                         </a>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="job-details-empty">
-                      <Briefcase size={64} className="empty-icon" />
-                      <h3>{t('selectJob')}</h3>
-                      <p>{t('selectJobPrompt')}</p>
-                    </div>
+                      </div>
+                    ) : (
+                      <div className="job-details-empty">
+                        <Briefcase size={64} className="empty-icon" />
+                        <h3>{t('selectJob')}</h3>
+                        <p>{t('selectJobPrompt')}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="jobs-mobile-list">
+                  {renderedJobs.map((job) => {
+                    const isExpanded = expandedJobId === job.id;
+                    return (
+                      <div className={`job-card-mobile ${isExpanded ? 'expanded' : ''}`} key={job.id}>
+                        <div className="job-card-mobile-header">
+                          <div className="mobile-title-wrap">
+                            <div className="mobile-company-logo">{job.companyLogo}</div>
+                            <div>
+                              <h3>{job.title}</h3>
+                              <p>{job.company}</p>
+                            </div>
+                          </div>
+                          <button
+                            className={`icon-btn ${savedJobs.has(job.id) ? 'saved' : ''}`}
+                            onClick={() => toggleSaveJob(job.id)}
+                            aria-label={t('save')}
+                          >
+                            {savedJobs.has(job.id) ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
+                          </button>
+                        </div>
+
+                        <div className="job-card-mobile-meta">
+                          <span><MapPin size={14} />{job.location}</span>
+                          <span><Briefcase size={14} />{job.jobType}</span>
+                          <span><DollarSign size={14} />{job.salary}</span>
+                        </div>
+
+                        <div className="job-card-mobile-actions">
+                          <button
+                            className="btn-cta-secondary mobile"
+                            onClick={() => handleMobileJobToggle(job)}
+                          >
+                            {isExpanded ? t('hideDetails') : t('viewDetails')}
+                          </button>
+                          <a
+                            href={job.applicationUrl}
+                            className="btn-cta-primary mobile"
+                            onClick={(e) => handleApplyClick(e, job)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {t('applyNow')}
+                            <ArrowRight size={16} />
+                          </a>
+                        </div>
+
+                        {isExpanded && (
+                          <div className="mobile-job-details">
+                            <div className="mobile-job-stats">
+                              <div>
+                                <span>{t('experience')}</span>
+                                <strong>{job.experienceLevel}</strong>
+                              </div>
+                              <div>
+                                <span>{t('posted')}</span>
+                                <strong>{job.postedDate}</strong>
+                              </div>
+                              <div>
+                                <span>{t('applicants')}</span>
+                                <strong>{job.applicants}</strong>
+                              </div>
+                            </div>
+                            <div className="mobile-job-skills">
+                              {job.skills.map((skill, idx) => (
+                                <span key={idx}>{skill}</span>
+                              ))}
+                            </div>
+                            <p className="mobile-description">{job.description}</p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                  {displayCount < filteredJobs.length && (
+                    <button onClick={loadMore} className="btn-load-more-mobile">
+                      {language === 'en' 
+                        ? `Load More (${filteredJobs.length - displayCount} more)`
+                        : `تحميل المزيد (${filteredJobs.length - displayCount} أخرى)`
+                      }
+                      <ChevronDown size={16} />
+                    </button>
                   )}
                 </div>
-              </div>
+              )}
             </>
           )}
         </section>

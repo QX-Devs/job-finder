@@ -12,9 +12,11 @@ import { useTranslate } from '../utils/translate'; // <<< أضف هذا
 import './Layout.css';
 
 // Footer Component
-const Footer = () => {
+const Footer = ({ isMobile = false }) => {
   const navigate = useNavigate();
   const { t, isRTL, language } = useTranslate(); // <<< أضف الترجمة
+  const footerIconSize = isMobile ? 16 : 24;
+  const footerBadgeIconSize = isMobile ? 12 : 16;
 
   const footerLinks = {
     quickLinks: [
@@ -52,7 +54,7 @@ const Footer = () => {
           <div className="footer-column">
             <div className="footer-logo" onClick={() => navigate('/')}>
               <div className="footer-logo-icon">
-                <Briefcase size={24} />
+                <Briefcase size={footerIconSize} />
               </div>
               <span className="footer-logo-text">GradJob</span>
             </div>
@@ -121,15 +123,15 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <p>&copy; {new Date().getFullYear()} GradJob. {t('allRightsReserved')}</p>
-          <div className="footer-badges">
-            <div className="badge-item">
-              <Shield size={16} />
-              <span>{t('secure')}</span>
-            </div>
-            <div className="badge-item">
-              <Heart size={16} />
-              <span>{t('madeWithLove')}</span>
-            </div>
+            <div className="footer-badges">
+              <div className="badge-item">
+                <Shield size={footerBadgeIconSize} />
+                <span>{t('secure')}</span>
+              </div>
+              <div className="badge-item">
+                <Heart size={footerBadgeIconSize} />
+                <span>{t('madeWithLove')}</span>
+              </div>
           </div>
         </div>
       </div>
@@ -143,6 +145,8 @@ const Layout = ({ children }) => {
   const location = useLocation();
   const { t, isRTL, language, toggleLanguage } = useTranslate(); // <<< أضف الترجمة
 
+  const initialMobileState = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  const initialCompactState = typeof window !== 'undefined' ? window.innerWidth <= 480 : false;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState('login');
@@ -153,6 +157,12 @@ const Layout = ({ children }) => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [hasNewNotifications, setHasNewNotifications] = useState(true);
+  const [isMobileView, setIsMobileView] = useState(initialMobileState);
+  const [isCompactView, setIsCompactView] = useState(initialCompactState);
+  const navIconSize = isMobileView ? 14 : 18;
+  const actionIconSize = isMobileView ? 16 : 20;
+  const avatarIconSize = isMobileView ? 16 : 20;
+  const logoIconSize = isMobileView ? 18 : 28;
   
   const userDropdownRef = useRef(null);
   const notificationsRef = useRef(null);
@@ -172,6 +182,16 @@ const Layout = ({ children }) => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobileView(width <= 768);
+      setIsCompactView(width <= 480);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Close dropdowns when clicking outside
@@ -353,7 +373,7 @@ const Layout = ({ children }) => {
           {/* Logo */}
           <div className="navbar-logo" onClick={() => navigate('/')}>
             <div className="logo-icon">
-              <Briefcase size={28} />
+              <Briefcase size={logoIconSize} />
               <div className="logo-pulse"></div>
             </div>
             <span className="logo-text">GradJob</span>
@@ -369,7 +389,7 @@ const Layout = ({ children }) => {
                   onClick={() => navigate(link.path)}
                   className={`nav-link ${isActivePath(link.path) ? 'active' : ''}`}
                 >
-                  <Icon size={18} className="nav-link-icon" />
+                  <Icon size={navIconSize} className="nav-link-icon" />
                   {link.name}
                   {isActivePath(link.path) && <div className="nav-link-indicator"></div>}
                 </button>
@@ -378,166 +398,201 @@ const Layout = ({ children }) => {
           </div>
 
           {/* Desktop Actions */}
-          <div className="navbar-actions">
-            {/* Language Toggle */}
-            <div className="language-toggle-wrapper" ref={languageRef}>
+          {!isMobileView && (
+            <div className="navbar-actions">
+              {/* Language Toggle */}
+              <div className="language-toggle-wrapper" ref={languageRef}>
+                <button
+                  onClick={toggleLanguage}
+                  className="icon-action-btn language-toggle"
+                  title={language === 'en' ? 'Switch to Arabic' : 'التغيير إلى الإنجليزية'}
+                >
+                <Languages size={actionIconSize} />
+                  <span className="language-code">{language === 'en' ? 'AR' : 'EN'}</span>
+                </button>
+              </div>
+
+              {isLoggedIn ? (
+                <>
+                  {/* Notifications */}
+                  <div className="notification-wrapper" ref={notificationsRef}>
+                    <button
+                      onClick={toggleNotifications}
+                      className="icon-action-btn notification-btn"
+                    >
+                    <Bell size={actionIconSize} />
+                      {hasNewNotifications && <span className="notification-badge"></span>}
+                    </button>
+
+                    {/* Notifications Dropdown */}
+                  {isNotificationsOpen && (
+                    <div
+                      className="notifications-dropdown"
+                      style={{
+                        width: isCompactView ? '92vw' : '380px',
+                        right: isCompactView ? '4vw' : '0'
+                      }}
+                    >
+                        <div className="notifications-header">
+                          <h3>{t('notifications')}</h3>
+                          <button className="mark-read-btn">{t('markAllRead')}</button>
+                        </div>
+                        <div className="notifications-list">
+                          {notifications.map((notif) => {
+                            const NotifIcon = notif.icon;
+                            return (
+                              <div
+                                key={notif.id}
+                                className={`notification-item ${notif.unread ? 'unread' : ''}`}
+                              >
+                              <div className={`notification-icon ${notif.color}`}>
+                                <NotifIcon size={navIconSize} />
+                                </div>
+                                <div className="notification-content">
+                                  <h4>{notif.title}</h4>
+                                  <p>{notif.message}</p>
+                                  <span className="notification-time">{notif.time}</span>
+                                </div>
+                                {notif.unread && <div className="unread-dot"></div>}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="notifications-footer">
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate('/notifications');
+                              setIsNotificationsOpen(false);
+                            }}
+                          >
+                            {t('viewAllNotifications')}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* User Dropdown */}
+                  <div className="user-menu-wrapper" ref={userDropdownRef}>
+                    <button
+                      onClick={toggleUserDropdown}
+                      className="user-menu-trigger"
+                    >
+                      <div className="user-avatar">
+                      <User size={avatarIconSize} />
+                      </div>
+                      <span className="user-name">{currentUser?.fullName || t('me')}</span>
+                      <ChevronDown
+                      size={isMobileView ? 12 : 16}
+                        className={`dropdown-arrow ${isUserDropdownOpen ? 'open' : ''}`}
+                      />
+                    </button>
+
+                    {/* User Dropdown Menu */}
+                    {isUserDropdownOpen && (
+                      <div className="user-dropdown">
+                        <div className="user-dropdown-header">
+                          <div className="user-avatar-large">
+                          <User size={isMobileView ? 18 : 24} />
+                          </div>
+                          <div className="user-info">
+                            <h4>{currentUser?.fullName || t('myAccount')}</h4>
+                            <p>{currentUser?.email || ''}</p>
+                          </div>
+                        </div>
+
+                        <div className="user-dropdown-section">
+                          {userMenuItems.map((item) => {
+                            const ItemIcon = item.icon;
+                            return (
+                              <button
+                                key={item.path}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(item.path);
+                                  setIsUserDropdownOpen(false);
+                                }}
+                                className="user-dropdown-item"
+                              >
+                              <ItemIcon size={navIconSize} />
+                                {item.name}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        <div className="user-dropdown-footer">
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleLogout();
+                            }} 
+                            className="logout-btn"
+                          >
+                          <LogOut size={navIconSize} />
+                            {t('logout')}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => openAuthModal('login')}
+                    className="nav-btn-secondary"
+                  >
+                    {t('login')}
+                  </button>
+                  <button
+                    onClick={() => openAuthModal('signup')}
+                    className="nav-btn-primary"
+                  >
+                  <Zap size={actionIconSize} />
+                    {t('signUpFree')}
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+
+          {isMobileView && (
+            <div className="navbar-mobile-actions">
               <button
                 onClick={toggleLanguage}
-                className="icon-action-btn language-toggle"
+                className="mobile-icon-btn"
                 title={language === 'en' ? 'Switch to Arabic' : 'التغيير إلى الإنجليزية'}
+                aria-label={language === 'en' ? 'Switch to Arabic' : 'التغيير إلى الإنجليزية'}
               >
-                <Languages size={20} />
-                <span className="language-code">{language === 'en' ? 'AR' : 'EN'}</span>
+                <Languages size={actionIconSize} />
               </button>
-            </div>
-
-            {isLoggedIn ? (
-              <>
-                {/* Notifications */}
-                <div className="notification-wrapper" ref={notificationsRef}>
-                  <button
-                    onClick={toggleNotifications}
-                    className="icon-action-btn notification-btn"
-                  >
-                    <Bell size={20} />
-                    {hasNewNotifications && <span className="notification-badge"></span>}
-                  </button>
-
-                  {/* Notifications Dropdown */}
-                  {isNotificationsOpen && (
-                    <div className="notifications-dropdown">
-                      <div className="notifications-header">
-                        <h3>{t('notifications')}</h3>
-                        <button className="mark-read-btn">{t('markAllRead')}</button>
-                      </div>
-                      <div className="notifications-list">
-                        {notifications.map((notif) => {
-                          const NotifIcon = notif.icon;
-                          return (
-                            <div
-                              key={notif.id}
-                              className={`notification-item ${notif.unread ? 'unread' : ''}`}
-                            >
-                              <div className={`notification-icon ${notif.color}`}>
-                                <NotifIcon size={18} />
-                              </div>
-                              <div className="notification-content">
-                                <h4>{notif.title}</h4>
-                                <p>{notif.message}</p>
-                                <span className="notification-time">{notif.time}</span>
-                              </div>
-                              {notif.unread && <div className="unread-dot"></div>}
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div className="notifications-footer">
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate('/notifications');
-                            setIsNotificationsOpen(false);
-                          }}
-                        >
-                          {t('viewAllNotifications')}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* User Dropdown */}
-                <div className="user-menu-wrapper" ref={userDropdownRef}>
-                  <button
-                    onClick={toggleUserDropdown}
-                    className="user-menu-trigger"
-                  >
-                    <div className="user-avatar">
-                      <User size={20} />
-                    </div>
-                    <span className="user-name">{currentUser?.fullName || t('me')}</span>
-                    <ChevronDown
-                      size={16}
-                      className={`dropdown-arrow ${isUserDropdownOpen ? 'open' : ''}`}
-                    />
-                  </button>
-
-                  {/* User Dropdown Menu */}
-                  {isUserDropdownOpen && (
-                    <div className="user-dropdown">
-                      <div className="user-dropdown-header">
-                        <div className="user-avatar-large">
-                          <User size={24} />
-                        </div>
-                        <div className="user-info">
-                          <h4>{currentUser?.fullName || t('myAccount')}</h4>
-                          <p>{currentUser?.email || ''}</p>
-                        </div>
-                      </div>
-
-                      <div className="user-dropdown-section">
-                        {userMenuItems.map((item) => {
-                          const ItemIcon = item.icon;
-                          return (
-                            <button
-                              key={item.path}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(item.path);
-                                setIsUserDropdownOpen(false);
-                              }}
-                              className="user-dropdown-item"
-                            >
-                              <ItemIcon size={18} />
-                              {item.name}
-                            </button>
-                          );
-                        })}
-                      </div>
-
-                      <div className="user-dropdown-footer">
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleLogout();
-                          }} 
-                          className="logout-btn"
-                        >
-                          <LogOut size={18} />
-                          {t('logout')}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </>
-            ) : (
-              <>
+              {isLoggedIn ? (
                 <button
+                  className="mobile-icon-btn"
+                  onClick={() => navigate('/dashboard')}
+                  aria-label={t('dashboard')}
+                >
+                  <User size={avatarIconSize} />
+                </button>
+              ) : (
+                <button
+                  className="mobile-auth-btn"
                   onClick={() => openAuthModal('login')}
-                  className="nav-btn-secondary"
                 >
                   {t('login')}
                 </button>
-                <button
-                  onClick={() => openAuthModal('signup')}
-                  className="nav-btn-primary"
-                >
-                  <Zap size={18} />
-                  {t('signUpFree')}
-                </button>
-              </>
-            )}
-          </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="mobile-menu-toggle"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+              )}
+              <button
+                className="mobile-menu-toggle"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={isMobileMenuOpen ? (language === 'en' ? 'Close menu' : 'إغلاق القائمة') : (language === 'en' ? 'Open menu' : 'افتح القائمة')}
+              >
+            {isMobileMenuOpen ? <X size={actionIconSize} /> : <Menu size={actionIconSize} />}
+              </button>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -560,7 +615,7 @@ const Layout = ({ children }) => {
                 className="mobile-menu-close"
                 aria-label="Close menu"
               >
-                <X size={24} />
+                <X size={isMobileView ? 18 : 24} />
               </button>
 
               {/* Language Toggle in Mobile Menu */}
@@ -569,7 +624,7 @@ const Layout = ({ children }) => {
                   onClick={toggleLanguage}
                   className="mobile-language-btn"
                 >
-                  <Languages size={18} />
+                  <Languages size={actionIconSize} />
                   <span>{language === 'en' ? 'العربية' : 'English'}</span>
                 </button>
               </div>
@@ -578,7 +633,7 @@ const Layout = ({ children }) => {
               {isLoggedIn && (
                 <div className="mobile-user-info">
                   <div className="mobile-user-avatar">
-                    <User size={20} />
+                    <User size={avatarIconSize} />
                   </div>
                   <div className="mobile-user-details">
                     <h4>{currentUser?.fullName || t('myAccount')}</h4>
@@ -599,7 +654,7 @@ const Layout = ({ children }) => {
                         onClick={() => navigate(link.path)}
                         className={`mobile-nav-link ${isActivePath(link.path) ? 'active' : ''}`}
                       >
-                        <Icon size={18} />
+                      <Icon size={navIconSize} />
                         {link.name}
                         {isActivePath(link.path) && <div className="mobile-active-indicator"></div>}
                       </button>
@@ -621,7 +676,7 @@ const Layout = ({ children }) => {
                           onClick={() => navigate(item.path)}
                           className="mobile-nav-link"
                         >
-                          <ItemIcon size={18} />
+                          <ItemIcon size={navIconSize} />
                           {item.name}
                         </button>
                       );
@@ -634,7 +689,7 @@ const Layout = ({ children }) => {
               <div className="mobile-menu-auth">
                 {isLoggedIn ? (
                   <button onClick={handleLogout} className="mobile-btn-outline">
-                    <LogOut size={18} />
+                    <LogOut size={navIconSize} />
                     {t('logout')}
                   </button>
                 ) : (
@@ -649,7 +704,7 @@ const Layout = ({ children }) => {
                       onClick={() => openAuthModal('signup')}
                       className="mobile-btn-primary"
                     >
-                      <Zap size={16} />
+                      <Zap size={navIconSize} />
                       {t('signUpFree')}
                     </button>
                   </>
@@ -675,7 +730,7 @@ const Layout = ({ children }) => {
       </main>
 
       {/* Enhanced Footer */}
-      <Footer />
+      <Footer isMobile={isMobileView} />
     </div>
   );
 };

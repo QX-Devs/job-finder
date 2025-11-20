@@ -12,6 +12,20 @@ if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
+function formatTimestamp() {
+  const d = new Date();
+
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+
+  const hours = String(d.getHours()).padStart(2, '0');
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  const seconds = String(d.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
+}
+
 function buildDocxFromResume(data, userProfile) {
   const safe = (v, d = '') => (v === undefined || v === null || v === '' ? d : String(v));
   const name = safe(userProfile?.fullName, '');
@@ -39,19 +53,6 @@ function buildDocxFromResume(data, userProfile) {
     return month ? `${monthNames[parseInt(month) - 1]} ${year}` : year;
   };
 
-  function formatTimestamp() {
-    const d = new Date();
-  
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-  
-    const hours = String(d.getHours()).padStart(2, '0');
-    const minutes = String(d.getMinutes()).padStart(2, '0');
-    const seconds = String(d.getSeconds()).padStart(2, '0');
-  
-    return `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
-  }
   // Format experience period
   const formatPeriod = (startDate, endDate, current) => {
     const start = formatDate(startDate);
@@ -66,7 +67,7 @@ function buildDocxFromResume(data, userProfile) {
         document: {
           run: {
             font: 'Arial',
-            size: 18, // Reduced from 20 (10pt -> 9pt)
+            size: 22, // 11pt body text
           },
           paragraph: {
             spacing: { 
@@ -83,7 +84,7 @@ function buildDocxFromResume(data, userProfile) {
           name: 'Normal',
           run: {
             font: 'Arial',
-            size: 18, // Reduced from 20
+            size: 22, // 11pt body text
           },
           paragraph: {
             spacing: { after: 60, line: 240, lineRule: 'auto' }, // Reduced spacing
@@ -94,7 +95,7 @@ function buildDocxFromResume(data, userProfile) {
           name: 'SectionHeading',
           run: {
             font: 'Arial',
-            size: 24, // Reduced from 28 (14pt -> 12pt)
+            size: 32, // 16pt for section headings
             bold: true,
           },
           paragraph: {
@@ -111,7 +112,7 @@ function buildDocxFromResume(data, userProfile) {
           name: 'SubHeading',
           run: {
             font: 'Arial',
-            size: 18, // Reduced from 20
+            size: 22,
             bold: true,
           },
           paragraph: {
@@ -128,7 +129,7 @@ function buildDocxFromResume(data, userProfile) {
           name: 'JobTitle',
           run: {
             font: 'Arial',
-            size: 20, // Reduced from 22
+            size: 22,
             bold: true,
           },
           paragraph: {
@@ -141,7 +142,7 @@ function buildDocxFromResume(data, userProfile) {
           name: 'RightAlignedDate',
           run: {
             font: 'Arial',
-            size: 17, // Reduced from 19
+            size: 22,
             bold: true,
           },
           paragraph: {
@@ -199,7 +200,7 @@ function buildDocxFromResume(data, userProfile) {
             new TextRun({
               text: name.toUpperCase(),
               bold: true,
-              size: 52, // Reduced from 68 (34pt -> 26pt)
+              size: 72, // 36pt name heading
               font: 'Arial',
             }),
           ],
@@ -213,7 +214,7 @@ function buildDocxFromResume(data, userProfile) {
             new TextRun({
               text: safe(data.title),
               bold: true,
-              size: 22, // Reduced from 26 (13pt -> 11pt)
+              size: 32, // 16pt professional title
               font: 'Arial',
             }),
           ],
@@ -252,9 +253,9 @@ function buildDocxFromResume(data, userProfile) {
                   children: [
                     new Paragraph({
                       children: [
-                        new TextRun({ text: '• ', size: 18 }),
-                        new TextRun({ text: 'Mobile', bold: true, size: 18 }),
-                        new TextRun({ text: ': ' + phone, size: 18 }),
+                        new TextRun({ text: '• ', size: 22 }),
+                        new TextRun({ text: 'Mobile', bold: true, size: 22 }),
+                        new TextRun({ text: ': ' + phone, size: 22 }),
                       ],
                       spacing: { line: 240, after: 40 },
                     }),
@@ -270,23 +271,23 @@ function buildDocxFromResume(data, userProfile) {
                   children: [
                     new Paragraph({
                       children: githubUrl ? [
-                        new TextRun({ text: '• ', size: 18 }),
-                        new TextRun({ text: 'GitHub', bold: true, size: 18 }),
-                        new TextRun({ text: ': ', size: 18 }),
+                        new TextRun({ text: '• ', size: 22 }),
+                        new TextRun({ text: 'GitHub', bold: true, size: 22 }),
+                        new TextRun({ text: ': ', size: 22 }),
                         new ExternalHyperlink({
                           children: [
                             new TextRun({
                               text: githubDisplay || githubUrl,
                               style: 'Hyperlink',
-                              size: 18,
+                              size: 22,
                             }),
                           ],
                           link: githubUrl,
                         }),
                       ] : [
-                        new TextRun({ text: '• ', size: 18 }),
-                        new TextRun({ text: 'GitHub', bold: true, size: 18 }),
-                        new TextRun({ text: ': N/A', size: 18 }),
+                        new TextRun({ text: '• ', size: 22 }),
+                        new TextRun({ text: 'GitHub', bold: true, size: 22 }),
+                        new TextRun({ text: ': N/A', size: 22 }),
                       ],
                       spacing: { line: 240, after: 40 },
                     }),
@@ -306,9 +307,9 @@ function buildDocxFromResume(data, userProfile) {
                   children: [
                     new Paragraph({
                       children: [
-                        new TextRun({ text: '• ', size: 18 }),
-                        new TextRun({ text: 'Email', bold: true, size: 18 }),
-                        new TextRun({ text: ': ' + email, size: 18 }),
+                        new TextRun({ text: '• ', size: 22 }),
+                        new TextRun({ text: 'Email', bold: true, size: 22 }),
+                        new TextRun({ text: ': ' + email, size: 22 }),
                       ],
                       spacing: { line: 240, after: 40 },
                     }),
@@ -324,23 +325,23 @@ function buildDocxFromResume(data, userProfile) {
                   children: [
                     new Paragraph({
                       children: linkedinUrl ? [
-                        new TextRun({ text: '• ', size: 18 }),
-                        new TextRun({ text: 'LinkedIn', bold: true, size: 18 }),
-                        new TextRun({ text: ': ', size: 18 }),
+                        new TextRun({ text: '• ', size: 22 }),
+                        new TextRun({ text: 'LinkedIn', bold: true, size: 22 }),
+                        new TextRun({ text: ': ', size: 22 }),
                         new ExternalHyperlink({
                           children: [
                             new TextRun({
                               text: linkedinDisplay || linkedinUrl,
                               style: 'Hyperlink',
-                              size: 18,
+                              size: 22,
                             }),
                           ],
                           link: linkedinUrl,
                         }),
                       ] : [
-                        new TextRun({ text: '• ', size: 18 }),
-                        new TextRun({ text: 'LinkedIn', bold: true, size: 18 }),
-                        new TextRun({ text: ': N/A', size: 18 }),
+                        new TextRun({ text: '• ', size: 22 }),
+                        new TextRun({ text: 'LinkedIn', bold: true, size: 22 }),
+                        new TextRun({ text: ': N/A', size: 22 }),
                       ],
                       spacing: { line: 240, after: 40 },
                     }),
@@ -372,7 +373,7 @@ function buildDocxFromResume(data, userProfile) {
           children: [
             new TextRun({
               text: safe(data.summary),
-              size: 18, // Reduced from 20
+              size: 22, // 11pt section content
               font: 'Arial',
             }),
           ],
@@ -425,7 +426,7 @@ function buildDocxFromResume(data, userProfile) {
                 children: [
                   new TextRun({
                     text: resp,
-                    size: 17, // Reduced from 19
+                    size: 22,
                     font: 'Arial',
                   }),
                 ],
@@ -466,18 +467,18 @@ function buildDocxFromResume(data, userProfile) {
             ],
             spacing: { after: 40 }, // Reduced from 60
           }),
-          new Paragraph({
-            style: 'RightAlignedDate',
-            children: [
-              new TextRun({
-                text: safe(edu.institution),
+              new Paragraph({
+                style: 'RightAlignedDate',
+                children: [
+                  new TextRun({
+                    text: safe(edu.institution),
+                  }),
+                  new TextRun({
+                    text: '\tGraduated: ' + formatDate(edu.graduationDate || edu.graduationYear),
+                  }),
+                ],
+                spacing: { after: eduIndex === education.length - 1 ? 0 : 0 },
               }),
-              new TextRun({
-                text: '\tGraduated: ' + formatDate(edu.graduationDate || edu.graduationYear),
-              }),
-            ],
-            spacing: { after: eduIndex === education.length - 1 ? 0 : 0 },
-          }),
         ]).flat(),
 
         // SKILLS (no page break - keep with Languages section)
@@ -498,7 +499,7 @@ function buildDocxFromResume(data, userProfile) {
             children: [
               new TextRun({
                 text: typeof skill === 'string' ? skill : (skill.skillName || ''),
-                size: 17, // Reduced from 19
+                size: 22,
                 font: 'Arial',
               }),
             ],
@@ -531,7 +532,7 @@ function buildDocxFromResume(data, userProfile) {
               new TextRun({
                 text: typeof lang === 'string' ? lang : (lang.language || ''),
                 bold: true,
-                size: 17, // Reduced from 19
+                size: 22,
                 font: 'Arial',
               }),
             ],

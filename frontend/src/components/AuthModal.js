@@ -34,6 +34,26 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
   const [errors, setErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 480 : false
+  );
+  const iconSize18 = isMobile ? 10 : 18;
+  const iconSize22 = isMobile ? 14 : 22;
+  const largeBrandIconSize = isMobile ? 20 : 48;
+  const arrowButtonSize = isMobile ? 12 : 20;
+  const benefitItemStyle = {
+    padding: isMobile ? '6px 10px' : '18px 20px',
+    fontSize: isMobile ? '0.65rem' : '1.05rem'
+  };
+  const authFooterStyle = { fontSize: isMobile ? '0.7rem' : '0.95rem' };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 480);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Update default tab when prop changes
   useEffect(() => {
@@ -280,36 +300,40 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
           onClick={handleClose}
           aria-label="Close modal"
         >
-          <X size={24} />
+          <X size={isMobile ? 14 : 24} />
         </button>
 
         <div className="auth-modal-content">
           {/* Left Side - Enhanced Branding */}
           <div className="auth-modal-brand">
             <div className="brand-logo">
-              <Sparkles size={48} strokeWidth={2.5} />
+              <Sparkles size={largeBrandIconSize} strokeWidth={2.5} />
             </div>
-            <h2>Welcome to GradJob</h2>
-            <p>Your gateway to thousands of career opportunities tailored just for you</p>
+            <h2 style={{ fontSize: isMobile ? '1.05rem' : '2.75rem' }}>Welcome to GradJob</h2>
+            <p style={{ fontSize: isMobile ? '0.72rem' : '1.25rem' }}>
+              Your gateway to thousands of career opportunities tailored just for you
+            </p>
             
+            {!isMobile && (
             <div className="brand-benefits">
-              <div className="benefit-item">
-                <Zap size={22} />
+              <div className="benefit-item" style={benefitItemStyle}>
+                <Zap size={iconSize22} />
                 <span>AI-Powered Resume Builder</span>
               </div>
-              <div className="benefit-item">
-                <TrendingUp size={22} />
+              <div className="benefit-item" style={benefitItemStyle}>
+                <TrendingUp size={iconSize22} />
                 <span>Smart Job Matching Algorithm</span>
               </div>
-              <div className="benefit-item">
-                <ArrowRight size={22} />
+              <div className="benefit-item" style={benefitItemStyle}>
+                <ArrowRight size={iconSize22} />
                 <span>One-Click Application Process</span>
               </div>
-              <div className="benefit-item">
-                <Shield size={22} />
+              <div className="benefit-item" style={benefitItemStyle}>
+                <Shield size={iconSize22} />
                 <span>Secure & Privacy Protected</span>
               </div>
             </div>
+            )}
           </div>
 
           {/* Right Side - Enhanced Forms */}
@@ -344,7 +368,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
               <form onSubmit={handleLogin} className="auth-form" noValidate>
                 <div className="form-group">
                   <label htmlFor="login-email">
-                    <Mail size={18} />
+                    <Mail size={iconSize18} />
                     Email Address
                   </label>
                   <input
@@ -364,7 +388,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
                 <div className="form-group">
                   <label htmlFor="login-password">
-                    <Lock size={18} />
+                    <Lock size={iconSize18} />
                     Password
                   </label>
                   <div className="password-input">
@@ -384,7 +408,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       onClick={() => setShowPassword(!showPassword)}
                       aria-label={showPassword ? 'Hide password' : 'Show password'}
                     >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      {showPassword ? <EyeOff size={iconSize18} /> : <Eye size={iconSize18} />}
                     </button>
                   </div>
                   {errors.password && touchedFields.password && (
@@ -401,12 +425,12 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                   ) : (
                     <>
                       Login
-                      <ArrowRight size={20} />
+                      <ArrowRight size={arrowButtonSize} />
                     </>
                   )}
                 </button>
 
-                <div className="auth-footer">
+                <div className="auth-footer" style={authFooterStyle}>
                   Don't have an account?{' '}
                   <button 
                     type="button" 
@@ -424,7 +448,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
               <form onSubmit={handleSignup} className="auth-form" noValidate>
                 <div className="form-group">
                   <label htmlFor="signup-name">
-                    <User size={18} />
+                    <User size={iconSize18} />
                     Full Name
                   </label>
                   <input
@@ -444,7 +468,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
                 <div className="form-group">
                   <label htmlFor="signup-email">
-                    <Mail size={18} />
+                    <Mail size={iconSize18} />
                     Email Address
                   </label>
                   <input
@@ -464,7 +488,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
                 <div className="form-group">
                   <label htmlFor="signup-password">
-                    <Lock size={18} />
+                    <Lock size={iconSize18} />
                     Password
                   </label>
                   <div className="password-input">
@@ -490,7 +514,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       onClick={() => setShowPassword(!showPassword)}
                       aria-label={showPassword ? 'Hide password' : 'Show password'}
                     >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      {showPassword ? <EyeOff size={iconSize18} /> : <Eye size={iconSize18} />}
                     </button>
                   </div>
                   {errors.password && touchedFields.password && (
@@ -500,7 +524,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
                 <div className="form-group">
                   <label htmlFor="signup-confirm-password">
-                    <Lock size={18} />
+                    <Lock size={iconSize18} />
                     Confirm Password
                   </label>
                   <div className="password-input">
@@ -520,7 +544,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                     >
-                      {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      {showConfirmPassword ? <EyeOff size={iconSize18} /> : <Eye size={iconSize18} />}
                     </button>
                   </div>
                   {errors.confirmPassword && touchedFields.confirmPassword && (
@@ -537,12 +561,12 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                   ) : (
                     <>
                       Create Account
-                      <ArrowRight size={20} />
+                      <ArrowRight size={arrowButtonSize} />
                     </>
                   )}
                 </button>
 
-                <div className="auth-footer">
+                <div className="auth-footer" style={authFooterStyle}>
                   Already have an account?{' '}
                   <button 
                     type="button" 

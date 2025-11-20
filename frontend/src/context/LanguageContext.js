@@ -5,8 +5,8 @@ import { translations } from '../utils/translations';
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('ar');
-  const [direction, setDirection] = useState('rtl');
+  const [language, setLanguage] = useState('en');
+  const [direction, setDirection] = useState('ltr');
 
   useEffect(() => {
     // تعيين اتجاه النص بناءً على اللغة مهم جداا تعديل

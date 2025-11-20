@@ -1,13 +1,29 @@
 const jwt = require('jsonwebtoken');
 const { User, Education, Experience, Skill, Language } = require('../models');
 const bcrypt = require('bcryptjs');
+const { sendEmail } = require('../utils/email');
 
-// Generate JWT Token
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE
+const TOKEN_EXPIRATION_MS = 60 * 60 * 1000;
+
+const generateAuthToken = (id) =>
+  jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
   });
-};
+
+const generateVerificationToken = (id) =>
+  jwt.sign({ id }, process.env.JWT_VERIFY_SECRET, { expiresIn: '1h' });
+
+const generateResetToken = (id) =>
+  jwt.sign({ id }, process.env.JWT_RESET_SECRET, { expiresIn: '1h' });
+
+const getApiBaseUrl = () =>
+  process.env.API_BASE_URL || `http://localhost:${process.env.PORT || 5000}/api`;
+
+const getFrontendBaseUrl = () =>
+  process.env.FRONTEND_URL || 'http://localhost:3000';
+
+const formatSupportEmail = (htmlBody) =>
+  htmlBody.replace(/<[^>]*>/g, '');
 
 // @desc    Register user
 // @route   POST /api/auth/register
@@ -20,32 +36,115 @@ const register = async (req, res) => {
       return res.status(400).json({ message: 'fullName, email and password are required' });
     }
 
-    // Check if user exists
     const userExists = await User.findOne({ where: { email } });
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Create user with minimal required fields
     const user = await User.create({ fullName, email, password });
 
-    // Generate token
-    const token = generateToken(user.id);
+    const verificationToken = generateVerificationToken(user.id);
+    user.verificationToken = verificationToken;
+    user.verificationTokenExpires = new Date(Date.now() + TOKEN_EXPIRATION_MS);
+    await user.save();
+
+    const verifyUrl = `${getApiBaseUrl()}/auth/verify/${verificationToken}`;
+    const htmlBody = `
+  <div style="
+    font-family: Arial, sans-serif;
+    max-width: 480px;
+    margin: auto;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    color: #333;
+  ">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <h2 style="margin: 0; font-size: 24px; color: #111827; font-weight: 700;">
+        GradJob – Verify Your Email
+      </h2>
+    </div>
+
+    <p style="font-size: 15px;">
+      Hi <strong>${user.fullName || 'there'}</strong>,
+    </p>
+
+    <p style="font-size: 15px; line-height: 1.6;">
+      Thank you for signing up with <strong>GradJob</strong>!
+      To activate your account, please verify your email address.
+    </p>
+
+    <div style="text-align: center; margin: 28px 0;">
+      <a href="${verifyUrl}" style="
+        background: linear-gradient(135deg, #4caf50, #2e7d32);
+        color: white;
+        padding: 14px 24px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        display: inline-block;
+        font-weight: bold;
+      ">
+        Verify Email
+      </a>
+    </div>
+
+    <p style="font-size: 14px; color: #555;">
+      If the button above does not work, copy and paste the link below:
+    </p>
+
+    <div style="
+      background: #f3f4f6;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      word-break: break-all;
+      color: #111;
+    ">
+      ${verifyUrl}
+    </div>
+
+    <p style="font-size: 13px; color: #6b7280; margin-top: 24px;">
+      This link will expire in <strong>1 hour</strong> for security reasons.
+    </p>
+
+    <hr style="margin: 32px 0; border: none; border-top: 1px solid #e5e7eb;" />
+
+    <p style="text-align: center; font-size: 12px; color: #9ca3af;">
+      © ${new Date().getFullYear()} GradJob. All rights reserved.
+    </p>
+  </div>
+`;
+
+
+
+    await sendEmail({
+      to: user.email,
+      subject: 'Verify your GradJob account',
+      html: htmlBody,
+      text: formatSupportEmail(htmlBody),
+    });
+
+    const authToken = generateAuthToken(user.id);
+
     res.status(201).json({
       success: true,
+      message: 'Registration successful. Please verify your email to continue.',
       data: {
         id: user.id,
-        fullName: user.fullName,
         email: user.email,
-        token
-      }
+        requiresVerification: !user.isVerified,
+        isVerified: user.isVerified,
+        token: authToken,
+      },
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Server error', 
-      error: error.message 
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message,
     });
   }
 };
@@ -62,20 +161,17 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'Please provide email and password' });
     }
 
-    // Check for user
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(404).json({ message: 'User Not Found' });
     }
 
-    // Check password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(405).json({ message: 'Invalid Password'});
     }
 
-    // Generate token
-    const token = generateToken(user.id);
+    const token = generateAuthToken(user.id);
 
     res.json({
       success: true,
@@ -83,7 +179,8 @@ const login = async (req, res) => {
         id: user.id,
         fullName: user.fullName,
         email: user.email,
-        token
+        token,
+        isVerified: user.isVerified,
       }
     });
   } catch (error) {
@@ -93,6 +190,186 @@ const login = async (req, res) => {
       message: 'Server error', 
       error: error.message 
     });
+  }
+};
+
+// @desc    Verify email
+// @route   GET /api/auth/verify/:token
+// @access  Public
+const verifyEmail = async (req, res) => {
+  try {
+    const { token } = req.params;
+    if (!token) {
+      return res.status(400).json({ success: false, message: 'Verification token is required' });
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_VERIFY_SECRET);
+    } catch (error) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired verification token' });
+    }
+
+    const user = await User.findByPk(decoded.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (user.isVerified) {
+      return res.json({ success: true, message: 'Email already verified' });
+    }
+
+    if (
+      !user.verificationToken ||
+      user.verificationToken !== token ||
+      !user.verificationTokenExpires ||
+      new Date(user.verificationTokenExpires).getTime() < Date.now()
+    ) {
+      return res.status(400).json({ success: false, message: 'Verification token is invalid or has expired' });
+    }
+
+    user.isVerified = true;
+    user.verificationToken = null;
+    user.verificationTokenExpires = null;
+    await user.save();
+
+    return res.json({ success: true, message: 'Email verified successfully' });
+  } catch (error) {
+    console.error('Verify email error:', error);
+    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
+// @desc    Forgot password
+// @route   POST /api/auth/forgot-password
+// @access  Public
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Email is required' });
+    }
+
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (!user.isVerified) {
+      return res.status(403).json({ success: false, message: 'Please verify your email before requesting a password reset.' });
+    }
+
+    const resetToken = generateResetToken(user.id);
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = new Date(Date.now() + TOKEN_EXPIRATION_MS);
+    await user.save();
+
+    const resetUrl = `${getFrontendBaseUrl().replace(/\/$/, '')}/reset-password/${resetToken}`;
+    const htmlBody = `
+      <p>Hi ${user.fullName || 'there'},</p>
+      <p>We received a request to reset your password. Click the button below within the next hour to set a new password.</p>
+      <p><a href="${resetUrl}" style="padding: 12px 20px; background-color: #1e88e5; color: #ffffff; text-decoration: none; border-radius: 4px;">Reset Password</a></p>
+      <p>If you did not request this change, you can safely ignore this email. Your password will remain unchanged.</p>
+      <p>Reset link: ${resetUrl}</p>
+    `;
+
+    await sendEmail({
+      to: user.email,
+      subject: 'Reset your GradJob password',
+      html: htmlBody,
+      text: formatSupportEmail(htmlBody),
+    });
+
+    return res.json({ success: true, message: 'Password reset instructions have been sent to your email.' });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
+// @desc    Reset password
+// @route   POST /api/auth/reset-password/:token
+// @access  Public
+const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ success: false, message: 'Reset token is required' });
+    }
+    if (!password) {
+      return res.status(400).json({ success: false, message: 'New password is required' });
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_RESET_SECRET);
+    } catch (error) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired reset token' });
+    }
+
+    const user = await User.findByPk(decoded.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (
+      !user.resetPasswordToken ||
+      user.resetPasswordToken !== token ||
+      !user.resetPasswordExpires ||
+      new Date(user.resetPasswordExpires).getTime() < Date.now()
+    ) {
+      return res.status(400).json({ success: false, message: 'Reset token is invalid or has expired' });
+    }
+
+    user.password = password;
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+    await user.save();
+
+    return res.json({ success: true, message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
+const resendVerificationEmail = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (user.isVerified) {
+      return res.json({ success: true, message: 'Email already verified' });
+    }
+
+    const verificationToken = generateVerificationToken(user.id);
+    user.verificationToken = verificationToken;
+    user.verificationTokenExpires = new Date(Date.now() + TOKEN_EXPIRATION_MS);
+    await user.save();
+
+    const verifyUrl = `${getApiBaseUrl()}/auth/verify/${verificationToken}`;
+    const htmlBody = `
+      <p>Hi ${user.fullName || 'there'},</p>
+      <p>You requested a new verification email. Please verify your email by clicking the button below within the next hour.</p>
+      <p><a href="${verifyUrl}" style="padding: 12px 20px; background-color: #2e7d32; color: #ffffff; text-decoration: none; border-radius: 4px;">Verify Email</a></p>
+      <p>If the button does not work, copy and paste this link into your browser:<br/>${verifyUrl}</p>
+    `;
+
+    await sendEmail({
+      to: user.email,
+      subject: 'Verify your GradJob account',
+      html: htmlBody,
+      text: formatSupportEmail(htmlBody),
+    });
+
+    return res.json({ success: true, message: 'Verification email sent successfully.' });
+  } catch (error) {
+    console.error('Resend verification email error:', error);
+    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
   }
 };
 
@@ -309,4 +586,4 @@ const deleteAccount = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getMe, updateProfile, changePassword, deleteAccount };
+module.exports = { register, login, verifyEmail, forgotPassword, resetPassword, resendVerificationEmail, getMe, updateProfile, changePassword, deleteAccount };

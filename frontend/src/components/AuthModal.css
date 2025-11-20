@@ -34,6 +34,7 @@
   overflow: hidden;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
   position: relative;
+  z-index: 1;
   animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -50,8 +51,10 @@
 
 .auth-modal-close {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  z-index: 999999 !important;
+  /* Keep close button FIXED on the right safely clear from gradient */
+  top: 20px;
+  right: 20px;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.25);
   width: 44px;
@@ -62,7 +65,6 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 10;
   color: white;
   backdrop-filter: blur(10px);
 }
@@ -82,6 +84,8 @@
   min-height: 650px;
   max-height: 90vh;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 /* Left Side - Branding with Enhanced Gradient */
@@ -94,28 +98,31 @@
   justify-content: center;
   color: white;
   position: relative;
+  z-index: 1;
   overflow: hidden;
 }
 
 .auth-modal-brand::before {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -50%;
+  /* Move 3D blob to the LEFT side */
+  top: -40%;
+  left: -45%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 55%);
   animation: pulse 10s ease-in-out infinite;
 }
 
 .auth-modal-brand::after {
   content: '';
   position: absolute;
-  bottom: -30%;
-  left: -20%;
+  /* Move second 3D blob further LEFT */
+  bottom: -25%;
+  left: -35%;
   width: 150%;
   height: 150%;
-  background: radial-gradient(circle at 70% 70%, rgba(5, 150, 105, 0.3) 0%, transparent 60%);
+  background: radial-gradient(circle at 30% 70%, rgba(5, 150, 105, 0.25) 0%, transparent 65%);
   animation: pulse 8s ease-in-out infinite reverse;
 }
 
@@ -225,7 +232,10 @@
   flex: 1;
   padding: 60px 50px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: white;
+  position: relative;
+  z-index: 1;
 }
 
 /* Custom Scrollbar */
@@ -672,65 +682,107 @@
 }
 
 @media (max-width: 480px) {
+  /* 1) Shrink brand section dramatically */
   .auth-modal-brand {
-    padding: 24px 12px 16px;
+    padding: 12px 10px !important;
+    min-height: 120px !important;
   }
 
   .auth-modal-brand h2 {
-    font-size: 1.5rem;
+    font-size: 1.05rem !important;
+    margin-bottom: 4px !important;
   }
 
   .auth-modal-brand > p {
-    font-size: 0.85rem;
-  }
-
-  .auth-modal-form-container {
-    padding: 20px 12px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .auth-tab {
-    padding: 8px 12px;
-    font-size: 0.75rem;
-    min-height: 36px;
-    flex: 1;
-  }
-
-  .form-group input {
-    padding: 10px 12px;
-    font-size: 14px;
-    min-height: 38px;
-  }
-
-  .auth-submit-btn {
-    padding: 10px 16px;
-    font-size: 0.85rem;
-    min-height: 40px;
-    width: 100%;
-  }
-
-  .form-group label {
-    font-size: 0.8rem;
-    margin-bottom: 6px;
+    font-size: 0.72rem !important;
+    margin-bottom: 12px !important;
   }
 
   .brand-logo {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 16px;
+    width: 38px !important;
+    height: 38px !important;
+    margin-bottom: 12px !important;
   }
 
-  .brand-logo svg {
-    width: 26px;
-    height: 26px;
+  /* 2) Shrink form container padding */
+  .auth-modal-form-container {
+    padding: 12px 14px !important;
   }
-  
+
+  /* 3) Shrink tab buttons */
+  .auth-tab {
+    padding: 5px 8px !important;
+    font-size: 0.65rem !important;
+    min-height: 28px !important;
+  }
+  .auth-tabs {
+    margin-bottom: 10px !important;
+  }
+
+  /* 4) Shrink input fields */
+  .form-group input {
+    padding: 6px 8px !important;
+    font-size: 0.75rem !important;
+    min-height: 30px !important;
+    border-radius: 8px !important;
+  }
+
+  .form-group label {
+    font-size: 0.72rem !important;
+  }
+
+  /* 5) Shrink password toggle icon */
+  .toggle-password {
+    width: 26px !important;
+    height: 26px !important;
+    padding: 4px !important;
+  }
+
+  /* 6) Shrink Submit Button */
+  .auth-submit-btn {
+    padding: 8px !important;
+    min-height: 34px !important;
+    font-size: 0.8rem !important;
+    border-radius: 10px !important;
+  }
+
+  /* 7) Shrink close button */
   .auth-modal-close {
-    width: 38px;
-    height: 38px;
-    top: 10px;
-    right: 10px;
+    /* Keep close button fully FREE from gradient on mobile */
+    width: 30px !important;
+    height: 30px !important;
+    top: 10px !important;
+    right: 10px !important;
+  }
+
+  /* 8) Reduce spacing between form elements */
+  .auth-form {
+    gap: 14px !important;
+  }
+  .form-group {
+    gap: 6px !important;
+  }
+
+  /* 9) Reduce bottom footer size */
+  .auth-footer {
+    margin-top: 14px !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* 10) Make modal smaller & like a popup */
+  .auth-modal-container {
+    max-width: 94% !important;
+    border-radius: 16px !important;
+    height: auto !important;
+    max-height: 88vh !important;
+  }
+
+  /* 11) Reduce gradient shape size on mobile */
+  .auth-modal-brand::before,
+  .auth-modal-brand::after {
+    /* Make blobs smaller AND push them more left */
+    opacity: 0.2 !important;
+    transform: scale(0.5) translateX(-25px) !important;
   }
 }
 
