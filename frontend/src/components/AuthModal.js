@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   X, Mail, Lock, User, Eye, EyeOff, 
   CheckCircle, ArrowRight, Sparkles, Shield,
-  Zap, TrendingUp
+  Zap, TrendingUp, ArrowLeft
 } from 'lucide-react';
 import authService from '../services/authService';
 import './AuthModal.css';
@@ -17,6 +17,9 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+  const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState(false);
 
   // Login form state
   const [loginData, setLoginData] = useState({
@@ -82,6 +85,9 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
     setShowPassword(false);
     setShowConfirmPassword(false);
     setTouchedFields({});
+    setShowForgotPassword(false);
+    setForgotPasswordEmail('');
+    setForgotPasswordSuccess(false);
   };
 
   const handleClose = () => {
@@ -92,6 +98,40 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     resetForm();
+  };
+
+  // Handle forgot password
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    // Validate email
+    if (!forgotPasswordEmail.trim()) {
+      setError('Email is required');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(forgotPasswordEmail)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await authService.forgotPassword(forgotPasswordEmail);
+      
+      if (response.success) {
+        setForgotPasswordSuccess(true);
+        setError('');
+      }
+    } catch (err) {
+      // Even if there's an error, show success message (backend always returns success)
+      setForgotPasswordSuccess(true);
+      setError('');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Handle field blur for real-time validation
@@ -363,8 +403,98 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
               </div>
             )}
 
+            {/* Forgot Password Form */}
+            {activeTab === 'login' && showForgotPassword && (
+              <div className="auth-form">
+                {forgotPasswordSuccess ? (
+                  <div className="forgot-password-success">
+                    <CheckCircle size={isMobile ? 32 : 48} />
+                    <h3 style={{ fontSize: isMobile ? '1rem' : '1.5rem' }}>Check Your Email</h3>
+                    <p style={{ fontSize: isMobile ? '0.75rem' : '1rem' }}>
+                      If your email exists in our system, you will receive password reset instructions in your inbox.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowForgotPassword(false);
+                        setForgotPasswordSuccess(false);
+                        setForgotPasswordEmail('');
+                      }}
+                      className="auth-submit-btn"
+                      style={{ marginTop: '20px' }}
+                    >
+                      <ArrowLeft size={arrowButtonSize} />
+                      Back to Login
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <div style={{ marginBottom: '20px' }}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowForgotPassword(false);
+                          setForgotPasswordEmail('');
+                          setError('');
+                        }}
+                        className="link-btn"
+                        style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}
+                      >
+                        <ArrowLeft size={iconSize18} />
+                        Back to Login
+                      </button>
+                      <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.75rem', fontWeight: 700, marginBottom: '10px' }}>
+                        Forgot Password?
+                      </h3>
+                      <p style={{ fontSize: isMobile ? '0.8rem' : '1rem', color: '#6b7280', marginBottom: '24px' }}>
+                        Enter your email address and we'll send you instructions to reset your password.
+                      </p>
+                    </div>
+
+                    {error && (
+                      <div className="auth-error-banner" role="alert">
+                        {error}
+                      </div>
+                    )}
+
+                    <form onSubmit={handleForgotPassword} className="auth-form" noValidate>
+                      <div className="form-group">
+                        <label htmlFor="forgot-email">
+                          <Mail size={iconSize18} />
+                          Email Address
+                        </label>
+                        <input
+                          id="forgot-email"
+                          type="email"
+                          value={forgotPasswordEmail}
+                          onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                          placeholder="Enter your email"
+                          autoComplete="email"
+                          required
+                        />
+                      </div>
+
+                      <button type="submit" className="auth-submit-btn" disabled={isLoading}>
+                        {isLoading ? (
+                          <>
+                            <span className="spinner"></span>
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            Send Reset Link
+                            <ArrowRight size={arrowButtonSize} />
+                          </>
+                        )}
+                      </button>
+                    </form>
+                  </>
+                )}
+              </div>
+            )}
+
             {/* Login Form */}
-            {activeTab === 'login' && (
+            {activeTab === 'login' && !showForgotPassword && (
               <form onSubmit={handleLogin} className="auth-form" noValidate>
                 <div className="form-group">
                   <label htmlFor="login-email">
@@ -414,6 +544,20 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                   {errors.password && touchedFields.password && (
                     <span className="error-message" role="alert">{errors.password}</span>
                   )}
+                </div>
+
+                <div style={{ textAlign: 'right', marginTop: '-8px' }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowForgotPassword(true);
+                      setError('');
+                    }}
+                    className="link-btn"
+                    style={{ fontSize: isMobile ? '0.7rem' : '0.9rem' }}
+                  >
+                    Forgot Password?
+                  </button>
                 </div>
 
                 <button type="submit" className="auth-submit-btn" disabled={isLoading}>

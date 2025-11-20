@@ -250,40 +250,141 @@ const forgotPassword = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Email is required' });
     }
 
+    console.log(`📧 Forgot password request for email: ${email}`);
+
     const user = await User.findOne({ where: { email } });
+    
     if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
+      console.log(`❌ User not found for email: ${email}`);
+      // Security: Always return success message to prevent email enumeration
+      return res.json({ 
+        success: true, 
+        message: 'If your email exists in our system, you will receive password reset instructions in your inbox.' 
+      });
     }
 
-    if (!user.isVerified) {
-      return res.status(403).json({ success: false, message: 'Please verify your email before requesting a password reset.' });
+    console.log(`✅ User found: ${user.email}, isVerified: ${user.isVerified}`);
+
+    // Security: Always return success message to prevent email enumeration
+    // Send email if user exists (regardless of verification status)
+    try {
+      const resetToken = generateResetToken(user.id);
+      user.resetPasswordToken = resetToken;
+      user.resetPasswordExpires = new Date(Date.now() + TOKEN_EXPIRATION_MS);
+      await user.save();
+
+      console.log(`🔑 Reset token generated for user: ${user.email}`);
+
+      const resetUrl = `${getFrontendBaseUrl().replace(/\/$/, '')}/reset-password/${resetToken}`;
+      const htmlBody = `
+        <div style="
+          font-family: Arial, sans-serif;
+          max-width: 480px;
+          margin: auto;
+          background: #ffffff;
+          padding: 24px;
+          border-radius: 12px;
+          border: 1px solid #e5e7eb;
+          color: #333;
+        ">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <h2 style="margin: 0; font-size: 24px; color: #111827; font-weight: 700;">
+              GradJob – Reset Your Password
+            </h2>
+          </div>
+
+          <p style="font-size: 15px;">
+            Hi <strong>${user.fullName || 'there'}</strong>,
+          </p>
+
+          <p style="font-size: 15px; line-height: 1.6;">
+            We received a request to reset your password. Click the button below within the next hour to set a new password.
+          </p>
+
+          <div style="text-align: center; margin: 28px 0;">
+            <a href="${resetUrl}" style="
+              background: linear-gradient(135deg, #10b981, #059669);
+              color: white;
+              padding: 14px 24px;
+              text-decoration: none;
+              border-radius: 8px;
+              font-size: 16px;
+              display: inline-block;
+              font-weight: bold;
+            ">
+              Reset Password
+            </a>
+          </div>
+
+          <p style="font-size: 14px; color: #555;">
+            If the button above does not work, copy and paste the link below:
+          </p>
+
+          <div style="
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            word-break: break-all;
+            color: #111;
+          ">
+            ${resetUrl}
+          </div>
+
+          <p style="font-size: 13px; color: #6b7280; margin-top: 24px;">
+            If you did not request this change, you can safely ignore this email. Your password will remain unchanged.
+          </p>
+
+          <p style="font-size: 13px; color: #6b7280; margin-top: 16px;">
+            This link will expire in <strong>1 hour</strong> for security reasons.
+          </p>
+
+          <hr style="margin: 32px 0; border: none; border-top: 1px solid #e5e7eb;" />
+
+          <p style="text-align: center; font-size: 12px; color: #9ca3af;">
+            © ${new Date().getFullYear()} GradJob. All rights reserved.
+          </p>
+        </div>
+      `;
+
+      console.log(`📤 Attempting to send password reset email to: ${user.email}`);
+      console.log(`📧 Email service configured: ${process.env.EMAIL_USER ? 'YES' : 'NO'}`);
+      
+      await sendEmail({
+        to: user.email,
+        subject: 'Reset your GradJob password',
+        html: htmlBody,
+        text: formatSupportEmail(htmlBody),
+      });
+
+      console.log(`✅ Password reset email sent successfully to: ${user.email}`);
+    } catch (emailError) {
+      console.error('❌ Error sending password reset email:', emailError);
+      console.error('Email error details:', {
+        message: emailError.message,
+        code: emailError.code,
+        response: emailError.response,
+        stack: emailError.stack
+      });
+      // Continue to return success message for security
     }
 
-    const resetToken = generateResetToken(user.id);
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = new Date(Date.now() + TOKEN_EXPIRATION_MS);
-    await user.save();
-
-    const resetUrl = `${getFrontendBaseUrl().replace(/\/$/, '')}/reset-password/${resetToken}`;
-    const htmlBody = `
-      <p>Hi ${user.fullName || 'there'},</p>
-      <p>We received a request to reset your password. Click the button below within the next hour to set a new password.</p>
-      <p><a href="${resetUrl}" style="padding: 12px 20px; background-color: #1e88e5; color: #ffffff; text-decoration: none; border-radius: 4px;">Reset Password</a></p>
-      <p>If you did not request this change, you can safely ignore this email. Your password will remain unchanged.</p>
-      <p>Reset link: ${resetUrl}</p>
-    `;
-
-    await sendEmail({
-      to: user.email,
-      subject: 'Reset your GradJob password',
-      html: htmlBody,
-      text: formatSupportEmail(htmlBody),
+    // Always return success message (security best practice to prevent email enumeration)
+    return res.json({ 
+      success: true, 
+      message: 'If your email exists in our system, you will receive password reset instructions in your inbox.' 
     });
-
-    return res.json({ success: true, message: 'Password reset instructions have been sent to your email.' });
   } catch (error) {
-    console.error('Forgot password error:', error);
-    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+    console.error('❌ Forgot password error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack
+    });
+    // Even on error, return generic success message for security
+    return res.json({ 
+      success: true, 
+      message: 'If your email exists in our system, you will receive password reset instructions in your inbox.' 
+    });
   }
 };
 

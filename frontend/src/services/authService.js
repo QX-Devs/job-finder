@@ -45,12 +45,11 @@ const authService = {
     }
   },
 
-  // Reset password (for future use)
-  resetPassword: async (token, newPassword) => {
+  // Reset password
+  resetPassword: async (token, password) => {
     try {
-      const response = await api.post('/auth/reset-password', { 
-        token, 
-        newPassword 
+      const response = await api.post(`/auth/reset-password/${token}`, { 
+        password 
       });
       return response.data;
     } catch (error) {

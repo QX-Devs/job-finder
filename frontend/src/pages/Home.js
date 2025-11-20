@@ -9,9 +9,11 @@ import {
   Rocket, Heart, Share2, Eye, Calendar, Badge
 } from 'lucide-react';
 import AuthModal from '../components/AuthModal';
+import ResetPasswordModal from '../components/ResetPasswordModal';
 import authService from '../services/authService';
 import applicationService from '../services/applicationService';
 import { useTranslate } from '../utils/translate'; // <<< استيراد دالة الترجمة
+import { useSearchParams } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
@@ -45,6 +47,11 @@ const Home = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState('login');
   
+  // Reset Password Modal State
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
+  const [resetToken, setResetToken] = useState(null);
+  
   const isLoggedIn = authService.isAuthenticated();
   const heroRef = useRef(null);
   const jobsRef = useRef(null);
@@ -58,6 +65,17 @@ const Home = () => {
     { id: 'sales', name: t('sales'), icon: Users, count: 0 },
     { id: 'product', name: t('product'), icon: Zap, count: 0 }
   ];
+
+  // Check for reset password token in URL
+  useEffect(() => {
+    const token = searchParams.get('token');
+    if (token) {
+      setResetToken(token);
+      setIsResetPasswordModalOpen(true);
+      // Remove token from URL but keep it in state
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
 
   // Track window resize for mobile detection
   useEffect(() => {
@@ -1124,6 +1142,15 @@ const Home = () => {
         onClose={closeAuthModal}
         defaultTab={authModalTab}
         onSuccess={handleAuthSuccess}
+      />
+      
+      <ResetPasswordModal
+        isOpen={isResetPasswordModalOpen}
+        onClose={() => {
+          setIsResetPasswordModalOpen(false);
+          setResetToken(null);
+        }}
+        token={resetToken}
       />
     </>
   );

@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
   Outlet,
+  useParams,
 } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext"; // <<< أضف هذا
 import Layout from "./components/Layout";
@@ -104,12 +105,24 @@ function App() {
             />
           </Route>
 
+          {/* Reset Password Route - redirects to home with token */}
+          <Route 
+            path="/reset-password/:token" 
+            element={<ResetPasswordRedirect />} 
+          />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
     </LanguageProvider>
   );
 }
+
+// Component to handle reset password redirect
+const ResetPasswordRedirect = () => {
+  const { token } = useParams();
+  return <Navigate to={`/?token=${token}`} replace />;
+};
 
 // Single layout component that wraps ALL pages
 const MainLayout = () => {
