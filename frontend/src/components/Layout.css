@@ -914,9 +914,7 @@
     top: 0 !important;
   }
   
-  .mobile-menu-content {
-    /* Padding removed - header handles spacing */
-  }
+  
 }
 
 @keyframes fadeIn {
@@ -1727,43 +1725,109 @@ a:focus-visible {
   background: var(--gray-500);
 }
 
-/* Language Toggle Styles */
-.language-toggle-wrapper {
+/* ============================================
+   Theme Toggle Button - Consistent with other buttons
+   ============================================ */
+
+/* زر Dark Mode - نفس تصميم أزرار الترجمة والإشعارات */
+.theme-toggle-btn {
   position: relative;
+  width: 38px !important;
+  height: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--gray-100) !important;
+  border: 2px solid transparent !important;
+  border-radius: 12px !important;
+  color: var(--gray-600) !important;
+  cursor: pointer !important;
+  transition: all var(--transition-base) !important;
+  padding: 6px !important;
 }
 
-.language-toggle-wrapper,
-.mobile-language-btn {
-  min-width: auto !important;
+.theme-toggle-btn:hover {
+  background: var(--primary-50) !important;
+  border-color: var(--primary-200) !important;
+  color: var(--primary-600) !important;
+  transform: translateY(-2px) scale(1.05) !important;
 }
 
-.icon-action-btn.language-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: var(--gray-100);
-  border: 1px solid var(--gray-300);
-  border-radius: 8px;
-  color: var(--gray-700);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-base);
+.theme-toggle-btn:active {
+  transform: translateY(0) scale(0.95) !important;
 }
 
-.icon-action-btn.language-toggle:hover {
-  background: var(--gray-200);
-  border-color: var(--primary-500);
-  color: var(--primary-600);
+/* أيقونة داخل الزر */
+.theme-icon {
+  width: 18px !important;
+  height: 18px !important;
+  transition: all var(--transition-base) !important;
+  flex-shrink: 0 !important;
 }
 
-.language-code {
-  font-size: 0.8rem;
-  font-weight: 700;
+.theme-toggle-btn:hover .theme-icon {
+  transform: rotate(15deg) scale(1.1) !important;
 }
 
-/* Mobile Language Toggle - Now inside header */
-.mobile-language-toggle {
+/* تأثير خاص للـ Dark Mode */
+.theme-toggle-btn.dark-active {
+  background: var(--primary-100) !important;
+  border-color: var(--primary-300) !important;
+  color: var(--primary-600) !important;
+}
+
+/* For mobile view */
+.navbar-mobile-actions .theme-toggle-btn {
+  width: 36px !important;
+  height: 36px !important;
+  padding: 6px !important;
+}
+
+.navbar-mobile-actions .theme-toggle-btn .theme-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* تأكد من أن جميع الأزرار متسقة */
+.icon-action-btn,
+.theme-toggle-btn,
+.notification-btn,
+.language-toggle {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  padding: 6px !important;
+  border-radius: 12px !important;
+  border: 2px solid transparent !important;
+  background: var(--gray-100) !important;
+  color: var(--gray-600) !important;
+  transition: all var(--transition-base) !important;
+}
+
+.icon-action-btn:hover,
+.theme-toggle-btn:hover,
+.notification-btn:hover,
+.language-toggle:hover {
+  background: var(--primary-50) !important;
+  border-color: var(--primary-200) !important;
+  color: var(--primary-600) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+}
+
+/* Mobile actions consistency */
+.navbar-mobile-actions .icon-action-btn,
+.navbar-mobile-actions .theme-toggle-btn,
+.navbar-mobile-actions .mobile-icon-btn {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  padding: 6px !important;
+}
+
+/* زر Dark Mode في الـ mobile menu */
+.mobile-theme-toggle {
   display: flex !important;
   align-items: center !important;
   visibility: visible !important;
@@ -1772,7 +1836,7 @@ a:focus-visible {
   border: none !important;
 }
 
-.mobile-language-btn {
+.mobile-theme-btn {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
@@ -1788,77 +1852,17 @@ a:focus-visible {
   min-height: auto !important;
   visibility: visible !important;
   opacity: 1 !important;
+  width: 100% !important;
 }
 
-.mobile-language-btn:hover {
+.mobile-theme-btn:hover {
   background: var(--gray-100) !important;
   color: var(--gray-900) !important;
 }
 
-.mobile-language-btn svg {
+.mobile-theme-btn svg {
   width: 18px !important;
   height: 18px !important;
   flex-shrink: 0 !important;
   color: var(--gray-600) !important;
-}
-
-/* RTL Support for Layout */
-[dir="rtl"] .navbar-links {
-  direction: rtl;
-}
-
-[dir="rtl"] .mobile-menu-content {
-  left: auto !important;
-  right: 0 !important;
-  box-shadow: -4px 0 30px rgba(0, 0, 0, 0.3) !important;
-  animation: slideInRight 0.3s ease-out !important;
-}
-
-/* RTL Support for Mobile Menu Header */
-[dir="rtl"] .mobile-menu-header {
-  direction: rtl;
-}
-
-[dir="rtl"] .mobile-close-btn {
-  order: -1;
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-[dir="rtl"] .navbar-actions {
-  direction: rtl;
-}
-
-[dir="rtl"] .mobile-menu-content {
-  direction: rtl !important;
-}
-
-[dir="rtl"] .footer-grid {
-  direction: rtl;
-}
-
-[dir="rtl"] .user-dropdown {
-  direction: rtl;
-}
-
-[dir="rtl"] .notifications-dropdown {
-  direction: rtl;
-}
-
-[dir="rtl"] .mobile-menu-links {
-  direction: rtl;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .language-toggle-wrapper {
-    display: none;
-  }
 }

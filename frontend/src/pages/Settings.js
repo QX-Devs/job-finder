@@ -1,58 +1,65 @@
+// frontend/src/pages/Settings.js
 import React, { useEffect, useState, useRef } from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import authService from '../services/authService';
+import { useTranslate } from '../utils/translate';
+import { useLanguage } from '../context/LanguageContext';
+
 import './Settings.css';
 
 const countryCodes = [
-  { code: '+962', country: 'Jordan', countryCode: 'JO' },
-  { code: '+1', country: 'US/CA', countryCode: 'US' },
-  { code: '+44', country: 'UK', countryCode: 'GB' },
-  { code: '+91', country: 'IN', countryCode: 'IN' },
-  { code: '+86', country: 'CN', countryCode: 'CN' },
-  { code: '+81', country: 'JP', countryCode: 'JP' },
-  { code: '+49', country: 'DE', countryCode: 'DE' },
-  { code: '+33', country: 'FR', countryCode: 'FR' },
-  { code: '+39', country: 'IT', countryCode: 'IT' },
-  { code: '+34', country: 'ES', countryCode: 'ES' },
-  { code: '+7', country: 'RU', countryCode: 'RU' },
-  { code: '+61', country: 'AU', countryCode: 'AU' },
-  { code: '+55', country: 'BR', countryCode: 'BR' },
-  { code: '+82', country: 'KR', countryCode: 'KR' },
-  { code: '+52', country: 'MX', countryCode: 'MX' },
-  { code: '+31', country: 'NL', countryCode: 'NL' },
-  { code: '+46', country: 'SE', countryCode: 'SE' },
-  { code: '+47', country: 'NO', countryCode: 'NO' },
-  { code: '+45', country: 'DK', countryCode: 'DK' },
-  { code: '+41', country: 'CH', countryCode: 'CH' },
-  { code: '+43', country: 'AT', countryCode: 'AT' },
-  { code: '+32', country: 'BE', countryCode: 'BE' },
-  { code: '+351', country: 'PT', countryCode: 'PT' },
-  { code: '+30', country: 'GR', countryCode: 'GR' },
-  { code: '+48', country: 'PL', countryCode: 'PL' },
-  { code: '+420', country: 'CZ', countryCode: 'CZ' },
-  { code: '+36', country: 'HU', countryCode: 'HU' },
-  { code: '+40', country: 'RO', countryCode: 'RO' },
-  { code: '+64', country: 'NZ', countryCode: 'NZ' },
-  { code: '+65', country: 'SG', countryCode: 'SG' },
-  { code: '+60', country: 'MY', countryCode: 'MY' },
-  { code: '+66', country: 'TH', countryCode: 'TH' },
-  { code: '+84', country: 'VN', countryCode: 'VN' },
-  { code: '+63', country: 'PH', countryCode: 'PH' },
-  { code: '+62', country: 'ID', countryCode: 'ID' },
-  { code: '+971', country: 'AE', countryCode: 'AE' },
-  { code: '+966', country: 'SA', countryCode: 'SA' },
-  { code: '+972', country: 'IL', countryCode: 'IL' },
-  { code: '+90', country: 'TR', countryCode: 'TR' },
-  { code: '+20', country: 'EG', countryCode: 'EG' },
-  { code: '+27', country: 'ZA', countryCode: 'ZA' },
-  { code: '+234', country: 'NG', countryCode: 'NG' },
-  { code: '+254', country: 'KE', countryCode: 'KE' },
-  { code: '+54', country: 'AR', countryCode: 'AR' },
-  { code: '+56', country: 'CL', countryCode: 'CL' },
-  { code: '+57', country: 'CO', countryCode: 'CO' },
+  { code: '+962', country: 'الأردن', countryCode: 'JO' },
+  { code: '+1', country: 'الولايات المتحدة/كندا', countryCode: 'US' },
+  { code: '+44', country: 'المملكة المتحدة', countryCode: 'GB' },
+  { code: '+91', country: 'الهند', countryCode: 'IN' },
+  { code: '+86', country: 'الصين', countryCode: 'CN' },
+  { code: '+81', country: 'اليابان', countryCode: 'JP' },
+  { code: '+49', country: 'ألمانيا', countryCode: 'DE' },
+  { code: '+33', country: 'فرنسا', countryCode: 'FR' },
+  { code: '+39', country: 'إيطاليا', countryCode: 'IT' },
+  { code: '+34', country: 'إسبانيا', countryCode: 'ES' },
+  { code: '+7', country: 'روسيا', countryCode: 'RU' },
+  { code: '+61', country: 'أستراليا', countryCode: 'AU' },
+  { code: '+55', country: 'البرازيل', countryCode: 'BR' },
+  { code: '+82', country: 'كوريا الجنوبية', countryCode: 'KR' },
+  { code: '+52', country: 'المكسيك', countryCode: 'MX' },
+  { code: '+31', country: 'هولندا', countryCode: 'NL' },
+  { code: '+46', country: 'السويد', countryCode: 'SE' },
+  { code: '+47', country: 'النرويج', countryCode: 'NO' },
+  { code: '+45', country: 'الدنمارك', countryCode: 'DK' },
+  { code: '+41', country: 'سويسرا', countryCode: 'CH' },
+  { code: '+43', country: 'النمسا', countryCode: 'AT' },
+  { code: '+32', country: 'بلجيكا', countryCode: 'BE' },
+  { code: '+351', country: 'البرتغال', countryCode: 'PT' },
+  { code: '+30', country: 'اليونان', countryCode: 'GR' },
+  { code: '+48', country: 'بولندا', countryCode: 'PL' },
+  { code: '+420', country: 'التشيك', countryCode: 'CZ' },
+  { code: '+36', country: 'المجر', countryCode: 'HU' },
+  { code: '+40', country: 'رومانيا', countryCode: 'RO' },
+  { code: '+64', country: 'نيوزيلندا', countryCode: 'NZ' },
+  { code: '+65', country: 'سنغافورة', countryCode: 'SG' },
+  { code: '+60', country: 'ماليزيا', countryCode: 'MY' },
+  { code: '+66', country: 'تايلاند', countryCode: 'TH' },
+  { code: '+84', country: 'فيتنام', countryCode: 'VN' },
+  { code: '+63', country: 'الفلبين', countryCode: 'PH' },
+  { code: '+62', country: 'إندونيسيا', countryCode: 'ID' },
+  { code: '+971', country: 'الإمارات', countryCode: 'AE' },
+  { code: '+966', country: 'السعودية', countryCode: 'SA' },
+  { code: '+972', country: 'إسرائيل', countryCode: 'IL' },
+  { code: '+90', country: 'تركيا', countryCode: 'TR' },
+  { code: '+20', country: 'مصر', countryCode: 'EG' },
+  { code: '+27', country: 'جنوب أفريقيا', countryCode: 'ZA' },
+  { code: '+234', country: 'نيجيريا', countryCode: 'NG' },
+  { code: '+254', country: 'كينيا', countryCode: 'KE' },
+  { code: '+54', country: 'الأرجنتين', countryCode: 'AR' },
+  { code: '+56', country: 'تشيلي', countryCode: 'CL' },
+  { code: '+57', country: 'كولومبيا', countryCode: 'CO' },
 ];
 
 const Settings = () => {
+  const { t, isRTL } = useTranslate();
+  const { language } = useLanguage();
+  
   const [activeTab, setActiveTab] = useState('account');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -125,7 +132,7 @@ const Settings = () => {
   const saveProfile = async () => {
     // Validation
     if (!profile.fullName || profile.fullName.trim() === '') {
-      showErr('Full name is required');
+      showErr(t('fullNameRequired'));
       return;
     }
     
@@ -136,13 +143,13 @@ const Settings = () => {
       const payload = {
         fullName: profile.fullName.trim(),
         phone: fullPhone,
-        countryCode: countryCode, // Send country code separately
+        countryCode: countryCode,
         github: usernames.github ? `https://github.com/${usernames.github}` : '',
         linkedin: usernames.linkedin ? `https://linkedin.com/in/${usernames.linkedin}` : '',
       };
       const res = await authService.updateProfile(payload);
       if (res?.success) {
-        showMsg('Profile updated successfully');
+        showMsg(t('profileUpdated'));
         // Update local storage with new user data
         if (res.data) {
           authService.setUser(res.data);
@@ -157,21 +164,21 @@ const Settings = () => {
         }
       }
     } catch (e) {
-      showErr(e.response?.data?.message || e.message || 'Failed to update profile');
+      showErr(e.response?.data?.message || e.message || t('updateProfileFailed'));
     } finally { setLoading(false); }
   };
 
   const changePassword = async () => {
     if (!passwords.currentPassword || !passwords.newPassword) {
-      showErr('Please fill in all password fields');
+      showErr(t('requiredField'));
       return;
     }
     if (passwords.newPassword !== passwords.confirmNewPassword) {
-      showErr('New passwords do not match');
+      showErr(t('passwordsDoNotMatch'));
       return;
     }
     if (passwords.newPassword.length < 6) {
-      showErr('New password must be at least 6 characters long');
+      showErr(t('passwordTooShort'));
       return;
     }
     try {
@@ -179,11 +186,11 @@ const Settings = () => {
       setError('');
       const res = await authService.changePassword(passwords.currentPassword, passwords.newPassword);
       if (res?.success) {
-        showMsg('Password updated successfully');
+        showMsg(t('passwordUpdated'));
         setPasswords({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
       }
     } catch (e) {
-      showErr(e.response?.data?.message || e.message || 'Failed to change password');
+      showErr(e.response?.data?.message || e.message || t('changePasswordFailed'));
     } finally { setLoading(false); }
   };
 
@@ -193,7 +200,7 @@ const Settings = () => {
       setError('');
       const res = await authService.updateProfile({ resumeVisibility: privacy.isPublic ? 'public' : 'private' });
       if (res?.success) {
-        showMsg('Privacy settings saved successfully');
+        showMsg(t('privacySettingsSaved'));
         // Update local storage with new user data
         if (res.data) {
           authService.setUser(res.data);
@@ -203,12 +210,12 @@ const Settings = () => {
         }
       }
     } catch (e) {
-      showErr(e.response?.data?.message || e.message || 'Failed to save privacy');
+      showErr(e.response?.data?.message || e.message || t('savePrivacyFailed'));
     } finally { setLoading(false); }
   };
 
   const deleteAccount = async () => {
-    if (!window.confirm('Are you sure you want to delete your account? This cannot be undone.')) return;
+    if (!window.confirm(t('deleteAccountConfirm'))) return;
     try {
       setLoading(true);
       setError('');
@@ -218,19 +225,34 @@ const Settings = () => {
         window.location.href = '/';
       }
     } catch (e) {
-      showErr(e.response?.data?.message || e.message || 'Failed to delete account');
+      showErr(e.response?.data?.message || e.message || t('deleteAccountFailed'));
     } finally { setLoading(false); }
   };
 
   return (
-    <div className="settings-container">
+    <div className={`settings-container ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="settings-card">
         <div className="settings-header">
-          <h1>Settings</h1>
+          <h1>{t('settings')}</h1>
           <div className="settings-tabs">
-            <button className={activeTab==='account'?'active':''} onClick={()=>setActiveTab('account')}>Account</button>
-            <button className={activeTab==='security'?'active':''} onClick={()=>setActiveTab('security')}>Security</button>
-            <button className={activeTab==='privacy'?'active':''} onClick={()=>setActiveTab('privacy')}>Privacy</button>
+            <button 
+              className={activeTab==='account'?'active':''} 
+              onClick={()=>setActiveTab('account')}
+            >
+              {t('account')}
+            </button>
+            <button 
+              className={activeTab==='security'?'active':''} 
+              onClick={()=>setActiveTab('security')}
+            >
+              {t('security')}
+            </button>
+            <button 
+              className={activeTab==='privacy'?'active':''} 
+              onClick={()=>setActiveTab('privacy')}
+            >
+              {t('privacy')}
+            </button>
           </div>
         </div>
 
@@ -241,11 +263,15 @@ const Settings = () => {
           <div className="settings-section">
             <div className="form-row">
               <div className="form-group">
-                <label>Full Name</label>
-                <input value={profile.fullName} onChange={(e)=>setProfile({...profile, fullName:e.target.value})} />
+                <label>{t('fullName')}</label>
+                <input 
+                  value={profile.fullName} 
+                  onChange={(e)=>setProfile({...profile, fullName:e.target.value})} 
+                  placeholder={t('enterFullName')}
+                />
               </div>
               <div className="form-group">
-                <label>Phone Number</label>
+                <label>{t('phoneNumber')}</label>
                 <div className="phone-input-container">
                   <div className="custom-country-select-wrapper" ref={countrySelectRef}>
                     <button
@@ -260,12 +286,17 @@ const Settings = () => {
                             <ReactCountryFlag 
                               countryCode={selectedCountry.countryCode} 
                               svg 
-                              style={{ width: '1.3em', height: '1.3em', marginRight: '8px' }} 
+                              style={{ 
+                                width: '1.3em', 
+                                height: '1.3em', 
+                                marginRight: isRTL ? '0' : '8px',
+                                marginLeft: isRTL ? '8px' : '0'
+                              }} 
                             />
                             <span>{selectedCountry.code} {selectedCountry.country}</span>
                           </>
                         ) : (
-                          <span>Select Country</span>
+                          <span>{t('select')}</span>
                         );
                       })()}
                     </button>
@@ -284,7 +315,12 @@ const Settings = () => {
                             <ReactCountryFlag 
                               countryCode={cc.countryCode} 
                               svg 
-                              style={{ width: '1.3em', height: '1.3em', marginRight: '8px' }} 
+                              style={{ 
+                                width: '1.3em', 
+                                height: '1.3em', 
+                                marginRight: isRTL ? '0' : '8px',
+                                marginLeft: isRTL ? '8px' : '0'
+                              }} 
                             />
                             <span>{cc.code} {cc.country}</span>
                           </button>
@@ -297,29 +333,39 @@ const Settings = () => {
                     className="phone-number-input"
                     value={phoneNumber} 
                     onChange={(e)=>setPhoneNumber(e.target.value.replace(/\D/g, ''))} 
-                    placeholder="123456789"
+                    placeholder={t('phonePlaceholder')}
                   />
                 </div>
               </div>
             </div>
             <div className="form-row">
               <div className="form-group">
-                <label>GitHub Username</label>
+                <label>{t('githubUsername')}</label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ whiteSpace: 'nowrap', color: '#6b7280' }}>github.com/</span>
-                  <input value={usernames.github} onChange={(e)=>setUsernames({...usernames, github:e.target.value.replace(/\s+/g,'')})} placeholder="username" />
+                  <input 
+                    value={usernames.github} 
+                    onChange={(e)=>setUsernames({...usernames, github:e.target.value.replace(/\s+/g,'')})} 
+                    placeholder={t('username')} 
+                  />
                 </div>
               </div>
               <div className="form-group">
-                <label>LinkedIn Username</label>
+                <label>{t('linkedinUsername')}</label>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ whiteSpace: 'nowrap', color: '#6b7280' }}>linkedin.com/in/</span>
-                  <input value={usernames.linkedin} onChange={(e)=>setUsernames({...usernames, linkedin:e.target.value.replace(/\s+/g,'')})} placeholder="username" />
+                  <input 
+                    value={usernames.linkedin} 
+                    onChange={(e)=>setUsernames({...usernames, linkedin:e.target.value.replace(/\s+/g,'')})} 
+                    placeholder={t('username')} 
+                  />
                 </div>
               </div>
             </div>
             <div className="actions">
-              <button className="btn-primary" onClick={saveProfile} disabled={loading}>{loading?'Saving...':'Save Changes'}</button>
+              <button className="btn-primary" onClick={saveProfile} disabled={loading}>
+                {loading ? t('saving') : t('saveChanges')}
+              </button>
             </div>
           </div>
         )}
@@ -327,22 +373,40 @@ const Settings = () => {
         {activeTab === 'security' && (
           <div className="settings-section">
             <div className="form-group">
-              <label>Current Password</label>
-              <input type="password" value={passwords.currentPassword} onChange={(e)=>setPasswords({...passwords, currentPassword:e.target.value})} />
+              <label>{t('currentPassword')}</label>
+              <input 
+                type="password" 
+                value={passwords.currentPassword} 
+                onChange={(e)=>setPasswords({...passwords, currentPassword:e.target.value})} 
+                placeholder={t('enterCurrentPassword')}
+              />
             </div>
             <div className="form-row">
               <div className="form-group">
-                <label>New Password</label>
-                <input type="password" value={passwords.newPassword} onChange={(e)=>setPasswords({...passwords, newPassword:e.target.value})} />
+                <label>{t('newPassword')}</label>
+                <input 
+                  type="password" 
+                  value={passwords.newPassword} 
+                  onChange={(e)=>setPasswords({...passwords, newPassword:e.target.value})} 
+                  placeholder={t('enterNewPassword')}
+                />
               </div>
               <div className="form-group">
-                <label>Confirm New Password</label>
-                <input type="password" value={passwords.confirmNewPassword} onChange={(e)=>setPasswords({...passwords, confirmNewPassword:e.target.value})} />
+                <label>{t('confirmNewPassword')}</label>
+                <input 
+                  type="password" 
+                  value={passwords.confirmNewPassword} 
+                  onChange={(e)=>setPasswords({...passwords, confirmNewPassword:e.target.value})} 
+                />
               </div>
             </div>
             <div className="actions">
-              <button className="btn-primary" onClick={changePassword} disabled={loading}>{loading?'Saving...':'Update Password'}</button>
-              <button className="btn-danger" onClick={deleteAccount} disabled={loading}>Delete Account</button>
+              <button className="btn-primary" onClick={changePassword} disabled={loading}>
+                {loading ? t('saving') : t('updatePassword')}
+              </button>
+              <button className="btn-danger" onClick={deleteAccount} disabled={loading}>
+                {t('deleteAccount')}
+              </button>
             </div>
           </div>
         )}
@@ -350,11 +414,20 @@ const Settings = () => {
         {activeTab === 'privacy' && (
           <div className="settings-section">
             <div className="form-group inline">
-              <label>Public Profile</label>
-              <input type="checkbox" checked={privacy.isPublic} onChange={(e)=>setPrivacy({ isPublic: e.target.checked })} />
+              <label>{t('publicProfile')}</label>
+              <input 
+                type="checkbox" 
+                checked={privacy.isPublic} 
+                onChange={(e)=>setPrivacy({ isPublic: e.target.checked })} 
+              />
             </div>
+            <p style={{ color: '#6b7280', fontSize: '0.875rem', marginTop: '8px' }}>
+              {t('publicProfileDescription')}
+            </p>
             <div className="actions">
-              <button className="btn-primary" onClick={savePrivacy} disabled={loading}>{loading?'Saving...':'Save Privacy'}</button>
+              <button className="btn-primary" onClick={savePrivacy} disabled={loading}>
+                {loading ? t('saving') : t('savePrivacy')}
+              </button>
             </div>
           </div>
         )}

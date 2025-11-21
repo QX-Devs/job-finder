@@ -9,6 +9,7 @@ import {
 import AuthModal from './AuthModal';
 import authService from '../services/authService';
 import { useTranslate } from '../utils/translate'; // <<< أضف هذا
+import ThemeToggle from './ThemeToggle';
 import './Layout.css';
 
 // Footer Component
@@ -379,6 +380,7 @@ const Layout = ({ children }) => {
 
           {/* Desktop Navigation */}
           <div className="navbar-links">
+           
             {navLinks.map((link) => {
               const Icon = link.icon;
               return (
@@ -399,6 +401,7 @@ const Layout = ({ children }) => {
           {!isMobileView && (
             <div className="navbar-actions">
               {/* Language Toggle */}
+              <ThemeToggle />
               <div className="language-toggle-wrapper" ref={languageRef}>
                 <button
                   onClick={toggleLanguage}
@@ -623,6 +626,7 @@ const Layout = ({ children }) => {
               {/* Mobile Menu Header */}
               <div className="mobile-menu-header">
                 {/* Language Toggle */}
+                <ThemeToggle />
                 <div className="mobile-language-toggle">
                   <button
                     onClick={toggleLanguage}

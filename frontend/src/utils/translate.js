@@ -1,3 +1,4 @@
+// frontend/src/utils/translate.js
 import { translations } from './translations';
 import { useLanguage } from '../context/LanguageContext';
 

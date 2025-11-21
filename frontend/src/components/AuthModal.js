@@ -1,3 +1,4 @@
+// frontend/src/components/AuthModal.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -7,10 +8,12 @@ import {
 } from 'lucide-react';
 import authService from '../services/authService';
 import './AuthModal.css';
-import { useTranslate } from '../utils/translate'; // <<< استيراد دالة الترجمة
+import { useTranslate } from '../utils/translate';
+import { useLanguage } from '../context/LanguageContext';
 
 const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
-  const { t, isRTL, language, toggleLanguage } = useTranslate(); // <<< استخدام الترجمة
+  const { t, isRTL } = useTranslate();
+  const { language } = useLanguage();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(defaultTab);
   const [showPassword, setShowPassword] = useState(false);
@@ -107,12 +110,12 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
     // Validate email
     if (!forgotPasswordEmail.trim()) {
-      setError('Email is required');
+      setError(t('requiredField'));
       return;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(forgotPasswordEmail)) {
-      setError('Please enter a valid email address');
+      setError(t('invalidEmailFormat'));
       return;
     }
 
@@ -151,9 +154,9 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
     
     if (fieldName === 'email') {
       if (!loginData.email.trim()) {
-        newErrors.email = 'Email is required';
+        newErrors.email = t('requiredField');
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginData.email)) {
-        newErrors.email = 'Please enter a valid email';
+        newErrors.email = t('invalidEmailFormat');
       } else {
         delete newErrors.email;
       }
@@ -161,7 +164,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
     
     if (fieldName === 'password') {
       if (!loginData.password) {
-        newErrors.password = 'Password is required';
+        newErrors.password = t('requiredField');
       } else {
         delete newErrors.password;
       }
@@ -176,7 +179,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
     if (fieldName === 'fullName') {
       if (!signupData.fullName.trim() || signupData.fullName.trim().length < 2) {
-        newErrors.fullName = 'Name must be at least 2 characters';
+        newErrors.fullName = t('nameTooShort');
       } else {
         delete newErrors.fullName;
       }
@@ -185,9 +188,9 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
     if (fieldName === 'email') {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!signupData.email.trim()) {
-        newErrors.email = 'Email is required';
+        newErrors.email = t('requiredField');
       } else if (!emailRegex.test(signupData.email)) {
-        newErrors.email = 'Please enter a valid email address';
+        newErrors.email = t('invalidEmailFormat');
       } else {
         delete newErrors.email;
       }
@@ -195,11 +198,11 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
     if (fieldName === 'password') {
       if (!signupData.password) {
-        newErrors.password = 'Password is required';
+        newErrors.password = t('requiredField');
       } else if (signupData.password.length < 8) {
-        newErrors.password = 'Password must be at least 8 characters';
+        newErrors.password = t('passwordTooShort');
       } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(signupData.password)) {
-        newErrors.password = 'Must contain uppercase, lowercase, and number';
+        newErrors.password = t('passwordRequirements');
       } else {
         delete newErrors.password;
       }
@@ -207,9 +210,9 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
     if (fieldName === 'confirmPassword') {
       if (!signupData.confirmPassword) {
-        newErrors.confirmPassword = 'Please confirm your password';
+        newErrors.confirmPassword = t('confirmPasswordRequired');
       } else if (signupData.password !== signupData.confirmPassword) {
-        newErrors.confirmPassword = 'Passwords do not match';
+        newErrors.confirmPassword = t('passwordsDontMatch');
       } else {
         delete newErrors.confirmPassword;
       }
@@ -223,13 +226,13 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
     const newErrors = {};
     
     if (!loginData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('requiredField');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginData.email)) {
-      newErrors.email = 'Please enter a valid email';
+      newErrors.email = t('invalidEmailFormat');
     }
     
     if (!loginData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = t('requiredField');
     }
     
     setErrors(newErrors);
@@ -241,24 +244,24 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
     const newErrors = {};
 
     if (!signupData.fullName.trim() || signupData.fullName.trim().length < 2) {
-      newErrors.fullName = 'Name must be at least 2 characters';
+      newErrors.fullName = t('nameTooShort');
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!signupData.email.trim() || !emailRegex.test(signupData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = t('invalidEmailFormat');
     }
 
     if (!signupData.password || signupData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
+      newErrors.password = t('passwordTooShort');
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(signupData.password)) {
-      newErrors.password = 'Must contain uppercase, lowercase, and number';
+      newErrors.password = t('passwordRequirements');
     }
 
     if (!signupData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
+      newErrors.confirmPassword = t('confirmPasswordRequired');
     } else if (signupData.password !== signupData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = t('passwordsDontMatch');
     }
 
     setErrors(newErrors);
@@ -286,7 +289,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
         }
       }
     } catch (err) {
-      setError(err.message || 'Login failed. Please check your credentials and try again.');
+      setError(err.message || t('loginFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -313,7 +316,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
         navigate('/cv-prompt');
       }
     } catch (err) {
-      setError(err.message || 'Registration failed. Please try again.');
+      setError(err.message || t('registrationFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -330,7 +333,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
 
   return (
     <div 
-      className="auth-modal-overlay" 
+      className={`auth-modal-overlay ${isRTL ? 'rtl' : 'ltr'}`} 
       onClick={handleClose}
       onKeyDown={handleKeyDown}
     >
@@ -338,7 +341,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
         <button 
           className="auth-modal-close" 
           onClick={handleClose}
-          aria-label="Close modal"
+          aria-label={t('close')}
         >
           <X size={isMobile ? 14 : 24} />
         </button>
@@ -349,28 +352,28 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
             <div className="brand-logo">
               <Sparkles size={largeBrandIconSize} strokeWidth={2.5} />
             </div>
-            <h2 style={{ fontSize: isMobile ? '1.05rem' : '2.75rem' }}>Welcome to GradJob</h2>
+            <h2 style={{ fontSize: isMobile ? '1.05rem' : '2.75rem' }}>{t('welcomeToGradJob')}</h2>
             <p style={{ fontSize: isMobile ? '0.72rem' : '1.25rem' }}>
-              Your gateway to thousands of career opportunities tailored just for you
+              {t('loginSubtitle')}
             </p>
             
             {!isMobile && (
             <div className="brand-benefits">
               <div className="benefit-item" style={benefitItemStyle}>
                 <Zap size={iconSize22} />
-                <span>AI-Powered Resume Builder</span>
+                <span>{t('aiPowered')}</span>
               </div>
               <div className="benefit-item" style={benefitItemStyle}>
                 <TrendingUp size={iconSize22} />
-                <span>Smart Job Matching Algorithm</span>
+                <span>{t('aiMatching')}</span>
               </div>
               <div className="benefit-item" style={benefitItemStyle}>
                 <ArrowRight size={iconSize22} />
-                <span>One-Click Application Process</span>
+                <span>{t('instantApplications')}</span>
               </div>
               <div className="benefit-item" style={benefitItemStyle}>
                 <Shield size={iconSize22} />
-                <span>Secure & Privacy Protected</span>
+                <span>{t('secure')}</span>
               </div>
             </div>
             )}
@@ -385,14 +388,14 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                 onClick={() => handleTabChange('login')}
                 type="button"
               >
-                Login
+                {t('login')}
               </button>
               <button
                 className={`auth-tab ${activeTab === 'signup' ? 'active' : ''}`}
                 onClick={() => handleTabChange('signup')}
                 type="button"
               >
-                Sign Up
+                {t('signup')}
               </button>
             </div>
 
@@ -409,9 +412,9 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                 {forgotPasswordSuccess ? (
                   <div className="forgot-password-success">
                     <CheckCircle size={isMobile ? 32 : 48} />
-                    <h3 style={{ fontSize: isMobile ? '1rem' : '1.5rem' }}>Check Your Email</h3>
+                    <h3 style={{ fontSize: isMobile ? '1rem' : '1.5rem' }}>{t('checkYourEmail')}</h3>
                     <p style={{ fontSize: isMobile ? '0.75rem' : '1rem' }}>
-                      If your email exists in our system, you will receive password reset instructions in your inbox.
+                      {t('resetLinkSent')}
                     </p>
                     <button
                       type="button"
@@ -424,7 +427,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       style={{ marginTop: '20px' }}
                     >
                       <ArrowLeft size={arrowButtonSize} />
-                      Back to Login
+                      {t('backToLogin')}
                     </button>
                   </div>
                 ) : (
@@ -441,13 +444,13 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                         style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}
                       >
                         <ArrowLeft size={iconSize18} />
-                        Back to Login
+                        {t('backToLogin')}
                       </button>
                       <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.75rem', fontWeight: 700, marginBottom: '10px' }}>
-                        Forgot Password?
+                        {t('forgotPasswordTitle')}
                       </h3>
                       <p style={{ fontSize: isMobile ? '0.8rem' : '1rem', color: '#6b7280', marginBottom: '24px' }}>
-                        Enter your email address and we'll send you instructions to reset your password.
+                        {t('forgotPasswordSubtitle')}
                       </p>
                     </div>
 
@@ -461,14 +464,14 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       <div className="form-group">
                         <label htmlFor="forgot-email">
                           <Mail size={iconSize18} />
-                          Email Address
+                          {t('emailAddress')}
                         </label>
                         <input
                           id="forgot-email"
                           type="email"
                           value={forgotPasswordEmail}
                           onChange={(e) => setForgotPasswordEmail(e.target.value)}
-                          placeholder="Enter your email"
+                          placeholder={t('enterEmail')}
                           autoComplete="email"
                           required
                         />
@@ -478,11 +481,11 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                         {isLoading ? (
                           <>
                             <span className="spinner"></span>
-                            Sending...
+                            {t('sending')}
                           </>
                         ) : (
                           <>
-                            Send Reset Link
+                            {t('sendResetLink')}
                             <ArrowRight size={arrowButtonSize} />
                           </>
                         )}
@@ -499,7 +502,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                 <div className="form-group">
                   <label htmlFor="login-email">
                     <Mail size={iconSize18} />
-                    Email Address
+                    {t('emailAddress')}
                   </label>
                   <input
                     id="login-email"
@@ -507,7 +510,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                     value={loginData.email}
                     onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                     onBlur={() => handleFieldBlur('email', 'login')}
-                    placeholder="Enter your email"
+                    placeholder={t('enterEmail')}
                     className={errors.email && touchedFields.email ? 'error' : ''}
                     autoComplete="email"
                   />
@@ -519,7 +522,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                 <div className="form-group">
                   <label htmlFor="login-password">
                     <Lock size={iconSize18} />
-                    Password
+                    {t('password')}
                   </label>
                   <div className="password-input">
                     <input
@@ -528,7 +531,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       value={loginData.password}
                       onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                       onBlur={() => handleFieldBlur('password', 'login')}
-                      placeholder="Enter your password"
+                      placeholder={t('enterPassword')}
                       className={errors.password && touchedFields.password ? 'error' : ''}
                       autoComplete="current-password"
                     />
@@ -536,7 +539,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       type="button"
                       className="toggle-password"
                       onClick={() => setShowPassword(!showPassword)}
-                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      aria-label={showPassword ? t('hidePassword') : t('showPassword')}
                     >
                       {showPassword ? <EyeOff size={iconSize18} /> : <Eye size={iconSize18} />}
                     </button>
@@ -556,7 +559,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                     className="link-btn"
                     style={{ fontSize: isMobile ? '0.7rem' : '0.9rem' }}
                   >
-                    Forgot Password?
+                    {t('forgotPassword')}
                   </button>
                 </div>
 
@@ -564,24 +567,24 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                   {isLoading ? (
                     <>
                       <span className="spinner"></span>
-                      Logging in...
+                      {t('loggingIn')}
                     </>
                   ) : (
                     <>
-                      Login
+                      {t('loginButton')}
                       <ArrowRight size={arrowButtonSize} />
                     </>
                   )}
                 </button>
 
                 <div className="auth-footer" style={authFooterStyle}>
-                  Don't have an account?{' '}
+                  {t('dontHaveAccount')}{' '}
                   <button 
                     type="button" 
                     onClick={() => handleTabChange('signup')} 
                     className="link-btn"
                   >
-                    Sign up now
+                    {t('signup')}
                   </button>
                 </div>
               </form>
@@ -593,7 +596,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                 <div className="form-group">
                   <label htmlFor="signup-name">
                     <User size={iconSize18} />
-                    Full Name
+                    {t('fullName')}
                   </label>
                   <input
                     id="signup-name"
@@ -601,7 +604,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                     value={signupData.fullName}
                     onChange={(e) => setSignupData({ ...signupData, fullName: e.target.value })}
                     onBlur={() => handleFieldBlur('fullName', 'signup')}
-                    placeholder="Enter your full name"
+                    placeholder={t('enterFullName')}
                     className={errors.fullName && touchedFields.fullName ? 'error' : ''}
                     autoComplete="name"
                   />
@@ -613,7 +616,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                 <div className="form-group">
                   <label htmlFor="signup-email">
                     <Mail size={iconSize18} />
-                    Email Address
+                    {t('emailAddress')}
                   </label>
                   <input
                     id="signup-email"
@@ -621,7 +624,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                     value={signupData.email}
                     onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
                     onBlur={() => handleFieldBlur('email', 'signup')}
-                    placeholder="Enter your email"
+                    placeholder={t('enterEmail')}
                     className={errors.email && touchedFields.email ? 'error' : ''}
                     autoComplete="email"
                   />
@@ -633,7 +636,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                 <div className="form-group">
                   <label htmlFor="signup-password">
                     <Lock size={iconSize18} />
-                    Password
+                    {t('password')}
                   </label>
                   <div className="password-input">
                     <input
@@ -648,7 +651,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                         }
                       }}
                       onBlur={() => handleFieldBlur('password', 'signup')}
-                      placeholder="Create a strong password"
+                      placeholder={t('createStrongPassword')}
                       className={errors.password && touchedFields.password ? 'error' : ''}
                       autoComplete="new-password"
                     />
@@ -656,7 +659,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       type="button"
                       className="toggle-password"
                       onClick={() => setShowPassword(!showPassword)}
-                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      aria-label={showPassword ? t('hidePassword') : t('showPassword')}
                     >
                       {showPassword ? <EyeOff size={iconSize18} /> : <Eye size={iconSize18} />}
                     </button>
@@ -669,7 +672,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                 <div className="form-group">
                   <label htmlFor="signup-confirm-password">
                     <Lock size={iconSize18} />
-                    Confirm Password
+                    {t('confirmPassword')}
                   </label>
                   <div className="password-input">
                     <input
@@ -678,7 +681,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       value={signupData.confirmPassword}
                       onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
                       onBlur={() => handleFieldBlur('confirmPassword', 'signup')}
-                      placeholder="Confirm your password"
+                      placeholder={t('confirmYourPassword')}
                       className={errors.confirmPassword && touchedFields.confirmPassword ? 'error' : ''}
                       autoComplete="new-password"
                     />
@@ -686,7 +689,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                       type="button"
                       className="toggle-password"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                      aria-label={showConfirmPassword ? t('hidePassword') : t('showPassword')}
                     >
                       {showConfirmPassword ? <EyeOff size={iconSize18} /> : <Eye size={iconSize18} />}
                     </button>
@@ -700,24 +703,24 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
                   {isLoading ? (
                     <>
                       <span className="spinner"></span>
-                      Creating Account...
+                      {t('creatingAccount')}
                     </>
                   ) : (
                     <>
-                      Create Account
+                      {t('createAccount')}
                       <ArrowRight size={arrowButtonSize} />
                     </>
                   )}
                 </button>
 
                 <div className="auth-footer" style={authFooterStyle}>
-                  Already have an account?{' '}
+                  {t('alreadyHaveAccount')}{' '}
                   <button 
                     type="button" 
                     onClick={() => handleTabChange('login')} 
                     className="link-btn"
                   >
-                    Login here
+                    {t('loginHere')}
                   </button>
                 </div>
               </form>

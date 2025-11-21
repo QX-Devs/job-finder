@@ -219,6 +219,30 @@ export const translations = {
     signInWith: "Or sign in with",
     signUpWith: "Or sign up with",
     bySigningUp: "By signing up, you agree to our",
+    checkYourEmail: "Check Your Email",
+hidePassword: "Hide password", 
+showPassword: "Show password",
+close: "Close",
+resetPassword: "Reset Password",
+createNewPassword: "Create New Password",
+enterNewPassword: "Enter your new password",
+confirmNewPassword: "Confirm your new password",
+resettingPassword: "Resetting Password...",
+passwordResetSuccessful: "Password Reset Successful!",
+emailVerified: "Email Verified!",
+verificationFailed: "Verification Failed",
+verificationSuccessful: "Verification Successful!",
+continueToHome: "Continue to Home",
+resetPasswordSubtitle: "Enter your new password below to complete the reset process",
+createNewPasswordDesc: "Please enter your new password. Make sure it's strong and secure.",
+passwordResetSuccessMessage: "Your password has been successfully reset. You will be redirected to login shortly.",
+invalidResetToken: "Invalid or missing reset token",
+resetPasswordFailed: "Failed to reset password. The link may have expired.",
+emailVerifiedDesc: "Your email has been successfully verified. You can now access all features.",
+verificationFailedDesc: "We encountered an issue verifying your email address.",
+verificationSuccessMessage: "Your email address has been verified successfully. You can now enjoy all the features of GradJob.",
+verificationFailedMessage: "The verification link may have expired or is invalid. Please request a new verification email.",
+verificationHelpMessage: "Need help? You can request a new verification email from your dashboard.",
     
     // === NEW COMMON TRANSLATIONS ===
     or: "Or",
@@ -771,6 +795,7 @@ export const translations = {
   downloadFailed: "Could not download CV. Please try again.",
     
   // Settings Page Translations
+  select: "Select Country",
   settings: "Settings",
   account: "Account",
   security: "Security",
@@ -932,7 +957,12 @@ export const translations = {
   careerObjectivePlaceholder: "Tell us about your career goals",
   saving: "Saving...",
   saveChanges: "Save Changes",
-  cancel: "Cancel"
+  cancel: "Cancel",
+
+  //buttons dark mode and light mode
+  themeToggle: "Toggle theme",
+  darkMode: "Dark Mode", 
+  lightMode: "Light Mode"
   },
   
   ar: {
@@ -1154,6 +1184,30 @@ export const translations = {
     signInWith: "أو سجل الدخول باستخدام",
     signUpWith: "أو اشترك باستخدام", 
     bySigningUp: "بإنشاء حساب، فإنك توافق على",
+    checkYourEmail: "تحقق من بريدك الإلكتروني",
+hidePassword: "إخفاء كلمة المرور",
+showPassword: "إظهار كلمة المرور", 
+close: "إغلاق",
+resetPassword: "إعادة تعيين كلمة المرور",
+createNewPassword: "إنشاء كلمة مرور جديدة",
+enterNewPassword: "أدخل كلمة المرور الجديدة",
+confirmNewPassword: "تأكيد كلمة المرور الجديدة", 
+resettingPassword: "جاري إعادة تعيين كلمة المرور...",
+passwordResetSuccessful: "تم إعادة تعيين كلمة المرور بنجاح!",
+emailVerified: "تم التحقق من البريد الإلكتروني!",
+verificationFailed: "فشل التحقق",
+verificationSuccessful: "تم التحقق بنجاح!",
+continueToHome: "المتابعة إلى الرئيسية",
+resetPasswordSubtitle: "أدخل كلمة المرور الجديدة أدناه لإكمال عملية إعادة التعيين",
+createNewPasswordDesc: "يرجى إدخال كلمة المرور الجديدة. تأكد من أنها قوية وآمنة.",
+passwordResetSuccessMessage: "تم إعادة تعيين كلمة المرور بنجاح. سيتم توجيهك لتسجيل الدخول قريباً.",
+invalidResetToken: "رمز إعادة التعيين غير صالح أو مفقود",
+resetPasswordFailed: "فشل إعادة تعيين كلمة المرور. قد يكون الرابط منتهي الصلاحية.",
+emailVerifiedDesc: "تم التحقق من بريدك الإلكتروني بنجاح. يمكنك الآن الوصول إلى جميع الميزات.",
+verificationFailedDesc: "واجهنا مشكلة في التحقق من عنوان بريدك الإلكتروني.",
+verificationSuccessMessage: "تم التحقق من عنوان بريدك الإلكتروني بنجاح. يمكنك الآن الاستمتاع بجميع ميزات GradJob.",
+verificationFailedMessage: "قد يكون رابط التحقق منتهي الصلاحية أو غير صالح. يرجى طلب بريد تحقق جديد.",
+verificationHelpMessage: "هل تحتاج مساعدة؟ يمكنك طلب بريد تحقق جديد من لوحة التحكم.",
     
     // === NEW COMMON TRANSLATIONS ===
     or: "أو",
@@ -1706,6 +1760,7 @@ export const translations = {
   downloadFailed: "تعذر تحميل السيرة الذاتية. يرجى المحاولة مرة أخرى.",
 
   // Settings Page Translations
+  select: "اختر الدولة",
   settings: "الإعدادات",
   account: "الحساب",
   security: "الأمان",
@@ -1867,9 +1922,12 @@ export const translations = {
   careerObjectivePlaceholder: "أخبرنا عن أهدافك المهنية",
   saving: "جاري الحفظ...",
   saveChanges: "حفظ التغييرات",
-  cancel: "إلغاء"
+  cancel: "إلغاء",
+  //buttons dark mode and light mode
+  themeToggle: "تبديل السمة",
+  darkMode: "الوضع الداكن", 
+  lightMode: "الوضع المضيء"
 
-
-
+ 
   }
   };

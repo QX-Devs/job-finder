@@ -1,4 +1,5 @@
-import React from 'react';
+ // frontend/src/components/ProtectedRoute.js
+ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import authService from '../services/authService';
 

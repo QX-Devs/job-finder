@@ -1,12 +1,15 @@
+// frontend/src/components/ResetPasswordModal.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   X, Lock, Eye, EyeOff, ArrowRight, CheckCircle, AlertCircle
 } from 'lucide-react';
 import authService from '../services/authService';
+import { useTranslate } from '../utils/translate';
 import './AuthModal.css';
 
 const ResetPasswordModal = ({ isOpen, onClose, token }) => {
+  const { t, isRTL } = useTranslate();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -79,11 +82,11 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
 
     if (fieldName === 'password') {
       if (!formData.password) {
-        newErrors.password = 'Password is required';
+        newErrors.password = t('requiredField');
       } else if (formData.password.length < 8) {
-        newErrors.password = 'Password must be at least 8 characters';
+        newErrors.password = t('passwordTooShort');
       } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-        newErrors.password = 'Must contain uppercase, lowercase, and number';
+        newErrors.password = t('passwordRequirements');
       } else {
         delete newErrors.password;
       }
@@ -91,9 +94,9 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
 
     if (fieldName === 'confirmPassword') {
       if (!formData.confirmPassword) {
-        newErrors.confirmPassword = 'Please confirm your password';
+        newErrors.confirmPassword = t('confirmPasswordRequired');
       } else if (formData.password !== formData.confirmPassword) {
-        newErrors.confirmPassword = 'Passwords do not match';
+        newErrors.confirmPassword = t('passwordsDontMatch');
       } else {
         delete newErrors.confirmPassword;
       }
@@ -107,15 +110,15 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
     const newErrors = {};
 
     if (!formData.password || formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
+      newErrors.password = t('passwordTooShort');
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      newErrors.password = 'Must contain uppercase, lowercase, and number';
+      newErrors.password = t('passwordRequirements');
     }
 
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
+      newErrors.confirmPassword = t('confirmPasswordRequired');
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = t('passwordsDontMatch');
     }
 
     setErrors(newErrors);
@@ -128,7 +131,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
     setError('');
 
     if (!token) {
-      setError('Invalid or missing reset token');
+      setError(t('invalidResetToken'));
       return;
     }
 
@@ -147,7 +150,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
         }, 3000);
       }
     } catch (err) {
-      setError(err.message || 'Failed to reset password. The link may have expired.');
+      setError(err.message || t('resetPasswordFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -164,7 +167,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
 
   return (
     <div 
-      className="auth-modal-overlay" 
+      className={`auth-modal-overlay ${isRTL ? 'rtl' : 'ltr'}`} 
       onClick={handleClose}
       onKeyDown={handleKeyDown}
     >
@@ -172,7 +175,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
         <button 
           className="auth-modal-close" 
           onClick={handleClose}
-          aria-label="Close modal"
+          aria-label={t('close')}
         >
           <X size={isMobile ? 14 : 24} />
         </button>
@@ -183,9 +186,9 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
             <div className="brand-logo">
               <Lock size={isMobile ? 20 : 48} strokeWidth={2.5} />
             </div>
-            <h2 style={{ fontSize: isMobile ? '1.05rem' : '2.75rem' }}>Reset Your Password</h2>
+            <h2 style={{ fontSize: isMobile ? '1.05rem' : '2.75rem' }}>{t('resetPassword')}</h2>
             <p style={{ fontSize: isMobile ? '0.72rem' : '1.25rem' }}>
-              Enter your new password below to complete the reset process
+              {t('resetPasswordSubtitle')}
             </p>
           </div>
 
@@ -194,19 +197,19 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
             {success ? (
               <div className="forgot-password-success">
                 <CheckCircle size={isMobile ? 32 : 48} />
-                <h3 style={{ fontSize: isMobile ? '1rem' : '1.5rem' }}>Password Reset Successful!</h3>
+                <h3 style={{ fontSize: isMobile ? '1rem' : '1.5rem' }}>{t('passwordResetSuccessful')}</h3>
                 <p style={{ fontSize: isMobile ? '0.75rem' : '1rem' }}>
-                  Your password has been successfully reset. You will be redirected to login shortly.
+                  {t('passwordResetSuccessMessage')}
                 </p>
               </div>
             ) : (
               <>
                 <div style={{ marginBottom: '20px' }}>
                   <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.75rem', fontWeight: 700, marginBottom: '10px' }}>
-                    Create New Password
+                    {t('createNewPassword')}
                   </h3>
                   <p style={{ fontSize: isMobile ? '0.8rem' : '1rem', color: '#6b7280', marginBottom: '24px' }}>
-                    Please enter your new password. Make sure it's strong and secure.
+                    {t('createNewPasswordDesc')}
                   </p>
                 </div>
 
@@ -221,7 +224,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
                   <div className="form-group">
                     <label htmlFor="reset-password">
                       <Lock size={iconSize18} />
-                      New Password
+                      {t('newPassword')}
                     </label>
                     <div className="password-input">
                       <input
@@ -236,7 +239,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
                           }
                         }}
                         onBlur={() => handleFieldBlur('password')}
-                        placeholder="Enter your new password"
+                        placeholder={t('enterNewPassword')}
                         className={errors.password && touchedFields.password ? 'error' : ''}
                         autoComplete="new-password"
                       />
@@ -244,7 +247,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
                         type="button"
                         className="toggle-password"
                         onClick={() => setShowPassword(!showPassword)}
-                        aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        aria-label={showPassword ? t('hidePassword') : t('showPassword')}
                       >
                         {showPassword ? <EyeOff size={iconSize18} /> : <Eye size={iconSize18} />}
                       </button>
@@ -257,7 +260,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
                   <div className="form-group">
                     <label htmlFor="reset-confirm-password">
                       <Lock size={iconSize18} />
-                      Confirm Password
+                      {t('confirmNewPassword')}
                     </label>
                     <div className="password-input">
                       <input
@@ -266,7 +269,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
                         value={formData.confirmPassword}
                         onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                         onBlur={() => handleFieldBlur('confirmPassword')}
-                        placeholder="Confirm your new password"
+                        placeholder={t('confirmYourPassword')}
                         className={errors.confirmPassword && touchedFields.confirmPassword ? 'error' : ''}
                         autoComplete="new-password"
                       />
@@ -274,7 +277,7 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
                         type="button"
                         className="toggle-password"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                        aria-label={showConfirmPassword ? t('hidePassword') : t('showPassword')}
                       >
                         {showConfirmPassword ? <EyeOff size={iconSize18} /> : <Eye size={iconSize18} />}
                       </button>
@@ -288,11 +291,11 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
                     {isLoading ? (
                       <>
                         <span className="spinner"></span>
-                        Resetting Password...
+                        {t('resettingPassword')}
                       </>
                     ) : (
                       <>
-                        Reset Password
+                        {t('resetPassword')}
                         <ArrowRight size={arrowButtonSize} />
                       </>
                     )}
@@ -308,4 +311,3 @@ const ResetPasswordModal = ({ isOpen, onClose, token }) => {
 };
 
 export default ResetPasswordModal;
-

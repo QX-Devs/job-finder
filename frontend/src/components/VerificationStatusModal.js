@@ -1,11 +1,14 @@
+// frontend/src/components/VerificationStatusModal.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   X, CheckCircle, AlertCircle, Mail
 } from 'lucide-react';
+import { useTranslate } from '../utils/translate';
 import './AuthModal.css';
 
 const VerificationStatusModal = ({ isOpen, onClose, status, message }) => {
+  const { t, isRTL } = useTranslate();
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' ? window.innerWidth <= 480 : false
@@ -53,7 +56,7 @@ const VerificationStatusModal = ({ isOpen, onClose, status, message }) => {
 
   return (
     <div 
-      className="auth-modal-overlay" 
+      className={`auth-modal-overlay ${isRTL ? 'rtl' : 'ltr'}`} 
       onClick={handleClose}
       onKeyDown={handleKeyDown}
     >
@@ -61,7 +64,7 @@ const VerificationStatusModal = ({ isOpen, onClose, status, message }) => {
         <button 
           className="auth-modal-close" 
           onClick={handleClose}
-          aria-label="Close modal"
+          aria-label={t('close')}
         >
           <X size={isMobile ? 14 : 24} />
         </button>
@@ -77,12 +80,12 @@ const VerificationStatusModal = ({ isOpen, onClose, status, message }) => {
               )}
             </div>
             <h2 style={{ fontSize: isMobile ? '1.05rem' : '2.75rem' }}>
-              {isSuccess ? 'Email Verified!' : 'Verification Failed'}
+              {isSuccess ? t('emailVerified') : t('verificationFailed')}
             </h2>
             <p style={{ fontSize: isMobile ? '0.72rem' : '1.25rem' }}>
               {isSuccess 
-                ? 'Your email has been successfully verified. You can now access all features.'
-                : 'We encountered an issue verifying your email address.'
+                ? t('emailVerifiedDesc')
+                : t('verificationFailedDesc')
               }
             </p>
           </div>
@@ -96,18 +99,18 @@ const VerificationStatusModal = ({ isOpen, onClose, status, message }) => {
                 <AlertCircle size={iconSize} style={{ color: '#ef4444' }} />
               )}
               <h3 style={{ fontSize: isMobile ? '1rem' : '1.5rem' }}>
-                {isSuccess ? 'Verification Successful!' : 'Verification Failed'}
+                {isSuccess ? t('verificationSuccessful') : t('verificationFailed')}
               </h3>
               <p style={{ fontSize: isMobile ? '0.75rem' : '1rem' }}>
                 {message || (isSuccess 
-                  ? 'Your email address has been verified successfully. You can now enjoy all the features of GradJob.'
-                  : 'The verification link may have expired or is invalid. Please request a new verification email.'
+                  ? t('verificationSuccessMessage')
+                  : t('verificationFailedMessage')
                 )}
               </p>
               {!isSuccess && (
                 <div style={{ marginTop: '20px' }}>
                   <p style={{ fontSize: isMobile ? '0.7rem' : '0.9rem', marginBottom: '12px', color: '#6b7280' }}>
-                    Need help? You can request a new verification email from your dashboard.
+                    {t('verificationHelpMessage')}
                   </p>
                 </div>
               )}
@@ -117,7 +120,7 @@ const VerificationStatusModal = ({ isOpen, onClose, status, message }) => {
                 className="auth-submit-btn"
                 style={{ marginTop: '20px' }}
               >
-                {isSuccess ? 'Continue to Home' : 'Close'}
+                {isSuccess ? t('continueToHome') : t('close')}
               </button>
             </div>
           </div>
@@ -128,4 +131,3 @@ const VerificationStatusModal = ({ isOpen, onClose, status, message }) => {
 };
 
 export default VerificationStatusModal;
-
