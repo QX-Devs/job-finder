@@ -37,6 +37,50 @@ const JOB_QUERIES = [
 const PAGES_PER_QUERY = 3;
 
 /**
+ * Import jobs from JSearch for a specific query and location
+ * @returns {Promise<{ importedCount: number, skipped: number, errors: number, jobs: Array, errorDetails: Array }>}
+ */
+async function importJSearchJobs(query, location, pages = PAGES_PER_QUERY) {
+  if (!query || !location) {
+    throw new Error('Both query and location parameters are required');
+  }
+
+  console.log(`\n🔍 Importing JSearch jobs for query="${query}" location="${location}"...`);
+
+  const summary = {
+    importedCount: 0,
+    skipped: 0,
+    errors: 0,
+    jobs: [],
+    errorDetails: []
+  };
+
+  const jobs = await fetchJobsFromJSearch(query, location, pages);
+  summary.jobs = jobs;
+
+  if (!jobs || jobs.length === 0) {
+    console.log('   ℹ️  No jobs returned from JSearch API');
+    return summary;
+  }
+
+  for (const jobData of jobs) {
+    const result = await importJob(jobData);
+
+    if (result.imported) {
+      summary.importedCount++;
+    } else if (result.skipped) {
+      summary.skipped++;
+    } else if (result.error) {
+      summary.errors++;
+      summary.errorDetails.push({ job: jobData.title, error: result.error });
+    }
+  }
+
+  console.log(`   📊 Import summary: ${summary.importedCount} imported, ${summary.skipped} skipped, ${summary.errors} errors`);
+  return summary;
+}
+
+/**
  * Import a single job into the database
  * Returns: { imported: boolean, skipped: boolean, error: string|null }
  */
@@ -94,41 +138,14 @@ async function processQuery(queryConfig) {
   console.log(`\n🔍 Fetching: "${query}" in "${location}"...`);
 
   try {
-    // Fetch jobs from JSearch API
-    const jobs = await fetchJobsFromJSearch(query, location, PAGES_PER_QUERY);
-    console.log(`   ✅ Fetched ${jobs.length} jobs from API`);
-
-    if (jobs.length === 0) {
-      return { imported: 0, skipped: 0, errors: 0, total: 0 };
-    }
-
-    // Import each job
-    let importedCount = 0;
-    let skippedCount = 0;
-    let errorCount = 0;
-    const errors = [];
-
-    for (const jobData of jobs) {
-      const result = await importJob(jobData);
-      
-      if (result.imported) {
-        importedCount++;
-      } else if (result.skipped) {
-        skippedCount++;
-      } else if (result.error) {
-        errorCount++;
-        errors.push({ job: jobData.title, error: result.error });
-      }
-    }
-
-    console.log(`   📊 Results: ${importedCount} imported, ${skippedCount} skipped, ${errorCount} errors`);
+    const summary = await importJSearchJobs(query, location, PAGES_PER_QUERY);
 
     return {
-      imported: importedCount,
-      skipped: skippedCount,
-      errors: errorCount,
-      total: jobs.length,
-      errorDetails: errors
+      imported: summary.importedCount,
+      skipped: summary.skipped,
+      errors: summary.errors,
+      total: summary.jobs.length,
+      errorDetails: summary.errorDetails
     };
 
   } catch (error) {
@@ -230,5 +247,5 @@ if (require.main === module) {
     });
 }
 
-module.exports = { fetchAndImportAllJobs, processQuery, importJob };
+module.exports = { fetchAndImportAllJobs, processQuery, importJob, importJSearchJobs };
 

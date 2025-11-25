@@ -9,6 +9,8 @@ const { sequelize, testConnection } = require('../config/database');
 const authRoutes = require('../routes/auth');
 const meRoutes = require('../routes/me');
 const jobRoutes = require('../routes/jobRoutes');
+const scraperRoutes = require('../routes/scraperRoutes');
+const { startScheduler } = require('../services/scraperScheduler');
 const path = require('path');
 
 const app = express();
@@ -332,6 +334,7 @@ Answer:`;
 app.use('/api/auth', authRoutes);
 app.use('/api/me', meRoutes);
 app.use('/api/jobs', jobRoutes);
+app.use('/api', scraperRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
@@ -427,6 +430,8 @@ const startServer = async () => {
       console.log(`📊 Database status: http://localhost:${PORT}/api/database-status`);
       console.log(`✅ Hugging Face AI: ENABLED with Llama-3.2-3B-Instruct`);
     });
+
+    startScheduler();
 
     // Graceful shutdown
     const gracefulShutdown = (signal) => {

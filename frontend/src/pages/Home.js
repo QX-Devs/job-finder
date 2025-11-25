@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Search, MapPin, Briefcase, DollarSign, Building2, 
-  ExternalLink, Bookmark, BookmarkCheck, Star, 
+  Bookmark, BookmarkCheck,
   CheckCircle, ArrowRight, Sparkles, FileText, Brain,
-  Filter, X, TrendingUp, Clock, Users, Grid3x3, List,
+  X, TrendingUp, Clock, Users, Grid3x3, List,
   SlidersHorizontal, ChevronDown, Zap, Target, Award,
-  Rocket, Heart, Share2, Eye, Calendar, Badge
+  Rocket, Share2, Badge
 } from 'lucide-react';
 import AuthModal from '../components/AuthModal';
 import ResetPasswordModal from '../components/ResetPasswordModal';
@@ -19,7 +19,7 @@ import { useSearchParams } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
-  const { t, isRTL, language, toggleLanguage } = useTranslate(); // <<< استخدام الترجمة
+  const { t, isRTL, language } = useTranslate(); // <<< استخدام الترجمة
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -64,7 +64,7 @@ const Home = () => {
   const jobsRef = useRef(null);
 
   // Job Categories with icons
-  const categories = [
+  const webCategories = [
     { id: 'all', name: t('allJobs'), icon: Briefcase, count: 0 },
     { id: 'engineering', name: t('engineering'), icon: Rocket, count: 0 },
     { id: 'design', name: t('design'), icon: Target, count: 0 },
@@ -164,6 +164,22 @@ const Home = () => {
               ? (language === 'en' ? '1 day ago' : 'يوم واحد')
               : `${daysAgo} ${language === 'en' ? 'days ago' : 'أيام'}`;
 
+            // Strip HTML tags from description
+            const stripHtml = (html) => {
+              if (!html) return '';
+              // Remove HTML tags and decode HTML entities
+              return html
+                .replace(/<[^>]*>/g, '') // Remove HTML tags
+                .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
+                .replace(/&amp;/g, '&') // Replace &amp; with &
+                .replace(/&lt;/g, '<') // Replace &lt; with <
+                .replace(/&gt;/g, '>') // Replace &gt; with >
+                .replace(/&quot;/g, '"') // Replace &quot; with "
+                .replace(/&#39;/g, "'") // Replace &#39; with '
+                .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+                .trim();
+            };
+
             return {
               id: job.id,
               title: job.title,
@@ -180,7 +196,7 @@ const Home = () => {
               skills: flatTags,
               postedDate: postedDateStr,
               postedTimestamp: postedDate.getTime(),
-              description: job.description || '',
+              description: stripHtml(job.description || ''),
               applicationUrl: job.apply_url,
               remote: (job.location || '').toLowerCase().includes('remote')
             };
@@ -258,30 +274,41 @@ const Home = () => {
       result = result.filter(job => job.remote);
     }
 
-    // Sorting
-    switch (sortBy) {
-      case 'latest':
-        result.sort((a, b) => b.postedTimestamp - a.postedTimestamp);
-        break;
-      case 'salary-high':
-        result.sort((a, b) => b.salaryMax - a.salaryMax);
-        break;
-      case 'salary-low':
-        result.sort((a, b) => a.salaryMin - b.salaryMin);
-        break;
-      case 'popular':
-        result.sort((a, b) => b.postedTimestamp - a.postedTimestamp);
-        break;
-      default:
-        break;
-    }
+    // --- PRIORITY SORT: Jordan/Amman jobs first, then apply selected sort ---
+    result.sort((a, b) => {
+      // First priority: Jordan/Amman jobs always come first
+      const aLocation = (a.location || '').toLowerCase();
+      const bLocation = (b.location || '').toLowerCase();
+      const aJordan = (aLocation.includes('jordan') || aLocation.includes('amman')) ? 1 : 0;
+      const bJordan = (bLocation.includes('jordan') || bLocation.includes('amman')) ? 1 : 0;
+      const jordanDiff = bJordan - aJordan;
+      
+      // If one is Jordan/Amman and the other isn't, Jordan/Amman wins
+      if (jordanDiff !== 0) {
+        return jordanDiff;
+      }
+      
+      // Both are Jordan or both are not Jordan - apply selected sort
+      switch (sortBy) {
+        case 'latest':
+          return b.postedTimestamp - a.postedTimestamp;
+        case 'salary-high':
+          return b.salaryMax - a.salaryMax;
+        case 'salary-low':
+          return a.salaryMin - b.salaryMin;
+        case 'popular':
+          return b.postedTimestamp - a.postedTimestamp;
+        default:
+          return 0;
+      }
+    });
 
     setFilteredJobs(result);
     // Auto-select first job if none selected
     if (result.length > 0 && !selectedJob) {
       setSelectedJob(result[0]);
     }
-  }, [filters, searchTerm, selectedCategory, sortBy, jobs, language]);
+  }, [filters, searchTerm, selectedCategory, sortBy, jobs, language, selectedJob]);
 
   const toggleSaveJob = async (jobId) => {
     if (!isLoggedIn) {
@@ -536,7 +563,7 @@ const Home = () => {
 
             {/* Categories Chips */}
             <div className="categories-scroll">
-              {categories.map((cat) => {
+              {webCategories.map((cat) => {
                 const Icon = cat.icon;
                 const count = cat.id === 'all' 
                   ? jobs.length 

@@ -57,6 +57,24 @@ const Job = sequelize.define('Job', {
   source_id: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  linkedin_job_id: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  easy_apply: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: false
+  },
+  company_logo: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  job_insights: {
+    type: DataTypes.JSON,
+    allowNull: true,
+    defaultValue: null
   }
 }, {
   timestamps: true,
@@ -70,6 +88,11 @@ const Job = sequelize.define('Job', {
       unique: true,
       fields: ['source_id'],
       name: 'unique_source_id'
+    },
+    {
+      unique: true,
+      fields: ['linkedin_job_id'],
+      name: 'unique_linkedin_job_id'
     }
   ]
 });

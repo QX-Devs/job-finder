@@ -31,11 +31,15 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
+    "node-cron": "^3.0.3",
     "node-fetch": "^2.6.9",
     "nodemailer": "^7.0.10",
     "openai": "^6.3.0",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
+    "puppeteer": "^24.31.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
