@@ -1,21 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../context/AuthContext';
 import applicationService from '../services/applicationService';
-import authService from '../services/authService';
 import { Briefcase, ExternalLink, MapPin, Calendar, Link as LinkIcon, Loader2 } from 'lucide-react';
 import './Applications.css';
 
 const Applications = () => {
   const navigate = useNavigate();
   const { t, direction } = useLanguage();
+  const { user } = useAuth();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [search, setSearch] = useState('');
-
-  const user = authService.getStoredUser();
 
   const STATUS_OPTIONS = [
     { value: 'applied', label: t('statusApplied') },

@@ -6,6 +6,7 @@ import {
   CheckCircle, ArrowRight, Sparkles, Shield,
   Zap, TrendingUp, ArrowLeft
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import authService from '../services/authService';
 import './AuthModal.css';
 import { useTranslate } from '../utils/translate';
@@ -14,6 +15,7 @@ import { useLanguage } from '../context/LanguageContext';
 const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
   const { t, isRTL } = useTranslate();
   const { language } = useLanguage();
+  const { login: loginContext, register: registerContext } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(defaultTab);
   const [showPassword, setShowPassword] = useState(false);
@@ -278,7 +280,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
     setIsLoading(true);
 
     try {
-      const response = await authService.login(loginData.email, loginData.password);
+      const response = await loginContext(loginData.email, loginData.password);
       
       if (response.success) {
         handleClose();
@@ -287,6 +289,8 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
         } else {
           navigate('/');
         }
+      } else {
+        setError(response.message || t('loginFailed'));
       }
     } catch (err) {
       setError(err.message || t('loginFailed'));
@@ -305,7 +309,7 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
     setIsLoading(true);
 
     try {
-      const response = await authService.register({
+      const response = await registerContext({
         fullName: signupData.fullName,
         email: signupData.email,
         password: signupData.password
@@ -314,6 +318,8 @@ const AuthModal = ({ isOpen, onClose, defaultTab = 'login', onSuccess }) => {
       if (response.success) {
         handleClose();
         navigate('/cv-prompt');
+      } else {
+        setError(response.message || t('registrationFailed'));
       }
     } catch (err) {
       setError(err.message || t('registrationFailed'));

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,9 +8,10 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import api from "./services/api";
+import api, { getCurrentApiUrl } from "./services/api";
 import "./components/AuthModal.css";
 import { LanguageProvider } from "./context/LanguageContext"; // <<< أضف هذا
+import { AuthProvider } from "./context/AuthContext";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
@@ -38,7 +39,8 @@ function App() {
   return (
     <LanguageProvider> {/* <<< لف كل التطبيق بالـ LanguageProvider */}
       <Router>
-        <Routes>
+        <AuthProvider> {/* Global authentication provider - must be inside Router */}
+          <Routes>
           {/* Single layout route for ALL pages */}
           <Route element={<MainLayout />}>
             {/* Public routes */}
@@ -128,6 +130,7 @@ function App() {
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </AuthProvider>
       </Router>
     </LanguageProvider>
   );
@@ -142,23 +145,135 @@ const ResetPasswordRedirect = () => {
 // Component to handle email verification - calls API and redirects to home with status
 const VerifyEmailRedirect = () => {
   const { token } = useParams();
-  const [isProcessing, setIsProcessing] = useState(true);
 
   useEffect(() => {
     const verifyEmail = async () => {
+      // Get the current API base URL (recalculates to ensure it's correct)
+      let apiBaseUrl = getCurrentApiUrl();
+      
+      // Double-check: if still localhost but we're on a different hostname, force update
+      if (apiBaseUrl.includes('localhost') && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        apiBaseUrl = `${window.location.protocol}//${window.location.hostname}:5000/api`;
+        console.warn('⚠️ Forced API URL update from localhost to:', apiBaseUrl);
+        // Update the axios instance
+        api.defaults.baseURL = apiBaseUrl;
+      }
+      const fullUrl = `${apiBaseUrl}/auth/verify/${token}`;
+      
+      console.log('📧 Verifying email:', {
+        token: token ? `${token.substring(0, 20)}...` : 'missing',
+        apiBaseUrl,
+        fullUrl,
+        hostname: window.location.hostname,
+        protocol: window.location.protocol,
+        port: window.location.port,
+        origin: window.location.origin,
+        REACT_APP_API_URL: process.env.REACT_APP_API_URL || 'not set',
+        'api.defaults.baseURL': api.defaults.baseURL || 'not set'
+      });
+      
+      // Ensure api instance is using the correct base URL
+      if (api.defaults.baseURL !== apiBaseUrl) {
+        console.warn('⚠️ API base URL mismatch, updating:', api.defaults.baseURL, '→', apiBaseUrl);
+        api.defaults.baseURL = apiBaseUrl;
+      }
+      
+      // Test if server is reachable first
+      try {
+        const healthUrl = `${apiBaseUrl.replace('/api', '')}/api/health`;
+        console.log('🏥 Testing server connectivity:', healthUrl);
+        const healthCheck = await fetch(healthUrl, {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'no-cache',
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        console.log('🏥 Health check response:', {
+          status: healthCheck.status,
+          ok: healthCheck.ok,
+          url: healthCheck.url,
+          statusText: healthCheck.statusText
+        });
+        if (!healthCheck.ok) {
+          throw new Error(`Health check failed: ${healthCheck.status} ${healthCheck.statusText}`);
+        }
+      } catch (healthError) {
+        console.error('❌ Health check failed:', healthError);
+        throw new Error(`Cannot reach server at ${apiBaseUrl}. Please ensure the backend server is running and accessible from your device.`);
+      }
+
       try {
         const response = await api.get(`/auth/verify/${token}`);
+        console.log('✅ Verification response:', response.data);
+        
         if (response.data.success) {
           // Redirect to home with success status
           window.location.href = `/?verify=success&message=${encodeURIComponent(response.data.message || 'Email verified successfully')}`;
         } else {
           // Redirect to home with error status
-          window.location.href = `/?verify=error&message=${encodeURIComponent(response.data.message || 'Verification failed')}`;
+          const errorMsg = response.data.message || 'Verification failed';
+          console.error('❌ Verification failed:', errorMsg);
+          window.location.href = `/?verify=error&message=${encodeURIComponent(errorMsg)}`;
         }
       } catch (error) {
-        // Redirect to home with error status
-        const errorMessage = error.response?.data?.message || error.message || 'Verification failed';
-        window.location.href = `/?verify=error&message=${encodeURIComponent(errorMessage)}`;
+        // Extract detailed error message
+        const errorResponse = error.response?.data;
+        const errorMessage = errorResponse?.message || error.message || 'Verification failed';
+        const errorCode = errorResponse?.error || 'UNKNOWN_ERROR';
+        
+        // Check if it's a network error (no response from server)
+        const isNetworkError = !error.response && (error.code === 'ERR_NETWORK' || error.code === 'ERR_CONNECTION_REFUSED' || error.request);
+        
+        console.error('❌ Verification error:', {
+          message: errorMessage,
+          error: errorCode,
+          status: error.response?.status,
+          code: error.code,
+          fullUrl,
+          apiBaseUrl,
+          isNetworkError,
+          details: errorResponse,
+          request: error.request ? 'Request made but no response' : 'No request made'
+        });
+        
+        // Show specific error message based on error code
+        let userFriendlyMessage = errorMessage;
+        
+        if (isNetworkError) {
+          // Network error - server not reachable
+          userFriendlyMessage = `Cannot connect to server at ${apiBaseUrl}. Please ensure:
+1. The backend server is running on port 5000
+2. Your phone and PC are on the same network
+3. Firewall allows connections on port 5000
+4. Try accessing: ${apiBaseUrl.replace('/api', '/health')} in your browser`;
+        } else if (errorCode === 'TOKEN_EXPIRED') {
+          userFriendlyMessage = 'Verification link has expired. Please request a new verification email.';
+        } else if (errorCode === 'TOKEN_INVALID') {
+          userFriendlyMessage = 'Invalid verification link. Please check your email and try again.';
+        } else if (errorCode === 'USER_NOT_FOUND') {
+          userFriendlyMessage = 'User account not found. The account may have been deleted.';
+        } else if (errorCode === 'DATABASE_ERROR') {
+          userFriendlyMessage = 'Database connection error. Please try again later.';
+        } else if (error.response?.status === 400 && errorMessage.includes('expired')) {
+          userFriendlyMessage = 'Verification link has expired. Please request a new verification email.';
+        } else if (error.response?.status === 400 && errorMessage.includes('invalid')) {
+          userFriendlyMessage = 'Invalid verification link. Please check your email and try again.';
+        } else if (error.response?.status === 404) {
+          userFriendlyMessage = 'User account not found. The account may have been deleted.';
+        } else if (error.response?.status === 500) {
+          userFriendlyMessage = 'Server error during verification. Please try again later.';
+        } else if (errorMessage === 'Network error. Please check your internet connection.') {
+          // This is the generic network error from API interceptor
+          userFriendlyMessage = `Cannot connect to server at ${apiBaseUrl}. Please check:
+1. Backend server is running
+2. Correct IP address (${window.location.hostname})
+3. Firewall settings
+4. Network connectivity`;
+        }
+        
+        window.location.href = `/?verify=error&message=${encodeURIComponent(userFriendlyMessage)}`;
       }
     };
 

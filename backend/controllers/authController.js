@@ -19,8 +19,16 @@ const generateResetToken = (id) =>
 const getApiBaseUrl = () =>
   process.env.API_BASE_URL || `http://localhost:${process.env.PORT || 5000}/api`;
 
-const getFrontendBaseUrl = () =>
-  process.env.FRONTEND_URL || 'http://localhost:3000';
+const getFrontendBaseUrl = () => {
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+  
+  // Log the frontend URL being used for email links (for debugging)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🌐 Frontend URL for email links:', frontendUrl);
+  }
+  
+  return frontendUrl;
+};
 
 const formatSupportEmail = (htmlBody) =>
   htmlBody.replace(/<[^>]*>/g, '');
@@ -33,12 +41,18 @@ const register = async (req, res) => {
     const { fullName, email, password } = req.body;
 
     if (!fullName || !email || !password) {
-      return res.status(400).json({ message: 'fullName, email and password are required' });
+      return res.status(400).json({ 
+        success: false,
+        message: 'fullName, email and password are required' 
+      });
     }
 
     const userExists = await User.findOne({ where: { email } });
     if (userExists) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ 
+        success: false,
+        message: 'User already exists' 
+      });
     }
 
     const user = await User.create({ fullName, email, password });
@@ -48,7 +62,12 @@ const register = async (req, res) => {
     user.verificationTokenExpires = new Date(Date.now() + TOKEN_EXPIRATION_MS);
     await user.save();
 
-    const verifyUrl = `${getFrontendBaseUrl().replace(/\/$/, '')}/verify/${verificationToken}`;
+    const frontendBaseUrl = getFrontendBaseUrl();
+    const verifyUrl = `${frontendBaseUrl.replace(/\/$/, '')}/verify/${verificationToken}`;
+    
+    // Log verification URL for debugging
+    console.log('📧 Generated verification URL (registration):', verifyUrl);
+    
     const htmlBody = `
   <div style="
     font-family: Arial, sans-serif;
@@ -158,17 +177,26 @@ const login = async (req, res) => {
 
     // Validate email & password
     if (!email || !password) {
-      return res.status(400).json({ message: 'Please provide email and password' });
+      return res.status(400).json({ 
+        success: false,
+        message: 'Please provide email and password' 
+      });
     }
 
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(404).json({ message: 'User Not Found' });
+      return res.status(404).json({ 
+        success: false,
+        message: 'User Not Found' 
+      });
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(405).json({ message: 'Invalid Password'});
+      return res.status(405).json({ 
+        success: false,
+        message: 'Invalid Password'
+      });
     }
 
     const token = generateAuthToken(user.id);
@@ -199,44 +227,166 @@ const login = async (req, res) => {
 const verifyEmail = async (req, res) => {
   try {
     const { token } = req.params;
+    
+    // Log verification attempt for debugging
+    console.log('📧 Email verification attempt:', {
+      token: token ? `${token.substring(0, 20)}...` : 'missing',
+      ip: req.ip,
+      userAgent: req.get('user-agent'),
+      origin: req.get('origin')
+    });
+
+    // Check if token is provided
     if (!token) {
-      return res.status(400).json({ success: false, message: 'Verification token is required' });
+      console.error('❌ Verification failed: Token missing');
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Verification token is required',
+        error: 'TOKEN_MISSING'
+      });
     }
 
+    // Decode and verify JWT token
     let decoded;
     try {
       decoded = jwt.verify(token, process.env.JWT_VERIFY_SECRET);
+      console.log('✅ JWT decoded successfully:', {
+        userId: decoded.id,
+        iat: decoded.iat ? new Date(decoded.iat * 1000).toISOString() : 'N/A',
+        exp: decoded.exp ? new Date(decoded.exp * 1000).toISOString() : 'N/A',
+        now: new Date().toISOString(),
+        expired: decoded.exp ? Date.now() > decoded.exp * 1000 : 'N/A'
+      });
     } catch (error) {
-      return res.status(400).json({ success: false, message: 'Invalid or expired verification token' });
+      console.error('❌ JWT verification failed:', error.message);
+      
+      // Check if token is expired
+      if (error.name === 'TokenExpiredError') {
+        try {
+          const expiredDecoded = jwt.decode(token);
+          console.log('📅 Expired token details:', {
+            userId: expiredDecoded?.id,
+            expiredAt: expiredDecoded?.exp ? new Date(expiredDecoded.exp * 1000).toISOString() : 'N/A',
+            expiredSince: expiredDecoded?.exp ? Math.floor((Date.now() - expiredDecoded.exp * 1000) / 1000 / 60) + ' minutes' : 'N/A'
+          });
+        } catch (decodeError) {
+          console.error('Failed to decode expired token:', decodeError);
+        }
+        
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Verification token has expired. Please request a new verification email.',
+          error: 'TOKEN_EXPIRED'
+        });
+      }
+      
+      // Invalid token signature or malformed
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Invalid verification token. Please check your email link.',
+        error: 'TOKEN_INVALID'
+      });
     }
 
-    const user = await User.findByPk(decoded.id);
+    // Check if user exists in database
+    let user;
+    try {
+      user = await User.findByPk(decoded.id);
+    } catch (dbError) {
+      console.error('❌ Database error during verification:', dbError);
+      return res.status(503).json({ 
+        success: false, 
+        message: 'Database connection error. Please try again later.',
+        error: 'DATABASE_ERROR'
+      });
+    }
+
     if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
+      console.error('❌ Verification failed: User not found', { userId: decoded.id });
+      return res.status(404).json({ 
+        success: false, 
+        message: 'User account not found. The account may have been deleted.',
+        error: 'USER_NOT_FOUND'
+      });
     }
 
+    // Check if already verified
     if (user.isVerified) {
-      return res.json({ success: true, message: 'Email already verified' });
+      console.log('ℹ️ Email already verified:', { userId: user.id, email: user.email });
+      return res.json({ 
+        success: true, 
+        message: 'Email already verified' 
+      });
     }
 
-    if (
-      !user.verificationToken ||
-      user.verificationToken !== token ||
-      !user.verificationTokenExpires ||
-      new Date(user.verificationTokenExpires).getTime() < Date.now()
-    ) {
-      return res.status(400).json({ success: false, message: 'Verification token is invalid or has expired' });
+    // Verify token matches and hasn't expired in database
+    if (!user.verificationToken) {
+      console.error('❌ Verification failed: No token stored for user', { userId: user.id });
+      return res.status(400).json({ 
+        success: false, 
+        message: 'No verification token found for this account. Please request a new verification email.',
+        error: 'TOKEN_NOT_FOUND'
+      });
     }
 
+    if (user.verificationToken !== token) {
+      console.error('❌ Verification failed: Token mismatch', { 
+        userId: user.id,
+        storedToken: user.verificationToken ? `${user.verificationToken.substring(0, 20)}...` : 'none',
+        providedToken: `${token.substring(0, 20)}...`
+      });
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Verification token does not match. Please use the latest verification email.',
+        error: 'TOKEN_MISMATCH'
+      });
+    }
+
+    if (!user.verificationTokenExpires) {
+      console.error('❌ Verification failed: No expiration set', { userId: user.id });
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Verification token has no expiration. Please request a new verification email.',
+        error: 'TOKEN_EXPIRATION_MISSING'
+      });
+    }
+
+    const expirationTime = new Date(user.verificationTokenExpires).getTime();
+    const now = Date.now();
+    
+    if (expirationTime < now) {
+      const expiredMinutes = Math.floor((now - expirationTime) / 1000 / 60);
+      console.error('❌ Verification failed: Token expired in database', { 
+        userId: user.id,
+        expiredAt: new Date(expirationTime).toISOString(),
+        expiredSince: `${expiredMinutes} minutes`
+      });
+      return res.status(400).json({ 
+        success: false, 
+        message: `Verification token expired ${expiredMinutes} minute(s) ago. Please request a new verification email.`,
+        error: 'TOKEN_EXPIRED'
+      });
+    }
+
+    // Mark email as verified
     user.isVerified = true;
     user.verificationToken = null;
     user.verificationTokenExpires = null;
     await user.save();
 
-    return res.json({ success: true, message: 'Email verified successfully' });
+    console.log('✅ Email verified successfully:', { userId: user.id, email: user.email });
+    return res.json({ 
+      success: true, 
+      message: 'Email verified successfully' 
+    });
   } catch (error) {
-    console.error('Verify email error:', error);
-    return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+    console.error('❌ Verify email error:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Server error during verification. Please try again later.',
+      error: 'SERVER_ERROR',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 
@@ -452,7 +602,12 @@ const resendVerificationEmail = async (req, res) => {
     user.verificationTokenExpires = new Date(Date.now() + TOKEN_EXPIRATION_MS);
     await user.save();
 
-    const verifyUrl = `${getFrontendBaseUrl().replace(/\/$/, '')}/verify/${verificationToken}`;
+    const frontendBaseUrl = getFrontendBaseUrl();
+    const verifyUrl = `${frontendBaseUrl.replace(/\/$/, '')}/verify/${verificationToken}`;
+    
+    // Log verification URL for debugging
+    console.log('📧 Generated verification URL (resend):', verifyUrl);
+    
     const htmlBody = `
       <p>Hi ${user.fullName || 'there'},</p>
       <p>You requested a new verification email. Please verify your email by clicking the button below within the next hour.</p>
@@ -471,6 +626,44 @@ const resendVerificationEmail = async (req, res) => {
   } catch (error) {
     console.error('Resend verification email error:', error);
     return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+  }
+};
+
+// @desc    Get authentication status
+// @route   GET /api/auth/status
+// @access  Public (but requires valid token)
+// Returns authentication status without requiring full user data
+const getAuthStatus = async (req, res) => {
+  try {
+    // If middleware passed, user is authenticated
+    const user = await User.findByPk(req.user.id, {
+      attributes: { exclude: ['password'] }
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        authenticated: false,
+        user: null,
+        message: 'invalid or expired token'
+      });
+    }
+
+    res.json({
+      authenticated: true,
+      user: {
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+        isVerified: user.isVerified
+      }
+    });
+  } catch (error) {
+    console.error('Auth status error:', error);
+    res.status(401).json({
+      authenticated: false,
+      user: null,
+      message: 'invalid or expired token'
+    });
   }
 };
 
@@ -687,4 +880,4 @@ const deleteAccount = async (req, res) => {
   }
 };
 
-module.exports = { register, login, verifyEmail, forgotPassword, resetPassword, resendVerificationEmail, getMe, updateProfile, changePassword, deleteAccount };
+module.exports = { register, login, verifyEmail, forgotPassword, resetPassword, resendVerificationEmail, getAuthStatus, getMe, updateProfile, changePassword, deleteAccount };

@@ -15,7 +15,14 @@ const authService = {
       
       return response.data;
     } catch (error) {
-      throw error.response?.data || { message: 'Registration failed' };
+      // Extract error message from enhanced error object (from API interceptor)
+      // The interceptor creates: { message, status, data, ... }
+      const errorMessage = error.message || error.data?.message || error.response?.data?.message || 'Registration failed';
+      const errorObj = {
+        message: errorMessage,
+        ...(error.data || error.response?.data || {})
+      };
+      throw errorObj;
     }
   },
 
@@ -31,7 +38,14 @@ const authService = {
       
       return response.data;
     } catch (error) {
-      throw error.response?.data || { message: 'Login failed' };
+      // Extract error message from enhanced error object (from API interceptor)
+      // The interceptor creates: { message, status, data, ... }
+      const errorMessage = error.message || error.data?.message || error.response?.data?.message || 'Login failed';
+      const errorObj = {
+        message: errorMessage,
+        ...(error.data || error.response?.data || {})
+      };
+      throw errorObj;
     }
   },
 

@@ -7,7 +7,7 @@ import {
   Search, Zap, Shield, HelpCircle, MessageSquare, Languages
 } from 'lucide-react';
 import AuthModal from './AuthModal';
-import authService from '../services/authService';
+import { useAuth } from '../context/AuthContext';
 import { useTranslate } from '../utils/translate'; // <<< أضف هذا
 import ThemeToggle from './ThemeToggle';
 import './Layout.css';
@@ -145,14 +145,13 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, isRTL, language, toggleLanguage } = useTranslate(); // <<< أضف الترجمة
+  const { user: currentUser, isAuthenticated: isLoggedIn, logout: handleLogoutContext, updateUser } = useAuth();
 
   const initialMobileState = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
   const initialCompactState = typeof window !== 'undefined' ? window.innerWidth <= 480 : false;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState('login');
-  const [isLoggedIn, setIsLoggedIn] = useState(authService.isAuthenticated());
-  const [currentUser, setCurrentUser] = useState(authService.getStoredUser());
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
@@ -160,7 +159,7 @@ const Layout = ({ children }) => {
   const [hasNewNotifications, setHasNewNotifications] = useState(false);
   const [isMobileView, setIsMobileView] = useState(initialMobileState);
   const [isCompactView, setIsCompactView] = useState(initialCompactState);
-  const navIconSize = isMobileView ? 14 : 18;
+  const navIconSize = isMobileView ? 18 : 28;
   const actionIconSize = isMobileView ? 16 : 20;
   const avatarIconSize = isMobileView ? 16 : 20;
   const logoIconSize = isMobileView ? 18 : 28;
@@ -240,40 +239,18 @@ const Layout = ({ children }) => {
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setIsLoggedIn(authService.isAuthenticated());
-    if (authService.isAuthenticated()) {
-      authService.getCurrentUser().then((res) => {
-        if (res?.success && res.data) {
-          setCurrentUser(res.data);
-          authService.setUser(res.data);
-        }
-      }).catch(() => {});
-    } else {
-      setCurrentUser(null);
-    }
   }, [location.pathname]);
 
-  // Sync auth state across tabs
+  // Listen for auth logout events from API interceptor
   useEffect(() => {
-    const syncAuth = () => setIsLoggedIn(authService.isAuthenticated());
-    window.addEventListener('storage', syncAuth);
-    return () => window.removeEventListener('storage', syncAuth);
-  }, []);
+    const handleAuthLogout = () => {
+      // AuthContext will handle the logout, we just need to close modals
+      setIsAuthModalOpen(false);
+      setIsMobileMenuOpen(false);
+    };
 
-  // On mount, ensure we have the latest user profile
-  useEffect(() => {
-    if (authService.isAuthenticated()) {
-      const stored = authService.getStoredUser();
-      setCurrentUser(stored);
-      authService.getCurrentUser().then((res) => {
-        if (res?.success && res.data) {
-          setCurrentUser(res.data);
-          authService.setUser(res.data);
-          // Update notification badge based on verification status
-          setHasNewNotifications(!res.data.isVerified);
-        }
-      }).catch(() => {});
-    }
+    window.addEventListener('auth:logout', handleAuthLogout);
+    return () => window.removeEventListener('auth:logout', handleAuthLogout);
   }, []);
 
   // Update notification badge when user verification status changes
@@ -284,6 +261,13 @@ const Layout = ({ children }) => {
       setHasNewNotifications(false);
     }
   }, [isLoggedIn, currentUser]);
+
+  // Update user in context when user data changes (e.g., after profile update)
+  useEffect(() => {
+    if (currentUser) {
+      updateUser(currentUser);
+    }
+  }, [currentUser, updateUser]);
 
   // Notifications - only show verification notification if user is not verified
   const notifications = useMemo(() => {
@@ -318,15 +302,12 @@ const Layout = ({ children }) => {
 
   const handleAuthSuccess = () => {
     setIsAuthModalOpen(false);
-    setIsLoggedIn(true);
     navigate('/dashboard');
   };
 
   const handleLogout = () => {
-    authService.logout();
-    setIsLoggedIn(false);
+    handleLogoutContext();
     setIsUserDropdownOpen(false);
-    navigate('/');
   };
 
   const toggleUserDropdown = () => {

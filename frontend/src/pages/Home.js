@@ -164,22 +164,6 @@ const Home = () => {
               ? (language === 'en' ? '1 day ago' : 'يوم واحد')
               : `${daysAgo} ${language === 'en' ? 'days ago' : 'أيام'}`;
 
-            // Strip HTML tags from description
-            const stripHtml = (html) => {
-              if (!html) return '';
-              // Remove HTML tags and decode HTML entities
-              return html
-                .replace(/<[^>]*>/g, '') // Remove HTML tags
-                .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
-                .replace(/&amp;/g, '&') // Replace &amp; with &
-                .replace(/&lt;/g, '<') // Replace &lt; with <
-                .replace(/&gt;/g, '>') // Replace &gt; with >
-                .replace(/&quot;/g, '"') // Replace &quot; with "
-                .replace(/&#39;/g, "'") // Replace &#39; with '
-                .replace(/\s+/g, ' ') // Replace multiple spaces with single space
-                .trim();
-            };
-
             return {
               id: job.id,
               title: job.title,
@@ -196,7 +180,7 @@ const Home = () => {
               skills: flatTags,
               postedDate: postedDateStr,
               postedTimestamp: postedDate.getTime(),
-              description: stripHtml(job.description || ''),
+              description: job.description || '',
               applicationUrl: job.apply_url,
               remote: (job.location || '').toLowerCase().includes('remote')
             };
@@ -274,34 +258,23 @@ const Home = () => {
       result = result.filter(job => job.remote);
     }
 
-    // --- PRIORITY SORT: Jordan/Amman jobs first, then apply selected sort ---
-    result.sort((a, b) => {
-      // First priority: Jordan/Amman jobs always come first
-      const aLocation = (a.location || '').toLowerCase();
-      const bLocation = (b.location || '').toLowerCase();
-      const aJordan = (aLocation.includes('jordan') || aLocation.includes('amman')) ? 1 : 0;
-      const bJordan = (bLocation.includes('jordan') || bLocation.includes('amman')) ? 1 : 0;
-      const jordanDiff = bJordan - aJordan;
-      
-      // If one is Jordan/Amman and the other isn't, Jordan/Amman wins
-      if (jordanDiff !== 0) {
-        return jordanDiff;
-      }
-      
-      // Both are Jordan or both are not Jordan - apply selected sort
-      switch (sortBy) {
-        case 'latest':
-          return b.postedTimestamp - a.postedTimestamp;
-        case 'salary-high':
-          return b.salaryMax - a.salaryMax;
-        case 'salary-low':
-          return a.salaryMin - b.salaryMin;
-        case 'popular':
-          return b.postedTimestamp - a.postedTimestamp;
-        default:
-          return 0;
-      }
-    });
+    // Sorting
+    switch (sortBy) {
+      case 'latest':
+        result.sort((a, b) => b.postedTimestamp - a.postedTimestamp);
+        break;
+      case 'salary-high':
+        result.sort((a, b) => b.salaryMax - a.salaryMax);
+        break;
+      case 'salary-low':
+        result.sort((a, b) => a.salaryMin - b.salaryMin);
+        break;
+      case 'popular':
+        result.sort((a, b) => b.postedTimestamp - a.postedTimestamp);
+        break;
+      default:
+        break;
+    }
 
     setFilteredJobs(result);
     // Auto-select first job if none selected

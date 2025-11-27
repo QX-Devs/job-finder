@@ -4,7 +4,62 @@ import axios from 'axios';
 import { HTTP_STATUS, ERROR_MESSAGES } from './apiConstants';
 
 // Base API URL - with fallback for different environments
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// IMPORTANT: For LAN access, set REACT_APP_API_URL=http://192.168.1.100:5000/api in .env
+function getApiUrl() {
+  // First, check environment variable (highest priority)
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  
+  // If running in browser, use current window location
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+    
+    // If not localhost, use current hostname for API
+    if (hostname && hostname !== 'localhost' && hostname !== '127.0.0.1') {
+      return `${protocol}//${hostname}:5000/api`;
+    }
+  }
+  
+  // Fallback to localhost only if on localhost
+  return 'http://localhost:5000/api';
+}
+
+// Get initial API URL
+let API_URL = getApiUrl();
+
+// Function to get current API URL (recalculates based on current window location)
+export function getCurrentApiUrl() {
+  return getApiUrl();
+}
+
+// Update API URL if window location changes (for dynamic updates)
+if (typeof window !== 'undefined') {
+  // Recalculate on every access to ensure it's current
+  const updateApiUrl = () => {
+    const newUrl = getApiUrl();
+    if (newUrl !== API_URL) {
+      console.log('🔄 API URL changed:', API_URL, '→', newUrl);
+      API_URL = newUrl;
+      api.defaults.baseURL = API_URL;
+    }
+  };
+  
+  // Update immediately
+  updateApiUrl();
+  
+  // Log API URL for debugging
+  console.log('🔗 API Base URL:', API_URL);
+  console.log('🌐 Current hostname:', window.location.hostname);
+  console.log('🌐 Current origin:', window.location.origin);
+  console.log('🌐 Current protocol:', window.location.protocol);
+  console.log('🌐 REACT_APP_API_URL:', process.env.REACT_APP_API_URL || 'not set');
+  
+  // Update on hashchange/popstate (SPA navigation)
+  window.addEventListener('hashchange', updateApiUrl);
+  window.addEventListener('popstate', updateApiUrl);
+}
 
 // Default retry configuration
 const RETRY_CONFIG = {
@@ -23,9 +78,17 @@ const api = axios.create({
   withCredentials: false, // Set to true if using cookies
 });
 
-// Request interceptor - Automatically add token to all requests
+// Request interceptor - Automatically add token to all requests AND ensure correct baseURL
 api.interceptors.request.use(
   (config) => {
+    // Update baseURL to ensure it's always current (important for mobile/LAN access)
+    const currentApiUrl = getApiUrl();
+    if (config.baseURL !== currentApiUrl) {
+      console.log('🔄 Updating API baseURL in request:', config.baseURL, '→', currentApiUrl);
+      config.baseURL = currentApiUrl;
+      api.defaults.baseURL = currentApiUrl; // Also update the default
+    }
+    
     // Get token from localStorage
     const token = localStorage.getItem('token');
     
@@ -48,6 +111,8 @@ api.interceptors.request.use(
     // Log request for debugging (remove in production)
     if (process.env.NODE_ENV === 'development') {
       console.log(`🔄 API Request: ${config.method?.toUpperCase()} ${config.url}`, {
+        baseURL: config.baseURL,
+        fullUrl: `${config.baseURL}${config.url}`,
         headers: config.headers,
         params: config.params,
         data: config.data
@@ -228,18 +293,37 @@ function getErrorMessage(status) {
 
 // Helper function to handle unauthorized errors
 function handleUnauthorizedError(error) {
-  // Only redirect if it's NOT an auth request to avoid infinite loops
+  // Only handle if it's NOT an auth request to avoid infinite loops
   const isAuthRequest = error.config?.url?.includes('/auth/');
   
   if (!isAuthRequest) {
+    // Clear auth data immediately
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     
+    // Dispatch a custom event that AuthContext can listen to
+    // This allows AuthContext to update state without direct coupling
+    window.dispatchEvent(new CustomEvent('auth:logout', { 
+      detail: { reason: 'invalid or expired token' } 
+    }));
+    
     // Use setTimeout to avoid React state updates during render
     setTimeout(() => {
-      // Check if we're not already on login page to avoid unnecessary redirects
-      if (!window.location.pathname.includes('/login')) {
-        window.location.href = '/login?session_expired=true';
+      // Check if we're not already on a public page to avoid unnecessary redirects
+      const publicPaths = ['/', '/about-us', '/contact-us', '/privacy-policy', 
+                          '/terms-of-service', '/find-jobs', '/companies', 
+                          '/career-advice', '/blog', '/faq', '/cookies', 
+                          '/accessibility', '/cv-prompt', '/cv-generator'];
+      
+      const isPublicPath = publicPaths.some(path => 
+        window.location.pathname === path || 
+        window.location.pathname.startsWith('/verify') ||
+        window.location.pathname.startsWith('/reset-password')
+      );
+      
+      if (!isPublicPath) {
+        // Redirect to home page (not login, since we don't have a /login route)
+        window.location.href = '/';
       }
     }, 100);
   }

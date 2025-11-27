@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../context/AuthContext';
+import api from '../services/api';
 import authService from '../services/authService';
 import resumeService from '../services/resumeService';
 import {
@@ -13,7 +15,7 @@ import './Dashboard.css';
 const Dashboard = () => {
   const navigate = useNavigate();
   const { t, direction } = useLanguage();
-  const [user, setUser] = useState(authService.getStoredUser());
+  const { user, updateUser } = useAuth();
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -25,11 +27,9 @@ const Dashboard = () => {
     let mounted = true;
     const load = async () => {
       try {
-        const me = await authService.getCurrentUser();
-        if (me?.success && me.data) {
-          if (!mounted) return;
-          setUser(me.data);
-          authService.setUser(me.data);
+        const response = await api.get('/me');
+        if (response.data?.success && response.data.data && mounted) {
+          updateUser(response.data.data);
         }
       } catch (_) {}
 

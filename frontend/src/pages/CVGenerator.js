@@ -220,7 +220,10 @@ const CVGenerator = () => {
       const res = await resumeService.generateDocx(payload);
       if (res.success && res.downloadUrl) {
         // Construct full URL for download
-        const apiBase = (process.env.REACT_APP_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+        const apiBase = (process.env.REACT_APP_API_URL || 
+          (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+            ? `http://${window.location.hostname}:5000/api`
+            : 'http://localhost:5000/api')).replace(/\/$/, '');
         const hostBase = apiBase.replace(/\/api$/, '');
         const fullUrl = res.downloadUrl.startsWith('http') 
           ? res.downloadUrl 

@@ -10,15 +10,57 @@ const authRoutes = require('../routes/auth');
 const meRoutes = require('../routes/me');
 const jobRoutes = require('../routes/jobRoutes');
 const scraperRoutes = require('../routes/scraperRoutes');
-const { startScheduler } = require('../services/scraperScheduler');
+// Job fetching is now handled by separate findJobs.js script
+// const { startScheduler } = require('../services/scraperScheduler');
 const path = require('path');
 
 const app = express();
 
 // Security middleware
 app.use(helmet());
+
+// CORS configuration - allow localhost and LAN IPs
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  process.env.FRONTEND_URL
+].filter(Boolean); // Remove undefined values
+
+// Add common LAN IP patterns if FRONTEND_URL is not set
+if (!process.env.FRONTEND_URL) {
+  // Allow requests from any origin in development (for LAN testing)
+  // In production, set FRONTEND_URL environment variable
+  allowedOrigins.push(/^http:\/\/192\.168\.\d+\.\d+:3000$/);
+  allowedOrigins.push(/^http:\/\/10\.\d+\.\d+\.\d+:3000$/);
+  allowedOrigins.push(/^http:\/\/172\.(1[6-9]|2[0-9]|3[0-1])\.\d+\.\d+:3000$/);
+}
+
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in allowed list
+    const isAllowed = allowedOrigins.some(allowed => {
+      if (typeof allowed === 'string') {
+        return origin === allowed;
+      } else if (allowed instanceof RegExp) {
+        return allowed.test(origin);
+      }
+      return false;
+    });
+    
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      // In development, allow all origins for LAN testing
+      if (process.env.NODE_ENV === 'development') {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  },
   credentials: true
 }));
 
@@ -431,7 +473,10 @@ const startServer = async () => {
       console.log(`✅ Hugging Face AI: ENABLED with Llama-3.2-3B-Instruct`);
     });
 
-    startScheduler();
+    // Job fetching is now handled by separate findJobs.js script
+    // Uncomment the line below if you want automatic job fetching on server start
+    // startScheduler();
+    console.log('ℹ️  Job fetching disabled. Run "node scripts/findJobs.js" separately to fetch jobs.');
 
     // Graceful shutdown
     const gracefulShutdown = (signal) => {
