@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Search, MapPin, Briefcase, DollarSign, Building2, 
@@ -8,6 +8,7 @@ import {
   SlidersHorizontal, ChevronDown, Zap, Target, Award,
   Rocket, Share2, Badge
 } from 'lucide-react';
+import DOMPurify from 'dompurify';
 import AuthModal from '../components/AuthModal';
 import ResetPasswordModal from '../components/ResetPasswordModal';
 import VerificationStatusModal from '../components/VerificationStatusModal';
@@ -22,7 +23,6 @@ const Home = () => {
   const { t, isRTL, language } = useTranslate(); // <<< استخدام الترجمة
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
-  const [filteredJobs, setFilteredJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [savedJobs, setSavedJobs] = useState(new Set());
   const [jobIdToApplicationId, setJobIdToApplicationId] = useState({});
@@ -42,7 +42,9 @@ const Home = () => {
     location: 'all',
     experienceLevel: 'all',
     salaryRange: 'all',
-    remote: false
+    remote: false,
+    keyword: '',
+    datePosted: 'any'
   });
   
   // Auth Modal State
@@ -187,17 +189,35 @@ const Home = () => {
           });
 
           console.log(`Home: Transformed ${transformedJobs.length} jobs`);
-          setJobs(transformedJobs);
-          setFilteredJobs(transformedJobs);
+          
+          // Sort jobs immediately after transformation (before setting state)
+          // This ensures correct sorting on initial render
+          const sortedJobs = transformedJobs.sort((a, b) => {
+            // Helper function to check if location is Amman
+            const isAmman = (location) => {
+              if (!location) return false;
+              return location.toLowerCase().includes('amman');
+            };
+            
+            // Prioritize Amman jobs first
+            const aIsAmman = isAmman(a.location);
+            const bIsAmman = isAmman(b.location);
+            
+            if (aIsAmman && !bIsAmman) return -1;
+            if (!aIsAmman && bIsAmman) return 1;
+            
+            // If both are Amman or both are not, sort by date (latest first)
+            return b.postedTimestamp - a.postedTimestamp;
+          });
+          
+          setJobs(sortedJobs);
         } else {
           console.warn('Home: No jobs in response or response not successful');
           setJobs([]);
-          setFilteredJobs([]);
         }
       } catch (error) {
         console.error('Home: Error fetching jobs:', error);
         setJobs([]);
-        setFilteredJobs([]);
       } finally {
         setIsLoading(false);
       }
@@ -206,11 +226,27 @@ const Home = () => {
     fetchJobs();
   }, [language]);
 
-  // Enhanced filtering with multiple criteria
-  useEffect(() => {
+  // Extract unique values from jobs for dynamic dropdowns
+  const uniqueJobTypes = useMemo(() => {
+    const types = new Set(jobs.map(job => job.jobType).filter(Boolean));
+    return Array.from(types).sort();
+  }, [jobs]);
+
+  const uniqueLocations = useMemo(() => {
+    const locations = new Set(jobs.map(job => job.location).filter(Boolean));
+    return Array.from(locations).sort();
+  }, [jobs]);
+
+  const uniqueExperienceLevels = useMemo(() => {
+    const levels = new Set(jobs.map(job => job.experienceLevel).filter(Boolean));
+    return Array.from(levels).sort();
+  }, [jobs]);
+
+  // Enhanced filtering with AND logic using useMemo for performance
+  const filteredJobs = useMemo(() => {
     let result = jobs;
 
-    // Search filter
+    // Search filter (OR logic within search - title OR company OR skills)
     if (searchTerm) {
       result = result.filter(job =>
         job.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -221,67 +257,150 @@ const Home = () => {
       );
     }
 
-    // Category filter
-    if (selectedCategory !== 'all') {
-      result = result.filter(job => job.category === selectedCategory);
-    }
+    // Apply ALL filters with AND logic - each filter must match
+    result = result.filter(job => {
+      // Category filter
+      const matchesCategory = selectedCategory === 'all' || job.category === selectedCategory;
 
-    // Job type filter
-    if (filters.jobType !== 'all') {
-      result = result.filter(job => job.jobType === filters.jobType);
-    }
+      // Job type filter
+      const matchesType = filters.jobType === 'all' || job.jobType === filters.jobType;
 
-    // Location filter
-    if (filters.location !== 'all') {
-      if (filters.location === 'remote') {
-        result = result.filter(job => job.remote || job.location.toLowerCase().includes('remote'));
-      } else {
-        result = result.filter(job => job.location === filters.location);
+      // Location filter
+      let matchesLocation = true;
+      if (filters.location !== 'all') {
+        if (filters.location === 'remote') {
+          matchesLocation = job.remote || job.location?.toLowerCase().includes('remote');
+        } else {
+          matchesLocation = job.location === filters.location;
+        }
       }
-    }
 
-    // Experience level filter
-    if (filters.experienceLevel !== 'all') {
-      result = result.filter(job => job.experienceLevel === filters.experienceLevel);
-    }
+      // Experience level filter
+      const matchesLevel = filters.experienceLevel === 'all' || job.experienceLevel === filters.experienceLevel;
 
-    // Salary range filter
-    if (filters.salaryRange !== 'all') {
-      const [min, max] = filters.salaryRange.split('-').map(Number);
-      result = result.filter(job => 
-        job.salaryMin >= min && job.salaryMax <= max
-      );
-    }
+      // Salary range filter
+      let matchesSalary = true;
+      if (filters.salaryRange !== 'all') {
+        const [min, max] = filters.salaryRange.split('-').map(Number);
+        matchesSalary = job.salaryMin >= min && job.salaryMax <= max;
+      }
 
-    // Remote filter
-    if (filters.remote) {
-      result = result.filter(job => job.remote);
-    }
+      // Remote filter
+      const matchesRemote = !filters.remote || job.remote === true;
+
+      // Keyword search filter (searches in title, company, description)
+      const keyword = filters.keyword?.trim() || '';
+      const matchesKeyword = keyword === '' ||
+        job.title?.toLowerCase().includes(keyword.toLowerCase()) ||
+        job.company?.toLowerCase().includes(keyword.toLowerCase()) ||
+        job.description?.toLowerCase().includes(keyword.toLowerCase());
+
+      // Date posted filter
+      let matchesDate = true;
+      if (filters.datePosted !== 'any' && job.postedTimestamp) {
+        const postedDate = new Date(job.postedTimestamp);
+        const diffDays = (Date.now() - postedDate.getTime()) / (1000 * 60 * 60 * 24);
+        
+        switch (filters.datePosted) {
+          case '24h':
+            matchesDate = diffDays <= 1;
+            break;
+          case '3d':
+            matchesDate = diffDays <= 3;
+            break;
+          case '7d':
+            matchesDate = diffDays <= 7;
+            break;
+          case '30d':
+            matchesDate = diffDays <= 30;
+            break;
+          default:
+            matchesDate = true;
+        }
+      }
+
+      // ALL conditions must be true (AND logic)
+      return matchesCategory && matchesType && matchesLocation && matchesLevel && matchesSalary && matchesRemote && matchesKeyword && matchesDate;
+    });
 
     // Sorting
+    const sortedResult = [...result]; // Create a copy to avoid mutating
+    
+    // Helper function to check if location is Amman
+    const isAmman = (location) => {
+      if (!location) return false;
+      return location.toLowerCase().includes('amman');
+    };
+    
     switch (sortBy) {
       case 'latest':
-        result.sort((a, b) => b.postedTimestamp - a.postedTimestamp);
+        sortedResult.sort((a, b) => {
+          // Prioritize Amman jobs first
+          const aIsAmman = isAmman(a.location);
+          const bIsAmman = isAmman(b.location);
+          
+          if (aIsAmman && !bIsAmman) return -1;
+          if (!aIsAmman && bIsAmman) return 1;
+          
+          // If both are Amman or both are not, sort by date
+          return b.postedTimestamp - a.postedTimestamp;
+        });
         break;
       case 'salary-high':
-        result.sort((a, b) => b.salaryMax - a.salaryMax);
+        sortedResult.sort((a, b) => {
+          // Prioritize Amman jobs first
+          const aIsAmman = isAmman(a.location);
+          const bIsAmman = isAmman(b.location);
+          
+          if (aIsAmman && !bIsAmman) return -1;
+          if (!aIsAmman && bIsAmman) return 1;
+          
+          // If both are Amman or both are not, sort by salary
+          return b.salaryMax - a.salaryMax;
+        });
         break;
       case 'salary-low':
-        result.sort((a, b) => a.salaryMin - b.salaryMin);
+        sortedResult.sort((a, b) => {
+          // Prioritize Amman jobs first
+          const aIsAmman = isAmman(a.location);
+          const bIsAmman = isAmman(b.location);
+          
+          if (aIsAmman && !bIsAmman) return -1;
+          if (!aIsAmman && bIsAmman) return 1;
+          
+          // If both are Amman or both are not, sort by salary
+          return a.salaryMin - b.salaryMin;
+        });
         break;
       case 'popular':
-        result.sort((a, b) => b.postedTimestamp - a.postedTimestamp);
+        sortedResult.sort((a, b) => {
+          // Prioritize Amman jobs first
+          const aIsAmman = isAmman(a.location);
+          const bIsAmman = isAmman(b.location);
+          
+          if (aIsAmman && !bIsAmman) return -1;
+          if (!aIsAmman && bIsAmman) return 1;
+          
+          // If both are Amman or both are not, sort by date
+          return b.postedTimestamp - a.postedTimestamp;
+        });
         break;
       default:
+        // Default: prioritize Amman jobs
+        sortedResult.sort((a, b) => {
+          const aIsAmman = isAmman(a.location);
+          const bIsAmman = isAmman(b.location);
+          
+          if (aIsAmman && !bIsAmman) return -1;
+          if (!aIsAmman && bIsAmman) return 1;
+          
+          return b.postedTimestamp - a.postedTimestamp;
+        });
         break;
     }
 
-    setFilteredJobs(result);
-    // Auto-select first job if none selected
-    if (result.length > 0 && !selectedJob) {
-      setSelectedJob(result[0]);
-    }
-  }, [filters, searchTerm, selectedCategory, sortBy, jobs, language, selectedJob]);
+    return sortedResult;
+  }, [filters, searchTerm, selectedCategory, sortBy, jobs]);
 
   const toggleSaveJob = async (jobId) => {
     if (!isLoggedIn) {
@@ -376,7 +495,9 @@ const Home = () => {
       location: 'all',
       experienceLevel: 'all',
       salaryRange: 'all',
-      remote: false
+      remote: false,
+      keyword: '',
+      datePosted: 'any'
     });
     setSelectedCategory('all');
     setSearchTerm('');
@@ -444,9 +565,19 @@ const Home = () => {
     }
   ];
 
-  const activeFiltersCount = Object.values(filters).filter(
-    v => v !== 'all' && v !== false
-  ).length + (selectedCategory !== 'all' ? 1 : 0);
+  // Calculate active filters count (excluding 'all' and false values)
+  const activeFiltersCount = useMemo(() => {
+    let count = 0;
+    if (filters.jobType !== 'all') count++;
+    if (filters.location !== 'all') count++;
+    if (filters.experienceLevel !== 'all') count++;
+    if (filters.salaryRange !== 'all') count++;
+    if (filters.remote) count++;
+    if (filters.keyword && filters.keyword.trim() !== '') count++;
+    if (filters.datePosted !== 'any') count++;
+    if (selectedCategory !== 'all') count++;
+    return count;
+  }, [filters, selectedCategory]);
 
   return (
     <>
@@ -573,6 +704,34 @@ const Home = () => {
               </div>
 
               <div className="filters-grid">
+                {/* Keyword Search */}
+                <div className="filter-group filter-group-full">
+                  <label>{t('keywordSearch')}</label>
+                  <input
+                    type="text"
+                    placeholder={t('keywordSearchPlaceholder')}
+                    value={filters.keyword}
+                    onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
+                    className="filter-input-enhanced"
+                  />
+                </div>
+
+                {/* Date Posted Filter */}
+                <div className="filter-group">
+                  <label>{t('datePosted')}</label>
+                  <select
+                    value={filters.datePosted}
+                    onChange={(e) => setFilters({ ...filters, datePosted: e.target.value })}
+                    className="filter-select-enhanced"
+                  >
+                    <option value="any">{t('anyTime')}</option>
+                    <option value="24h">{t('last24Hours')}</option>
+                    <option value="3d">{t('last3Days')}</option>
+                    <option value="7d">{t('last7Days')}</option>
+                    <option value="30d">{t('last30Days')}</option>
+                  </select>
+                </div>
+
                 <div className="filter-group">
                   <label>{t('jobTypeFilter')}</label>
                   <select
@@ -581,10 +740,9 @@ const Home = () => {
                     className="filter-select-enhanced"
                   >
                     <option value="all">{t('allTypes')}</option>
-                    <option value="Full-time">Full-time</option>
-                    <option value="Part-time">Part-time</option>
-                    <option value="Contract">Contract</option>
-                    <option value="Internship">Internship</option>
+                    {uniqueJobTypes.map(type => (
+                      <option key={type} value={type}>{type}</option>
+                    ))}
                   </select>
                 </div>
 
@@ -597,10 +755,11 @@ const Home = () => {
                   >
                     <option value="all">{t('allLocations')}</option>
                     <option value="remote">Remote</option>
-                    <option value="San Francisco, CA">San Francisco, CA</option>
-                    <option value="New York, NY">New York, NY</option>
-                    <option value="Seattle, WA">Seattle, WA</option>
-                    <option value="Austin, TX">Austin, TX</option>
+                    {uniqueLocations
+                      .filter(loc => !loc.toLowerCase().includes('remote'))
+                      .map(location => (
+                        <option key={location} value={location}>{location}</option>
+                      ))}
                   </select>
                 </div>
 
@@ -612,10 +771,9 @@ const Home = () => {
                     className="filter-select-enhanced"
                   >
                     <option value="all">{t('allLevels')}</option>
-                    <option value="Entry Level">Entry Level</option>
-                    <option value="Mid Level">Mid Level</option>
-                    <option value="Senior">Senior</option>
-                    <option value="Lead">Lead</option>
+                    {uniqueExperienceLevels.map(level => (
+                      <option key={level} value={level}>{level}</option>
+                    ))}
                   </select>
                 </div>
 
@@ -654,6 +812,11 @@ const Home = () => {
               <p>
                 {t('showing')} <strong>{Math.min(displayCount, filteredJobs.length)}</strong> {t('of')}{' '}
                 <strong>{filteredJobs.length}</strong> {t('jobs')}
+                {activeFiltersCount > 0 && (
+                  <span style={{ marginLeft: '12px', color: 'var(--primary-600)', fontWeight: 600 }}>
+                    • {t('activeFilters')}: {activeFiltersCount}
+                  </span>
+                )}
               </p>
             </div>
 
@@ -699,10 +862,16 @@ const Home = () => {
             <div className="empty-state">
               <div className="empty-icon">🔍</div>
               <h3>{t('noJobsFound')}</h3>
-              <p>{t('tryAdjusting')}</p>
-              <button onClick={clearFilters} className="btn-primary">
-                {t('clearAllFilters')}
-              </button>
+              <p>
+                {activeFiltersCount > 0 
+                  ? t('noJobsMatchFilters') 
+                  : t('tryAdjusting')}
+              </p>
+              {activeFiltersCount > 0 && (
+                <button onClick={clearFilters} className="btn-primary">
+                  {t('clearAllFilters')}
+                </button>
+              )}
             </div>
           ) : (
             <>
@@ -715,7 +884,14 @@ const Home = () => {
                         <div
                           key={job.id}
                           className={`job-list-item ${selectedJob?.id === job.id ? 'active' : ''}`}
-                          onClick={() => setSelectedJob(job)}
+                          onClick={() => {
+                            // Toggle selection: if clicking the same job, deselect it
+                            if (selectedJob?.id === job.id) {
+                              setSelectedJob(null);
+                            } else {
+                              setSelectedJob(job);
+                            }
+                          }}
                         >
                           {/* Company Logo */}
                           <div className="company-logo-small">{job.companyLogo}</div>
@@ -852,9 +1028,15 @@ const Home = () => {
                       {/* Description */}
                       <div className="job-details-section">
                         <h3 className="section-title">{t('jobDescription')}</h3>
-                        <p className="job-description">{selectedJob.description}</p>
+                        <div 
+                          className="job-description"
+                          dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(selectedJob.description || '')
+                          }}
+                        />
                       </div>
 
+                      {/* Stats */}
                       {/* Stats */}
                       <div className="job-details-stats">
                         <div className="stat-item">
@@ -954,7 +1136,12 @@ const Home = () => {
                                 <span key={idx}>{skill}</span>
                               ))}
                             </div>
-                            <p className="mobile-description">{job.description}</p>
+                            <div 
+                              className="mobile-description"
+                              dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(job.description || '')
+                              }}
+                            />
                           </div>
                         )}
                       </div>

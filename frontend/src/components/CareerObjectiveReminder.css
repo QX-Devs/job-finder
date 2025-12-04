@@ -1,0 +1,137 @@
+/* Career Objective Reminder Banner */
+.career-objective-reminder {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  max-width: 600px;
+  width: calc(100% - 40px);
+  animation: slideUpBanner 0.4s ease-out;
+}
+
+@keyframes slideUpBanner {
+  from {
+    transform: translateX(-50%) translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.career-objective-reminder-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.career-objective-reminder-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #00a651 0%, #059669 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.career-objective-reminder-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.career-objective-reminder-text strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.career-objective-reminder-text span {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.career-objective-reminder-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.career-objective-reminder-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #00a651;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.career-objective-reminder-button:hover {
+  background: #059669;
+}
+
+.career-objective-reminder-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.career-objective-reminder-close:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .career-objective-reminder {
+    bottom: 10px;
+    width: calc(100% - 20px);
+  }
+
+  .career-objective-reminder-content {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+
+  .career-objective-reminder-text {
+    flex-basis: 100%;
+    order: 2;
+  }
+
+  .career-objective-reminder-actions {
+    flex: 1;
+    justify-content: flex-end;
+    order: 3;
+  }
+
+  .career-objective-reminder-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+

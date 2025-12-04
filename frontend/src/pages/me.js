@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import authService from '../services/authService';
 import { apiHelpers } from '../services/api';
+import { sanitizeText } from '../utils/textSanitizer';
 import './me.css';
 
 function Me() {
@@ -26,9 +27,13 @@ function Me() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // Sanitize text fields that may contain special characters
+    const sanitizedValue = (name === 'careerObjective' || name === 'location') 
+      ? sanitizeText(value) 
+      : value;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: sanitizedValue
     }));
   };
 
@@ -73,8 +78,14 @@ function Me() {
       setLoading(true);
       setError(null);
       
+      // Sanitize text fields before submitting
+      const sanitizedFormData = {
+        ...formData,
+        careerObjective: sanitizeText(formData.careerObjective || ''),
+        location: sanitizeText(formData.location || '')
+      };
       // Use apiHelpers for consistency with auth
-      const response = await apiHelpers.put('/me', formData);
+      const response = await apiHelpers.put('/me', sanitizedFormData);
       
       console.log('Update response:', response.data);
       
@@ -217,9 +228,18 @@ function Me() {
                 <h2>{t('education')}</h2>
                 {user.education.map((edu, idx) => (
                   <div key={idx} className="list-item">
-                    <h3>{edu.degree} {t('in')} {edu.major}</h3>
-                    <p>{edu.institution}</p>
-                    <p className="year">{edu.graduationYear}</p>
+                    <h3>{edu.degree} {edu.major ? `${t('in')} ${edu.major}` : ''}</h3>
+                    <div className="education-row">
+                      <p className="education-institution">{edu.institution}</p>
+                      {edu.graduationYear && (
+                        <p className="year">{edu.graduationYear}</p>
+                      )}
+                    </div>
+                    {edu.gpa && edu.gpa.trim() && (
+                      <p style={{ marginTop: '4px', fontStyle: 'italic', color: '#6b7280', fontSize: '0.9rem' }}>
+                        GPA: {edu.gpa}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>

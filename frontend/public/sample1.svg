@@ -1,0 +1,10 @@
+
+<svg width="800" height="1100" xmlns="http://www.w3.org/2000/svg">
+  <text x="40" y="80" font-size="36" font-weight="bold">FULL NAME</text>
+  <text x="40" y="120" font-size="20">Job Title</text>
+  <text x="40" y="200" font-size="24" font-weight="bold">WORK EXPERIENCE</text>
+  <text x="40" y="240" font-size="18">Company Name  Role</text>
+  <text x="40" y="270" font-size="16">Description of responsibilities...</text>
+  <text x="40" y="400" font-size="24" font-weight="bold">EDUCATION</text>
+  <text x="40" y="440" font-size="18">University Name  Degree</text>
+</svg>

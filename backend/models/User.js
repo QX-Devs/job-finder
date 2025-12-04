@@ -101,6 +101,11 @@ const User = sequelize.define('User', {
   professionalSummary: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  isGraduate: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
   }
 }, {
   timestamps: true,

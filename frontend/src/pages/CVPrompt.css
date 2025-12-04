@@ -1,5 +1,10 @@
 /* CV Prompt Page - Light Theme */
 
+.profile-setup-grid {
+  display: block;
+  width: 100%;
+}
+
 .cv-prompt-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
@@ -180,12 +185,14 @@
 }
 
 .benefits-section ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .benefits-section li {
+  list-style: none !important;
+  padding: 0 !important;
   font-size: 1.1rem;
   color: #374151;
   padding: 12px 0;

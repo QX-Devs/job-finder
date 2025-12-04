@@ -123,5 +123,104 @@
   }
 }
 
+/* ===== DARK MODE STYLES ===== */
+html.dark .apps-title h1 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .apps-search {
+  background: rgba(51, 65, 85, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .apps-search::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.dark .apps-filter select {
+  background: rgba(51, 65, 85, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .apps-loading {
+  color: #94a3b8 !important;
+}
+
+html.dark .apps-error {
+  background: rgba(127, 29, 29, 0.3) !important;
+  color: #fca5a5 !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+html.dark .apps-empty {
+  background: rgba(30, 41, 59, 0.8) !important;
+  color: #94a3b8 !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+html.dark .app-card {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+html.dark .app-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .app-meta {
+  color: #94a3b8 !important;
+}
+
+html.dark .meta.link {
+  color: #6ee7b7 !important;
+}
+
+html.dark .meta.link:hover {
+  color: #34d399 !important;
+}
+
+html.dark .status {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .status.applied {
+  background: rgba(14, 165, 233, 0.2) !important;
+  border-color: rgba(14, 165, 233, 0.4) !important;
+  color: #7dd3fc !important;
+}
+
+html.dark .status.interview {
+  background: rgba(245, 158, 11, 0.2) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #fbbf24 !important;
+}
+
+html.dark .status.offer {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .status.rejected {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: #fca5a5 !important;
+}
+
+html.dark .status.saved {
+  background: rgba(51, 65, 85, 0.4) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .app-notes {
+  background: rgba(51, 65, 85, 0.4) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  color: #cbd5e1 !important;
+}
+
 
 

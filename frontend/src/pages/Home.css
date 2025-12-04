@@ -55,6 +55,10 @@ body {
 .home-container {
   min-height: 100vh;
   background: linear-gradient(180deg, #ffffff 0%, var(--gray-50) 100%);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* ============================================
@@ -116,6 +120,23 @@ body {
 }
 .btn-hero-secondary:hover { border-color: var(--primary-400); color: var(--primary-700); }
 
+/* Dark mode: secondary hero button should not be pure white */
+html.dark .btn-hero-secondary,
+:root.dark .btn-hero-secondary {
+  background: radial-gradient(circle at top left, #020617 0%, #020617 40%, #020617 100%) !important;
+  border-color: rgba(148, 163, 184, 0.6) !important;
+  color: #e5e7eb !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.8) !important;
+}
+
+/* Dark mode hover state */
+html.dark .btn-hero-secondary:hover,
+:root.dark .btn-hero-secondary:hover {
+  border-color: #22c55e !important;
+  color: #bbf7d0 !important;
+  box-shadow: 0 14px 40px rgba(34, 197, 94, 0.4) !important;
+}
+
 .hero-trust { margin-top: 18px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 .trust-item { display: inline-flex; align-items: center; gap: 8px; color: var(--gray-600); font-weight: 700; }
 
@@ -163,9 +184,31 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: white;
+  color: #ffffff;
   font-size: 0.95rem;
   animation: fadeInUp 0.6s ease-out backwards;
+}
+
+/* Ensure stat-chip is visible in dark mode */
+html.dark .stat-chip,
+:root.dark .stat-chip {
+  color: #ffffff !important;
+}
+
+html.dark .stat-chip span,
+:root.dark .stat-chip span {
+  color: #ffffff !important;
+}
+
+html.dark .stat-chip strong,
+:root.dark .stat-chip strong {
+  color: #ffffff !important;
+}
+
+html.dark .stat-chip svg,
+:root.dark .stat-chip svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
 .stat-chip:nth-child(1) { animation-delay: 0.1s; }
@@ -175,6 +218,7 @@ body {
 
 .stat-chip strong {
   font-weight: 700;
+  color: inherit;
 }
 
 /* ============================================
@@ -589,6 +633,32 @@ body {
   box-shadow: 0 0 0 3px var(--primary-50);
 }
 
+.filter-group-full {
+  grid-column: 1 / -1; /* Span full width */
+}
+
+.filter-input-enhanced {
+  padding: 12px 16px;
+  border: 2px solid var(--gray-200);
+  border-radius: 10px;
+  background: white;
+  color: var(--gray-700);
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+  width: 100%;
+}
+
+.filter-input-enhanced:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-50);
+}
+
+.filter-input-enhanced::placeholder {
+  color: var(--gray-400);
+  font-weight: 400;
+}
+
 .checkbox-label {
   display: flex;
   align-items: center;
@@ -736,7 +806,7 @@ body {
 
 .mobile-job-skills span {
   padding: 6px 10px;
-  border-radius: 999px;
+  border-radius: 0;
   background: var(--primary-50);
   color: var(--primary-600);
   font-size: 0.8rem;
@@ -748,6 +818,80 @@ body {
   line-height: 1.5;
   color: var(--gray-700);
   margin: 0;
+}
+
+/* HTML content styling for mobile descriptions */
+.mobile-description p {
+  margin: 0 0 0.75em 0;
+}
+
+.mobile-description p:last-child {
+  margin-bottom: 0;
+}
+
+.mobile-description br {
+  line-height: 1.5;
+}
+
+.mobile-description strong,
+.mobile-description b {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.mobile-description em,
+.mobile-description i {
+  font-style: italic;
+}
+
+.mobile-description ul,
+.mobile-description ol {
+  margin: 0.75em 0;
+  padding-left: 1.5em;
+}
+
+.mobile-description ul {
+  list-style-type: disc;
+}
+
+.mobile-description ol {
+  list-style-type: decimal;
+}
+
+.mobile-description li {
+  margin: 0.4em 0;
+  line-height: 1.5;
+}
+
+.mobile-description h1,
+.mobile-description h2,
+.mobile-description h3,
+.mobile-description h4,
+.mobile-description h5,
+.mobile-description h6 {
+  margin: 1em 0 0.5em 0;
+  font-weight: 600;
+  color: var(--gray-900);
+  line-height: 1.3;
+}
+
+.mobile-description h1:first-child,
+.mobile-description h2:first-child,
+.mobile-description h3:first-child,
+.mobile-description h4:first-child,
+.mobile-description h5:first-child,
+.mobile-description h6:first-child {
+  margin-top: 0;
+}
+
+.mobile-description a {
+  color: var(--primary-600);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.mobile-description a:hover {
+  color: var(--primary-700);
 }
 
 .btn-load-more-mobile {
@@ -814,7 +958,15 @@ body {
 
 .jobs-list {
   overflow-y: auto;
+  overflow-x: hidden;
   flex: 1;
+  /* Hide scrollbar while keeping scroll functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.jobs-list::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
 }
 
 .job-list-item {
@@ -825,6 +977,10 @@ body {
   cursor: pointer;
   transition: all var(--transition-base);
   background: white;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .job-list-item:hover {
@@ -832,8 +988,10 @@ body {
 }
 
 .job-list-item.active {
-  background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
-  border-left: 4px solid var(--primary-500);
+  border: none !important;
+  box-shadow: inset 0 0 0 2px #2cc295 !important;
+  background: #e5fbf5 !important;
+  border-radius: 12px;
 }
 
 .company-logo-small {
@@ -1123,11 +1281,11 @@ body {
 }
 
 .skill-tag-large {
-  padding: 8px 16px;
+  padding: 16px 18px;
   background: var(--primary-50);
   color: var(--primary-700);
   border: 1px solid var(--primary-200);
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 0.9rem;
   font-weight: 600;
   transition: all var(--transition-base);
@@ -1146,20 +1304,98 @@ body {
   margin: 0;
 }
 
+/* HTML content styling for job descriptions */
+.job-description p {
+  margin: 0 0 1em 0;
+}
+
+.job-description p:last-child {
+  margin-bottom: 0;
+}
+
+.job-description br {
+  line-height: 1.7;
+}
+
+.job-description strong,
+.job-description b {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.job-description em,
+.job-description i {
+  font-style: italic;
+}
+
+.job-description ul,
+.job-description ol {
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.job-description ul {
+  list-style-type: disc;
+}
+
+.job-description ol {
+  list-style-type: decimal;
+}
+
+.job-description li {
+  margin: 0.5em 0;
+  line-height: 1.7;
+}
+
+.job-description h1,
+.job-description h2,
+.job-description h3,
+.job-description h4,
+.job-description h5,
+.job-description h6 {
+  margin: 1.5em 0 0.75em 0;
+  font-weight: 600;
+  color: var(--gray-900);
+  line-height: 1.3;
+}
+
+.job-description h1:first-child,
+.job-description h2:first-child,
+.job-description h3:first-child,
+.job-description h4:first-child,
+.job-description h5:first-child,
+.job-description h6:first-child {
+  margin-top: 0;
+}
+
+.job-description a {
+  color: var(--primary-600);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.job-description a:hover {
+  color: var(--primary-700);
+}
+
 .job-details-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
   margin-bottom: 32px;
-  padding: 20px;
-  background: var(--gray-50);
-  border-radius: 12px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  width: fit-content;
+  box-shadow: none;
 }
 
 .stat-item {
   display: flex;
   gap: 12px;
   align-items: center;
+  color: var(--gray-900);
 }
 
 .stat-item svg {
@@ -1179,6 +1415,57 @@ body {
   color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* Dark mode styles for job-details-stats ("Today / posted" card) */
+html.dark .job-details-panel,
+:root.dark .job-details-panel {
+  background: radial-gradient(circle at top left, #0b1120 0%, #020617 45%, #020617 100%) !important;
+  border-color: rgba(148, 163, 184, 0.45) !important;
+  color: #e5e7eb !important;
+}
+
+html.dark .job-details-stats,
+:root.dark .job-details-stats {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  width: fit-content !important;
+  padding: 0 !important;
+}
+
+/* Make sure no inner element keeps a white box */
+html.dark .job-details-stats *,
+:root.dark .job-details-stats * {
+  background-color: transparent !important;
+}
+
+/* "Today" value */
+html.dark .job-details-stats .stat-value,
+:root.dark .job-details-stats .stat-value {
+  color: #f9fafb !important;
+  font-weight: 700 !important;
+}
+
+/* "POSTED" label */
+html.dark .job-details-stats .stat-label,
+:root.dark .job-details-stats .stat-label {
+  color: #9ca3af !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Icon next to the text */
+html.dark .job-details-stats .stat-item svg,
+:root.dark .job-details-stats .stat-item svg {
+  color: #22c55e !important;
+  stroke: #22c55e !important;
+}
+
+html.dark .job-details-stats .stat-item,
+:root.dark .job-details-stats .stat-item {
+  color: #e2e8f0 !important;
 }
 
 .job-details-footer {
@@ -1692,7 +1979,7 @@ body {
   padding: 6px 12px;
   background: var(--primary-50);
   color: var(--primary-700);
-  border-radius: 8px;
+  border-radius: 0;
   font-size: 0.85rem;
   font-weight: 600;
   transition: all var(--transition-fast);
@@ -2078,6 +2365,21 @@ body {
 .btn-cta-primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode override for CTA primary button */
+html.dark .btn-cta-primary,
+:root.dark .btn-cta-primary {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600)) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.35) !important;
+}
+
+html.dark .btn-cta-primary:hover,
+:root.dark .btn-cta-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 40px rgba(16, 185, 129, 0.45) !important;
 }
 
 .btn-cta-secondary {
@@ -3118,8 +3420,10 @@ select:focus-visible {
 }
 
 [dir="rtl"] .job-list-item.active {
-  border-left: none;
-  border-right: 4px solid var(--primary-500);
+  border: none !important;
+  box-shadow: inset 0 0 0 2px #2cc295 !important;
+  background: #e5fbf5 !important;
+  border-radius: 12px;
 }
 
 [dir="rtl"] .job-list-item:hover {
@@ -3164,4 +3468,1249 @@ select:focus-visible {
 
 [dir="rtl"] .resume-grid {
   direction: rtl;
+}
+
+/* ============================================
+   DARK MODE OVERRIDES - Color Conflict Fixes
+   ============================================ */
+
+:root.dark .home-container {
+  background: linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%) !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  position: relative !important;
+}
+
+:root.dark body {
+  background: var(--color-bg-primary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* ============================================
+   HERO SECTION - Dark Mode Fixes
+   ============================================ */
+
+:root.dark .hero-section {
+  background: radial-gradient(900px 400px at 10% 10%, rgba(15, 23, 42, 0.8) 0%, transparent 60%),
+              radial-gradient(900px 400px at 90% 20%, rgba(30, 41, 59, 0.6) 0%, transparent 65%),
+              linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%) !important;
+}
+
+:root.dark .hero-badge {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--primary-600) !important;
+    color: var(--primary-300) !important;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .hero-title {
+    color: var(--color-text-primary) !important;
+  }
+
+  .hero-subtitle {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .hero-ctas .btn-hero-primary {
+    background: linear-gradient(135deg, var(--primary-500), var(--primary-600)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 12px 28px rgba(16, 185, 129, 0.3) !important;
+  }
+
+  .hero-ctas .btn-hero-primary:hover {
+    box-shadow: 0 18px 40px rgba(16, 185, 129, 0.4) !important;
+  }
+
+  .hero-ctas .btn-hero-secondary {
+    background: radial-gradient(circle at top left, #020617 0%, #020617 40%, #020617 100%) !important;
+    border-color: rgba(148, 163, 184, 0.6) !important;
+    color: #e5e7eb !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.8) !important;
+  }
+
+  .hero-ctas .btn-hero-secondary:hover {
+    border-color: #22c55e !important;
+    color: #bbf7d0 !important;
+    box-shadow: 0 14px 40px rgba(34, 197, 94, 0.4) !important;
+  }
+
+  .trust-item {
+    color: var(--color-text-secondary) !important;
+  }
+
+  /* ============================================
+     STATS BANNER - Dark Mode Fixes
+     ============================================ */
+  
+/* Stat chip styles moved to enhancements section below */
+
+  /* ============================================
+     SEARCH SECTION - Dark Mode Fixes
+     ============================================ */
+  
+  .search-box-enhanced {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    box-shadow: 0 0 0 1px var(--color-border) inset, 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    background-image: linear-gradient(var(--color-bg-secondary), var(--color-bg-secondary)), 
+                      linear-gradient(135deg, var(--primary-600), var(--primary-500)) !important;
+  }
+
+  .search-box-enhanced:focus-within {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2), 0 8px 16px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .search-icon {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .search-input-enhanced {
+    color: var(--color-text-primary) !important;
+  }
+
+  .search-input-enhanced::placeholder {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .filter-input-enhanced {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .filter-input-enhanced:focus {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .filter-input-enhanced::placeholder {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .search-clear {
+    background: var(--color-bg-tertiary) !important;
+    color: var(--color-text-secondary) !important;
+  }
+
+  .search-clear:hover {
+    background: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  /* ============================================
+     FILTER CONTROLS - Dark Mode Fixes
+     ============================================ */
+  
+  .filter-toggle-btn {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .filter-toggle-btn:hover {
+    border-color: var(--primary-500) !important;
+    color: var(--primary-300) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .filter-toggle-btn.active {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: var(--primary-500) !important;
+    color: var(--primary-300) !important;
+  }
+
+  .filters-panel {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .filters-panel-header h3 {
+    color: var(--color-text-primary) !important;
+  }
+
+  .clear-filters-btn,
+  .close-filters-btn {
+    background: var(--color-bg-tertiary) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text-secondary) !important;
+  }
+
+  .clear-filters-btn:hover {
+    background: var(--color-border) !important;
+    border-color: var(--color-text-tertiary) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .close-filters-btn:hover {
+    background: rgba(248, 113, 113, 0.2) !important;
+    border-color: var(--color-error) !important;
+    color: var(--color-error) !important;
+  }
+
+  .filter-group label {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .filter-select-enhanced {
+    background: var(--color-bg-tertiary) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .filter-select-enhanced:focus {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .checkbox-label {
+    color: var(--color-text-primary) !important;
+  }
+
+  /* ============================================
+     CATEGORY CHIPS - Dark Mode Fixes
+     ============================================ */
+  
+  .category-chip {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .category-chip:hover {
+    border-color: var(--primary-500) !important;
+    color: var(--primary-300) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .category-chip.active {
+    background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%) !important;
+    border-color: var(--primary-500) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+  }
+
+  .category-count {
+    background: rgba(0, 0, 0, 0.2) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .category-chip.active .category-count {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+  }
+
+  /* ============================================
+     RESULTS BAR - Dark Mode Fixes
+     ============================================ */
+  
+  .results-bar {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    box-shadow: 0 0 0 1px var(--color-border) inset, 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    background-image: linear-gradient(var(--color-bg-secondary), var(--color-bg-secondary)), 
+                      linear-gradient(135deg, var(--primary-600), var(--primary-500)) !important;
+  }
+
+  .results-info p {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .results-info strong {
+    color: var(--color-text-primary) !important;
+  }
+
+  .sort-select {
+    background: var(--color-bg-tertiary) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .sort-select:focus {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .view-toggle {
+    background: var(--color-bg-tertiary) !important;
+  }
+
+  .view-btn {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .view-btn:hover {
+    color: var(--color-text-primary) !important;
+  }
+
+  .view-btn.active {
+    background: var(--color-bg-primary) !important;
+    color: var(--primary-300) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  /* ============================================
+     JOB LIST ITEMS (SIDEBAR) - Dark Mode Fixes
+     ============================================ */
+  
+  .jobs-sidebar {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .job-list-item {
+    background: var(--color-bg-secondary) !important;
+    border-bottom-color: var(--color-border) !important;
+  }
+
+  .job-list-item:hover {
+    background: var(--color-bg-tertiary) !important;
+  }
+
+  .job-list-item.active {
+    border: none !important;
+    box-shadow: inset 0 0 0 2px #10b981 !important;
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-radius: 12px !important;
+  }
+
+  /* Ensure text is visible in active job card */
+  .job-list-item.active .job-list-title,
+  .job-list-item.active .job-list-company,
+  .job-list-item.active .job-list-meta {
+    color: var(--color-text-primary) !important;
+  }
+
+  .job-list-title {
+    color: var(--color-text-primary) !important;
+  }
+
+  .job-list-company {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .meta-item-small {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .job-list-date {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .saved-icon {
+    color: var(--primary-400) !important;
+  }
+
+  .company-logo-small {
+    background: var(--color-bg-tertiary) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .btn-load-more-sidebar {
+    background: var(--color-bg-secondary) !important;
+    border-top-color: var(--color-border) !important;
+    color: var(--primary-300) !important;
+  }
+
+  .btn-load-more-sidebar:hover {
+    background: rgba(16, 185, 129, 0.1) !important;
+  }
+
+  /* ============================================
+     JOB DETAILS PANEL - Dark Mode Fixes
+     ============================================ */
+  
+  .job-details-panel {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .job-details-header {
+    border-bottom-color: var(--color-border) !important;
+  }
+
+  .job-details-company-logo {
+    background: var(--color-bg-tertiary) !important;
+    color: var(--color-text-primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .job-details-title {
+    color: var(--color-text-primary) !important;
+  }
+
+  .job-details-company {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .icon-btn-large {
+    background: var(--color-bg-tertiary) !important;
+    color: var(--color-text-secondary) !important;
+  }
+
+  .icon-btn-large:hover {
+    background: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .icon-btn-large.saved {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: var(--primary-300) !important;
+  }
+
+  .info-card {
+    background: var(--color-bg-tertiary) !important;
+    border-color: var(--color-border) !important;
+  }
+
+  .info-card:hover {
+    border-color: var(--primary-500) !important;
+    background: rgba(16, 185, 129, 0.1) !important;
+  }
+
+  .info-card svg {
+    color: var(--primary-400) !important;
+  }
+
+  .info-label {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .info-value {
+    color: var(--color-text-primary) !important;
+  }
+
+  .section-title {
+    color: var(--color-text-primary) !important;
+  }
+
+  /* .job-skills-large - no dark mode overrides needed */
+
+  .skill-tag-large {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: var(--primary-300) !important;
+    border-color: var(--primary-600) !important;
+  }
+
+  .skill-tag-large:hover {
+    background: rgba(16, 185, 129, 0.25) !important;
+    border-color: var(--primary-500) !important;
+  }
+
+  .job-description {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .job-details-footer {
+    border-top-color: var(--color-border) !important;
+  }
+
+  .apply-btn-large {
+    background: linear-gradient(135deg, var(--primary-500), var(--primary-600)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+  }
+
+  .apply-btn-large:hover {
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
+  }
+
+  .job-details-empty {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .job-details-empty .empty-icon {
+    color: var(--color-border) !important;
+  }
+
+  .job-details-empty h3 {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .job-details-empty p {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  /* ============================================
+     JOB CARDS (GRID VIEW) - Dark Mode Fixes
+     ============================================ */
+  
+  .job-card-enhanced {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .job-card-enhanced::before {
+    background: linear-gradient(90deg, var(--primary-500), var(--primary-600)) !important;
+  }
+
+  .job-card-enhanced:hover {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .job-card-enhanced.featured {
+    border-color: var(--color-warning) !important;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%) !important;
+  }
+
+  .job-card-enhanced.featured:hover {
+    border-color: var(--color-warning) !important;
+    box-shadow: 0 12px 40px rgba(251, 191, 36, 0.3) !important;
+  }
+
+  .job-card-enhanced.urgent {
+    border-color: var(--color-error) !important;
+  }
+
+  .job-card-enhanced.urgent::before {
+    background: linear-gradient(90deg, var(--color-error), #dc2626) !important;
+  }
+
+  .company-logo {
+    background: linear-gradient(135deg, var(--color-bg-tertiary), var(--color-border)) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .job-title-enhanced {
+    color: var(--color-text-primary) !important;
+  }
+
+  .job-card-enhanced:hover .job-title-enhanced {
+    color: var(--primary-300) !important;
+  }
+
+  .company-info-enhanced {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .company-name {
+    color: var(--color-text-primary) !important;
+  }
+
+  .separator {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .industry {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .meta-item-enhanced {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .meta-item-enhanced svg {
+    color: var(--primary-400) !important;
+  }
+
+  /* .job-skills - no dark mode overrides needed */
+
+  .skill-tag {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: var(--primary-300) !important;
+  }
+
+  .skill-tag:hover {
+    background: rgba(16, 185, 129, 0.25) !important;
+  }
+
+  .job-stats {
+    border-top-color: var(--color-border) !important;
+    border-bottom-color: var(--color-border) !important;
+  }
+
+  .stat {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .stat svg {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .experience-level {
+    background: var(--color-bg-tertiary) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .apply-btn-enhanced {
+    background: linear-gradient(135deg, var(--primary-500), var(--primary-600)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .apply-btn-enhanced:hover {
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3) !important;
+  }
+
+  .icon-btn {
+    background: var(--color-bg-tertiary) !important;
+    color: var(--color-text-secondary) !important;
+  }
+
+  .icon-btn:hover {
+    background: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .icon-btn.saved {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: var(--primary-300) !important;
+  }
+
+  .icon-btn.saved:hover {
+    background: rgba(16, 185, 129, 0.3) !important;
+  }
+
+  .urgent-badge {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.15)) !important;
+    color: var(--color-error) !important;
+  }
+
+  .featured-badge-text {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.15)) !important;
+    color: var(--color-warning) !important;
+  }
+
+  .remote-badge {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.15)) !important;
+    color: var(--color-accent) !important;
+  }
+
+  /* ============================================
+     MOBILE JOB CARDS - Dark Mode Fixes
+     ============================================ */
+  
+  .job-card-mobile {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .job-card-mobile.expanded {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .mobile-title-wrap h3 {
+    color: var(--color-text-primary) !important;
+  }
+
+  .mobile-title-wrap p {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .mobile-company-logo {
+    background: var(--color-bg-tertiary) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .job-card-mobile-meta {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .mobile-job-details {
+    border-top-color: var(--color-border) !important;
+  }
+
+  .mobile-job-stats span {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .mobile-job-stats strong {
+    color: var(--color-text-primary) !important;
+  }
+
+  .mobile-job-skills span {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: var(--primary-300) !important;
+  }
+
+  .mobile-description {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .btn-load-more-mobile {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    color: var(--primary-300) !important;
+  }
+
+  .btn-load-more-mobile:hover {
+    border-color: var(--primary-500) !important;
+    color: var(--primary-200) !important;
+  }
+
+  /* ============================================
+     JOBS HEADER - Dark Mode Fixes
+     ============================================ */
+  
+  .jobs-main-title {
+    color: var(--color-text-primary) !important;
+  }
+
+  .jobs-subtitle {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .header-cta-btn {
+    background: linear-gradient(135deg, var(--primary-500), var(--primary-600)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+  }
+
+  .header-cta-btn:hover {
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
+  }
+
+  /* ============================================
+     FEATURES SECTION - Dark Mode Fixes
+     ============================================ */
+  
+  .features-section-enhanced {
+    background: linear-gradient(180deg, transparent 0%, var(--color-bg-primary) 100%) !important;
+  }
+
+  .features-badge {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--primary-600) !important;
+    color: var(--primary-300) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .features-title {
+    color: var(--color-text-primary) !important;
+  }
+
+  .features-subtitle {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .feature-card-enhanced {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .feature-card-enhanced::before {
+    background: linear-gradient(135deg, transparent 0%, rgba(16, 185, 129, 0.1) 100%) !important;
+  }
+
+  .feature-card-enhanced:hover {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 20px 50px rgba(16, 185, 129, 0.25) !important;
+  }
+
+  .feature-card-enhanced h3 {
+    color: var(--color-text-primary) !important;
+  }
+
+  .feature-card-enhanced p {
+    color: var(--color-text-secondary) !important;
+  }
+
+  /* ============================================
+     CTA SECTION - Dark Mode Fixes
+     ============================================ */
+  
+html.dark .cta-section-enhanced {
+  background: linear-gradient(135deg, #064e3b 0%, #022c22 100%) !important;
+}
+
+html.dark .cta-background {
+  opacity: 0.25 !important;
+}
+
+html.dark .cta-circle {
+  background: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.4), 0 0 80px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .circle-1 {
+  background: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 0 0 60px rgba(16, 185, 129, 0.5), 0 0 120px rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark .circle-2 {
+  background: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 0 50px rgba(16, 185, 129, 0.4), 0 0 100px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .circle-3 {
+  background: rgba(16, 185, 129, 0.25) !important;
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.4), 0 0 80px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .cta-content-enhanced h2 {
+  color: #f0fdf4 !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark .cta-content-enhanced > p {
+  color: #ecfdf5 !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 8px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .btn-cta-secondary {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+html.dark .btn-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+html.dark .cta-feature {
+  color: #f0fdf4 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 6px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .cta-icon {
+  background: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3) !important;
+}
+
+  /* ============================================
+     RESUME GENERATOR SECTION - Dark Mode Fixes
+     ============================================ */
+  
+html.dark .resume-generator-section {
+  background: linear-gradient(135deg, #064e3b 0%, #022c22 100%) !important;
+  border-radius: 32px !important;
+  margin: 60px 24px !important;
+  padding: 80px 24px !important;
+}
+  
+  .resume-badge {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--primary-600) !important;
+    color: var(--primary-300) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .resume-title {
+    color: var(--color-text-primary) !important;
+  }
+
+  .resume-subtitle {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .resume-cta .btn-primary {
+    background: linear-gradient(135deg, var(--primary-500), var(--primary-600)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3) !important;
+  }
+
+  .resume-cta .btn-primary:hover {
+    box-shadow: 0 16px 40px rgba(16, 185, 129, 0.4) !important;
+  }
+
+  .resume-card {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .resume-card:hover {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 20px 50px rgba(16, 185, 129, 0.2) !important;
+  }
+
+  .resume-card-inner {
+    background: var(--color-bg-tertiary) !important;
+  }
+
+  .resume-badge-page {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+  }
+
+  .resume-caption h3 {
+    color: var(--color-text-primary) !important;
+  }
+
+  .resume-caption p {
+    color: var(--color-text-secondary) !important;
+  }
+
+  /* ============================================
+     LOADING & EMPTY STATES - Dark Mode Fixes
+     ============================================ */
+  
+  .loading-state p {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .loader {
+    border-color: var(--color-border) !important;
+    border-top-color: var(--primary-500) !important;
+  }
+
+  .empty-state h3 {
+    color: var(--color-text-primary) !important;
+  }
+
+  .empty-state p {
+    color: var(--color-text-secondary) !important;
+  }
+
+  .empty-icon {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  /* ============================================
+     BUTTONS & INTERACTIVE ELEMENTS - Dark Mode Fixes
+     ============================================ */
+  
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary-500), var(--primary-600)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
+  }
+
+  .btn-load-more {
+    background: var(--color-bg-secondary) !important;
+    color: var(--primary-300) !important;
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .btn-load-more:hover {
+    background: rgba(16, 185, 129, 0.1) !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .load-more-info {
+    color: var(--color-text-tertiary) !important;
+  }
+
+  .language-toggle-btn {
+    background: var(--color-bg-secondary) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text-primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .language-toggle-btn:hover {
+    border-color: var(--primary-500) !important;
+    color: var(--primary-300) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* ============================================
+     FOCUS STATES - Dark Mode Fixes
+     ============================================ */
+  
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible {
+    outline-color: var(--primary-500) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* ============================================
+     GRADIENT TEXT - Dark Mode Fixes
+     ============================================ */
+  
+  .gradient-text {
+    background: linear-gradient(135deg, var(--primary-400) 0%, var(--primary-300) 25%, var(--primary-500) 50%, var(--primary-400) 75%, var(--primary-300) 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+  /* ============================================
+     SCROLLBAR - Dark Mode Fixes
+     ============================================ */
+  
+:root.dark .jobs-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+:root.dark .jobs-list::-webkit-scrollbar-track {
+  background: var(--color-bg-tertiary);
+}
+
+:root.dark .jobs-list::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+:root.dark .jobs-list::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-600);
+}
+
+:root.dark .job-details-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+:root.dark .job-details-panel::-webkit-scrollbar-track {
+  background: var(--color-bg-tertiary);
+}
+
+:root.dark .job-details-panel::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+:root.dark .job-details-panel::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-600);
+}
+
+/* ============================================
+   DARK MODE ENHANCEMENTS
+   ============================================ */
+
+/* 1. SMOOTH THEME TRANSITIONS - Applied to major elements */
+:root.dark .home-container,
+:root.dark .hero-section,
+:root.dark .hero-badge,
+:root.dark .hero-title,
+:root.dark .hero-subtitle,
+:root.dark .stats-banner,
+:root.dark .search-box-enhanced,
+:root.dark .filter-toggle-btn,
+:root.dark .category-chip,
+:root.dark .job-list-item,
+:root.dark .job-card-enhanced,
+:root.dark .job-details-panel,
+:root.dark .feature-card-enhanced,
+:root.dark .resume-card,
+:root.dark .filters-panel,
+:root.dark .results-bar {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 2. STATS BANNER DARK MODE - Enhanced gradient and text visibility */
+html.dark .stats-banner {
+  background: linear-gradient(135deg, #064e3b 0%, #022c22 100%) !important;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3) !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+html.dark .stats-banner::before {
+  opacity: 0.1 !important;
+  z-index: 1 !important;
+}
+
+html.dark .stats-banner::after {
+  opacity: 0.05 !important;
+  z-index: 1 !important;
+}
+
+/* ============================================
+   JOB DESCRIPTION HTML CONTENT - Dark Mode
+   ============================================ */
+
+:root.dark .job-description {
+  color: var(--color-text-secondary) !important;
+}
+
+:root.dark .job-description p {
+  color: var(--color-text-secondary) !important;
+}
+
+:root.dark .job-description strong,
+:root.dark .job-description b {
+  color: var(--color-text-primary) !important;
+}
+
+:root.dark .job-description h1,
+:root.dark .job-description h2,
+:root.dark .job-description h3,
+:root.dark .job-description h4,
+:root.dark .job-description h5,
+:root.dark .job-description h6 {
+  color: var(--color-text-primary) !important;
+}
+
+:root.dark .job-description a {
+  color: var(--primary-400) !important;
+}
+
+:root.dark .job-description a:hover {
+  color: var(--primary-300) !important;
+}
+
+:root.dark .mobile-description {
+  color: var(--color-text-secondary) !important;
+}
+
+:root.dark .mobile-description p {
+  color: var(--color-text-secondary) !important;
+}
+
+:root.dark .mobile-description strong,
+:root.dark .mobile-description b {
+  color: var(--color-text-primary) !important;
+}
+
+:root.dark .mobile-description h1,
+:root.dark .mobile-description h2,
+:root.dark .mobile-description h3,
+:root.dark .mobile-description h4,
+:root.dark .mobile-description h5,
+:root.dark .mobile-description h6 {
+  color: var(--color-text-primary) !important;
+}
+
+:root.dark .mobile-description a {
+  color: var(--primary-400) !important;
+}
+
+:root.dark .mobile-description a:hover {
+  color: var(--primary-300) !important;
+}
+
+/* DARK MODE — Stats Banner */
+html.dark .stats-banner .stat-chip {
+  color: #e8faf4 !important;
+}
+
+html.dark .stats-banner .stat-chip svg {
+  stroke: currentColor !important;
+  color: currentColor !important;
+}
+
+/* 3. CUSTOM SCROLLBAR - Global dark mode scrollbar */
+:root.dark ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+:root.dark ::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+:root.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-bg-tertiary);
+  border-radius: 6px;
+  border: 3px solid var(--color-bg-secondary);
+}
+
+:root.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-700);
+}
+
+/* 4. TEXT SELECTION - Green selection in dark mode */
+:root.dark ::selection {
+  background: var(--primary-600);
+  color: white;
+}
+
+:root.dark ::-moz-selection {
+  background: var(--primary-600);
+  color: white;
+}
+
+/* 5. GLASSMORPHISM CARDS - Frosted glass effect */
+:root.dark .job-card-enhanced,
+:root.dark .feature-card-enhanced,
+:root.dark .resume-card {
+  backdrop-filter: blur(10px);
+  background: rgba(30, 41, 59, 0.7) !important;
+}
+
+/* 6. ENHANCED FOCUS INDICATORS - Better visibility */
+:root.dark *:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
+/* 7. SHADOW ENHANCEMENT - Colored shadows in dark mode */
+:root.dark .job-card-enhanced:hover {
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.25), 0 0 0 1px var(--primary-500) !important;
+}
+
+:root.dark .feature-card-enhanced:hover {
+  box-shadow: 0 20px 50px rgba(16, 185, 129, 0.2), 0 0 0 1px var(--primary-600) !important;
+}
+
+/* 8. LOADING STATE SKELETON - Animated skeleton loader */
+:root.dark .skeleton {
+  background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-bg-tertiary) 50%, var(--color-bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 9. SMOOTH HOVER TRANSFORMS - Applied to interactive elements */
+:root.dark .job-card-enhanced,
+:root.dark .feature-card-enhanced,
+:root.dark .resume-card,
+:root.dark .category-chip,
+:root.dark .filter-toggle-btn,
+:root.dark .btn-primary,
+:root.dark .btn-hero-primary,
+:root.dark .btn-hero-secondary,
+:root.dark .apply-btn-enhanced,
+:root.dark .apply-btn-large,
+:root.dark .icon-btn,
+:root.dark .icon-btn-large,
+:root.dark .job-list-item,
+:root.dark .search-box-enhanced,
+:root.dark .filter-select-enhanced,
+:root.dark .sort-select {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 10. REDUCED MOTION SUPPORT - Respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  :root.dark * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 11. BETTER INPUT FIELD STYLING - Dark color scheme */
+:root.dark input,
+:root.dark textarea,
+:root.dark select {
+  color-scheme: dark;
+}
+
+/* 12. ENHANCED GRADIENT TEXT IN DARK MODE - Brighter, animated gradient */
+:root.dark .gradient-text {
+  background: linear-gradient(135deg, #60efff 0%, #0061ff 25%, #10b981 50%, #60efff 75%, #ec4899 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-size: 200% 200% !important;
+  animation: gradientShift 3s ease infinite !important;
+}
+
+html.dark .stats-banner .stat-chip *,
+html.dark .stats-banner-content .stat-chip *,
+html.dark .stat-chip * {
+  color: #ffffff !important;
+}
+
+html.dark .stats-banner .stat-chip svg,
+html.dark .stats-banner-content .stat-chip svg,
+html.dark .stat-chip svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: none !important;
 }

@@ -23,7 +23,6 @@ import Me from "./pages/me";
 import CVPrompt from "./pages/CVPrompt";
 import CVGenerator from "./pages/CVGenerator";
 import Settings from "./pages/Settings";
-import FindJobs from "./pages/FindJobs";
 import Companies from "./pages/Companies";
 import CareerAdvice from "./pages/CareerAdvice";
 import Blog from "./pages/Blog";
@@ -50,8 +49,14 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/cv-prompt" element={<CVPrompt />} />
-            <Route path="/cv-generator" element={<CVGenerator />} />
-            <Route path="/find-jobs" element={<FindJobs />} />
+            <Route 
+              path="/cv-generator" 
+              element={
+                <ProtectedRoute>
+                  <CVGenerator />
+                </ProtectedRoute>
+              } 
+            />
             <Route path="/companies" element={<Companies />} />
             <Route path="/career-advice" element={<CareerAdvice />} />
             <Route path="/blog" element={<Blog />} />

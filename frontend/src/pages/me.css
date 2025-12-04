@@ -91,7 +91,12 @@ button:disabled {
 }
 
 .profile-section {
-  margin-bottom: 40px;
+  margin-bottom: 48px;
+  margin-top: 32px;
+}
+
+.profile-section:first-of-type {
+  margin-top: 0;
 }
 
 .profile-section h2 {
@@ -152,13 +157,45 @@ button:disabled {
   font-size: 13px;
 }
 
+/* Education formatting - Institution and date on opposite sides */
+.education-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.education-institution {
+  margin: 0;
+  flex: 1;
+}
+
 .skills-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 0;
+  align-items: center;
 }
 
-.skill-tag { background: #ecfdf5; color: #065f46; padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1px solid #bbf7d0; }
+.skill-tag { 
+  background: transparent; 
+  color: #374151; 
+  padding: 0; 
+  border-radius: 0; 
+  font-size: 1rem; 
+  font-weight: 500; 
+  border: none; 
+  display: inline;
+}
+
+.skill-tag::after {
+  content: ', ';
+  color: #6b7280;
+}
+
+.skill-tag:last-child::after {
+  content: '';
+}
 
 /* Form Styles */
 .me-form {

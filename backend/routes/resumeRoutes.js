@@ -1,7 +1,7 @@
 // routes/resumeRoutes.js
 const express = require('express');
 const { protect } = require('../middleware/auth');
-const { createResume, listResumes, generateDocx, uploadResumeFile, downloadUploadedResume } = require('../controllers/resumeController');
+const { createResume, listResumes, generateDocx, uploadResumeFile, downloadUploadedResume, getResumeById, updateResume, deleteResume } = require('../controllers/resumeController');
 const multer = require('multer');
 const path = require('path');
 
@@ -25,11 +25,16 @@ const router = express.Router();
 // All resume routes require authentication
 router.use(protect);
 
-// Placeholder routes - we'll implement the controller later
+// Resume routes
+// Specific routes should come before parameterized routes
 router.get('/', listResumes);
 router.post('/', createResume);
 router.post('/generate', generateDocx);
 router.post('/upload', upload.single('file'), uploadResumeFile);
 router.get('/file/:filename', downloadUploadedResume);
+// Parameterized routes come last
+router.get('/:id', getResumeById);
+router.put('/:id', updateResume);
+router.delete('/:id', deleteResume);
 
 module.exports = router;

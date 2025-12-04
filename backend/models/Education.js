@@ -34,6 +34,10 @@ const Education = sequelize.define('Education', {
       min: 1900,
       max: 2100
     }
+  },
+  gpa: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   timestamps: true

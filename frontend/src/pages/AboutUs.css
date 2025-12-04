@@ -576,3 +576,186 @@ a:focus {
   outline: 2px solid var(--secondary-accent);
   outline-offset: 2px;
 }
+
+/* ===== DARK MODE STYLES ===== */
+html.dark body {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .about-container {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%) !important;
+}
+
+html.dark .hero-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .section-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .subsection-title {
+  color: #e2e8f0 !important;
+}
+
+html.dark .body-text {
+  color: #cbd5e1 !important;
+}
+
+html.dark .small-text {
+  color: #94a3b8 !important;
+}
+
+html.dark .gradient-text {
+  background: linear-gradient(135deg, #6ee7b7, #10b981) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+html.dark .glass-card {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+html.dark .glass-card:hover {
+  background: rgba(30, 41, 59, 0.95) !important;
+  box-shadow: 0 30px 60px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .glass-card::before {
+  background: linear-gradient(135deg, #10b981, #6ee7b7, #34d399) !important;
+  opacity: 0.3 !important;
+}
+
+html.dark .glass-card:hover::before {
+  opacity: 0.5 !important;
+}
+
+html.dark .hero-icon {
+  color: #10b981 !important;
+  filter: drop-shadow(0 10px 30px rgba(16, 185, 129, 0.4)) !important;
+}
+
+html.dark .section-icon {
+  color: #10b981 !important;
+}
+
+html.dark .feature-card {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+html.dark .feature-card:hover {
+  background: rgba(30, 41, 59, 0.95) !important;
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .feature-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .feature-description {
+  color: #cbd5e1 !important;
+}
+
+html.dark .team-card {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+html.dark .team-card:hover {
+  background: rgba(30, 41, 59, 0.95) !important;
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .team-name {
+  color: #f1f5f9 !important;
+}
+
+html.dark .team-role {
+  color: #6ee7b7 !important;
+}
+
+html.dark .team-bio {
+  color: #cbd5e1 !important;
+}
+
+html.dark .skill-chip {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .skill-chip:hover {
+  background: rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark .value-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .value-description {
+  color: #cbd5e1 !important;
+}
+
+html.dark .tech-chip {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark .tech-chip:hover {
+  background: rgba(30, 41, 59, 0.95) !important;
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .tech-name {
+  color: #e2e8f0 !important;
+}
+
+html.dark .btn-primary {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white !important;
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark .btn-primary:not(:disabled):hover {
+  background: linear-gradient(135deg, #059669, #047857) !important;
+  box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4) !important;
+}
+
+html.dark .btn-secondary {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .btn-secondary:hover {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  background: rgba(30, 41, 59, 0.95) !important;
+  color: #34d399 !important;
+}
+
+html.dark .cta-note {
+  color: #94a3b8 !important;
+}
+
+html.dark .glass-divider {
+  background: rgba(148, 163, 184, 0.2) !important;
+}
+
+html.dark .shape-1 {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.2)) !important;
+}
+
+html.dark .shape-2 {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(110, 231, 183, 0.2)) !important;
+}
+
+html.dark .shape-3 {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.3), rgba(16, 185, 129, 0.2)) !important;
+}

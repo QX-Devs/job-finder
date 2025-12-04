@@ -561,3 +561,186 @@ a:focus {
   outline: 2px solid var(--secondary-accent);
   outline-offset: 2px;
 }
+
+/* ===== DARK MODE STYLES ===== */
+html.dark body {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .contact-container {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%) !important;
+}
+
+html.dark .hero-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .section-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .subsection-title {
+  color: #e2e8f0 !important;
+}
+
+html.dark .body-text {
+  color: #cbd5e1 !important;
+}
+
+html.dark .small-text {
+  color: #94a3b8 !important;
+}
+
+html.dark .gradient-text {
+  background: linear-gradient(135deg, #6ee7b7, #10b981) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+html.dark .glass-card {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+html.dark .glass-card:hover {
+  background: rgba(30, 41, 59, 0.95) !important;
+  box-shadow: 0 30px 60px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .glass-card::before {
+  background: linear-gradient(135deg, #10b981, #6ee7b7, #34d399) !important;
+  opacity: 0.3 !important;
+}
+
+html.dark .glass-card:hover::before {
+  opacity: 0.5 !important;
+}
+
+html.dark .hero-icon {
+  color: #10b981 !important;
+  filter: drop-shadow(0 10px 30px rgba(16, 185, 129, 0.4)) !important;
+}
+
+html.dark .section-icon {
+  color: #10b981 !important;
+}
+
+html.dark .contact-method-card {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+html.dark .contact-method-card:hover {
+  background: rgba(30, 41, 59, 0.95) !important;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .contact-icon {
+  color: #10b981 !important;
+}
+
+html.dark .contact-method-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .contact-method-details {
+  color: #94a3b8 !important;
+}
+
+html.dark .contact-link {
+  color: #6ee7b7 !important;
+}
+
+html.dark .contact-link:hover {
+  color: #34d399 !important;
+}
+
+html.dark .team-info-content h3 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .team-info-content p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .response-time-card {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark .form-label {
+  color: #cbd5e1 !important;
+}
+
+html.dark .form-input,
+html.dark .form-textarea {
+  background: rgba(51, 65, 85, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .form-input:focus,
+html.dark .form-textarea:focus {
+  background: rgba(51, 65, 85, 0.8) !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .form-input::placeholder,
+html.dark .form-textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.dark .form-input.error,
+html.dark .form-textarea.error {
+  border-color: #ef4444 !important;
+}
+
+html.dark .error-message {
+  color: #fca5a5 !important;
+}
+
+html.dark .btn-primary {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white !important;
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark .btn-primary:hover {
+  background: linear-gradient(135deg, #059669, #047857) !important;
+  box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4) !important;
+}
+
+html.dark .faq-section {
+  border-top-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+html.dark .faq-question {
+  color: #f1f5f9 !important;
+}
+
+html.dark .faq-answer {
+  color: #cbd5e1 !important;
+}
+
+html.dark .snackbar {
+  background: rgba(5, 150, 105, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  color: white !important;
+}
+
+html.dark .shape-1 {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.2)) !important;
+}
+
+html.dark .shape-2 {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(110, 231, 183, 0.2)) !important;
+}
+
+html.dark .shape-3 {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.3), rgba(16, 185, 129, 0.2)) !important;
+}

@@ -12,6 +12,34 @@
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
+  
+  /* Gray scale for light theme */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* Primary colors (green theme) */
+  --primary-50: #ecfdf5;
+  --primary-100: #d1fae5;
+  --primary-200: #a7f3d0;
+  --primary-300: #6ee7b7;
+  --primary-400: #34d399;
+  --primary-500: #10b981;
+  --primary-600: #059669;
+  --primary-700: #047857;
+  --primary-800: #065f46;
+  --primary-900: #064e3b;
+  
+  /* White/black for backgrounds */
+  --white: #ffffff;
+  --black: #000000;
 }
 
 :root.dark {
@@ -28,6 +56,34 @@
   --color-success: #34d399;
   --color-warning: #fbbf24;
   --color-error: #f87171;
+  
+  /* Gray scale for dark theme */
+  --gray-50: #1f2937;
+  --gray-100: #374151;
+  --gray-200: #4b5563;
+  --gray-300: #6b7280;
+  --gray-400: #9ca3af;
+  --gray-500: #d1d5db;
+  --gray-600: #e5e7eb;
+  --gray-700: #f3f4f6;
+  --gray-800: #f9fafb;
+  --gray-900: #ffffff;
+  
+  /* Primary colors (green theme) - adjusted for dark mode */
+  --primary-50: #064e3b;
+  --primary-100: #065f46;
+  --primary-200: #047857;
+  --primary-300: #059669;
+  --primary-400: #10b981;
+  --primary-500: #34d399;
+  --primary-600: #6ee7b7;
+  --primary-700: #a7f3d0;
+  --primary-800: #d1fae5;
+  --primary-900: #ecfdf5;
+  
+  /* White/black for backgrounds */
+  --white: #0f172a;
+  --black: #f1f5f9;
 }
 
 *, *::before, *::after {
@@ -113,4 +169,77 @@ select {
 /* Smooth transitions for all elements */
 * {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================
+   Global List & Link Styling
+   Remove bullets from all lists and clean up links
+   ============================================ */
+ul, ol, li {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure links have clean styling */
+a {
+  text-decoration: none !important;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Links inside lists should maintain clean appearance */
+ul a, ol a, li a {
+  text-decoration: none !important;
+  display: inline-block;
+}
+
+/* Buttons inside lists should also be clean */
+ul button, ol button, li button {
+  text-decoration: none !important;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Remove any pseudo-elements that might create bullets */
+ul::before, ul::after,
+ol::before, ol::after,
+li::before, li::after {
+  content: none !important;
+}
+
+/* Ensure nested lists also have no bullets */
+ul ul, ol ol, ul ol, ol ul {
+  list-style: none !important;
+}
+
+/* Content lists that should show bullets (like CV descriptions) - override global rule */
+.cv-preview-item-description,
+.cv-preview-item-description ul {
+  list-style: disc !important;
+  padding-left: 20px !important;
+  margin: 8px 0 !important;
+}
+
+.cv-preview-item-description li {
+  list-style: disc !important;
+  margin-bottom: 8px !important;
+  padding-left: 0 !important;
 }

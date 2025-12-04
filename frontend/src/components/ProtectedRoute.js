@@ -1,11 +1,12 @@
 // frontend/src/components/ProtectedRoute.js
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading, isVerifying, verifyAuth } = useAuth();
   const [isChecking, setIsChecking] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     // Only verify if we have a token but aren't authenticated yet
@@ -68,9 +69,10 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  // If not authenticated, redirect to home (which will show login modal)
+  // If not authenticated, redirect to home with auth=required query param to trigger login modal
   if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
+    const currentPath = location.pathname;
+    return <Navigate to={`/?auth=required&redirect=${encodeURIComponent(currentPath)}`} replace />;
   }
 
   // User is authenticated, render protected content

@@ -1,6 +1,7 @@
 // frontend/src/pages/Settings.js
 import React, { useEffect, useState, useRef } from 'react';
 import ReactCountryFlag from 'react-country-flag';
+import { Autocomplete, TextField, createFilterOptions } from '@mui/material';
 import authService from '../services/authService';
 import { useTranslate } from '../utils/translate';
 import { useLanguage } from '../context/LanguageContext';
@@ -65,7 +66,15 @@ const Settings = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const [profile, setProfile] = useState({ fullName: '', phone: '', github: '', linkedin: '', resumeVisibility: 'private' });
+  const [profile, setProfile] = useState({ 
+    fullName: '', 
+    phone: '', 
+    github: '', 
+    linkedin: '', 
+    resumeVisibility: 'private',
+    careerObjective: '',
+    location: ''
+  });
   const [countryCode, setCountryCode] = useState('+962');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [usernames, setUsernames] = useState({ github: '', linkedin: '' });
@@ -73,6 +82,60 @@ const Settings = () => {
   const [privacy, setPrivacy] = useState({ isPublic: false });
   const [isCountrySelectOpen, setIsCountrySelectOpen] = useState(false);
   const countrySelectRef = useRef(null);
+
+  // Career Objective suggestions
+  const careerObjectiveOptions = [
+    'Computer Science',
+    'Software Engineering',
+    'Full Stack Developer',
+    'Backend Developer',
+    'Frontend Developer',
+    'Data Engineer',
+    'AI & Machine Learning',
+    'Cybersecurity',
+    'Network Engineering',
+    'Cloud Engineering',
+    'DevOps',
+    'Mobile App Development',
+    'Game Development'
+  ];
+
+  // Location suggestions
+  const locationOptions = [
+    'Amman, Jordan',
+    'Irbid, Jordan',
+    'Zarqa, Jordan',
+    'Aqaba, Jordan',
+    'Madaba, Jordan',
+    'Riyadh, Saudi Arabia',
+    'Jeddah, Saudi Arabia',
+    'Dubai, UAE',
+    'Abu Dhabi, UAE',
+    'Doha, Qatar',
+    'Kuwait City, Kuwait',
+    'Manama, Bahrain',
+    'Muscat, Oman',
+    'Beirut, Lebanon',
+    'Cairo, Egypt',
+    'Alexandria, Egypt',
+    'Damascus, Syria',
+    'Baghdad, Iraq',
+    'Istanbul, Turkey',
+    'Ankara, Turkey',
+    'London, UK',
+    'Manchester, UK',
+    'New York, USA',
+    'San Francisco, USA',
+    'Los Angeles, USA',
+    'Toronto, Canada',
+    'Vancouver, Canada',
+    'Berlin, Germany',
+    'Munich, Germany',
+    'Paris, France',
+    'Amsterdam, Netherlands',
+    'Stockholm, Sweden',
+    'Remote'
+  ];
 
   useEffect(() => {
     (async () => {
@@ -100,7 +163,9 @@ const Settings = () => {
           phone: u.phone || '',
           github: u.github || '',
           linkedin: u.linkedin || '',
-          resumeVisibility: u.resumeVisibility || 'private'
+          resumeVisibility: u.resumeVisibility || 'private',
+          careerObjective: u.careerObjective || u.professionalSummary || '',
+          location: u.location || ''
         });
         
         // Derive usernames from URLs
@@ -136,16 +201,23 @@ const Settings = () => {
       return;
     }
     
+    if (!phoneNumber || phoneNumber.trim() === '') {
+      showErr(t('phoneRequired') || 'Phone number is required');
+      return;
+    }
+    
     try {
       setLoading(true);
       setError('');
-      const fullPhone = phoneNumber ? `${countryCode}${phoneNumber}` : '';
+      const fullPhone = `${countryCode}${phoneNumber}`;
       const payload = {
         fullName: profile.fullName.trim(),
         phone: fullPhone,
         countryCode: countryCode,
         github: usernames.github ? `https://github.com/${usernames.github}` : '',
         linkedin: usernames.linkedin ? `https://linkedin.com/in/${usernames.linkedin}` : '',
+        careerObjective: profile.careerObjective || '',
+        location: profile.location || ''
       };
       const res = await authService.updateProfile(payload);
       if (res?.success) {
@@ -360,6 +432,146 @@ const Settings = () => {
                     placeholder={t('username')} 
                   />
                 </div>
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-group">
+                <label>{t('careerObjective') || 'Career Objective / Professional Summary'}</label>
+                <Autocomplete
+                  freeSolo
+                  options={careerObjectiveOptions}
+                  value={profile.careerObjective || null}
+                  onChange={(event, newValue) => {
+                    setProfile({...profile, careerObjective: newValue || ''});
+                  }}
+                  onInputChange={(event, newInputValue) => {
+                    setProfile({...profile, careerObjective: newInputValue});
+                  }}
+                  filterOptions={(options, params) => {
+                    const filtered = createFilterOptions()(options, params);
+                    // If user typed something that doesn't match, allow it as custom
+                    if (params.inputValue !== '' && !filtered.some(option => option === params.inputValue)) {
+                      filtered.push(params.inputValue);
+                    }
+                    return filtered;
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      placeholder="Type or select career objective (e.g., Software Engineering, Full Stack Developer...)"
+                      variant="outlined"
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          borderRadius: '8px',
+                          fontSize: '16px',
+                          '& fieldset': {
+                            borderColor: '#d1d5db',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: '#9ca3af',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: '#00a651',
+                            borderWidth: '2px',
+                          },
+                        },
+                        '& .MuiInputBase-input': {
+                          padding: '12px 14px',
+                        },
+                      }}
+                    />
+                  )}
+                  sx={{
+                    '& .MuiAutocomplete-listbox': {
+                      padding: '4px',
+                    },
+                    '& .MuiAutocomplete-option': {
+                      borderRadius: '6px',
+                      margin: '2px 0',
+                      padding: '10px 16px',
+                      fontSize: '15px',
+                      '&:hover': {
+                        backgroundColor: '#f3f4f6',
+                      },
+                      '&[aria-selected="true"]': {
+                        backgroundColor: '#e8f5e9',
+                        color: '#00a651',
+                        '&.Mui-focused': {
+                          backgroundColor: '#e8f5e9',
+                        },
+                      },
+                    },
+                  }}
+                />
+              </div>
+              <div className="form-group">
+                <label>{t('location') || 'Location'}</label>
+                <Autocomplete
+                  freeSolo
+                  options={locationOptions}
+                  value={profile.location || null}
+                  onChange={(event, newValue) => {
+                    setProfile({...profile, location: newValue || ''});
+                  }}
+                  onInputChange={(event, newInputValue) => {
+                    setProfile({...profile, location: newInputValue});
+                  }}
+                  filterOptions={(options, params) => {
+                    const filtered = createFilterOptions()(options, params);
+                    // If user typed something that doesn't match, allow it as custom
+                    if (params.inputValue !== '' && !filtered.some(option => option === params.inputValue)) {
+                      filtered.push(params.inputValue);
+                    }
+                    return filtered;
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      placeholder="Type or select location (e.g., Amman, Dubai, Remote...)"
+                      variant="outlined"
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          borderRadius: '8px',
+                          fontSize: '16px',
+                          '& fieldset': {
+                            borderColor: '#d1d5db',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: '#9ca3af',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: '#00a651',
+                            borderWidth: '2px',
+                          },
+                        },
+                        '& .MuiInputBase-input': {
+                          padding: '12px 14px',
+                        },
+                      }}
+                    />
+                  )}
+                  sx={{
+                    '& .MuiAutocomplete-listbox': {
+                      padding: '4px',
+                    },
+                    '& .MuiAutocomplete-option': {
+                      borderRadius: '6px',
+                      margin: '2px 0',
+                      padding: '10px 16px',
+                      fontSize: '15px',
+                      '&:hover': {
+                        backgroundColor: '#f3f4f6',
+                      },
+                      '&[aria-selected="true"]': {
+                        backgroundColor: '#e8f5e9',
+                        color: '#00a651',
+                        '&.Mui-focused': {
+                          backgroundColor: '#e8f5e9',
+                        },
+                      },
+                    },
+                  }}
+                />
               </div>
             </div>
             <div className="actions">

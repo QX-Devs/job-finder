@@ -29,7 +29,19 @@ const Experience = sequelize.define('Experience', {
   },
   endDate: {
     type: DataTypes.DATEONLY,
-    allowNull: true
+    allowNull: true,
+    validate: {
+      isAfterStartDate(value) {
+        // Only validate if both dates exist and it's not a current job
+        if (this.startDate && value && !this.isCurrentJob) {
+          const start = new Date(this.startDate);
+          const end = new Date(value);
+          if (end < start) {
+            throw new Error('End date must be later than start date.');
+          }
+        }
+      }
+    }
   },
   description: {
     type: DataTypes.TEXT,
@@ -44,7 +56,19 @@ const Experience = sequelize.define('Experience', {
   defaultValue: false
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  validate: {
+    dateRangeValidation() {
+      // Additional validation hook to check date range
+      if (this.startDate && this.endDate && !this.isCurrentJob) {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        if (end < start) {
+          throw new Error('End date must be later than start date.');
+        }
+      }
+    }
+  }
 });
 
 module.exports = Experience;

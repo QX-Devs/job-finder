@@ -242,8 +242,16 @@ body {
 
 /* Lists */
 .custom-list {
-  list-style: none;
+  list-style: none !important;
   margin: 1.5rem 0;
+  padding: 0 !important;
+}
+
+.custom-list li,
+.custom-list-item {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .custom-list-item {

@@ -8,7 +8,7 @@
     "dev": "nodemon src/server.js",
     "db:reset": "node scripts/resetDb.js",
     "fetch-jobs": "node scripts/fetchAndImportJobs.js",
-    "find-jobs": "node scripts/findJobs.js"
+    "scrape-linkedin": "node scripts/scrapeLinkedInJobs.js"
   },
   "keywords": [
     "express",

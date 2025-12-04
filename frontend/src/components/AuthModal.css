@@ -842,7 +842,112 @@
   }
 }
 
-/* Dark mode support (optional) */
-@media (prefers-color-scheme: dark) {
-  /* Keep light theme as default, but add this for future dark mode support */
+/* Dark Mode Styles */
+html.dark .auth-modal-container {
+  background: rgba(30, 41, 59, 0.98) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .auth-modal-form-container {
+  background: rgba(30, 41, 59, 0.98) !important;
+}
+
+html.dark .auth-modal-form-container::-webkit-scrollbar-track {
+  background: rgba(51, 65, 85, 0.5) !important;
+}
+
+html.dark .auth-tabs {
+  background: rgba(51, 65, 85, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+html.dark .auth-tab {
+  color: #cbd5e1 !important;
+}
+
+html.dark .auth-tab.active {
+  background: rgba(51, 65, 85, 0.8) !important;
+  color: #34d399 !important;
+}
+
+html.dark .auth-tab:hover:not(.active) {
+  color: #e2e8f0 !important;
+  background: rgba(51, 65, 85, 0.4) !important;
+}
+
+html.dark .form-group label {
+  color: #e2e8f0 !important;
+}
+
+html.dark .form-group input {
+  background: rgba(51, 65, 85, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .form-group input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.dark .form-group input:hover {
+  border-color: rgba(148, 163, 184, 0.5) !important;
+  background: rgba(51, 65, 85, 0.7) !important;
+}
+
+html.dark .form-group input:focus {
+  border-color: #10b981 !important;
+  background: rgba(51, 65, 85, 0.8) !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+html.dark .form-group input.error {
+  border-color: #ef4444 !important;
+  background: rgba(127, 29, 29, 0.2) !important;
+}
+
+html.dark .form-group input.error:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2) !important;
+}
+
+html.dark .form-group input.success {
+  border-color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.1) !important;
+}
+
+html.dark .toggle-password {
+  color: #94a3b8 !important;
+}
+
+html.dark .toggle-password:hover {
+  color: #34d399 !important;
+  background: rgba(16, 185, 129, 0.15) !important;
+}
+
+html.dark .auth-footer {
+  color: #cbd5e1 !important;
+}
+
+html.dark .link-btn {
+  color: #34d399 !important;
+}
+
+html.dark .link-btn:hover {
+  color: #10b981 !important;
+}
+
+html.dark .link-btn::after {
+  background: #34d399 !important;
+}
+
+html.dark .forgot-password-success h3 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .forgot-password-success p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .error-message {
+  color: #fca5a5 !important;
 }

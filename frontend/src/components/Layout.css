@@ -54,7 +54,7 @@
 .main-content {
   flex: 1;
   margin-top: var(--navbar-height);
-  background: linear-gradient(135deg, var(--gray-50) 0%, white 50%, var(--gray-100) 100%);
+  background: linear-gradient(135deg, var(--gray-50) 0%, var(--color-bg-primary) 50%, var(--gray-100) 100%);
   min-height: calc(100vh - var(--navbar-height));
 }
 
@@ -85,10 +85,11 @@
    ============================================ */
 .content-section {
   padding: 60px 0;
-  background: white;
+  background: var(--color-bg-primary);
   margin: 40px 0;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  color: var(--color-text-primary);
 }
 
 .content-container {
@@ -132,11 +133,12 @@
   left: 0;
   right: 0;
   min-height: var(--navbar-height);
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--color-bg-primary);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--color-border);
   z-index: 1000;
+  color: var(--color-text-primary);
   transition: all var(--transition-base);
   overflow: visible;
 }
@@ -346,7 +348,7 @@
   padding: 8px 14px;
   border-radius: 999px;
   border: 1px solid var(--primary-400);
-  background: white;
+  background: var(--color-bg-primary);
   color: var(--primary-600);
   font-weight: 600;
   font-size: 0.85rem;
@@ -394,9 +396,9 @@
   right: 8px;
   width: 8px;
   height: 8px;
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+  background: linear-gradient(135deg, var(--color-error), #dc2626);
   border-radius: 50%;
-  border: 2px solid white;
+  border: 2px solid var(--color-bg-primary);
   animation: pulse-notification 2s infinite;
 }
 
@@ -424,13 +426,14 @@
   right: 0;
   width: 380px;
   max-height: 500px;
-  background: white;
-  border: 2px solid var(--gray-200);
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-border);
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   animation: slideDownFade 0.3s ease-out;
   z-index: 1000;
+  color: var(--color-text-primary);
 }
 
 @keyframes slideDownFade {
@@ -603,11 +606,12 @@
   align-items: center;
   gap: 10px;
   padding: 8px 16px 8px 8px;
-  background: white;
-  border: 2px solid var(--gray-200);
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-border);
   border-radius: 12px;
   cursor: pointer;
   transition: all var(--transition-base);
+  color: var(--color-text-primary);
 }
 
 .user-menu-trigger:hover {
@@ -654,11 +658,12 @@
   top: calc(100% + 12px);
   right: 0;
   width: 280px;
-  background: white;
-  border: 2px solid var(--gray-200);
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-border);
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   overflow: hidden;
+  color: var(--color-text-primary);
   animation: slideDownFade 0.3s ease-out;
   z-index: 1000;
 }
@@ -791,9 +796,9 @@
 }
 
 .nav-btn-secondary {
-  background: white;
-  color: var(--gray-700);
-  border: 2px solid var(--gray-200);
+  background: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
 }
 
 .nav-btn-secondary:hover {
@@ -809,10 +814,10 @@
    ============================================ */
 .mobile-menu-toggle {
   display: none;
-  background: #f3f4f6;
-  border: 2px solid #d1d5db;
+  background: var(--gray-100);
+  border: 2px solid var(--gray-300);
   border-radius: 8px;
-  color: #374151;
+  color: var(--color-text-primary);
   cursor: pointer;
   padding: 8px;
   transition: all 0.2s ease;
@@ -828,14 +833,14 @@
 }
 
 .mobile-menu-toggle:hover {
-  background: #ecfdf5;
-  border-color: #10b981;
-  color: #059669;
+  background: var(--primary-50);
+  border-color: var(--primary-500);
+  color: var(--primary-600);
 }
 
 .mobile-menu-toggle:active {
   transform: scale(0.95);
-  background: #d1fae5;
+  background: var(--primary-100);
 }
 
 .mobile-menu-toggle svg {
@@ -923,7 +928,7 @@
 }
 
 .mobile-menu-content {
-  background: #ffffff !important;
+  background: var(--color-bg-primary) !important;
   width: 85% !important;
   max-width: 320px !important;
   height: 100vh !important;
@@ -938,6 +943,7 @@
   z-index: 1000000 !important;
   visibility: visible !important;
   opacity: 1 !important;
+  color: var(--color-text-primary);
 }
 
 /* Mobile Menu Content Padding */
@@ -957,11 +963,12 @@
   justify-content: space-between;
   height: 60px;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--gray-200);
-  background: white;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-primary);
   flex-shrink: 0;
   position: relative;
   z-index: 1;
+  color: var(--color-text-primary);
 }
 
 .mobile-close-btn {
@@ -1006,12 +1013,13 @@
   align-items: center !important;
   gap: 8px !important;
   padding: 16px !important;
-  background: linear-gradient(135deg, #ecfdf5, #d1fae5) !important;
+  background: linear-gradient(135deg, var(--primary-50), var(--primary-100)) !important;
   border-radius: 10px !important;
   margin: 16px 16px 12px 16px !important;
   visibility: visible !important;
   opacity: 1 !important;
   width: calc(100% - 32px) !important;
+  color: var(--color-text-primary);
 }
 
 .mobile-user-avatar {
@@ -1172,26 +1180,26 @@
 }
 
 .mobile-btn-secondary {
-  background: #ffffff !important;
-  color: #374151 !important;
-  border: 2px solid #e5e7eb !important;
+  background: var(--color-bg-primary) !important;
+  color: var(--color-text-primary) !important;
+  border: 2px solid var(--color-border) !important;
 }
 
 .mobile-btn-secondary:hover {
-  background: #ecfdf5 !important;
-  border-color: #10b981 !important;
-  color: #059669 !important;
+  background: var(--primary-50) !important;
+  border-color: var(--primary-500) !important;
+  color: var(--primary-600) !important;
 }
 
 .mobile-btn-outline {
   background: transparent !important;
-  color: #ef4444 !important;
-  border: 2px solid #fecaca !important;
+  color: var(--color-error) !important;
+  border: 2px solid var(--color-error) !important;
 }
 
 .mobile-btn-outline:hover {
-  background: #fef2f2 !important;
-  border-color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: var(--color-error) !important;
 }
 
 /* ============================================
@@ -1200,7 +1208,7 @@
 .footer {
   background: linear-gradient(180deg, var(--gray-800) 0%, var(--gray-900) 100%);
   color: var(--gray-300);
-  padding: 80px 24px 24px;
+  padding: 50px 24px 20px;
   margin-top: auto;
   position: relative;
   overflow: hidden;
@@ -1226,8 +1234,8 @@
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 36px;
-  margin-bottom: 40px;
+  gap: 28px;
+  margin-bottom: 28px;
 }
 
 .footer-column h4 {
@@ -1250,13 +1258,16 @@
 }
 
 .footer-column ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .footer-column ul li {
-  margin-bottom: 12px;
+  list-style: none !important;
+  margin-bottom: 8px;
+  padding: 0 !important;
+  margin-left: 0 !important;
 }
 
 .footer-column button {
@@ -1301,7 +1312,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   cursor: pointer;
   transition: transform var(--transition-base);
 }
@@ -1330,10 +1341,10 @@
 
 .footer-description {
   color: var(--gray-400);
-  line-height: 1.6;
-  margin-bottom: 24px;
+  line-height: 1.5;
+  margin-bottom: 16px;
   max-width: 400px;
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
 
 .footer-social {
@@ -1370,10 +1381,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 24px;
+  padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
 }
 
 .footer-bottom p {
@@ -1865,4 +1876,190 @@ a:focus-visible {
   height: 18px !important;
   flex-shrink: 0 !important;
   color: var(--gray-600) !important;
+}
+
+/* ============================================
+   Dark Mode Overrides
+   ============================================ */
+:root.dark .navbar {
+  background: var(--color-bg-primary);
+  border-bottom-color: var(--color-border);
+}
+
+:root.dark .main-content {
+  background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 100%);
+}
+
+:root.dark .content-section {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+:root.dark .notifications-dropdown {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+:root.dark .mobile-menu-content {
+  background: var(--color-bg-secondary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+:root.dark .mobile-menu-header {
+  background: var(--color-bg-secondary);
+  border-bottom-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+:root.dark .nav-btn-secondary {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+:root.dark .mobile-auth-btn {
+  background: var(--color-bg-secondary);
+  color: var(--primary-400);
+  border-color: var(--primary-500);
+}
+
+:root.dark .mobile-menu-toggle {
+  background: var(--gray-200);
+  border-color: var(--gray-400);
+  color: var(--color-text-primary);
+}
+
+:root.dark .mobile-menu-toggle:hover {
+  background: var(--primary-800);
+  border-color: var(--primary-600);
+  color: var(--primary-300);
+}
+
+:root.dark .notification-item {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+:root.dark .notification-item:hover {
+  background: var(--color-bg-tertiary);
+}
+
+:root.dark .user-dropdown {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+:root.dark .user-dropdown-item {
+  color: var(--color-text-primary);
+}
+
+:root.dark .user-dropdown-item:hover {
+  background: var(--color-bg-tertiary);
+}
+
+:root.dark .mobile-btn-secondary {
+  background: var(--color-bg-secondary) !important;
+  color: var(--color-text-primary) !important;
+  border-color: var(--color-border) !important;
+}
+
+:root.dark .mobile-btn-secondary:hover {
+  background: var(--primary-800) !important;
+  border-color: var(--primary-600) !important;
+  color: var(--primary-300) !important;
+}
+
+/* ============================================
+   Footer Dark Mode Overrides
+   ============================================ */
+
+:root.dark .footer {
+  background: linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%) !important;
+  color: var(--color-text-secondary) !important;
+  border-top: 1px solid var(--color-border) !important;
+}
+
+:root.dark .footer::before {
+  background: linear-gradient(90deg, var(--primary-600), var(--primary-500), var(--primary-600)) !important;
+}
+
+:root.dark .footer::after {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%) !important;
+}
+
+:root.dark .footer-column h4 {
+  color: var(--color-text-primary) !important;
+}
+
+:root.dark .footer-column h4::after {
+  background: linear-gradient(90deg, var(--primary-500), var(--primary-600)) !important;
+}
+
+:root.dark .footer-column button {
+  color: var(--color-text-secondary) !important;
+}
+
+:root.dark .footer-column button:hover {
+  color: var(--primary-300) !important;
+}
+
+:root.dark .footer-column button::before {
+  background: var(--primary-500) !important;
+}
+
+:root.dark .footer-logo-icon {
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600)) !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+:root.dark .footer-logo-text {
+  color: var(--color-text-primary) !important;
+}
+
+:root.dark .footer-description {
+  color: var(--color-text-tertiary) !important;
+}
+
+:root.dark .social-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+:root.dark .social-btn:hover {
+  background: var(--primary-500) !important;
+  border-color: var(--primary-500) !important;
+  color: white !important;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3) !important;
+}
+
+:root.dark .footer-bottom {
+  border-top-color: var(--color-border) !important;
+}
+
+:root.dark .footer-bottom p {
+  color: var(--color-text-tertiary) !important;
+}
+
+:root.dark .badge-item {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+}
+
+:root.dark .badge-item svg {
+  color: var(--primary-400) !important;
+}
+
+/* Footer smooth transitions */
+:root.dark .footer,
+:root.dark .footer-column,
+:root.dark .footer-column button,
+:root.dark .social-btn,
+:root.dark .badge-item {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

@@ -311,9 +311,9 @@ function handleUnauthorizedError(error) {
     setTimeout(() => {
       // Check if we're not already on a public page to avoid unnecessary redirects
       const publicPaths = ['/', '/about-us', '/contact-us', '/privacy-policy', 
-                          '/terms-of-service', '/find-jobs', '/companies', 
+                          '/terms-of-service', '/companies', 
                           '/career-advice', '/blog', '/faq', '/cookies', 
-                          '/accessibility', '/cv-prompt', '/cv-generator'];
+                          '/accessibility', '/cv-prompt'];
       
       const isPublicPath = publicPaths.some(path => 
         window.location.pathname === path || 

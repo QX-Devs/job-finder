@@ -718,4 +718,223 @@
   }
 }
 
+/* ===== DARK MODE STYLES ===== */
+html.dark .saved-jobs-container {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%) !important;
+}
+
+html.dark .saved-jobs-hero {
+  background: radial-gradient(900px 400px at 10% 10%, rgba(16, 185, 129, 0.1) 0%, transparent 60%),
+              radial-gradient(900px 400px at 90% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 65%),
+              linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%) !important;
+}
+
+html.dark .saved-jobs-badge {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .saved-jobs-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .saved-jobs-subtitle {
+  color: #cbd5e1 !important;
+}
+
+html.dark .saved-jobs-controls {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+html.dark .search-bar-saved {
+  background: rgba(51, 65, 85, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+html.dark .search-bar-saved:focus-within {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+  background: rgba(51, 65, 85, 0.8) !important;
+}
+
+html.dark .search-bar-saved svg {
+  color: #94a3b8 !important;
+}
+
+html.dark .search-input-saved {
+  color: #f1f5f9 !important;
+}
+
+html.dark .search-input-saved::placeholder {
+  color: #64748b !important;
+}
+
+html.dark .saved-jobs-controls select {
+  background: rgba(51, 65, 85, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .saved-jobs-results-info {
+  background: rgba(51, 65, 85, 0.4) !important;
+}
+
+html.dark .saved-jobs-results-info p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .saved-jobs-results-info strong {
+  color: #f1f5f9 !important;
+}
+
+html.dark .saved-jobs-view-controls {
+  background: rgba(51, 65, 85, 0.6) !important;
+}
+
+html.dark .view-btn {
+  color: #94a3b8 !important;
+}
+
+html.dark .view-btn:hover {
+  color: #cbd5e1 !important;
+}
+
+html.dark .view-btn.active {
+  background: rgba(30, 41, 59, 0.95) !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .saved-jobs-message.success {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #6ee7b7 !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+html.dark .saved-jobs-message.error {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+html.dark .loading-state p {
+  color: #94a3b8 !important;
+}
+
+html.dark .loader {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  border-top-color: #10b981 !important;
+}
+
+html.dark .empty-state h3 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .empty-state p {
+  color: #94a3b8 !important;
+}
+
+html.dark .job-card-enhanced {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+html.dark .job-card-enhanced:hover {
+  border-color: #10b981 !important;
+  background: rgba(30, 41, 59, 1) !important;
+}
+
+html.dark .job-card-enhanced.saved {
+  border-color: rgba(16, 185, 129, 0.4) !important;
+}
+
+html.dark .job-title-enhanced {
+  color: #f1f5f9 !important;
+}
+
+html.dark .company-info-enhanced {
+  color: #94a3b8 !important;
+}
+
+html.dark .company-name {
+  color: #cbd5e1 !important;
+}
+
+html.dark .separator {
+  color: #64748b !important;
+}
+
+html.dark .industry {
+  color: #94a3b8 !important;
+}
+
+html.dark .job-meta-enhanced {
+  border-bottom-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+html.dark .meta-item-enhanced {
+  color: #94a3b8 !important;
+}
+
+html.dark .meta-item-enhanced svg {
+  color: #64748b !important;
+}
+
+html.dark .job-notes {
+  background: rgba(51, 65, 85, 0.4) !important;
+  border-left-color: #10b981 !important;
+}
+
+html.dark .job-notes p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .job-card-footer {
+  border-top-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+html.dark .saved-date {
+  color: #94a3b8 !important;
+}
+
+html.dark .company-logo {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.3) 100%) !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .icon-btn {
+  background: rgba(51, 65, 85, 0.6) !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .icon-btn:hover {
+  background: rgba(51, 65, 85, 0.8) !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .icon-btn.unsave-btn {
+  color: #fca5a5 !important;
+}
+
+html.dark .icon-btn.unsave-btn:hover {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #f87171 !important;
+}
+
+html.dark .btn-load-more {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: #10b981 !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .btn-load-more:hover {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: white !important;
+}
+
+html.dark .load-more-info {
+  color: #94a3b8 !important;
+}
+
 

@@ -3,7 +3,7 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
 const path = require('path');
 const { Op } = require('sequelize');
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
 // Try to load DB models, but don't crash if not available (for standalone testing)
 let Job = null;
@@ -41,6 +41,38 @@ const CONFIG = {
         // Add more as needed...
     ]
 };
+
+const MAX_DESCRIPTION_LENGTH = 8000; // avoid DB overflow on very long descriptions
+
+// --- URL HELPER ---
+function normalizeApplyUrl(url) {
+    if (!url || typeof url !== 'string') return null;
+
+    let cleaned = url.trim();
+    if (!cleaned) return null;
+
+    // LinkedIn sometimes uses protocol-relative URLs: //www.linkedin.com/...
+    if (cleaned.startsWith('//')) {
+        cleaned = 'https:' + cleaned;
+    }
+
+    // If URL doesn't start with http:// or https://, prepend https://
+    if (!/^https?:\/\//i.test(cleaned)) {
+        cleaned = 'https://' + cleaned;
+    }
+
+    try {
+        const u = new URL(cleaned);
+
+        // Strip LinkedIn tracking params to improve dedupe
+        const trackingParams = ['trk', 'refId', 'trackingId', 'lipi'];
+        trackingParams.forEach((p) => u.searchParams.delete(p));
+
+        return u.toString();
+    } catch (err) {
+        return null;
+    }
+}
 
 // --- HELPER FUNCTIONS ---
 
@@ -117,7 +149,7 @@ class LinkedInScraper {
     }
 
     async scrape(url, options = {}) {
-        const { mode = 'auto', easyApplyOnly = false } = options;
+        const { mode = 'auto', easyApplyOnly = false, maxJobs = CONFIG.MAX_JOBS_SEARCH } = options;
         if (!this.browser) await this.init();
 
         const page = await this.createPage();
@@ -138,7 +170,7 @@ class LinkedInScraper {
 
             if (isSearchPage) {
                 console.log('   🔍 Detected Search Page. Crawling jobs...');
-                await this.crawlSearchPage(page, allJobs, { easyApplyOnly });
+                await this.crawlSearchPage(page, allJobs, { easyApplyOnly, maxJobs });
             } else {
                 console.log('   📄 Detected Single Job Page. Extracting details...');
                 const jobData = await this.extractJobDetails(page);
@@ -157,7 +189,9 @@ class LinkedInScraper {
     }
 
     async crawlSearchPage(page, allJobs, options = {}) {
-        const { easyApplyOnly = false } = options;
+        const { easyApplyOnly = false, maxJobs = CONFIG.MAX_JOBS_SEARCH } = options;
+
+        let skippedForEasyApply = 0;
         // Scroll to load more jobs
         console.log('   📜 Scrolling to load jobs...');
         await this.autoScroll(page);
@@ -168,8 +202,8 @@ class LinkedInScraper {
             return anchors.map(a => a.href).filter(href => href.includes('/jobs/view/'));
         });
 
-        const uniqueLinks = [...new Set(jobLinks)].slice(0, CONFIG.MAX_JOBS_SEARCH);
-        console.log(`   🎯 Found ${uniqueLinks.length} unique jobs (limit: ${CONFIG.MAX_JOBS_SEARCH}).`);
+        const uniqueLinks = [...new Set(jobLinks)].slice(0, maxJobs);
+        console.log(`   🎯 Found ${uniqueLinks.length} unique jobs (limit: ${maxJobs}).`);
 
         // Visit each job link
         for (let i = 0; i < uniqueLinks.length; i++) {
@@ -181,19 +215,27 @@ class LinkedInScraper {
                 await retry(() => newPage.goto(link, { waitUntil: 'networkidle2', timeout: 30000 }));
 
                 const jobData = await this.extractJobDetails(newPage);
-                if (jobData) {
+                await newPage.close();
+
+                if (!jobData) {
+                    console.log(`      ⚠️  Failed to extract job details from ${link}`);
+                } else if (easyApplyOnly && !jobData.easyApply) {
+                    skippedForEasyApply++;
+                    console.log(`      ⏭️  Skipping non-Easy Apply job: ${jobData.title} at ${jobData.company}`);
+                } else {
                     allJobs.push(jobData);
                     console.log(`      ✅ Extracted: ${jobData.title} at ${jobData.company} (${jobData.location})`);
-                } else {
-                    console.log(`      ⚠️  Failed to extract job details from ${link}`);
                 }
 
-                await newPage.close();
                 // Random delay to be polite
                 await sleep(1000 + Math.random() * 2000);
             } catch (err) {
                 console.error(`      ❌ Failed to scrape job: ${err.message}`);
             }
+        }
+
+        if (easyApplyOnly) {
+            console.log(`   🎯 Easy Apply filter: ${skippedForEasyApply} jobs skipped (non-Easy Apply).`);
         }
     }
 
@@ -219,12 +261,16 @@ class LinkedInScraper {
                     const scripts = document.querySelectorAll('script[type="application/ld+json"]');
                     for (const s of scripts) {
                         const content = JSON.parse(s.innerText);
-                        if (content['@type'] === 'JobPosting') {
-                            jsonLd = content;
-                            break;
+                        const candidates = Array.isArray(content) ? content : [content];
+                        for (const c of candidates) {
+                            if (c && c['@type'] === 'JobPosting') {
+                                jsonLd = c;
+                                break;
+                            }
                         }
+                        if (Object.keys(jsonLd).length > 0) break;
                     }
-                } catch (e) { }
+                } catch (e) { /* ignore JSON-LD parse errors */ }
 
                 // 2. DOM Extraction
                 const title = getText('h1.top-card-layout__title') || jsonLd.title || '';
@@ -290,10 +336,11 @@ class LinkedInScraper {
             const jobId = jobIdMatch ? jobIdMatch[1] : '';
 
             // Skills extraction
+            const safeDescriptionText = (data.descriptionText || '').toLowerCase();
             const skills = [];
             const commonSkills = ['JavaScript', 'Python', 'React', 'Node.js', 'Java', 'C++', 'AWS', 'SQL', 'TypeScript', 'Go', 'Rust', 'Docker', 'Kubernetes', 'C#', '.NET', 'Azure', 'GCP', 'Angular', 'Vue'];
             commonSkills.forEach(skill => {
-                if (data.descriptionText.toLowerCase().includes(skill.toLowerCase())) {
+                if (safeDescriptionText.includes(skill.toLowerCase())) {
                     skills.push(skill);
                 }
             });
@@ -374,13 +421,28 @@ async function saveJobsToDB(jobs = []) {
             // Note: Location validation removed - we're using geoId=103710677 for Jordan, so all results are in Jordan
             // Locations like "Amman" are valid Jordan locations even if they don't contain the word "jordan"
             
-            // Use external apply URL if available, otherwise use LinkedIn URL (which should always be present)
-            const applyUrl = job.externalApplyUrl || job.linkedinApplyUrl;
+            // Prefer external apply URL, fallback to LinkedIn job URL
+            const rawApplyUrl = job.externalApplyUrl || job.linkedinApplyUrl;
+            const applyUrl = normalizeApplyUrl(rawApplyUrl);
+
             if (!applyUrl) {
-                console.log(`   ⚠️  Skipping job with no apply URL: ${job.title} at ${job.company}`);
+                console.log(`   ⚠️  Skipping job with invalid apply URL: ${rawApplyUrl} (${job.title} at ${job.company})`);
                 skippedCount++;
                 continue;
             }
+
+            // Description: prefer HTML, fallback to plain text
+            const rawDescription = (job.descriptionHtml || job.descriptionText || '').trim();
+            const description = rawDescription.length > MAX_DESCRIPTION_LENGTH
+                ? rawDescription.slice(0, MAX_DESCRIPTION_LENGTH)
+                : rawDescription;
+
+            // Tags: merge skills + industries, unique, trimmed
+            const tags = Array.from(
+                new Set([...(job.skills || []), ...(job.industries || [])]
+                    .map(t => String(t).trim())
+                    .filter(Boolean))
+            );
             
             const dedupeConditions = [];
 
@@ -389,16 +451,14 @@ async function saveJobsToDB(jobs = []) {
                 dedupeConditions.push({ linkedin_job_id: job.jobId });
             }
 
-            if (applyUrl) {
-                dedupeConditions.push({ apply_url: applyUrl });
-            }
-
             dedupeConditions.push({
                 [Op.and]: [
                     { title: job.title },
                     { company: job.company }
                 ]
             });
+
+            dedupeConditions.push({ apply_url: applyUrl }); // use normalized applyUrl here
 
             const existing = await Job.findOne({
                 where: {
@@ -412,18 +472,18 @@ async function saveJobsToDB(jobs = []) {
                 continue;
             }
 
-            const tags = Array.from(new Set([...(job.skills || []), ...(job.industries || [])]));
-
             const createdJob = await Job.create({
                 title: job.title,
                 company: job.company,
                 location: job.location,
                 salary: job.salary,
-                description: job.descriptionHtml || job.descriptionText,
+                description,
                 tags,
                 apply_url: applyUrl,
                 source: 'LinkedIn',
-                posted_at: job.datePosted ? new Date(job.datePosted) : new Date(),
+                posted_at: job.datePosted && !Number.isNaN(Date.parse(job.datePosted))
+                    ? new Date(job.datePosted)
+                    : new Date(),
                 source_id: job.jobId,
                 linkedin_job_id: job.jobId,
                 easy_apply: job.easyApply,
@@ -452,11 +512,13 @@ async function scrapeLinkedInJobs(url, options = {}) {
         mode = 'auto',
         easyApplyOnly = false,
         writeToFile = true,
-        outputFile = CONFIG.OUTPUT_FILE
+        outputFile = CONFIG.OUTPUT_FILE,
+        maxJobs = CONFIG.MAX_JOBS_SEARCH,
+        saveToDb = true,
     } = options;
     const scraper = new LinkedInScraper();
     try {
-        const jobs = await scraper.scrape(url, { mode, easyApplyOnly });
+        const jobs = await scraper.scrape(url, { mode, easyApplyOnly, maxJobs });
 
         if (writeToFile) {
             fs.mkdirSync(path.dirname(outputFile), { recursive: true });
@@ -469,7 +531,13 @@ async function scrapeLinkedInJobs(url, options = {}) {
         }
 
         // Save to DB
-        const dbSummary = await saveJobsToDB(jobs);
+        let dbSummary = { savedCount: 0, skippedCount: 0 };
+
+        if (saveToDb) {
+            dbSummary = await saveJobsToDB(jobs);
+        } else {
+            console.log('   🧪 DB saving is disabled (--no-db).');
+        }
 
         return {
             jobs,
@@ -484,3 +552,72 @@ async function scrapeLinkedInJobs(url, options = {}) {
 }
 
 module.exports = { scrapeLinkedInJobs };
+
+// --- CLI EXECUTION ---
+// Run the script if called directly from command line
+if (require.main === module) {
+    const args = process.argv.slice(2);
+    
+    const defaultUrl = 'https://www.linkedin.com/jobs/search/?currentJobId=4347860013&f_TPR=r604800&geoId=103710677&keywords=software%20developer&location=Jordan&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true';
+    
+    let url = args[0] && !args[0].startsWith('--') && !args[0].startsWith('-')
+        ? args[0]
+        : defaultUrl;
+    
+    const easyApplyOnly = args.includes('--easy-apply') || args.includes('-e');
+    const noDb = args.includes('--no-db');
+    
+    // Parse --limit=NN or -l=NN
+    let maxJobs = CONFIG.MAX_JOBS_SEARCH;
+    const limitArg = args.find(a => a.startsWith('--limit=') || a.startsWith('-l='));
+    if (limitArg) {
+        const parts = limitArg.split('=');
+        if (parts[1]) {
+            const parsed = parseInt(parts[1], 10);
+            if (!Number.isNaN(parsed) && parsed > 0) {
+                maxJobs = parsed;
+            }
+        }
+    }
+    
+    if (!url.startsWith('http')) {
+        console.error('❌ Error: Please provide a valid LinkedIn jobs URL');
+        console.log('\nUsage:');
+        console.log('  node scripts/scrapeLinkedInJobs.js [URL] [--easy-apply] [--limit=NN] [--no-db]');
+        console.log('\nExamples:');
+        console.log('  node scripts/scrapeLinkedInJobs.js');
+        console.log('  node scripts/scrapeLinkedInJobs.js "https://www.linkedin.com/jobs/search/?keywords=developer&location=Jordan"');
+        console.log('  node scripts/scrapeLinkedInJobs.js "https://www.linkedin.com/jobs/search/?keywords=developer&location=Jordan" --easy-apply');
+        console.log('  node scripts/scrapeLinkedInJobs.js "https://www.linkedin.com/jobs/search/?keywords=developer&location=Jordan" --limit=25 --no-db');
+        process.exit(1);
+    }
+    
+    console.log('🚀 Starting LinkedIn Job Scraper...');
+    console.log(`📋 URL: ${url}`);
+    console.log(`🎯 Easy Apply Only: ${easyApplyOnly ? 'Yes' : 'No'}`);
+    console.log(`📦 Max Jobs: ${maxJobs}`);
+    console.log(`💾 Save to DB: ${noDb ? 'No (JSON only)' : 'Yes'}`);
+    console.log('');
+    
+    scrapeLinkedInJobs(url, { 
+        easyApplyOnly,
+        writeToFile: true,
+        maxJobs,
+        saveToDb: !noDb
+    })
+    .then((result) => {
+        console.log('\n' + '='.repeat(60));
+        console.log('📊 SCRAPING SUMMARY');
+        console.log('='.repeat(60));
+        console.log(`✅ Jobs Scraped: ${result.jobs.length}`);
+        console.log(`💾 Jobs Saved to DB: ${result.savedCount || 0}`);
+        console.log(`⏭️  Jobs Skipped (duplicates): ${result.skippedCount || 0}`);
+        console.log('='.repeat(60));
+        console.log('\n🎉 Scraping completed successfully!');
+        process.exit(0);
+    })
+    .catch((error) => {
+        console.error('\n💥 Fatal error:', error);
+        process.exit(1);
+    });
+}

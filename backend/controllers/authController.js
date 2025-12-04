@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
-const { User, Education, Experience, Skill, Language } = require('../models');
+const { User, Education, Experience, Skill, Language, Course, GraduationProject } = require('../models');
 const bcrypt = require('bcryptjs');
 const { sendEmail } = require('../utils/email');
+const { sanitizeText, sanitizeTextArray } = require('../utils/textSanitizer');
+const { getLocationFromIP, getClientIP } = require('../utils/geolocation');
 
 const TOKEN_EXPIRATION_MS = 60 * 60 * 1000;
 
@@ -55,7 +57,22 @@ const register = async (req, res) => {
       });
     }
 
-    const user = await User.create({ fullName, email, password });
+    // Auto-detect location from IP address (non-blocking)
+    let detectedLocation = null;
+    try {
+      const clientIP = getClientIP(req);
+      detectedLocation = await getLocationFromIP(clientIP);
+    } catch (geoError) {
+      console.warn('⚠️ Could not detect location from IP:', geoError.message);
+      // Continue without location - user can set it manually later
+    }
+
+    const user = await User.create({ 
+      fullName, 
+      email, 
+      password,
+      location: detectedLocation || null // Set location if detected, otherwise null
+    });
 
     const verificationToken = generateVerificationToken(user.id);
     user.verificationToken = verificationToken;
@@ -678,9 +695,19 @@ const getMe = async (req, res) => {
         { model: Education, as: 'education' },
         { model: Experience, as: 'experience' },
         { model: Skill, as: 'skills' },
-        { model: Language, as: 'languages' }
+        { model: Language, as: 'languages' },
+        { model: Course, as: 'courses' }
       ]
     });
+
+    // Check if user exists (might have been deleted)
+    if (!user) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'User not found. Your account may have been deleted.',
+        error: 'USER_NOT_FOUND'
+      });
+    }
 
     res.json({
       success: true,
@@ -703,15 +730,40 @@ const updateProfile = async (req, res) => {
   try {
     const {
       fullName, phone, countryCode, github, linkedin, 
-      professionalSummary, resumeVisibility,
-      education, experience, skills, languages
+      professionalSummary, careerObjective, location, resumeVisibility,
+      education, experience, skills, languages, isGraduate
     } = req.body;
 
+    // Get current user to check if careerObjective is already set
+    const currentUser = await User.findByPk(req.user.id);
+    if (!currentUser) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Validate: If user doesn't have careerObjective yet, it becomes required
+    const hasExistingCareerObjective = currentUser.careerObjective && currentUser.careerObjective.trim();
+    
     // Update user basic info
     const updateData = {};
-    if (fullName !== undefined) updateData.fullName = fullName;
+    
+    // Validate careerObjective: required if user doesn't have one yet
+    if (careerObjective !== undefined) {
+      const newCareerObjective = careerObjective ? sanitizeText(careerObjective).trim() : '';
+      if (!hasExistingCareerObjective && !newCareerObjective) {
+        return res.status(400).json({
+          success: false,
+          message: 'Career Objective is required. Please provide your career objective or professional summary.'
+        });
+      }
+      updateData.careerObjective = newCareerObjective;
+    }
+    if (fullName !== undefined) updateData.fullName = sanitizeText(fullName);
     if (phone !== undefined) updateData.phone = phone || null;
     if (countryCode !== undefined) updateData.countryCode = countryCode || null;
+    if (location !== undefined) updateData.location = sanitizeText(location || '');
     // Handle github and linkedin - convert empty strings to null
     if (github !== undefined) {
       const githubValue = github && github.trim() !== '' ? github.trim() : null;
@@ -735,8 +787,9 @@ const updateProfile = async (req, res) => {
       }
       updateData.linkedin = linkedinValue;
     }
-    if (professionalSummary !== undefined) updateData.professionalSummary = professionalSummary || null;
+    if (professionalSummary !== undefined) updateData.professionalSummary = sanitizeText(professionalSummary || '');
     if (resumeVisibility !== undefined) updateData.resumeVisibility = resumeVisibility;
+    if (isGraduate !== undefined) updateData.isGraduate = Boolean(isGraduate);
 
     // Only update if there's data to update
     if (Object.keys(updateData).length > 0) {
@@ -763,6 +816,22 @@ const updateProfile = async (req, res) => {
 
     // Update experience if provided
     if (experience && Array.isArray(experience)) {
+      // Validate experience date ranges before creating
+      for (let i = 0; i < experience.length; i++) {
+        const exp = experience[i];
+        // Only validate if both dates exist and it's not a current job
+        if (exp.startDate && exp.endDate && !exp.current && !exp.isCurrentJob) {
+          const startDate = new Date(exp.startDate);
+          const endDate = new Date(exp.endDate);
+          if (endDate < startDate) {
+            return res.status(400).json({ 
+              success: false, 
+              error: `Experience entry ${i + 1}: End date must be later than start date.` 
+            });
+          }
+        }
+      }
+      
       // Delete existing experience
       await Experience.destroy({ where: { userId: req.user.id } });
       
@@ -820,7 +889,9 @@ const updateProfile = async (req, res) => {
         { model: Education, as: 'education' },
         { model: Experience, as: 'experience' },
         { model: Skill, as: 'skills' },
-        { model: Language, as: 'languages' }
+        { model: Language, as: 'languages' },
+        { model: Course, as: 'courses' },
+        { model: GraduationProject, as: 'graduationProject' }
       ]
     });
 

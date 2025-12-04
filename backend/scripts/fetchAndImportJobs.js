@@ -11,6 +11,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const { fetchJobsFromJSearch } = require('../services/jsearch');
 const { Job } = require('../models');
 const { sequelize } = require('../config/database');
+const { Op } = require('sequelize');
 
 // Job search queries - prioritize Jordan
 const JOB_QUERIES = [
@@ -72,7 +73,11 @@ async function importJSearchJobs(query, location, pages = PAGES_PER_QUERY) {
       summary.skipped++;
     } else if (result.error) {
       summary.errors++;
-      summary.errorDetails.push({ job: jobData.title, error: result.error });
+      summary.errorDetails.push({ 
+        job: jobData.title || 'Unknown', 
+        company: jobData.company || 'Unknown',
+        error: result.error 
+      });
     }
   }
 
@@ -81,11 +86,54 @@ async function importJSearchJobs(query, location, pages = PAGES_PER_QUERY) {
 }
 
 /**
+ * Validate and clean URL
+ */
+function validateAndCleanUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  
+  // Remove whitespace
+  url = url.trim();
+  
+  // If URL doesn't start with http:// or https://, add https://
+  if (!url.match(/^https?:\/\//i)) {
+    url = 'https://' + url;
+  }
+  
+  // Basic URL validation
+  try {
+    new URL(url);
+    return url;
+  } catch (e) {
+    // If URL is still invalid, return null
+    return null;
+  }
+}
+
+/**
  * Import a single job into the database
  * Returns: { imported: boolean, skipped: boolean, error: string|null }
  */
 async function importJob(jobData) {
   try {
+    // Validate required fields
+    if (!jobData.title || !jobData.company) {
+      return { 
+        imported: false, 
+        skipped: false, 
+        error: `Missing required fields: title=${!!jobData.title}, company=${!!jobData.company}` 
+      };
+    }
+
+    // Validate and clean apply_url
+    const cleanedApplyUrl = validateAndCleanUrl(jobData.apply_url);
+    if (!cleanedApplyUrl) {
+      return { 
+        imported: false, 
+        skipped: false, 
+        error: `Invalid or missing apply_url: ${jobData.apply_url}` 
+      };
+    }
+
     // Check for duplicates by source_id first (if available)
     let existingJob = null;
     if (jobData.source_id) {
@@ -100,7 +148,7 @@ async function importJob(jobData) {
         where: {
           title: jobData.title,
           company: jobData.company,
-          apply_url: jobData.apply_url
+          apply_url: cleanedApplyUrl
         }
       });
     }
@@ -110,23 +158,52 @@ async function importJob(jobData) {
       return { imported: false, skipped: true, error: null };
     }
 
+    // Prepare tags - ensure it's an array of strings
+    let tags = [];
+    if (Array.isArray(jobData.tags)) {
+      tags = jobData.tags
+        .flat()
+        .map(tag => String(tag).trim())
+        .filter(tag => tag.length > 0);
+    } else if (jobData.tags) {
+      tags = [String(jobData.tags).trim()].filter(tag => tag.length > 0);
+    }
+
+    // Ensure location is a string (not null/undefined)
+    const location = jobData.location ? String(jobData.location).trim() : null;
+
     // Create new job
     await Job.create({
-      title: jobData.title,
-      company: jobData.company,
-      location: jobData.location,
-      salary: jobData.salary,
-      description: jobData.description,
-      tags: Array.isArray(jobData.tags) ? jobData.tags.flat() : (jobData.tags || []),
-      apply_url: jobData.apply_url,
+      title: String(jobData.title).trim(),
+      company: String(jobData.company).trim(),
+      location: location,
+      salary: jobData.salary ? String(jobData.salary).trim() : null,
+      description: jobData.description ? String(jobData.description).trim() : null,
+      tags: tags,
+      apply_url: cleanedApplyUrl,
       source: 'JSearch API',
-      posted_at: jobData.posted_at,
-      source_id: jobData.source_id
+      posted_at: jobData.posted_at || new Date(),
+      source_id: jobData.source_id || null
     });
 
+    console.log(`   ✅ Imported: ${jobData.title} at ${jobData.company}`);
     return { imported: true, skipped: false, error: null };
   } catch (error) {
-    return { imported: false, skipped: false, error: error.message };
+    // Enhanced error logging
+    const errorDetails = {
+      message: error.message,
+      jobTitle: jobData.title,
+      jobCompany: jobData.company,
+      validationErrors: error.errors ? error.errors.map(e => `${e.path}: ${e.message}`).join(', ') : null
+    };
+    
+    console.error(`   ❌ Failed to import job: ${jobData.title} at ${jobData.company}`, errorDetails);
+    
+    return { 
+      imported: false, 
+      skipped: false, 
+      error: `${error.message}${error.errors ? ' - ' + errorDetails.validationErrors : ''}` 
+    };
   }
 }
 
@@ -217,14 +294,32 @@ async function fetchAndImportAllJobs() {
   console.log(`🇯🇴 Jordan Jobs Imported: ${summary.jordanJobsImported}`);
   console.log('='.repeat(60));
 
-  if (summary.allErrors.length > 0 && summary.allErrors.length <= 10) {
+  if (summary.allErrors.length > 0) {
     console.log('\n⚠️  Errors encountered:');
-    summary.allErrors.slice(0, 10).forEach((err, idx) => {
+    const maxErrors = 20; // Show more errors
+    summary.allErrors.slice(0, maxErrors).forEach((err, idx) => {
       console.log(`   ${idx + 1}. ${err.job || 'Unknown'}: ${err.error}`);
     });
-    if (summary.allErrors.length > 10) {
-      console.log(`   ... and ${summary.allErrors.length - 10} more errors`);
+    if (summary.allErrors.length > maxErrors) {
+      console.log(`   ... and ${summary.allErrors.length - maxErrors} more errors`);
     }
+  }
+
+  // Verify jobs were actually saved
+  try {
+    const totalJobsInDB = await Job.count();
+    console.log(`\n📊 Total jobs in database: ${totalJobsInDB}`);
+    
+    const jordanJobsInDB = await Job.count({
+      where: {
+        location: {
+          [Op.iLike]: '%jordan%'
+        }
+      }
+    });
+    console.log(`🇯🇴 Jordan jobs in database: ${jordanJobsInDB}`);
+  } catch (countError) {
+    console.warn('⚠️  Could not verify job count:', countError.message);
   }
 
   // Close database connection

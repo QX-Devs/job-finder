@@ -53,36 +53,38 @@ export const AuthProvider = ({ children }) => {
       const response = await api.get('/auth/status');
       
       if (response.data && response.data.authenticated && response.data.user) {
-        // Token is valid and user exists
-        setIsAuthenticated(true);
-        setUser(response.data.user);
-        
-        // Optionally fetch full user data
+        // Token is valid and user exists - verify with full user data
         try {
           const fullUserResponse = await api.get('/me');
           if (fullUserResponse.data && fullUserResponse.data.success && fullUserResponse.data.data) {
+            // User exists and we got full data
+            setIsAuthenticated(true);
             setUser(fullUserResponse.data.data);
             authService.setUser(fullUserResponse.data.data);
+            
+            setIsVerifying(false);
+            if (!silent) {
+              setIsLoading(false);
+            }
+            return { authenticated: true, user: fullUserResponse.data.data };
+          } else {
+            // /me returned but user data is missing - user might be deleted
+            throw new Error('User data not found');
           }
         } catch (err) {
-          // If full user fetch fails, use the status response user
-          console.warn('Failed to fetch full user data, using status data:', err);
+          // If /me fails (404, 401, etc.), user doesn't exist - clear auth
+          console.error('Failed to fetch user data - user may not exist:', err);
+          throw new Error('User not found');
         }
-
-        setIsVerifying(false);
-        if (!silent) {
-          setIsLoading(false);
-        }
-        return { authenticated: true, user: response.data.user };
       } else {
         // Server says not authenticated
         throw new Error('Not authenticated');
       }
     } catch (error) {
-      // 401 or any error means token is invalid
+      // 401, 404, or any error means token is invalid or user doesn't exist
       console.error('Auth verification failed:', error);
       
-      // Clear auth data
+      // Clear auth data immediately - user doesn't exist or token is invalid
       authService.clearAuth();
       setIsAuthenticated(false);
       setUser(null);
@@ -97,9 +99,9 @@ export const AuthProvider = ({ children }) => {
             !location.pathname.includes('/reset-password')) {
           // Don't redirect if we're on a public page
           const publicPaths = ['/', '/about-us', '/contact-us', '/privacy-policy', 
-                              '/terms-of-service', '/find-jobs', '/companies', 
+                              '/terms-of-service', '/companies', 
                               '/career-advice', '/blog', '/faq', '/cookies', 
-                              '/accessibility', '/cv-prompt', '/cv-generator'];
+                              '/accessibility', '/cv-prompt'];
           
           if (!publicPaths.includes(location.pathname)) {
             navigate('/', { replace: true });
@@ -191,9 +193,20 @@ export const AuthProvider = ({ children }) => {
     authService.setUser(userData);
   }, []);
 
-  // Verify auth on mount
+  // Verify auth on mount - always verify with server, never trust localStorage
   useEffect(() => {
-    verifyAuth(false);
+    // Clear any stale data first, then verify
+    const token = authService.getToken();
+    if (!token) {
+      // No token, clear everything immediately
+      authService.clearAuth();
+      setIsAuthenticated(false);
+      setUser(null);
+      setIsLoading(false);
+    } else {
+      // Have token, verify with server
+      verifyAuth(false);
+    }
   }, []); // Only run on mount
 
   // Verify auth on route changes (but not on every render)

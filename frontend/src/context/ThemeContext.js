@@ -11,30 +11,48 @@ export const useTheme = () => {
   return context;
 };
 
+// Initialize theme from localStorage or system preference (runs before React renders)
+const getInitialTheme = () => {
+  if (typeof window === 'undefined') return false;
+  
+  const savedTheme = localStorage.getItem('jobfinder-theme');
+  if (savedTheme === 'dark' || savedTheme === 'light') {
+    return savedTheme === 'dark';
+  }
+  
+  // Fallback to system preference
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return true;
+  }
+  
+  return false;
+};
+
 export const ThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(false);
-
-  // تحميل التفضيل المحفوظ عند التحميل
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setIsDark(savedTheme === 'dark');
-    } else {
-      // اكتشاف تفضيل النظام
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setIsDark(prefersDark);
+  const [isDark, setIsDark] = useState(() => {
+    // Initialize state from localStorage or system preference
+    const initialTheme = getInitialTheme();
+    // Apply to DOM immediately (before React renders)
+    if (typeof window !== 'undefined') {
+      const root = document.documentElement;
+      if (initialTheme) {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
     }
-  }, []);
+    return initialTheme;
+  });
 
-  // تطبيق الـ theme عند التغيير
+  // Apply theme when isDark changes and persist to localStorage
   useEffect(() => {
     const root = document.documentElement;
     if (isDark) {
       root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+      localStorage.setItem('jobfinder-theme', 'dark');
     } else {
       root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+      localStorage.setItem('jobfinder-theme', 'light');
     }
   }, [isDark]);
 
@@ -45,7 +63,8 @@ export const ThemeProvider = ({ children }) => {
   const value = {
     isDark,
     toggleTheme,
-    setIsDark
+    setIsDark,
+    theme: isDark ? 'dark' : 'light'
   };
 
   return (

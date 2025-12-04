@@ -1,12 +1,14 @@
 // src/components/Layout.js
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { 
   Menu, X, User, LogOut, Briefcase, Bell, Settings, 
   Heart, BookmarkCheck, FileText, TrendingUp, ChevronDown,
   Search, Zap, Shield, HelpCircle, MessageSquare, Languages
 } from 'lucide-react';
 import AuthModal from './AuthModal';
+import CareerObjectiveModal from './CareerObjectiveModal';
+import CareerObjectiveReminder from './CareerObjectiveReminder';
 import { useAuth } from '../context/AuthContext';
 import { useTranslate } from '../utils/translate'; // <<< أضف هذا
 import ThemeToggle from './ThemeToggle';
@@ -21,31 +23,18 @@ const Footer = ({ isMobile = false }) => {
 
   const footerLinks = {
     quickLinks: [
-      { name: t('browseJobs'), path: '/find-jobs' },
-      { name: t('companies'), path: '/companies' },
-      { name: t('resumeBuilder'), path: '/cv-generator' },
-      { name: t('careerAdvice'), path: '/career-advice' }
+      { name: t('resumeBuilder'), path: '/cv-generator' }
     ],
     resources: [
       { name: t('about'), path: '/about-us' },
-      { name: t('blog'), path: '/blog' },
-      { name: t('faq'), path: '/faq' },
       { name: t('contact'), path: '/contact-us' }
     ],
     legal: [
       { name: t('privacyPolicy'), path: '/privacy-policy' },
-      { name: t('termsOfService'), path: '/terms-of-service' },
-      { name: t('cookiePolicy'), path: '/cookies' },
-      { name: t('accessibility'), path: '/accessibility' }
+      { name: t('termsOfService'), path: '/terms-of-service' }
     ]
   };
 
-  const socialLinks = [
-    { name: 'Twitter', label: '𝕏', url: '#' },
-    { name: 'LinkedIn', label: 'in', url: '#' },
-    { name: 'Facebook', label: 'f', url: '#' },
-    { name: 'Instagram', label: '📷', url: '#' }
-  ];
 
   return (
     <footer className="footer" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -65,18 +54,6 @@ const Footer = ({ isMobile = false }) => {
                 : 'رفيقك المهني المدعوم بالذكاء الاصطناعي. ابحث عن وظيفة أحلامك وابنِ مستقبلك بثقة.'
               }
             </p>
-            <div className="footer-social">
-              {socialLinks.map((social) => (
-                <button
-                  key={social.name}
-                  className="social-btn"
-                  aria-label={social.name}
-                  onClick={() => window.open(social.url, '_blank')}
-                >
-                  {social.label}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -144,6 +121,7 @@ const Footer = ({ isMobile = false }) => {
 const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { t, isRTL, language, toggleLanguage } = useTranslate(); // <<< أضف الترجمة
   const { user: currentUser, isAuthenticated: isLoggedIn, logout: handleLogoutContext, updateUser } = useAuth();
 
@@ -298,12 +276,40 @@ const Layout = ({ children }) => {
     setIsMobileMenuOpen(false);
   };
 
-  const closeAuthModal = () => setIsAuthModalOpen(false);
+  const closeAuthModal = () => {
+    setIsAuthModalOpen(false);
+    // Remove auth and redirect params from URL when closing
+    if (searchParams.get('auth') === 'required') {
+      searchParams.delete('auth');
+      searchParams.delete('redirect');
+      setSearchParams(searchParams);
+    }
+  };
 
   const handleAuthSuccess = () => {
     setIsAuthModalOpen(false);
-    navigate('/dashboard');
+    // Check if there's a redirect parameter
+    const redirectPath = searchParams.get('redirect');
+    if (redirectPath) {
+      // Remove auth and redirect params from URL
+      searchParams.delete('auth');
+      searchParams.delete('redirect');
+      setSearchParams(searchParams);
+      navigate(redirectPath);
+    } else {
+      navigate('/dashboard');
+    }
   };
+
+  // Check for auth=required query parameter and open modal
+  useEffect(() => {
+    const authRequired = searchParams.get('auth');
+    if (authRequired === 'required' && !isLoggedIn && !isAuthModalOpen) {
+      // Open auth modal when auth is required
+      setAuthModalTab('login');
+      setIsAuthModalOpen(true);
+    }
+  }, [searchParams, isLoggedIn, isAuthModalOpen, setSearchParams]);
 
   const handleLogout = () => {
     handleLogoutContext();
@@ -326,7 +332,6 @@ const Layout = ({ children }) => {
 
   const navLinks = [
     { name: t('home'), path: '/', icon: Briefcase },
-    { name: t('findJobs'), path: '/find-jobs', icon: Search },
     { name: t('resumeBuilder'), path: '/cv-generator', icon: FileText },
     { name: t('about'), path: '/about-us', icon: HelpCircle },
     { name: t('contact'), path: '/contact-us', icon: MessageSquare }
@@ -720,6 +725,12 @@ const Layout = ({ children }) => {
         defaultTab={authModalTab}
         onSuccess={handleAuthSuccess}
       />
+
+      {/* Career Objective Modal - Global onboarding */}
+      <CareerObjectiveModal />
+
+      {/* Career Objective Reminder Banner */}
+      <CareerObjectiveReminder />
 
       {/* Page Content */}
       <main className="main-content">
