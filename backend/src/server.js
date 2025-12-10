@@ -573,9 +573,13 @@ const PORT = process.env.PORT || 5000;
 
 // Initialize database and start server
 const startServer = async () => {
+  let dbConnected = false;
+  
+  // Try to connect to database, but don't fail if it doesn't work
   try {
     console.log('🔄 Initializing database connection...');
     await testConnection();
+    dbConnected = true;
     
     console.log('🔄 Synchronizing database models...');
     await sequelize.sync({ 
@@ -583,27 +587,38 @@ const startServer = async () => {
       force: false
     });
     console.log('✅ Database synchronized');
-    
-    const server = app.listen(PORT, () => {
-      console.log(`🚀 Server is running on port ${PORT}`);
-      console.log(`🔧 Environment: ${process.env.NODE_ENV}`);
-      console.log(`🌐 API URL: http://localhost:${PORT}/api`);
-      console.log(`🏥 Health check: http://localhost:${PORT}/api/health`);
-      console.log(`🤖 AI Test: http://localhost:${PORT}/api/test-hf`);
-      console.log(`📊 Database status: http://localhost:${PORT}/api/database-status`);
-      console.log(`✅ Hugging Face AI: ENABLED with Llama-3.2-3B-Instruct`);
-    });
+  } catch (error) {
+    console.warn('⚠️  Database connection failed. Server will start without database.');
+    console.warn('   Some API endpoints may not work until database is available.');
+    console.warn('   Check your database configuration and network connection.');
+    dbConnected = false;
+  }
+  
+  // Start server regardless of database connection status
+  const server = app.listen(PORT, () => {
+    console.log(`🚀 Server is running on port ${PORT}`);
+    console.log(`🔧 Environment: ${process.env.NODE_ENV}`);
+    console.log(`🌐 API URL: http://localhost:${PORT}/api`);
+    console.log(`🏥 Health check: http://localhost:${PORT}/api/health`);
+    console.log(`🤖 AI Test: http://localhost:${PORT}/api/test-hf`);
+    console.log(`📊 Database status: http://localhost:${PORT}/api/database-status`);
+    console.log(`✅ Hugging Face AI: ENABLED with Llama-3.2-3B-Instruct`);
+    if (!dbConnected) {
+      console.log(`⚠️  Database: NOT CONNECTED (some features may be unavailable)`);
+    }
+  });
 
-    // Job fetching is now handled by separate scripts
-    // Uncomment the line below if you want automatic job fetching on server start
-    // startScheduler();
-    console.log('ℹ️  Job fetching disabled. Run "npm run fetch-jobs" or "npm run scrape-linkedin" separately to fetch jobs.');
+  // Job fetching is now handled by separate scripts
+  // Uncomment the line below if you want automatic job fetching on server start
+  // startScheduler();
+  console.log('ℹ️  Job fetching disabled. Run "npm run fetch-jobs" or "npm run scrape-linkedin" separately to fetch jobs.');
 
-    // Graceful shutdown
-    const gracefulShutdown = (signal) => {
-      console.log(`\n📦 Received ${signal}. Starting graceful shutdown...`);
-      server.close(() => {
-        console.log('✅ HTTP server closed.');
+  // Graceful shutdown
+  const gracefulShutdown = (signal) => {
+    console.log(`\n📦 Received ${signal}. Starting graceful shutdown...`);
+    server.close(() => {
+      console.log('✅ HTTP server closed.');
+      if (dbConnected) {
         sequelize.close()
           .then(() => {
             console.log('✅ Database connection closed.');
@@ -613,20 +628,18 @@ const startServer = async () => {
             console.error('❌ Error closing database connection:', err);
             process.exit(1);
           });
-      });
-      setTimeout(() => {
-        console.log('⚠️ Forcing shutdown after timeout...');
-        process.exit(1);
-      }, 10000);
-    };
+      } else {
+        process.exit(0);
+      }
+    });
+    setTimeout(() => {
+      console.log('⚠️ Forcing shutdown after timeout...');
+      process.exit(1);
+    }, 10000);
+  };
 
-    process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
-    process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-
-  } catch (error) {
-    console.error('❌ Failed to start server:', error);
-    process.exit(1);
-  }
+  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+  process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 };
 
 if (require.main === module) {

@@ -31,21 +31,25 @@ const createTransporter = () => {
 // Initialize transporter
 transporter = createTransporter();
 
-// Verify transporter connection
+// Verify transporter connection (non-blocking)
 if (transporter) {
   transporter.verify((error, success) => {
     if (error) {
-      console.error('❌ Email transporter verification failed:', error);
-      console.error('Error details:', {
+      console.warn('⚠️  Email transporter verification failed:', error.message);
+      console.warn('   Email functionality may be unavailable until connection is restored.');
+      console.warn('   Error details:', {
         code: error.code,
         command: error.command,
         response: error.response,
         responseCode: error.responseCode
       });
+      console.warn('   Server will continue running. Check your email configuration and network.');
     } else {
       console.log('✅ Email transporter is ready to send emails');
     }
   });
+} else {
+  console.warn('⚠️  Email transporter not initialized. Email functionality will be unavailable.');
 }
 
 const sendEmail = async ({ to, subject, html, text }) => {
