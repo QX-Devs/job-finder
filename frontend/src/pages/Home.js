@@ -15,12 +15,12 @@ import VerificationStatusModal from '../components/VerificationStatusModal';
 import authService from '../services/authService';
 import applicationService from '../services/applicationService';
 import jobService from '../services/jobService';
-import { useTranslate } from '../utils/translate'; // <<< استيراد دالة الترجمة
+import { useTranslate } from '../utils/translate';
 import { useSearchParams } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
-  const { t, isRTL, language } = useTranslate(); // <<< استخدام الترجمة
+  const { t, isRTL, language } = useTranslate();
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');

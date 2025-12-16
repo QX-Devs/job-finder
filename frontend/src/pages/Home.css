@@ -1265,10 +1265,14 @@ html.dark .stat-chip svg,
 
 .job-details-section {
   margin-bottom: 32px;
+  /* Reduce overall font size inside job details for a more compact layout */
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .section-title {
-  font-size: 1.1rem;
+  /* Slightly smaller section titles for a more compact layout */
+  font-size: 1rem;
   font-weight: 700;
   color: var(--gray-900);
   margin: 0 0 16px 0;
@@ -1283,7 +1287,8 @@ html.dark .stat-chip svg,
 .skill-tag-large {
   padding: 16px 18px;
   background: var(--primary-50);
-  color: var(--primary-700);
+  /* Darker text for better contrast inside skill tags */
+  color: var(--gray-900);
   border: 1px solid var(--primary-200);
   border-radius: 12px;
   font-size: 0.9rem;
@@ -3894,7 +3899,7 @@ select:focus-visible {
 
   .skill-tag-large {
     background: rgba(16, 185, 129, 0.15) !important;
-    color: var(--primary-300) !important;
+    color: var(--primary-700) !important;
     border-color: var(--primary-600) !important;
   }
 
