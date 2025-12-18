@@ -17,7 +17,7 @@ import './Layout.css';
 // Footer Component
 const Footer = ({ isMobile = false }) => {
   const navigate = useNavigate();
-  const { t, isRTL, language } = useTranslate(); // <<< أضف الترجمة
+  const { t, isRTL, language } = useTranslate();   
   const footerIconSize = isMobile ? 16 : 24;
   const footerBadgeIconSize = isMobile ? 12 : 16;
 
@@ -357,10 +357,11 @@ const Layout = ({ children }) => {
         <div className="navbar-container">
           {/* Logo */}
           <div className="navbar-logo" onClick={() => navigate('/')}>
-            <div className="logo-icon">
-              <Briefcase size={logoIconSize} />
-              <div className="logo-pulse"></div>
-            </div>
+           <img
+    src="/assets/green.png"
+    alt="GradJob"
+    className="logo-image"
+  />
             <span className="logo-text">GradJob</span>
           </div>
 

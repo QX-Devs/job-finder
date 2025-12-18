@@ -229,6 +229,19 @@
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.02em;
 }
+.logo-image {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 12px; /* زي اللي بالصورة */
+  margin-right: 8px;
+}
+
+[dir="rtl"] .logo-image {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
 
 /* ============================================
    Desktop Navigation Links

@@ -504,6 +504,7 @@ const Settings = () => {
                   }}
                 />
               </div>
+              
               <div className="form-group">
                 <label>{t('location') || 'Location'}</label>
                 <Autocomplete
@@ -529,7 +530,7 @@ const Settings = () => {
                       {...params}
                       placeholder="Type or select location (e.g., Amman, Dubai, Remote...)"
                       variant="outlined"
-                      sx={{
+                     sx={{
                         '& .MuiOutlinedInput-root': {
                           borderRadius: '8px',
                           fontSize: '16px',
@@ -550,7 +551,7 @@ const Settings = () => {
                       }}
                     />
                   )}
-                  sx={{
+                 sx={{
                     '& .MuiAutocomplete-listbox': {
                       padding: '4px',
                     },
