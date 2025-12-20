@@ -1,5 +1,7 @@
 /* CV Generator - Light Theme with Green Accents */
-
+*{
+  box-sizing: border-box;
+}
 .cv-generator-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
@@ -817,6 +819,13 @@
     font-size: 14px !important;
     padding: 6px 8px !important;
   }
+
+   .form-group input{
+    font-size: 20;
+    position: relative;
+    right: 10px;
+    padding: 0;
+   }
   
   .form-group textarea {
     min-height: 70px !important;
@@ -1414,4 +1423,15 @@ html.dark .save-btn {
 
 html.dark .save-btn:hover {
   background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+}
+
+
+@media (max-width: 768px){
+  .step-number{
+    position: relative;
+    top: 7px;
+  }
+  input {
+    margin-left: 10px;
+  }
 }

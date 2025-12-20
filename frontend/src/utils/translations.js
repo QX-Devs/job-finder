@@ -217,7 +217,7 @@ export const translations = {
     
     // API Messages
     loginFailed: "Login failed. Please check your credentials.",
-    resetLinkSent: "Password reset link has been sent to your email.",
+    resetLinkSent: "If your email exists in our system, you will receive password reset instructions in your inbox.",
     resetLinkFailed: "Failed to send reset link. Please try again.",
     
     // Error Messages
@@ -1248,7 +1248,7 @@ verificationHelpMessage: "Need help? You can request a new verification email fr
     
     // API Messages
     loginFailed: "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك.",
-    resetLinkSent: "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.",
+    resetLinkSent:" إذا كان بريدك الإلكتروني موجودًا في نظامنا ، فسوف تتلقى تعليمات إعادة تعيين كلمة المرور في البريد الوارد الخاص بك.",
     resetLinkFailed: "فشل إرسال رابط التعيين. يرجى المحاولة مرة أخرى.",
     
     // Error Messages

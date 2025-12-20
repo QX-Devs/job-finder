@@ -1951,7 +1951,7 @@ const CVGenerator = () => {
                       border: 'none !important', 
                       outline: 'none !important', 
                       flex: 1, 
-                      fontSize: '18px', 
+                      fontSize: '20px', 
                       padding: '0 !important',
                       margin: '0 !important',
                       minHeight: '24px',
