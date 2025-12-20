@@ -182,17 +182,12 @@
 }
 
 /* Subtle Glow Effect on Hover */
+
 .career-objective-modal::after {
   content: '';
   position: absolute;
   inset: -2px;
   border-radius: calc(var(--co-radius-2xl) + 2px);
-  background: linear-gradient(
-    135deg,
-    var(--co-primary-glow) 0%,
-    transparent 50%,
-    rgba(6, 182, 212, 0.2) 100%
-  );
   opacity: 0;
   z-index: -1;
   transition: opacity var(--co-transition-medium);
@@ -200,12 +195,12 @@
 }
 
 .career-objective-modal:hover::after {
-  opacity: 0.6;
+  opacity: 1;
 }
 
 /* Success State - Celebration Animation */
 .career-objective-modal.success {
-  animation: successCelebrate 0.8s var(--co-ease-out);
+  animation: successCelebrate 40s var(--co-ease-out);
 }
 
 @keyframes successCelebrate {
@@ -408,6 +403,7 @@
   transition: 
     border-color var(--co-transition),
     box-shadow var(--co-transition);
+    
 }
 
 .career-objective-modal-input .MuiOutlinedInput-root:hover:not(.Mui-disabled):not(.Mui-focused) fieldset {
@@ -416,13 +412,17 @@
 
 .career-objective-modal-input .MuiOutlinedInput-root.Mui-focused {
   background: var(--co-white);
+  
+}
+
+.career-objective-modal-input .MuiOutlinedInput-root{
+  height : 50px ;
+  border-radius: 20px;
 }
 
 .career-objective-modal-input .MuiOutlinedInput-root.Mui-focused fieldset {
   border-color: var(--co-primary);
-  box-shadow: 
-    0 0 0 4px var(--co-primary-subtle),
-    var(--co-shadow-sm);
+  box-shadow: 0px 0px 5px rgb(15, 171, 64);
 }
 
 .career-objective-modal-input .MuiOutlinedInput-root.Mui-disabled {
@@ -511,6 +511,7 @@
   overflow: hidden;
   background: var(--co-white);
   animation: dropdownEnter 0.2s var(--co-ease-out);
+  padding: 17px;
 }
 
 @keyframes dropdownEnter {
@@ -526,17 +527,16 @@
 
 /* Dropdown List */
 .MuiAutocomplete-popper .MuiAutocomplete-listbox {
-  padding: var(--co-space-2);
   max-height: 300px;
   font-family: var(--co-font-sans);
 }
 
 /* Option Item */
 .MuiAutocomplete-popper .MuiAutocomplete-option {
-  padding: 12px 16px;
-  margin: 2px 0;
-  border-radius: var(--co-radius-sm);
-  font-size: 14px;
+  border-radius: 10px;
+   padding-top: 20px;   /* نزول النص لتحت */
+  padding-bottom: 12px;
+  font-size: 20px;
   color: var(--co-gray-700);
   cursor: pointer;
   transition: 
@@ -545,10 +545,15 @@
     transform var(--co-transition-fast);
   font-weight: 500;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--co-space-3);
+  justify-content: center;
+  height: 50px;
+  gap: 10px;
   position: relative;
+  
 }
+
 
 .MuiAutocomplete-popper .MuiAutocomplete-option::before {
   content: '';
@@ -565,6 +570,7 @@
 .MuiAutocomplete-popper .MuiAutocomplete-option:hover {
   background: var(--co-gray-50);
   color: var(--co-gray-900);
+  padding: 10px;
 }
 
 .MuiAutocomplete-popper .MuiAutocomplete-option:hover::before {
@@ -580,16 +586,20 @@
   ) !important;
   color: var(--co-primary-dark);
   font-weight: 600;
+  font-size: 22px;
+  
 }
 
 .MuiAutocomplete-popper .MuiAutocomplete-option[aria-selected="true"]::before {
   background: var(--co-primary);
   box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.2);
+  text-align: center;
 }
 
 .MuiAutocomplete-popper .MuiAutocomplete-option.Mui-focused {
   background: var(--co-gray-50);
 }
+
 
 .MuiAutocomplete-popper .MuiAutocomplete-option[aria-selected="true"].Mui-focused {
   background: linear-gradient(
