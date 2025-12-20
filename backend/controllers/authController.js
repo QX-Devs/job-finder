@@ -684,6 +684,27 @@ const getAuthStatus = async (req, res) => {
   }
 };
 
+const pruneUserPayload = (userInstance) => {
+  const raw = userInstance?.toJSON ? userInstance.toJSON() : userInstance;
+  if (!raw) return raw;
+
+  const cleaned = { ...raw };
+
+  // Remove heavy/empty collections not needed for /me consumers
+  ['education', 'experience', 'skills', 'languages', 'courses'].forEach((key) => {
+    if (!cleaned[key] || (Array.isArray(cleaned[key]) && cleaned[key].length === 0)) {
+      delete cleaned[key];
+    }
+  });
+
+  // Drop nullable summary to avoid sending `null`
+  if (cleaned.professionalSummary == null) {
+    delete cleaned.professionalSummary;
+  }
+
+  return cleaned;
+};
+
 // @desc    Get current user
 // @route   GET /api/auth/me or GET /api/me
 // @access  Private
@@ -711,7 +732,7 @@ const getMe = async (req, res) => {
 
     res.json({
       success: true,
-      data: user
+      data: pruneUserPayload(user)
     });
   } catch (error) {
     console.error(error);
@@ -897,7 +918,7 @@ const updateProfile = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: updatedUser
+      data: pruneUserPayload(updatedUser)
     });
   } catch (error) {
     console.error('Update profile error:', error);

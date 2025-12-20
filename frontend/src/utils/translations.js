@@ -562,7 +562,7 @@ verificationHelpMessage: "Need help? You can request a new verification email fr
     projectDescription: "Project Description",
     projectDescriptionPlaceholder: "Describe your project in detail (minimum 200 characters). Include the problem you solved, your approach, and the results achieved.",
     projectDescriptionRequired: "Project description is required",
-    projectDescriptionMinLength: "Project description must be at least 200 characters",
+    projectDescriptionMinLength: "Project description must be at least 50 characters",
     projectTitleRequired: "Project title is required",
     roleInProject: "Your Role in the Project",
     roleInProjectPlaceholder: "e.g., Full-stack Developer, Team Lead, Database Designer",

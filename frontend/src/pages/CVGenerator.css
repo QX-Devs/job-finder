@@ -1110,6 +1110,42 @@ html.dark .form-group select:focus {
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
 }
 
+/* Fresh graduate panels */
+html.dark .graduate-toggle {
+  background: rgba(51, 65, 85, 0.35) !important;
+  border-color: rgba(148, 163, 184, 0.4) !important;
+}
+
+html.dark .graduate-toggle label {
+  color: #e2e8f0 !important;
+}
+
+html.dark .graduate-toggle p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .graduate-message-block {
+  background: rgba(59, 130, 246, 0.12) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+}
+
+html.dark .graduate-message-block h3 {
+  color: #bfdbfe !important;
+}
+
+html.dark .graduate-message-block p {
+  color: #cbd5e1 !important;
+}
+
+html.dark .graduation-project-section {
+  background: rgba(30, 41, 59, 0.9) !important;
+  border-color: rgba(148, 163, 184, 0.35) !important;
+}
+
+html.dark .graduation-project-section h3 {
+  color: #e2e8f0 !important;
+}
+
 /* Dark mode phone input styles */
 html.dark .phone-input-container {
   gap: 12px;

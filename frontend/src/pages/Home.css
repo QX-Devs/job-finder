@@ -440,10 +440,31 @@ html.dark .stat-chip svg,
   -ms-overflow-style: none;
   scrollbar-width: none;
   animation: fadeInUp 0.6s ease-out 0.5s backwards;
+  scroll-behavior: smooth;
 }
 
 .categories-scroll::-webkit-scrollbar {
   display: none;
+}
+
+@media (max-width: 768px) {
+  .categories-scroll {
+    gap: 10px;
+    padding: 4px 8px;
+  }
+  
+  .category-chip {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    min-width: fit-content;
+    flex-shrink: 0;
+  }
+  
+  .category-count {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    min-width: 20px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -457,13 +478,26 @@ html.dark .stat-chip svg,
   .category-chip {
     flex: 1 1 calc(50% - 12px);
     justify-content: center;
+    min-width: 0;
   }
 }
 
 @media (max-width: 400px) {
+  .categories-scroll {
+    gap: 6px;
+  }
+  
   .category-chip {
     flex: 1 1 100%;
     justify-content: center;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .category-count {
+    font-size: 0.75rem;
+    padding: 2px 5px;
+    min-width: 18px;
   }
 }
 
@@ -483,7 +517,8 @@ html.dark .stat-chip svg,
   white-space: nowrap;
   box-shadow: var(--shadow-sm);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 .category-chip::before {
@@ -520,10 +555,20 @@ html.dark .stat-chip svg,
   background: rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gray-700);
+  min-width: 24px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
 }
 
 .category-chip.active .category-count {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-weight: 700;
 }
 
 /* ============================================
@@ -2149,6 +2194,9 @@ html.dark .job-details-stats .stat-item,
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 32px;
+  justify-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .feature-card-enhanced {
@@ -2160,6 +2208,10 @@ html.dark .job-details-stats .stat-item,
   position: relative;
   overflow: hidden;
   animation: fadeInUp 0.6s ease-out backwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .feature-card-enhanced::before {
@@ -2216,6 +2268,8 @@ html.dark .job-details-stats .stat-item,
   margin-bottom: 12px;
   position: relative;
   z-index: 1;
+  text-align: center;
+  width: 100%;
 }
 
 .feature-card-enhanced p {
@@ -2224,6 +2278,8 @@ html.dark .job-details-stats .stat-item,
   font-size: 1rem;
   position: relative;
   z-index: 1;
+  text-align: center;
+  width: 100%;
 }
 
 .feature-card-glow {
@@ -2463,6 +2519,9 @@ html.dark .btn-cta-primary:hover,
   .features-grid-enhanced {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 24px !important;
+    justify-items: center !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
   }
 }
 
@@ -2606,6 +2665,13 @@ html.dark .btn-cta-primary:hover,
   .category-count {
     font-size: 0.7rem !important;
     padding: 2px 6px !important;
+    min-width: 20px !important;
+    font-weight: 700 !important;
+    color: var(--gray-700) !important;
+  }
+  
+  .category-chip.active .category-count {
+    color: #ffffff !important;
   }
   
   /* Filters Panel */
@@ -2834,6 +2900,9 @@ html.dark .btn-cta-primary:hover,
   .features-grid-enhanced {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
+    justify-items: center !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
   }
   
   .feature-card-enhanced {
@@ -3176,6 +3245,13 @@ html.dark .btn-cta-primary:hover,
   .category-count {
     font-size: 0.6rem !important;
     padding: 1px 4px !important;
+    min-width: 18px !important;
+    font-weight: 700 !important;
+    color: var(--gray-700) !important;
+  }
+  
+  .category-chip.active .category-count {
+    color: #ffffff !important;
   }
   
   /* Job list items - compact */
@@ -3702,11 +3778,15 @@ select:focus-visible {
   .category-count {
     background: rgba(0, 0, 0, 0.2) !important;
     color: var(--color-text-primary) !important;
+    font-weight: 700 !important;
+    min-width: 24px !important;
+    text-align: center !important;
   }
 
   .category-chip.active .category-count {
-    background: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.25) !important;
     color: #ffffff !important;
+    font-weight: 700 !important;
   }
 
   /* ============================================

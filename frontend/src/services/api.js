@@ -3,6 +3,8 @@
 import axios from 'axios';
 import { HTTP_STATUS, ERROR_MESSAGES } from './apiConstants';
 
+const CLIENT_SOURCE = 'web-app';
+
 // Base API URL - with fallback for different environments
 // IMPORTANT: For LAN access, set REACT_APP_API_URL=http://192.168.1.100:5000/api in .env
 function getApiUrl() {
@@ -89,6 +91,9 @@ api.interceptors.request.use(
       api.defaults.baseURL = currentApiUrl; // Also update the default
     }
     
+    // Identify client for backend traffic metrics
+    config.headers['X-Client-Source'] = CLIENT_SOURCE;
+
     // Get token from localStorage
     const token = localStorage.getItem('token');
     

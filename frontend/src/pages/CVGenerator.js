@@ -1458,7 +1458,7 @@ const CVGenerator = () => {
         if (!formData.graduationProject.description.trim()) {
           newErrors.graduationProjectDescription = t('projectDescriptionRequired') || 'Project description is required';
         } else if (formData.graduationProject.description.trim().length < 200) {
-          newErrors.graduationProjectDescription = t('projectDescriptionMinLength') || 'Project description must be at least 200 characters';
+          newErrors.graduationProjectDescription = t('projectDescriptionMinLength') || 'Project description must be at least 50 characters';
         }
         if (!formData.graduationProject.role.trim()) {
           newErrors.graduationProjectRole = t('roleInProjectRequired') || 'Your role in the project is required';
@@ -2054,7 +2054,7 @@ const CVGenerator = () => {
               <p className="step-description">{t('workExperience')}</p>
 
               {/* Fresh Graduate Toggle */}
-              <div className="form-group" style={{ marginBottom: '24px', padding: '16px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+              <div className="form-group graduate-toggle" style={{ marginBottom: '24px', padding: '16px', backgroundColor: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
                 <div className="toggle-container">
                   <div 
                     className={`toggle-switch ${formData.isGraduate ? 'on' : 'off'}`}
@@ -2163,8 +2163,8 @@ const CVGenerator = () => {
                       className={errors.graduationProjectDescription ? 'error' : ''}
                     />
                     <div className="summary-hint" style={{ marginTop: '8px' }}>
-                      {formData.graduationProject.description.trim().length < 200 ? 
-                        `${200 - formData.graduationProject.description.trim().length} ${t('moreCharactersNeeded') || 'more characters needed'}` : 
+                      {formData.graduationProject.description.trim().length < 50 ? 
+                        `${50 - formData.graduationProject.description.trim().length} ${t('moreCharactersNeeded') || 'more characters needed'}` : 
                         t('looksGood') || '✓ Looks good!'}
                     </div>
                     {errors.graduationProjectDescription && (

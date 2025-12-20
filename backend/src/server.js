@@ -13,6 +13,7 @@ const scraperRoutes = require('../routes/scraperRoutes');
 const candidateRoutes = require('../routes/candidateRoutes');
 const courseRoutes = require('../routes/courseRoutes');
 const graduationProjectRoutes = require('../routes/graduationProjectRoutes');
+const { trafficRecorder, getTrafficSnapshot } = require('../middleware/traffic');
 // Job fetching is now handled by separate scripts (fetchAndImportJobs.js, scrapeLinkedInJobs.js)
 // const { startScheduler } = require('../services/scraperScheduler');
 const path = require('path');
@@ -87,6 +88,9 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   app.use(morgan('combined'));
 }
+
+// API traffic recorder (persist + in-memory snapshot)
+app.use(trafficRecorder);
 
 // Test endpoint
 app.post('/api/test', (req, res) => {
@@ -398,6 +402,7 @@ Answer:`;
 
     const data = await response.json();
     let suggestion = data.choices[0].message.content;
+    console.log('suggestion raw:', suggestion);
     
     // Clean the response
     suggestion = suggestion.replace(/<think>[\s\S]*?<\/think>/gi, '');
@@ -544,6 +549,11 @@ app.get('/api', (req, res) => {
     },
     timestamp: new Date().toISOString()
   });
+});
+
+// API traffic snapshot
+app.get('/api/traffic', (req, res) => {
+  res.json(getTrafficSnapshot());
 });
 
 // 404 handler for API routes

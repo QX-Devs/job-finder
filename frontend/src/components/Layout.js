@@ -561,6 +561,7 @@ const Layout = ({ children }) => {
 
           {isMobileView && (
             <div className="navbar-mobile-actions">
+              <ThemeToggle />
               <button
                 onClick={toggleLanguage}
                 className="mobile-icon-btn"
