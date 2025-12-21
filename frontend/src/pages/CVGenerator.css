@@ -222,6 +222,43 @@
   left: 100%;
 }
 
+/* Voice Button Styles */
+.voice-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.voice-btn:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.voice-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.voice-btn-stop {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.voice-btn-stop:hover:not(:disabled) {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
 /* Additional depth with pseudo-element */
 .ai-suggest-btn::after {
   content: '';

@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import ReactCountryFlag from 'react-country-flag';
 import { 
   User, Briefcase, GraduationCap, Code, Globe, 
-  Plus, X, ArrowRight, ArrowLeft, Save, Github, Linkedin, Sparkles, Phone, BookOpen
+  Plus, X, ArrowRight, ArrowLeft, Save, Github, Linkedin, Sparkles, Phone, BookOpen, Mic
 } from 'lucide-react';
 import api from '../services/api';
 import resumeService from '../services/resumeService';
@@ -801,7 +801,7 @@ const CS_SKILLS = [
 ];
 
 const CVGenerator = () => {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, language } = useLanguage();
   const { user, updateUser } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -858,6 +858,18 @@ const CVGenerator = () => {
   const [showDownloadPrompt, setShowDownloadPrompt] = useState(false);
   const [isSuggesting, setIsSuggesting] = useState(false);
   const [loadingResume, setLoadingResume] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isVoiceActive, setIsVoiceActive] = useState(false);
+  const [summaryPlaceholder, setSummaryPlaceholder] = useState('');
+  const recognitionRef = useRef(null);
+  const originalSummaryRef = useRef('');
+  const manualStopRef = useRef(false);
+  const shouldRestartRef = useRef(false);
+  const voiceActiveRef = useRef(false);
+  const restartTimerRef = useRef(null);
+  const voiceFinalTranscriptRef = useRef('');
+  const voiceInterimTranscriptRef = useRef('');
+  const processAfterStopRef = useRef(false);
 
   // Parse phone number to extract country code when user data is available
   useEffect(() => {
@@ -1699,6 +1711,254 @@ const CVGenerator = () => {
     }
   };
 
+  // Helper function to get active language from UI or hook
+  const getActiveLanguage = () => {
+    // Try to get from DOM first (language-code span)
+    const langCodeElement = document.querySelector('.language-code');
+    if (langCodeElement) {
+      const langCode = langCodeElement.textContent.trim();
+      return langCode === 'AR' ? 'ar' : 'en';
+    }
+    // Fallback to hook
+    return language || 'en';
+  };
+
+  // Helper function to detect language from text using Unicode ranges
+  const detectLanguageFromText = (text) => {
+    if (!text || !text.trim()) return 'en';
+    
+    // Arabic Unicode range: \u0600-\u06FF
+    const arabicRegex = /[\u0600-\u06FF]/;
+    const hasArabic = arabicRegex.test(text);
+    
+    return hasArabic ? 'ar' : 'en';
+  };
+
+  // Helper function to start voice recognition
+  const startVoiceRecognition = (lang) => {
+    // Check if SpeechRecognition is available
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('Speech recognition is not supported in your browser. Please use Chrome or Edge.');
+      setIsListening(false);
+      setIsSuggesting(false);
+      return null;
+    }
+
+    // Map language to SpeechRecognition language code
+    const recognitionLang = lang === 'ar' ? 'ar-JO' : 'en-US';
+    
+    // Create recognition instance
+    const recognition = new SpeechRecognition();
+    recognition.lang = recognitionLang;
+    recognition.continuous = false; // Single sentence capture
+    recognition.interimResults = false; // No interim results
+    recognition.maxAlternatives = 1;
+
+    // Store reference
+    recognitionRef.current = recognition;
+
+    // Handle results
+    recognition.onresult = async (event) => {
+      const transcript = event.results[0][0].transcript.trim();
+      
+      if (!transcript) {
+        setIsListening(false);
+        setIsSuggesting(false);
+        setSummaryPlaceholder('');
+        return;
+      }
+
+      // Detect actual language from transcript
+      const detectedLang = detectLanguageFromText(transcript);
+      
+      // Update placeholder (use detected language for placeholder)
+      setSummaryPlaceholder(detectedLang === 'ar' ? 'جاري التحسين بالذكاء الاصطناعي...' : 'Improving with AI...');
+      setIsListening(false);
+      
+      // Send to backend
+      try {
+        await sendTranscriptToAI(transcript, detectedLang);
+      } catch (error) {
+        console.error('Voice recognition error:', error);
+        // Restore original summary on error
+        handleChange('summary', originalSummaryRef.current);
+        setSummaryPlaceholder('');
+        setIsSuggesting(false);
+        alert('Failed to process voice input. Please try again.');
+      }
+    };
+
+    // Handle errors
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+      setIsListening(false);
+      setIsSuggesting(false);
+      setSummaryPlaceholder('');
+      
+      let errorMessage = 'Voice recognition failed. ';
+      switch (event.error) {
+        case 'no-speech':
+          errorMessage += 'No speech detected. Please try again.';
+          break;
+        case 'audio-capture':
+          errorMessage += 'No microphone found. Please check your microphone.';
+          break;
+        case 'not-allowed':
+          errorMessage += 'Microphone permission denied. Please allow microphone access.';
+          break;
+        case 'network':
+          errorMessage += 'Network error. Please check your connection.';
+          break;
+        default:
+          errorMessage += 'Please try again.';
+      }
+      alert(errorMessage);
+    };
+
+    // Handle end
+    recognition.onend = () => {
+      // Reset listening state when recognition ends
+      setIsListening(false);
+      if (!isSuggesting) {
+        setSummaryPlaceholder('');
+      }
+    };
+
+    // Start recognition
+    try {
+      // Note: isListening state is set by the caller before calling this function
+      recognition.start();
+    } catch (error) {
+      console.error('Failed to start recognition:', error);
+      setIsListening(false);
+      setIsSuggesting(false);
+      setSummaryPlaceholder('');
+      alert('Failed to start voice recognition. Please try again.');
+    }
+
+    return recognition;
+  };
+
+  // Helper function to send transcript to AI backend (Hugging Face route)
+  const sendTranscriptToAI = async (text, detectedLang) => {
+    try {
+      setIsSuggesting(true);
+      
+      // Build context from form data
+      const contentPieces = [];
+      if (formData.title) contentPieces.push(`Title: ${formData.title}`);
+      if (formData.skills?.length) contentPieces.push(`Skills: ${formData.skills.join(', ')}`);
+      if (formData.experience?.length) {
+        const firstExp = formData.experience[0];
+        const expSummary = [firstExp.position, firstExp.company].filter(Boolean).join(' at ');
+        if (expSummary) contentPieces.push(`Recent Experience: ${expSummary}`);
+      }
+      if (formData.education?.length) {
+        const firstEdu = formData.education[0];
+        const eduSummary = [firstEdu.degree, firstEdu.fieldOfStudy, firstEdu.institution].filter(Boolean).join(' - ');
+        if (eduSummary) contentPieces.push(`Education: ${eduSummary}`);
+      }
+
+      // Call Hugging Face route FIRST (primary)
+      let response;
+      try {
+        console.log('[voice] sending to /ai/resume-suggestions');
+        response = await api.post('/ai/resume-suggestions', {
+          section: 'professional_summary',
+          content: text + (contentPieces.length > 0 ? '. ' + contentPieces.join('. ') : ''),
+          context: formData.title || 'Career objective',
+          language: detectedLang
+        });
+      } catch (endpointError) {
+        // Optional fallback to /ai/pro-summary if resume-suggestions fails
+        console.warn('[voice] /ai/resume-suggestions failed, trying /ai/pro-summary:', endpointError);
+        try {
+          response = await api.post('/ai/pro-summary', {
+            text: text,
+            language: detectedLang
+          });
+        } catch (fallbackError) {
+          // If both fail, throw the original error
+          throw endpointError;
+        }
+      }
+
+      // Extract suggestion robustly (prioritize backend response shape)
+      const enhancedText =
+        response.data?.data?.suggestion ||
+        response.data?.data?.enhancedText ||
+        response.data?.suggestion ||
+        response.data?.enhancedText ||
+        response.data?.result ||
+        '';
+
+      console.log('[voice] got enhanced text length:', enhancedText?.length);
+
+      if (enhancedText) {
+        // Trim and clean the response (remove quotes if present)
+        const cleanedText = enhancedText.trim().replace(/^["']|["']$/g, '');
+        
+        // Update textarea value using handleChange (consistent with form)
+        handleChange('summary', cleanedText);
+        setErrors(prev => ({ ...prev, summary: '' }));
+        
+        // Maintain focus on textarea
+        setTimeout(() => {
+          const textarea = document.querySelector('textarea[placeholder*="summary"], textarea[placeholder*="Professional"], textarea[placeholder*="professional"]');
+          if (textarea) {
+            textarea.focus();
+            // Set cursor to end
+            const length = cleanedText.length;
+            textarea.setSelectionRange(length, length);
+          }
+        }, 100);
+      } else {
+        // If no enhanced text, use original transcript (guaranteed fallback)
+        handleChange('summary', text);
+      }
+    } catch (error) {
+      console.error('[voice] AI processing error:', error);
+      // On error, use original transcript (no data loss)
+      handleChange('summary', text);
+      throw error;
+    } finally {
+      setIsSuggesting(false);
+      setSummaryPlaceholder('');
+    }
+  };
+
+  // Helper: Set voice active state (both ref and state)
+  const setVoiceActive = (active) => {
+    voiceActiveRef.current = active;
+    setIsVoiceActive(active);
+  };
+
+  // Helper: Stop voice recognition safely
+  const stopVoice = ({ manual }) => {
+    // Clear any pending restart timer
+    if (restartTimerRef.current) {
+      clearTimeout(restartTimerRef.current);
+      restartTimerRef.current = null;
+    }
+
+    if (manual) {
+      manualStopRef.current = true;
+      shouldRestartRef.current = false;
+    }
+
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch (e) {
+        // Ignore errors when stopping
+      }
+    }
+
+    setVoiceActive(false);
+  };
+
+  // Original AI Suggest function (text-based AI enhancement)
   const suggestProfessionalSummary = async () => {
     try {
       const inputText = (formData.summary || '').trim();
@@ -1740,6 +2000,239 @@ const CVGenerator = () => {
       setIsSuggesting(false);
     }
   };
+
+  // Voice-to-text handler for the new voice button (Dictation Mode)
+  const handleVoiceSuggest = () => {
+    // If currently active -> Stop
+    if (voiceActiveRef.current) {
+      // Mark that we should process after stop
+      processAfterStopRef.current = true;
+      stopVoice({ manual: true });
+      return;
+    }
+
+    // If currently inactive -> Start
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert('Speech recognition not supported');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognitionRef.current = recognition;
+
+    recognition.lang = language === 'ar' ? 'ar-JO' : 'en-US';
+    recognition.interimResults = true;  // Enable interim results for live dictation
+    recognition.continuous = true;     // Enable continuous mode for indefinite listening
+
+    manualStopRef.current = false;
+    shouldRestartRef.current = true;
+    originalSummaryRef.current = formData.summary;
+
+    // Reset transcript buffers when starting
+    voiceFinalTranscriptRef.current = '';
+    voiceInterimTranscriptRef.current = '';
+    processAfterStopRef.current = false;
+
+    // Set active state BEFORE starting recognition for immediate UI update
+    setVoiceActive(true);
+
+    recognition.onresult = (event) => {
+      // Accumulate transcripts (do NOT stop recognition or call AI here)
+      let finalText = voiceFinalTranscriptRef.current || '';
+      let interimText = '';
+
+      // Iterate from resultIndex to end to get all new results
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const result = event.results[i];
+        const transcript = result[0]?.transcript?.trim() || '';
+
+        if (result.isFinal) {
+          // Final result: append to final transcript
+          if (transcript) {
+            finalText = (finalText + ' ' + transcript).trim();
+            voiceFinalTranscriptRef.current = finalText;
+          }
+        } else {
+          // Interim result: build interim text
+          if (transcript) {
+            interimText = transcript;
+            voiceInterimTranscriptRef.current = interimText;
+          }
+        }
+      }
+
+      // Update textarea live with combined final + interim
+      const display = [finalText, interimText].filter(Boolean).join(' ').trim();
+      if (display) {
+        handleChange('summary', display);
+      }
+    };
+
+    recognition.onend = async () => {
+      // Process after Stop (must check BEFORE early returns)
+      if (processAfterStopRef.current) {
+        processAfterStopRef.current = false;
+
+        // Build final text from accumulated final transcripts
+        const finalText = (voiceFinalTranscriptRef.current || '').trim();
+        voiceInterimTranscriptRef.current = '';
+
+        if (!finalText) {
+          // No transcript captured, restore original
+          handleChange('summary', originalSummaryRef.current || '');
+          setSummaryPlaceholder('');
+          setVoiceActive(false);
+          return;
+        }
+
+        // Detect language
+        const detectedLang = typeof detectLanguageFromText === 'function'
+          ? detectLanguageFromText(finalText)
+          : (/[\u0600-\u06FF]/.test(finalText) ? 'ar' : 'en');
+
+        // Set placeholder indicating AI processing
+        setSummaryPlaceholder(detectedLang === 'ar'
+          ? 'جاري التحسين بالذكاء الاصطناعي...'
+          : 'Improving with AI...');
+
+        // Call unified pipeline (sendTranscriptToAI owns isSuggesting lifecycle)
+        try {
+          await sendTranscriptToAI(finalText, detectedLang);
+        } catch (e) {
+          // Fallback: keep the final transcript
+          handleChange('summary', finalText);
+          console.error('[voice] Voice → AI failed:', e);
+        } finally {
+          setSummaryPlaceholder('');
+        }
+
+        setVoiceActive(false);
+        return;
+      }
+
+      // Existing restart logic (for unexpected browser stops)
+      // If user manually stopped OR should not restart OR not active -> just ensure inactive and return
+      if (manualStopRef.current || !shouldRestartRef.current || !voiceActiveRef.current) {
+        setVoiceActive(false);
+        return;
+      }
+
+      // Schedule a restart (250-400ms delay)
+      if (restartTimerRef.current) {
+        clearTimeout(restartTimerRef.current);
+      }
+
+      restartTimerRef.current = setTimeout(() => {
+        if (shouldRestartRef.current && voiceActiveRef.current && !manualStopRef.current && recognitionRef.current) {
+          try {
+            recognitionRef.current.start();
+          } catch (e) {
+            // Ignore InvalidStateError and other errors
+            if (e.name !== 'InvalidStateError') {
+              console.error('Failed to restart recognition:', e);
+            }
+            // If restart fails, stop listening
+            setVoiceActive(false);
+            shouldRestartRef.current = false;
+          }
+        }
+        restartTimerRef.current = null;
+      }, 300);
+    };
+
+    recognition.onerror = (event) => {
+      // If manual stop -> ignore
+      if (manualStopRef.current) {
+        return;
+      }
+
+      const error = event.error;
+
+      // Recoverable errors: restart if still active
+      if ((error === 'no-speech' || error === 'aborted') && 
+          shouldRestartRef.current && 
+          voiceActiveRef.current) {
+        if (restartTimerRef.current) {
+          clearTimeout(restartTimerRef.current);
+        }
+
+        restartTimerRef.current = setTimeout(() => {
+          if (shouldRestartRef.current && voiceActiveRef.current && !manualStopRef.current && recognitionRef.current) {
+            try {
+              recognitionRef.current.start();
+            } catch (e) {
+              if (e.name !== 'InvalidStateError') {
+                console.error('Failed to restart after error:', e);
+              }
+              stopVoice({ manual: false });
+            }
+          }
+          restartTimerRef.current = null;
+        }, 300);
+        return;
+      }
+
+      // Non-recoverable errors: stop listening
+      if (error === 'not-allowed' || 
+          error === 'service-not-allowed' || 
+          error === 'audio-capture' ||
+          error === 'network') {
+        stopVoice({ manual: false });
+      } else {
+        // Other errors - stop listening
+        stopVoice({ manual: false });
+      }
+    };
+
+    recognition.start();
+  };
+
+  // Cleanup recognition on language change only (not on isVoiceActive change)
+  useEffect(() => {
+    // Stop any active recognition when language changes
+    if (voiceActiveRef.current) {
+      // Clear any pending restart timer
+      if (restartTimerRef.current) {
+        clearTimeout(restartTimerRef.current);
+        restartTimerRef.current = null;
+      }
+      manualStopRef.current = true;
+      shouldRestartRef.current = false;
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch (e) {
+          // Ignore errors
+        }
+      }
+      setVoiceActive(false);
+    }
+  }, [language]); // Only runs on language change
+
+  // Cleanup on unmount only
+  useEffect(() => {
+    return () => {
+      // Clear any pending restart timer
+      if (restartTimerRef.current) {
+        clearTimeout(restartTimerRef.current);
+        restartTimerRef.current = null;
+      }
+      manualStopRef.current = true;
+      shouldRestartRef.current = false;
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch (e) {
+          // Ignore errors
+        }
+        recognitionRef.current = null;
+      }
+      setVoiceActive(false);
+    };
+  }, []); // Only runs on unmount
 
   const steps = [
     { number: 1, title: t('profile'), icon: User },
@@ -1878,19 +2371,39 @@ const CVGenerator = () => {
                   required
                   value={formData.summary}
                   onChange={(e) => handleChange('summary', e.target.value)}
-                  placeholder={t('summaryPlaceholder')}
+                  placeholder={summaryPlaceholder || t('summaryPlaceholder')}
                   rows={5}
                   className={errors.summary ? 'error' : ''}
                 />
-                <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '12px', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '12px', marginBottom: '8px', gap: '12px' }}>
                   <button 
                     type="button" 
                     className={`ai-suggest-btn ${formData.summary.trim().length < 50 ? 'disabled' : ''}`} 
                     onClick={suggestProfessionalSummary} 
-                    disabled={isSuggesting || formData.summary.trim().length < 50}
+                    disabled={isSuggesting || isVoiceActive || formData.summary.trim().length < 50}
                     title={formData.summary.trim().length < 50 ? t('summaryMinLength') : t('aiSuggestTooltip')}
                   >
-                    <Sparkles size={20} /> {isSuggesting ? t('generating') : t('aiSuggest')}
+                    <Sparkles size={20} /> 
+                    {isSuggesting ? t('generating') : t('aiSuggest')}
+                  </button>
+                  
+                  <button
+                    type="button"
+                    className={`voice-btn ${isVoiceActive ? 'voice-btn-stop' : ''}`}
+                    onClick={handleVoiceSuggest}
+                    disabled={isSuggesting && !isVoiceActive}
+                  >
+                    {isVoiceActive ? (
+                      <>
+                        <X size={16} />
+                        {language === 'ar' ? 'إيقاف' : 'Stop'}
+                      </>
+                    ) : (
+                      <>
+                        <Mic size={16} />
+                        {language === 'ar' ? 'تحدث' : 'Speak'}
+                      </>
+                    )}
                   </button>
                 </div>
                 <div className="summary-hint">
