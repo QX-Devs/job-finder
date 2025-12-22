@@ -823,7 +823,7 @@
 .nav-btn-secondary:hover {
   background: var(--primary-50);
   border-color: var(--primary-500);
-  color: #fff;
+  color: #000;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
 }
@@ -866,6 +866,49 @@
   flex-shrink: 0;
   display: block;
   pointer-events: none;
+}
+
+.mobile-language-btn{
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    border: 1px solid var(--primary-400);
+    background-color: #ffffff;
+    color: var(--primary-600) ;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    transition: 0.5s;
+}
+
+.mobile-language-btn:hover{
+    border: none;
+    background-color:var(--primary-600) ;
+    color:  #ffffff;
+    transform: scale(1.1) ;
+    -webkit-transform: scale(1.1) ;
+    -moz-transform: scale(1.1) ;
+    -ms-transform: scale(1.1) ;
+    -o-transform: scale(1.1) ;
+}
+
+/* Dark mode for mobile language button */
+html.dark .mobile-language-btn,
+:root.dark .mobile-language-btn {
+  border: 1px solid white;
+  background-color: #1f2937;
+  color: white;
+}
+
+html.dark .mobile-language-btn:hover,
+:root.dark .mobile-language-btn:hover {
+  border: none;
+  background-color: var(--primary-600);
+  color: #000;
 }
 
 @media (max-width: 1024px) {
