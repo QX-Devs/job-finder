@@ -3700,7 +3700,7 @@ select:focus-visible {
   .filter-toggle-btn.active {
     background: rgba(16, 185, 129, 0.15) !important;
     border-color: var(--primary-500) !important;
-    color: var(--primary-300) !important;
+    color: #000 !important;
   }
 
   .filters-panel {
