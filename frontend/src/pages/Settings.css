@@ -635,7 +635,7 @@
 }
 
 .btn-primary::before {
-  content: 'Create Your Resume';
+  content: '';
   position: absolute;
   opacity: 0;
   transition: opacity var(--settings-transition-fast);
