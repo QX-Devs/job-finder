@@ -525,10 +525,10 @@ html.dark .stat-chip svg,
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: -2%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
   transition: left 0.5s;
 }
 
@@ -538,7 +538,7 @@ html.dark .stat-chip svg,
 
 .category-chip:hover {
   border-color: var(--primary-500);
-  color: var(--primary-600);
+  color: black;
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
