@@ -861,8 +861,13 @@ const CVGenerator = () => {
   const [isListening, setIsListening] = useState(false);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [summaryPlaceholder, setSummaryPlaceholder] = useState('');
+  const [isProjectImproving, setIsProjectImproving] = useState(false);
+  const [isProjectVoiceActive, setIsProjectVoiceActive] = useState(false);
+  const [projectDescriptionPlaceholder, setProjectDescriptionPlaceholder] = useState('');
   const recognitionRef = useRef(null);
   const originalSummaryRef = useRef('');
+  const projectRecognitionRef = useRef(null);
+  const originalProjectDescriptionRef = useRef('');
   const manualStopRef = useRef(false);
   const shouldRestartRef = useRef(false);
   const voiceActiveRef = useRef(false);
@@ -1734,6 +1739,146 @@ const CVGenerator = () => {
     return hasArabic ? 'ar' : 'en';
   };
 
+  const improveGraduationProjectDescription = async (descriptionText) => {
+    const trimmed = (descriptionText || '').trim();
+    if (!trimmed) return;
+
+    try {
+      setIsProjectImproving(true);
+      const detectedLang = detectLanguageFromText(trimmed);
+      setProjectDescriptionPlaceholder(
+        detectedLang === 'ar' ? 'جاري التحسين بالذكاء الاصطناعي...' : 'Improving with AI...'
+      );
+
+      const response = await api.post('/ai/improve-project-description', { description: trimmed });
+      const improvedText =
+        response.data?.data?.improvedDescription ||
+        response.data?.improvedDescription ||
+        response.data?.result ||
+        '';
+
+      if (improvedText) {
+        const cleaned = improvedText.trim().replace(/^["']|["']$/g, '');
+        setFormData(prev => ({
+          ...prev,
+          graduationProject: { ...prev.graduationProject, description: cleaned }
+        }));
+        setErrors(prev => ({ ...prev, graduationProjectDescription: '' }));
+      }
+    } catch (error) {
+      console.error('Failed to improve project description with AI:', error);
+      alert(t('aiError') || 'Failed to improve the project description. Please try again.');
+    } finally {
+      setIsProjectImproving(false);
+      setProjectDescriptionPlaceholder('');
+    }
+  };
+
+  const stopProjectVoice = () => {
+    if (projectRecognitionRef.current) {
+      try {
+        projectRecognitionRef.current.stop();
+      } catch (e) {
+        // ignore
+      }
+    }
+    setIsProjectVoiceActive(false);
+  };
+
+  const handleProjectVoiceSuggest = () => {
+    if (isProjectVoiceActive) {
+      stopProjectVoice();
+      return;
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('Speech recognition is not supported in your browser. Please use Chrome or Edge.');
+      return;
+    }
+
+    originalProjectDescriptionRef.current = formData.graduationProject.description || '';
+
+    const recognition = new SpeechRecognition();
+    const recognitionLang = language === 'ar' ? 'ar-JO' : 'en-US';
+    recognition.lang = recognitionLang;
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    projectRecognitionRef.current = recognition;
+
+    setIsProjectVoiceActive(true);
+
+    recognition.onresult = async (event) => {
+      const transcript = event.results?.[0]?.[0]?.transcript?.trim() || '';
+      if (!transcript) {
+        setIsProjectVoiceActive(false);
+        setProjectDescriptionPlaceholder('');
+        return;
+      }
+
+      const detectedLang = detectLanguageFromText(transcript);
+      setProjectDescriptionPlaceholder(detectedLang === 'ar' ? 'جاري التحسين بالذكاء الاصطناعي...' : 'Improving with AI...');
+
+      setFormData(prev => ({
+        ...prev,
+        graduationProject: { ...prev.graduationProject, description: transcript }
+      }));
+
+      try {
+        await improveGraduationProjectDescription(transcript);
+      } finally {
+        setIsProjectVoiceActive(false);
+        setProjectDescriptionPlaceholder('');
+      }
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Project speech recognition error:', event.error);
+      setFormData(prev => ({
+        ...prev,
+        graduationProject: { ...prev.graduationProject, description: originalProjectDescriptionRef.current || '' }
+      }));
+      setIsProjectVoiceActive(false);
+      setProjectDescriptionPlaceholder('');
+
+      let errorMessage = 'Voice recognition failed. ';
+      switch (event.error) {
+        case 'no-speech':
+          errorMessage += 'No speech detected. Please try again.';
+          break;
+        case 'audio-capture':
+          errorMessage += 'No microphone found. Please check your microphone.';
+          break;
+        case 'not-allowed':
+          errorMessage += 'Microphone permission denied. Please allow microphone access.';
+          break;
+        case 'network':
+          errorMessage += 'Network error. Please check your connection.';
+          break;
+        default:
+          errorMessage += 'Please try again.';
+      }
+      alert(errorMessage);
+    };
+
+    recognition.onend = () => {
+      setIsProjectVoiceActive(false);
+      if (!isProjectImproving) {
+        setProjectDescriptionPlaceholder('');
+      }
+    };
+
+    try {
+      recognition.start();
+    } catch (error) {
+      console.error('Failed to start project recognition:', error);
+      setIsProjectVoiceActive(false);
+      setProjectDescriptionPlaceholder('');
+      alert('Failed to start voice recognition. Please try again.');
+    }
+  };
+
   // Helper function to start voice recognition
   const startVoiceRecognition = (lang) => {
     // Check if SpeechRecognition is available
@@ -2445,36 +2590,22 @@ const CVGenerator = () => {
                     type="text"
                     value={formData.github}
                     onChange={(e) => handleChange('github', e.target.value)}
-                    onFocus={(e) => {
-                      const container = e.target.closest('.github-input-container');
-                      if (container) {
-                        container.style.borderColor = '#00a651';
-                        container.style.boxShadow = '0 0 0 3px rgba(0, 166, 81, 0.1)';
-                      }
-                    }}
-                    onBlur={(e) => {
-                      const container = e.target.closest('.github-input-container');
-                      if (container) {
-                        container.style.borderColor = '#d1d5db';
-                        container.style.boxShadow = 'none';
-                      }
-                    }}
                     placeholder={t('githubUsernamePlaceholder') || 'username'}
                     style={{ 
-                      border: 'none !important', 
-                      outline: 'none !important', 
+                      border: 'none',
+                      outline: 'none',
                       flex: 1, 
                       fontSize: '20px', 
-                      padding: '0 !important',
-                      margin: '0 !important',
+                      padding: 0,
+                      margin: 0,
                       minHeight: '24px',
                       lineHeight: '1.5',
                       fontFamily: 'inherit',
                       fontWeight: '500',
-                      backgroundColor: 'transparent !important',
+                      backgroundColor: 'transparent',
                       width: '100%',
                       color: '#111827',
-                      boxShadow: 'none !important',
+                      boxShadow: 'none',
                       appearance: 'none',
                       WebkitAppearance: 'none',
                       MozAppearance: 'textfield'
@@ -2517,36 +2648,22 @@ const CVGenerator = () => {
                     type="text"
                     value={formData.linkedin}
                     onChange={(e) => handleChange('linkedin', e.target.value)}
-                    onFocus={(e) => {
-                      const container = e.target.closest('.linkedin-input-container');
-                      if (container) {
-                        container.style.borderColor = '#00a651';
-                        container.style.boxShadow = '0 0 0 3px rgba(0, 166, 81, 0.1)';
-                      }
-                    }}
-                    onBlur={(e) => {
-                      const container = e.target.closest('.linkedin-input-container');
-                      if (container) {
-                        container.style.borderColor = '#d1d5db';
-                        container.style.boxShadow = 'none';
-                      }
-                    }}
                     placeholder={t('linkedinUsernamePlaceholder') || 'username'}
                     style={{ 
-                      border: 'none !important', 
-                      outline: 'none !important', 
+                      border: 'none',
+                      outline: 'none',
                       flex: 1, 
                       fontSize: '18px', 
-                      padding: '0 !important',
-                      margin: '0 !important',
+                      padding: 0,
+                      margin: 0,
                       minHeight: '24px',
                       lineHeight: '1.5',
                       fontFamily: 'inherit',
                       fontWeight: '500',
-                      backgroundColor: 'transparent !important',
+                      backgroundColor: 'transparent',
                       width: '100%',
                       color: '#111827',
-                      boxShadow: 'none !important',
+                      boxShadow: 'none',
                       appearance: 'none',
                       WebkitAppearance: 'none',
                       MozAppearance: 'textfield'
@@ -2671,10 +2788,45 @@ const CVGenerator = () => {
                         ...prev,
                         graduationProject: { ...prev.graduationProject, description: e.target.value }
                       }))}
-                      placeholder={t('projectDescriptionPlaceholder') || 'Describe your project in detail (minimum 200 characters). Include the problem you solved, your approach, and the results achieved.'}
+                      placeholder={projectDescriptionPlaceholder || t('projectDescriptionPlaceholder') || 'Describe your project in detail (minimum 200 characters). Include the problem you solved, your approach, and the results achieved.'}
                       rows={6}
                       className={errors.graduationProjectDescription ? 'error' : ''}
                     />
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '12px', marginBottom: '8px', gap: '12px' }}>
+                      <button
+                        type="button"
+                        className={`ai-suggest-btn ${formData.graduationProject.description.trim().length < 50 ? 'disabled' : ''}`}
+                        onClick={() => improveGraduationProjectDescription(formData.graduationProject.description)}
+                        disabled={
+                          isProjectImproving ||
+                          isProjectVoiceActive ||
+                          formData.graduationProject.description.trim().length < 50
+                        }
+                        title={formData.graduationProject.description.trim().length < 50 ? (t('summaryMinLength') || 'Please write at least 50 characters') : (t('aiSuggestTooltip') || 'Improve with AI')}
+                      >
+                        <Sparkles size={20} />
+                        {isProjectImproving ? (t('generating') || 'Generating...') : (t('aiSuggest') || 'AI Suggest')}
+                      </button>
+
+                      <button
+                        type="button"
+                        className={`voice-btn ${isProjectVoiceActive ? 'voice-btn-stop' : ''}`}
+                        onClick={handleProjectVoiceSuggest}
+                        disabled={isProjectImproving && !isProjectVoiceActive}
+                      >
+                        {isProjectVoiceActive ? (
+                          <>
+                            <X size={16} />
+                            {language === 'ar' ? 'إيقاف' : 'Stop'}
+                          </>
+                        ) : (
+                          <>
+                            <Mic size={16} />
+                            {language === 'ar' ? 'تحدث' : 'Speak'}
+                          </>
+                        )}
+                      </button>
+                    </div>
                     <div className="summary-hint" style={{ marginTop: '8px' }}>
                       {formData.graduationProject.description.trim().length < 50 ? 
                         `${50 - formData.graduationProject.description.trim().length} ${t('moreCharactersNeeded') || 'more characters needed'}` : 
@@ -3134,7 +3286,7 @@ const CVGenerator = () => {
                       onChange={(e) => updateEducation(index, 'degree', e.target.value)}
                       className={errors[`education_${index}_degree`] ? 'error' : ''}
                     >
-                      <option value="">{t('selectDegree') || 'Select a degree'}</option>
+                      <option value="">{t('Select') || 'Select a degree'}</option>
                       {DEGREE_OPTIONS.map((degree) => (
                         <option key={degree} value={degree}>
                           {degree}

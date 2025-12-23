@@ -32,7 +32,6 @@ import Accessibility from "./pages/Accessibility";
 import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
 import SavedJobs from "./pages/SavedJobs";
-import Notifications from "./pages/Notifications";
 
 function App() {
   return (
@@ -94,14 +93,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <SavedJobs />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/notifications" 
-              element={
-                <ProtectedRoute>
-                  <Notifications />
                 </ProtectedRoute>
               } 
             />

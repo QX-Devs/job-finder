@@ -338,9 +338,9 @@ html.dark .stat-chip svg,
 }
 
 .search-box-enhanced:focus-within {
-  border-color: var(--primary-500);
   box-shadow: 0 0 0 4px var(--primary-50), 0 8px 16px rgba(16, 185, 129, 0.1);
   transform: translateY(-1px);
+  background-image: linear-gradient(white, white), linear-gradient(135deg, var(--primary-400), var(--primary-600));
 }
 
 .search-icon {
@@ -355,6 +355,11 @@ html.dark .stat-chip svg,
   font-size: 1rem;
   color: var(--gray-800);
   background: transparent;
+}
+
+.search-input-enhanced:focus{
+  outline: none;
+  box-shadow: none;
 }
 
 .search-input-enhanced::placeholder {
@@ -3640,8 +3645,9 @@ select:focus-visible {
   }
 
   .search-box-enhanced:focus-within {
-    border-color: var(--primary-500) !important;
     box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2), 0 8px 16px rgba(0, 0, 0, 0.3) !important;
+    background-image: linear-gradient(var(--color-bg-secondary), var(--color-bg-secondary)), 
+                      linear-gradient(135deg, var(--primary-500), var(--primary-400)) !important;
   }
 
   .search-icon {

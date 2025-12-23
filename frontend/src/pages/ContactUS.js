@@ -110,8 +110,8 @@ const ContactUs = () => {
       icon: '📧',
       title: t('emailUs'),
       details: t('emailResponse'),
-      contact: 'support@gradjob.com',
-      link: 'mailto:support@gradjob.com'
+      contact: 'gradjob.noreply@gmail.com',
+      link: 'mailto:gradjob.noreply@gmail.com'
     },
     {
       icon: '💬',

@@ -57,7 +57,6 @@ export const translations = {
     // Notifications
     notifications: "Notifications",
     markAllRead: "Mark all read",
-    viewAllNotifications: "View all notifications",
     
     // Auth
     signUpFree: "Sign Up Free",
@@ -853,7 +852,7 @@ verificationHelpMessage: "Need help? You can request a new verification email fr
   applicationTrackingComingSoon: "Application tracking coming soon.",
   quickSettings: "Quick Settings",
   accountSettings: "Account Settings",
-  editResume: "Edit Resume",
+  editResume: "Generate Resume",
   exploreJobs: "Explore Jobs",
   dashboardTip: "Tip: Boost your chances by keeping your resume fresh and tailored.",
   uploadCV: "Upload CV",
@@ -1088,7 +1087,6 @@ verificationHelpMessage: "Need help? You can request a new verification email fr
     // Notifications
     notifications: "الإشعارات",
     markAllRead: "تعيين الكل كمقروء",
-    viewAllNotifications: "عرض جميع الإشعارات",
     
     // Auth
     signUpFree: "اشتراك مجاني",

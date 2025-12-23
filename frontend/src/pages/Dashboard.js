@@ -513,12 +513,6 @@ const Dashboard = () => {
                     value="0" 
                     onClick={() => navigate('/saved-jobs')} 
                   />
-                  <StatCard 
-                    icon={Bell} 
-                    title={t('updates')} 
-                    value="0" 
-                    onClick={() => navigate('/notifications')} 
-                  />
                 </div>
                 <div className="dash-empty small">
                   <p>{t('applicationTrackingComingSoon')}</p>

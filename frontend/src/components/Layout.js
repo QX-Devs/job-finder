@@ -459,17 +459,6 @@ const Layout = ({ children }) => {
                             </div>
                           )}
                         </div>
-                        <div className="notifications-footer">
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate('/notifications');
-                              setIsNotificationsOpen(false);
-                            }}
-                          >
-                            {t('viewAllNotifications')}
-                          </button>
-                        </div>
                       </div>
                     )}
                   </div>
