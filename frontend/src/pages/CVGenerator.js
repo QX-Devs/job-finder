@@ -2415,7 +2415,7 @@ const CVGenerator = () => {
               </div>
 
               <div className="form-group">
-                <label><Github size={18} /> {t('githubProfile')}</label>
+                <label><Github size={18} /> {t('githubProfile')} <span style={{ fontSize: '14px', fontWeight: 'bold' , color: '#6b7280' }}>(optional)</span></label>
                 <div 
                   className="github-input-container unified-input-box"
                   style={{ 
@@ -2487,7 +2487,7 @@ const CVGenerator = () => {
               </div>
 
               <div className="form-group">
-                <label><Linkedin size={18} /> {t('linkedinProfile')}</label>
+                <label><Linkedin size={18} /> {t('linkedinProfile')} <span style={{ fontSize: '14px', fontWeight: 'bold' , color: '#6b7280' }}>(optional)</span></label>
                 <div 
                   className="linkedin-input-container unified-input-box"
                   style={{ 
@@ -2704,7 +2704,7 @@ const CVGenerator = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>{t('projectDuration') || 'Project Duration'}</label>
+                      <label>{t('projectDuration') || 'Project Duration'} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                       <input
                         type="text"
                         value={formData.graduationProject.duration}
@@ -2857,7 +2857,7 @@ const CVGenerator = () => {
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>{t('githubRepository') || 'GitHub / Repository Link (Optional)'}</label>
+                      <label>{t('githubRepository') || 'GitHub / Repository Link'} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                       <input
                         type="url"
                         value={formData.graduationProject.githubUrl}
@@ -2870,7 +2870,7 @@ const CVGenerator = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>{t('supervisor') || 'Supervisor / Professor'}</label>
+                      <label>{t('supervisor') || 'Supervisor / Professor'} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                       <input
                         type="text"
                         value={formData.graduationProject.supervisor}
@@ -3035,7 +3035,7 @@ const CVGenerator = () => {
 
                     <div className="form-row">
                       <div className="form-group">
-                        <label>{t('startDate')}</label>
+                        <label>{t('startDate')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                         <input
                           type="month"
                           value={exp.startDate}
@@ -3045,7 +3045,7 @@ const CVGenerator = () => {
                       </div>
 
                       <div className="form-group">
-                        <label>{t('endDate')}</label>
+                        <label>{t('endDate')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                         {exp.current ? (
                           <input
                             type="text"
@@ -3084,7 +3084,7 @@ const CVGenerator = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>{t('description')}</label>
+                      <label>{t('description')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                       <textarea
                         value={exp.description}
                         onChange={(e) => updateExperience(index, 'description', e.target.value)}
@@ -3172,7 +3172,7 @@ const CVGenerator = () => {
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>{t('fieldOfStudy')}</label>
+                      <label>{t('fieldOfStudy')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                       <input
                         type="text"
                         value={edu.fieldOfStudy}
@@ -3182,7 +3182,7 @@ const CVGenerator = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>{t('graduationDate')}</label>
+                      <label>{t('graduationDate')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                       <input
                         type="month"
                         value={edu.graduationDate}
@@ -3192,7 +3192,7 @@ const CVGenerator = () => {
                   </div>
 
                   <div className="form-group">
-                    <label>GPA / Grade (optional)</label>
+                    <label>GPA / Grade <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                     <input
                       type="text"
                       value={edu.gpa || ''}
@@ -3223,7 +3223,7 @@ const CVGenerator = () => {
               <p className="step-description">{t('showcaseExpertise')}</p>
 
               <div className="form-group">
-                <label>{t('technicalSkills')}</label>
+                <label>{t('technicalSkills')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                 <div className="skills-input-container" style={{ position: 'relative' }}>
                   <div className="skills-input">
                     <input
@@ -3301,7 +3301,7 @@ const CVGenerator = () => {
               </div>
 
               <div className="form-group">
-                <label><Globe size={18} /> {t('languages')}</label>
+                <label><Globe size={18} /> {t('languages')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                 {formData.languages.map((lang, index) => (
                   <div key={index}>
                     <div className="language-row">
@@ -3403,7 +3403,7 @@ const CVGenerator = () => {
                   </div>
 
                   <div className="form-group">
-                    <label>{t('provider') || 'Provider/Institution'}</label>
+                    <label>{t('provider') || 'Provider/Institution'} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                     <input
                       type="text"
                       value={course.provider}
@@ -3414,7 +3414,7 @@ const CVGenerator = () => {
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
                     <div className="form-group">
-                      <label>{t('completionDate') || 'Completion Date'}</label>
+                      <label>{t('completionDate') || 'Completion Date'} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                       <input
                         type="date"
                         value={course.completionDate}
@@ -3423,7 +3423,7 @@ const CVGenerator = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>{t('category') || 'Category'}</label>
+                      <label>{t('category') || 'Category'} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                       <input
                         type="text"
                         value={course.category}
@@ -3434,7 +3434,7 @@ const CVGenerator = () => {
                   </div>
 
                   <div className="form-group">
-                    <label>{t('certificateUrl') || 'Certificate URL (Optional)'}</label>
+                    <label>{t('certificateUrl') || 'Certificate URL'} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                     <input
                       type="url"
                       value={course.certificateUrl}
