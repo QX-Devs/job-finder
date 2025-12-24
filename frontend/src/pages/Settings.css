@@ -1240,18 +1240,6 @@
   }
 }
 
-/* Focus Styles */
-.settings-tabs button:focus-visible,
-.form-group input:focus-visible,
-.form-group select:focus-visible,
-.form-group textarea:focus-visible,
-.btn-primary:focus-visible,
-.btn-secondary:focus-visible,
-.btn-danger:focus-visible,
-.country-code-select:focus-visible {
-  outline: 3px solid var(--settings-primary-400);
-  outline-offset: 2px;
-}
 
 /* High Contrast Mode */
 @media (prefers-contrast: high) {
@@ -1570,8 +1558,8 @@ html.dark .settings-error {
 
 /* Material-UI Autocomplete dark mode styles */
 html.dark .MuiOutlinedInput-root {
-  background-color: rgba(51, 65, 85, 0.6) !important;
-  color: #f1f5f9 !important;
+  background-color: #ffffff ;
+  color: #fff ;
 }
 
 html.dark .MuiOutlinedInput-root fieldset {
@@ -1588,17 +1576,18 @@ html.dark .MuiOutlinedInput-root.Mui-focused fieldset {
 }
 
 html.dark .MuiInputBase-input {
-  color: #f1f5f9 !important;
+  color: #000000 !important;
 }
 
 html.dark .MuiInputBase-input::placeholder {
-  color: #94a3b8 !important;
+  color: #ffffff !important;
   opacity: 1;
 }
 
 html.dark .MuiAutocomplete-listbox {
   background-color: rgba(30, 41, 59, 0.98) !important;
-  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+  border: 1px solid rgba(0, 255, 170, 0.5) !important;
+  
 }
 
 html.dark .MuiAutocomplete-option {

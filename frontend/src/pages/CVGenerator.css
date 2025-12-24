@@ -307,11 +307,7 @@
   margin: 0 !important;
 }
 
-.unified-input-box input:focus,
-.unified-input-box input:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
+
 
 .unified-input-box:focus-within {
   outline: none !important;

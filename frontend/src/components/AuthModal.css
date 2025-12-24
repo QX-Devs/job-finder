@@ -787,14 +787,6 @@
   }
 }
 
-/* Focus visible for accessibility */
-.auth-tab:focus-visible,
-.auth-submit-btn:focus-visible,
-.link-btn:focus-visible,
-.toggle-password:focus-visible {
-  outline: 3px solid #10b981;
-  outline-offset: 2px;
-}
 
 .form-group input:focus-visible {
   outline: none;

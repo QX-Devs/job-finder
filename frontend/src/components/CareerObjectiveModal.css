@@ -131,6 +131,27 @@
 }
 
 /* ========== MODAL CONTAINER - Premium Feel ========== */
+
+:root.dark .career-objective-modal {
+   background: rgb(228, 228, 228);
+  border-radius: var(--co-radius-2xl);
+  box-shadow: 
+    var(--co-shadow-2xl),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100vh - var(--co-space-12));
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: var(--co-z-modal);
+  animation: modalEnter 0.4s var(--co-ease-spring);
+  overflow: hidden;
+}
+
+
+
 .career-objective-modal {
   background: linear-gradient(
     180deg,
@@ -381,6 +402,7 @@
 .career-objective-modal-input .required {
   color: var(--co-error);
   font-weight: 500;
+  display: none;
 }
 
 /* MUI Autocomplete Overrides */
@@ -435,7 +457,7 @@
 
 /* Input Text */
 .career-objective-modal-input .MuiInputBase-input {
-  padding: 14px 16px;
+  padding: 100px 16px;
   font-size: 15px;
   color: var(--co-gray-900);
   font-family: var(--co-font-sans);

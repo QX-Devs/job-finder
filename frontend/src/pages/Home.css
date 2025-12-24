@@ -357,7 +357,7 @@ html.dark .stat-chip svg,
   background: transparent;
 }
 
-.search-input-enhanced:focus{
+.search-input-enhanced:focus , :root.dark .search-input-enhanced:focus {
   outline: none;
   box-shadow: none;
 }
@@ -530,7 +530,7 @@ html.dark .stat-chip svg,
   content: '';
   position: absolute;
   top: 0;
-  left: -10%;
+  left: -100%;
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
@@ -556,6 +556,8 @@ html.dark .stat-chip svg,
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
+
+
 .category-count {
   padding: 2px 8px;
   background: rgba(0, 0, 0, 0.1);
@@ -576,6 +578,7 @@ html.dark .stat-chip svg,
   color: #ffffff;
   font-weight: 700;
 }
+
 
 /* ============================================
    Filters Panel
@@ -3464,14 +3467,6 @@ html {
   }
 }
 
-/* Focus styles for accessibility */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible {
-  outline: 3px solid var(--primary-500);
-  outline-offset: 2px;
-}
 
 /* Language Toggle Button */
 .header-actions {
@@ -3692,23 +3687,23 @@ select:focus-visible {
      ============================================ */
   
   .filter-toggle-btn {
-    background: var(--color-bg-secondary) !important;
-    border-color: var(--color-border) !important;
-    color: var(--color-text-primary) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    background: var(--color-bg-secondary) ;
+    border-color: var(--color-border) ;
+    color: var(--color-text-primary) ;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) ;
   }
 
   .filter-toggle-btn:hover {
-    border-color: var(--primary-500) !important;
-    color: var(--primary-300) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    border-color: var(--primary-500) ;
+    color: #000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) ;
+    background-color: #fff;
   }
 
-  .filter-toggle-btn.active {
-    background: rgba(16, 185, 129, 0.15) !important;
-    border-color: var(--primary-500) !important;
-    color: #159d59 !important;
-  }
+ .filter-toggle-btn:focus{
+    outline: none;
+ }
+
 
   .filters-panel {
     background: var(--color-bg-secondary) !important;
@@ -3762,27 +3757,27 @@ select:focus-visible {
      CATEGORY CHIPS - Dark Mode Fixes
      ============================================ */
   
-  .category-chip {
+  :root.dark .category-chip {
     background: var(--color-bg-secondary) !important;
     border-color: var(--color-border) !important;
     color: var(--color-text-primary) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   }
 
-  .category-chip:hover {
+ :root.dark .category-chip:hover {
     border-color: var(--primary-500) !important;
-    color: var(--primary-300) !important;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2) !important;
   }
 
-  .category-chip.active {
+ :root.dark .category-chip.active {
     background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%) !important;
     border-color: var(--primary-500) !important;
-    color: #ffffff !important;
+    color: #000 !important;
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
   }
 
-  .category-count {
+ :root.dark .category-count {
     background: rgba(0, 0, 0, 0.2) !important;
     color: var(--color-text-primary) !important;
     font-weight: 700 !important;
@@ -3790,9 +3785,9 @@ select:focus-visible {
     text-align: center !important;
   }
 
-  .category-chip.active .category-count {
-    background: rgba(255, 255, 255, 0.25) !important;
-    color: #ffffff !important;
+ :root.dark .category-chip.active .category-count {
+    background: #fff !important;
+    color: #000 !important;
     font-weight: 700 !important;
   }
 
@@ -4273,7 +4268,6 @@ select:focus-visible {
   .features-badge {
     background: var(--color-bg-secondary) !important;
     border-color: var(--primary-600) !important;
-    color: var(--primary-300) !important;
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
   }
 
@@ -4385,7 +4379,6 @@ html.dark .resume-generator-section {
   .resume-badge {
     background: var(--color-bg-secondary) !important;
     border-color: var(--primary-600) !important;
-    color: var(--primary-300) !important;
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
   }
 
@@ -4422,10 +4415,14 @@ html.dark .resume-generator-section {
     background: var(--color-bg-tertiary) !important;
   }
 
+  :root.dark .resume-badge-page{
+    color: #000;
+  }
+
   .resume-badge-page {
     background: rgba(255, 255, 255, 0.95) !important;
     border-color: var(--color-border) !important;
-    color: var(--color-text-primary) !important;
+    color: var(--color-text-primary) ;
   }
 
   .resume-caption h3 {
@@ -4508,13 +4505,6 @@ html.dark .resume-generator-section {
      FOCUS STATES - Dark Mode Fixes
      ============================================ */
   
-  button:focus-visible,
-  a:focus-visible,
-  input:focus-visible,
-  select:focus-visible {
-    outline-color: var(--primary-500) !important;
-    outline-offset: 2px !important;
-  }
 
   /* ============================================
      GRADIENT TEXT - Dark Mode Fixes
@@ -4584,8 +4574,7 @@ html.dark .resume-generator-section {
 :root.dark .job-details-panel,
 :root.dark .feature-card-enhanced,
 :root.dark .resume-card,
-:root.dark .filters-panel,
-:root.dark .results-bar {
+:root.dark .filters-panel {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -4720,12 +4709,6 @@ html.dark .stats-banner .stat-chip svg {
   background: rgba(30, 41, 59, 0.7) !important;
 }
 
-/* 6. ENHANCED FOCUS INDICATORS - Better visibility */
-:root.dark *:focus-visible {
-  outline: 2px solid var(--primary-500);
-  outline-offset: 2px;
-}
-
 /* 7. SHADOW ENHANCEMENT - Colored shadows in dark mode */
 :root.dark .job-card-enhanced:hover {
   box-shadow: 0 12px 40px rgba(16, 185, 129, 0.25), 0 0 0 1px var(--primary-500) !important;
@@ -4781,6 +4764,12 @@ html.dark .stats-banner .stat-chip svg {
 :root.dark textarea,
 :root.dark select {
   color-scheme: dark;
+}
+
+/* 11.b. SEARCH BOX ENHANCED - Dark mode specific overrides */
+:root.dark .search-box-enhanced:focus ,   :root.dark .search-box-enhanced:focus-visible {
+  border: none;
+  outline: none;
 }
 
 /* 12. ENHANCED GRADIENT TEXT IN DARK MODE - Brighter, animated gradient */

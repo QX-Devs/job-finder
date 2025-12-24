@@ -393,6 +393,7 @@
   cursor: pointer;
   transition: all var(--transition-base);
   padding: 6px;
+  outline: none;
 }
 
 .icon-action-btn:hover {
@@ -1899,11 +1900,7 @@ html.dark .mobile-language-btn:hover,
   }
 }
 
-button:focus-visible,
-a:focus-visible {
-  outline: 3px solid var(--primary-500);
-  outline-offset: 2px;
-}
+
 
 /* ============================================
    Smooth Scrollbar
@@ -1955,6 +1952,7 @@ a:focus-visible {
   border-color: var(--primary-200) !important;
   color: var(--primary-600) !important;
   transform: translateY(-2px) scale(1.05) !important;
+  outline: none;
 }
 
 .theme-toggle-btn:active {
@@ -1978,7 +1976,13 @@ a:focus-visible {
   background: var(--primary-100) !important;
   border-color: var(--primary-300) !important;
   color: var(--primary-600) !important;
+  outline: none;
 }
+
+ .theme-toggle-btn.dark-active , .theme-toggle-btn {
+  outline: none;
+}
+
 
 /* For mobile view */
 .navbar-mobile-actions .theme-toggle-btn {

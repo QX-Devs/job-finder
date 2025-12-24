@@ -265,6 +265,9 @@ const Home = () => {
       // Job type filter
       const matchesType = filters.jobType === 'all' || job.jobType === filters.jobType;
 
+      // Job type filter
+      
+
       // Location filter
       let matchesLocation = true;
       if (filters.location !== 'all') {
@@ -740,6 +743,8 @@ const Home = () => {
                     className="filter-select-enhanced"
                   >
                     <option value="all">{t('allTypes')}</option>
+                    <option value="remote">Remote</option>
+                    <option value="part-time">Part-Time</option>
                     {uniqueJobTypes.map(type => (
                       <option key={type} value={type}>{type}</option>
                     ))}
@@ -754,7 +759,6 @@ const Home = () => {
                     className="filter-select-enhanced"
                   >
                     <option value="all">{t('allLocations')}</option>
-                    <option value="remote">Remote</option>
                     {uniqueLocations
                       .filter(loc => !loc.toLowerCase().includes('remote'))
                       .map(location => (
@@ -792,7 +796,7 @@ const Home = () => {
                   </select>
                 </div>
 
-                <div className="filter-group">
+                {/* <div className="filter-group">
                   <label className="checkbox-label">
                     <input
                       type="checkbox"
@@ -801,55 +805,12 @@ const Home = () => {
                     />
                     <span>{t('remoteOnly')}</span>
                   </label>
-                </div>
+                </div> */}
+
+                
               </div>
             </div>
           )}
-
-          {/* Results Bar */}
-          <div className="results-bar">
-            <div className="results-info">
-              <p>
-                {t('showing')} <strong>{Math.min(displayCount, filteredJobs.length)}</strong> {t('of')}{' '}
-                <strong>{filteredJobs.length}</strong> {t('jobs')}
-                {activeFiltersCount > 0 && (
-                  <span style={{ marginLeft: '12px', color: 'var(--primary-600)', fontWeight: 600 }}>
-                    • {t('activeFilters')}: {activeFiltersCount}
-                  </span>
-                )}
-              </p>
-            </div>
-
-            <div className="results-controls">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="sort-select"
-              >
-                <option value="latest">{t('latest')}</option>
-                <option value="salary-high">{t('salaryHigh')}</option>
-                <option value="salary-low">{t('salaryLow')}</option>
-                <option value="popular">{t('popular')}</option>
-              </select>
-
-              <div className="view-toggle">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                  title="Grid View"
-                >
-                  <Grid3x3 size={18} />
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-                  title="List View"
-                >
-                  <List size={18} />
-                </button>
-              </div>
-            </div>
-          </div>
 
                     {/* Loading State */}
           {isLoading ? (

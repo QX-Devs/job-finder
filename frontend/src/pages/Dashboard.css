@@ -1824,18 +1824,6 @@
   }
 }
 
-/* Focus Styles */
-.dash-action:focus-visible,
-.btn-small:focus-visible,
-.btn-primary:focus-visible,
-.btn-outline:focus-visible,
-.dash-stat-card:focus-visible,
-.dash-quick-links button:focus-visible,
-.dash-list-actions .link:focus-visible {
-  outline: 3px solid var(--primary-400);
-  outline-offset: 2px;
-}
-
 /* High Contrast Mode */
 @media (prefers-contrast: high) {
   .dash-card {
