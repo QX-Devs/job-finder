@@ -442,7 +442,7 @@ const TermsOfService = () => {
               <div style={{marginBottom: '1.5rem'}}>
                 <h3 className="subsection-title">{t('teamQXGradJob')}</h3>
                 <p className="body-text">
-                  {t('email')}: <a href="mailto:legal@gradjob.com" className="animated-link">legal@gradjob.com</a>
+                  {t('email')}: <a href="mailto: gradjob.noreply@gmail.com" className="animated-link">gradjob.noreply@gmail.com</a>
                 </p>
                 <p className="body-text">
                   {t('privacyPolicy')}: <a href="/privacy-policy" className="animated-link">{t('viewPrivacyPolicy')}</a>

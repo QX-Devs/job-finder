@@ -270,10 +270,6 @@ const PrivacyPolicy = () => {
                   <strong>{t('teamQXGradJob')}</strong>
                 </div>
                 <div className="contact-item">
-                  <span className="contact-label">{t('email')}:</span>
-                  <a href="mailto:privacy@gradjob.com" className="policy-link">privacy@gradjob.com</a>
-                </div>
-                <div className="contact-item">
                   <span className="contact-label">{t('support')}:</span>
                   <a href="mailto:gradjob.noreply@gmail.com" className="policy-link">gradjob.noreply@gmail.com</a>
                 </div>

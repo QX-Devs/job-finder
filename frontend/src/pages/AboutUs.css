@@ -280,9 +280,19 @@ body {
   justify-content: center;
 }
 
-.skill-chip {
+:root.dark .skill-chip {
   background: rgba(108, 99, 255, 0.2);
   color: white;
+  border: 1px solid rgba(108, 99, 255, 0.5);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+ .skill-chip {
+  background: rgba(108, 99, 255, 0.2);
+  color: rgb(0, 0, 0);
   border: 1px solid rgba(108, 99, 255, 0.5);
   padding: 6px 12px;
   border-radius: 20px;
@@ -352,8 +362,9 @@ body {
 }
 
 .tech-name {
-  color: white;
+  color: rgb(0, 0, 0);
   font-weight: 600;
+  
 }
 
 /* Buttons */

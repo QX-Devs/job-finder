@@ -173,7 +173,7 @@ button:disabled {
 .skills-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 0;
+  gap: 15px;
   align-items: center;
 }
 
