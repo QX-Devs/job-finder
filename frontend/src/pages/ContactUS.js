@@ -95,15 +95,45 @@ const ContactUs = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
     
-    if (validateForm()) {
-      console.log('Form submitted:', formData);
-      setShowSnackbar(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
+  //   if (validateForm()) {
+  //     console.log('Form submitted:', formData);
+  //     setShowSnackbar(true);
+  //     setFormData({ name: '', email: '', subject: '', message: '' });
+  //   }
+  // };
+
+  // داخل ملف ContactUs.js
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (validateForm()) {
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setShowSnackbar(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        alert(result.message || "Error sending message");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Could not connect to the server");
     }
-  };
+  }
+};
 
   const contactMethods = [
     {

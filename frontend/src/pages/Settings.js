@@ -46,7 +46,6 @@ const countryCodes = [
   { code: '+62', country: 'إندونيسيا', countryCode: 'ID' },
   { code: '+971', country: 'الإمارات', countryCode: 'AE' },
   { code: '+966', country: 'السعودية', countryCode: 'SA' },
-  { code: '+972', country: 'إسرائيل', countryCode: 'IL' },
   { code: '+90', country: 'تركيا', countryCode: 'TR' },
   { code: '+20', country: 'مصر', countryCode: 'EG' },
   { code: '+27', country: 'جنوب أفريقيا', countryCode: 'ZA' },

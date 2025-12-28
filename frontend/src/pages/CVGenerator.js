@@ -53,7 +53,6 @@ const countryCodes = [
   { code: '+62', country: 'إندونيسيا', countryCode: 'ID' },
   { code: '+971', country: 'الإمارات', countryCode: 'AE' },
   { code: '+966', country: 'السعودية', countryCode: 'SA' },
-  { code: '+972', country: 'إسرائيل', countryCode: 'IL' },
   { code: '+90', country: 'تركيا', countryCode: 'TR' },
   { code: '+20', country: 'مصر', countryCode: 'EG' },
   { code: '+27', country: 'جنوب أفريقيا', countryCode: 'ZA' },
@@ -1431,6 +1430,8 @@ const CVGenerator = () => {
       if (!formData.fullName.trim()) newErrors.fullName = t('nameRequired') || 'Name is required';
       const fullPhone = `${countryCode}${phoneNumber}`;
       if (!phoneNumber.trim()) newErrors.phone = t('phoneRequired') || 'Phone number is required';
+      else if (phoneNumber.length !== 9) newErrors.phone = t('Phone number must be 9 digits');
+      else if (!/^(79|78|77)/.test(phoneNumber)) newErrors.phone = t('Phone number must start with 79, 78, or 77')
       // Update formData.phone with combined value
       setFormData(prev => ({ ...prev, phone: fullPhone }));
       if (!formData.title.trim()) newErrors.title = t('titleRequired');
@@ -2419,7 +2420,7 @@ const CVGenerator = () => {
                   type="text"
                   value={formData.fullName}
                   onChange={(e) => handleChange('fullName', e.target.value)}
-                  placeholder={t('enterName') || 'Enter your full name'}
+                  placeholder={t('Enter Name') || 'Enter your full name'}
                   className={errors.fullName ? 'error' : ''}
                 />
                 {errors.fullName && <span className="error-message">{errors.fullName}</span>}
@@ -2487,10 +2488,16 @@ const CVGenerator = () => {
                     type="tel"
                     className={`phone-number-input ${errors.phone ? 'error' : ''}`}
                     value={phoneNumber}
+                    maxLength={9}
                     onChange={(e) => {
-                      // Only allow numbers
+                      // Only allow numbers and limit to 9 digits
                       const numbersOnly = e.target.value.replace(/\D/g, '');
-                      setPhoneNumber(numbersOnly);
+                      const limited = numbersOnly.slice(0, 9);
+                      setPhoneNumber(limited);
+                      // Clear phone error when it becomes valid length and has an allowed prefix
+                      if (limited.length === 9 && /^(79|78|77)/.test(limited) && errors.phone) {
+                        setErrors(prev => ({ ...prev, phone: '' }));
+                      }
                     }}
                     placeholder={t('phonePlaceholder') || '795600000'}
                   />
@@ -3298,7 +3305,7 @@ const CVGenerator = () => {
                         type="text"
                         value={edu.customDegree || ''}
                         onChange={(e) => updateEducation(index, 'customDegree', e.target.value)}
-                        placeholder={t('enterDegree') || 'Enter your degree'}
+                        placeholder={t('Enter Degree') || 'Enter your degree'}
                         style={{ marginTop: '10px' }}
                         className={errors[`education_${index}_degree`] ? 'error' : ''}
                       />
@@ -3493,7 +3500,7 @@ const CVGenerator = () => {
                         type="text"
                         value={lang.customLanguage || ''}
                         onChange={(e) => updateLanguage(index, 'customLanguage', e.target.value)}
-                        placeholder={t('enterLanguage') || 'Enter language name'}
+                        placeholder={t('Enter Language') || 'Enter language name'}
                         style={{ marginTop: '8px', marginBottom: '12px', width: '100%' }}
                       />
                     )}

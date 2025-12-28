@@ -986,10 +986,7 @@
     0 0 0 5px var(--co-primary);
 }
 
-.career-objective-modal-input .MuiOutlinedInput-root.Mui-focused.Mui-focusVisible {
-  outline: 3px solid var(--co-primary);
-  outline-offset: 2px;
-}
+
 
 /* Screen Reader Only */
 .sr-only {

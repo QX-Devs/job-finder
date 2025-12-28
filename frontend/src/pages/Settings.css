@@ -1385,7 +1385,7 @@ html.dark .form-group input[type="password"],
 html.dark .form-group input[type="tel"],
 html.dark .form-group textarea,
 html.dark .form-group select {
-  background: rgba(51, 65, 85, 0.6) !important;
+  background: transparent !important;
   border-color: rgba(148, 163, 184, 0.3) !important;
   color: #f1f5f9 !important;
 }

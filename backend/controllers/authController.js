@@ -972,4 +972,4 @@ const deleteAccount = async (req, res) => {
   }
 };
 
-module.exports = { register, login, verifyEmail, forgotPassword, resetPassword, resendVerificationEmail, getAuthStatus, getMe, updateProfile, changePassword, deleteAccount };
+module.exports = { register, login, verifyEmail , forgotPassword, resetPassword, resendVerificationEmail, getAuthStatus, getMe, updateProfile, changePassword, deleteAccount };

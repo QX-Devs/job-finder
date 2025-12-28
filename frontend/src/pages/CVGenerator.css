@@ -1270,11 +1270,7 @@ html.dark .phone-number-input {
   color: #f1f5f9 !important;
 }
 
-html.dark .phone-number-input:focus {
-  background: rgba(51, 65, 85, 0.8) !important;
-  border-color: #10b981 !important;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
-}
+
 
 html.dark .phone-number-input.error {
   border-color: #ef4444 !important;
@@ -1484,7 +1480,7 @@ html.dark .toggle-circle {
 
 /* Error Message */
 html.dark .error-message {
-  color: #fca5a5 !important;
+  color: #e93b3b !important;
 }
 
 /* Next and Save Buttons */

@@ -1143,8 +1143,8 @@ const Home = () => {
           <div className="resume-grid">
             {(() => {
               const publicBase = process.env.PUBLIC_URL || '';
-              const svg1 = `${publicBase}/${encodeURIComponent('Mohammad Kayyali-1.svg')}`;
-              const svg2 = `${publicBase}/${encodeURIComponent('Mohammad Kayyali-2.svg')}`;
+              const svg1 = `${publicBase}/${encodeURIComponent('CV1.svg')}`;
+              const svg2 = `${publicBase}/${encodeURIComponent('CV2.svg')}`;
               return (
                 <>
                   <div className="resume-card" onClick={() => navigate('/cv-generator')}>
