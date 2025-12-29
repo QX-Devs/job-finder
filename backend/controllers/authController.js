@@ -944,8 +944,8 @@ const changePassword = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ success: false, message: 'Current password is incorrect' });
     }
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
+    // Set the plain password - the beforeUpdate hook will hash it
+    user.password = newPassword;
     await user.save();
     return res.json({ success: true, message: 'Password updated successfully' });
   } catch (error) {
