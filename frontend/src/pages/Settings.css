@@ -322,6 +322,13 @@
   background: #ffffff;
 }
 
+.form-group input[type="text"]:focus , .form-group input[type="text"] {
+  outline: none;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
 .form-group input::placeholder,
 .form-group textarea::placeholder {
   color: var(--settings-gray-400);
