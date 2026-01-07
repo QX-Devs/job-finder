@@ -1,178 +1,645 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   viewBox="0 0 816 1056"
-   height="1056"
+   version="1.1"
+   id="svg1"
    width="816"
-   xml:space="preserve"
-   id="svg2"
-   version="1.1"><metadata
-     id="metadata8"><rdf:RDF><cc:Work
-         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
-     id="defs6"><clipPath
-       id="clipPath110"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path108"
-         d="m 40.639999,268.32001 h 48.160004 v 16.32 H 40.639999 Z" /></clipPath><clipPath
-       id="clipPath122"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path120"
-         d="m 88.800003,268.32001 h 8.159996 v 16.32 h -8.159996 z" /></clipPath><clipPath
-       id="clipPath130"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path128"
-         d="m 317.44,268.32001 h 80.63999 v 16.32 H 317.44 Z" /></clipPath><clipPath
-       id="clipPath142"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path140"
-         d="m 398.07999,268.32001 h 8.16 v 16.32 h -8.16 z" /></clipPath></defs><g
-     transform="translate(0,2.64e-5)"
-     id="g10"><g
-       id="g12"><text
-         id="text16"
-         style="font-variant:normal;font-weight:normal;font-size:21.23970032px;font-family:F1;-inkscape-font-specification:F1;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,53.279999)"><tspan
-           id="tspan14"
-           y="0"
-           x="0 14.166714 29.671696 45.010326 60.348957 75.687592 88.661644 94.562714 111.08363 126.80101">EDUCATION </tspan></text>
-</g><g
-       id="g18"><path
-         id="path20"
-         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         d="M 38.080002,59.040001 H 777.91998 V 60 H 38.080002 Z" /></g><g
-       id="g22"><text
-         id="text26"
-         style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F1;-inkscape-font-specification:F1;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,73.919998)"><tspan
-           id="tspan24"
-           y="0"
-           x="0 9.6967859 18.671307 27.645826 33.363407 37.624115 48.055508 56.226551 65.201073 70.918655 79.089699 87.260742 91.342682">Your Degree 1</tspan></text>
-</g><g
-       id="g28" /><g
-       id="g30"><text
-         id="text34"
-         style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F2;-inkscape-font-specification:F2;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,91.199997)"><tspan
-           id="tspan32"
-           y="0"
-           x="0 10.610164 18.690819 21.954933 29.300983 37.381638 42.376953 49.723003 52.987118 57.069054 64.4151 68.49704 79.107201 87.040939 99.382301 107.55334 111.63528">University Name 1</tspan></text>
-</g><g
-       id="g36" /><g
-       id="g38"><text
-         id="text42"
-         style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F1;-inkscape-font-specification:F1;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,110.72)"><tspan
-           id="tspan40"
-           y="0"
-           x="0 9.6967859 18.671307 27.645826 33.363407 37.624115 48.055508 56.226551 65.201073 70.918655 79.089699 87.260742 91.342682">Your Degree 2</tspan></text>
-</g><g
-       id="g44" /><g
-       id="g46"><text
-         id="text50"
-         style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F2;-inkscape-font-specification:F2;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,128)"><tspan
-           id="tspan48"
-           y="0"
-           x="0 10.610164 18.690819 21.954933 29.300983 37.381638 42.376953 49.723003 52.987118 57.069054 64.4151 68.49704 79.107201 87.040939 99.382301 107.55334 111.63528">University Name 2</tspan></text>
-</g><g
-       id="g52"><text
-         id="text56"
-         style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F1;-inkscape-font-specification:F1;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(650.11537,128)"><tspan
-           id="tspan54"
-           y="0"
-           x="0 8.0806551 16.251701 25.226221 29.308157 37.479202 45.650249 53.821293 61.755028">Jan 2026 </tspan></text>
-</g><g
-       id="g58"><text
-         id="text62"
-         style="font-variant:normal;font-weight:normal;font-size:13.25479984px;font-family:F3;-inkscape-font-specification:F3;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,144)"><tspan
-           id="tspan60"
-           y="0"
-           x="0 10.310008 19.150856 27.899025 31.581633 35.26424 45.86808 54.616249 63.457096 67.300987 74.591125 78.273735 88.745026 93.251663 96.83046 107.30175 116.87394 125.62211 135.43066 144.17883 148.02272 155.39441 162.94965">GPA: GPA/4 Or GRADE/100</tspan></text>
-</g><g
-       id="g64" /><g
-       id="g66"><text
-         id="text70"
-         style="font-variant:normal;font-weight:normal;font-size:21.23970032px;font-family:F1;-inkscape-font-specification:F1;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,174.88)"><tspan
-           id="tspan68"
-           y="0"
-           x="0 14.166714 29.671696 35.406414 48.38047 61.354523 75.797523">SKILLS </tspan></text>
-</g><g
-       id="g72"><path
-         id="path74"
-         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         d="M 38.080002,180.64 H 777.91998 v 0.96001 H 38.080002 Z" /></g><g
-       id="g76"><text
-         id="text80"
-         style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F1;-inkscape-font-specification:F1;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,195.67999)"><tspan
-           id="tspan78"
-           y="0"
-           x="0 11.427986 16.4233 25.39782 33.331554 39.208393 43.175262 52.284363 60.45541 68.536064 77.510582 86.485107 95.300362 99.382301 108.35682 117.33134 121.41328 129.58432 137.66498">Other Technologies </tspan></text>
-</g><g
-       id="g82"><text
-         id="text86"
-         style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F2;-inkscape-font-specification:F2;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,212.96001)"><tspan
-           id="tspan84"
-           y="0"
-           x="0 9.6967859 17.189756 20.275099 23.539211 26.803326 30.885262 38.965916 43.226627 47.308563 57.108078 64.454124 67.718239 70.803581 74.067696 78.149635 86.320679 90.402618 94.663322 104.36011 111.70616 114.97028 118.05562 121.31973 125.40166 133.57271 137.53958 141.80029 151.49707 158.84312 162.10724 165.37135 168.4567 172.53864 180.70967 184.97038 189.05232 198.85184 206.19789 209.28322 212.54733 215.81145 219.89339 228.06444">Skill 1, Skill 2, Skill 3, Skill 4, Skill 5 </tspan></text>
-</g><g
-       id="g88"><text
-         id="text92"
-         style="font-variant:normal;font-weight:normal;font-size:21.23970032px;font-family:F1;-inkscape-font-specification:F1;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40,239.52)"><tspan
-           id="tspan90"
-           y="0"
-           x="0 12.974055 28.312687 43.817669 60.172237 75.677216 91.182198 107.53677 121.70348 136.14648">LANGUAGES </tspan></text>
-</g><g
-       id="g94"><path
-         id="path96"
-         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         d="M 38.080002,245.11999 H 777.91998 V 246.08 H 38.080002 Z" /></g><g
-       id="g98"><text
-         id="text102"
-         style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F2;-inkscape-font-specification:F2;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         transform="translate(40.639999,264.16)"><tspan
+   height="1056"
+   viewBox="0 0 816 1056"
+   sodipodi:docname="To SVG.pdf"
+   inkscape:export-filename="To SVG.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:page
+       x="0"
+       y="0"
+       inkscape:label="2"
+       id="page96"
+       width="816"
+       height="1056"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <g
+     id="g96"
+     inkscape:groupmode="layer"
+     inkscape:label="2"
+     transform="translate(-836)">
+    <g
+       id="g98">
+      <text
+         id="text98"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,53.4)"><tspan
+           id="tspan98"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 0 -0.016000001 0.032000002"
+           y="0">SKILLS</tspan></text>
+    </g>
+    <g
+       id="g99">
+      <text
+         id="text99"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,74)"><tspan
+           id="tspan99"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.011 -0.011 0.033 -0.033 0.022 -0.033 0.011 0 -0.011 0.033 0 -0.011 0.022 -0.011 -0.011 0.033 -0.011 -0.011 0.022"
+           y="0">Programming Languages</tspan></text>
+    </g>
+    <g
+       id="g100">
+      <text
+         id="text100"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,91.533333)"><tspan
            id="tspan100"
-           y="0"
-           x="0 9.6967859 14.6921 22.863146 31.034191 34.298306 41.497437 276.71796 287.32812 295.40878 299.66949 302.75482 310.2478 318.32846">Arabic Native </tspan></text>
-</g><g
-       id="g104"><g
-         clip-path="url(#clipPath110)"
-         id="g106"><text
-           id="text114"
-           style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F2;-inkscape-font-specification:F2;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="translate(40.639999,281.60001)"><tspan
-             id="tspan112"
-             y="0"
-             x="0 9.6967859 17.867832 26.038877 29.302992 32.388332 39.734383">English</tspan></text>
-</g></g><g
-       id="g116"><g
-         clip-path="url(#clipPath122)"
-         id="g118" /></g><g
-       id="g124"><g
-         clip-path="url(#clipPath130)"
-         id="g126"><text
-           id="text134"
-           style="font-variant:normal;font-weight:normal;font-size:14.69209957px;font-family:F2;-inkscape-font-specification:F2;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="translate(317.44,281.60001)"><tspan
-             id="tspan132"
-             y="0"
-             x="0 9.6967859 14.6921 22.863146 26.945082 35.116127 42.462177 49.808228 53.072342 61.152996 69.324043 77.495087">Professional</tspan></text>
-</g></g><g
-       id="g136"><g
-         clip-path="url(#clipPath142)"
-         id="g138" /></g><g
-       id="g144" /></g></svg>
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 0 -0.011 0 0 0.011 0 0 0.022 -0.011 -0.011 0 0.044 0 -0.011 0 -0.011 0.011 0 -0.011 0 0.022 0 0 0 0 -0.011 0.044 0 -0.011 0 -0.011 0.022 -0.022 0 0.022 0 -0.011 0 0 0 0 0.033 -0.011 -0.011"
+           y="0">Java, Python, JavaScript, Go, TypeScript, HTML,</tspan></text>
+    </g>
+    <g
+       id="g101">
+      <text
+         id="text101"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,108.4)"><tspan
+           id="tspan101"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.011 0.011 0 0 0 -0.011 0.022 0 0 0 0.011 -0.011 -0.011 0 0.044 -0.022 0 0 0 0 0 0.044 -0.022 0.022 0 0 0 -0.011 0 0 0.011 0 -0.011 0 -0.011 0.044 0 -0.022 0.022 -0.011 0 0 0 0 -0.011 0 0.044"
+           y="0">CSS, Ruby, Php, Swift, Kotlin, Scala, Perl, Rust,</tspan></text>
+    </g>
+    <g
+       id="g102">
+      <text
+         id="text102"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,125.26667)"><tspan
+           id="tspan102"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.044 0 -0.011 -0.011 0 0 0.022 -0.011 0 0 0.011 -0.011 0 0.022 0 0 0.011 -0.011 0 -0.011 -0.011 0 0.022 -0.011"
+           y="0">R, Matlab, Bash, Powershell</tspan></text>
+    </g>
+    <g
+       id="g103">
+      <text
+         id="text103"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,144.13333)"><tspan
+           id="tspan103"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0.011 -0.011 -0.033 0.022 0 -0.011 0.011 -0.011"
+           y="0">Frameworks</tspan></text>
+    </g>
+    <g
+       id="g104">
+      <text
+         id="text104"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,161.66667)"><tspan
+           id="tspan104"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 0 0 0 0 0.011 0.022 -0.011 -0.011 0 -0.011 0.022 0 0 0 0 -0.011 -0.011 0.022 -0.011 0 0 0.033 0 -0.011 0 0 0 0 0.022 -0.011 -0.011 0.022 0 -0.011"
+           y="0">React, Angular, Django, Flask, Laravel</tspan></text>
+    </g>
+    <g
+       id="g105">
+      <text
+         id="text105"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,180.53333)"><tspan
+           id="tspan105"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0.033 -0.011 -0.011 0.022"
+           y="0">Databases</tspan></text>
+    </g>
+    <g
+       id="g106">
+      <text
+         id="text106"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,198.06667)"><tspan
+           id="tspan106"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0 0.022 0 0 0 -0.011 0.022 -0.011 -0.011 0.044 -0.011 0 0 -0.011 0.022 -0.011 -0.011 0.022 0 -0.022 0.044 0 -0.022 0.022 0 0 -0.011 -0.011 0.022 0.011 0 -0.011 0 0 0.022 0 -0.022 0 0.022 0 0 0 -0.011 0.022 -0.044"
+           y="0">SQL, GraphQL, MongoDB, PostgreSQL, MySQL, Redis,</tspan></text>
+    </g>
+    <g
+       id="g107">
+      <text
+         id="text107"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,214.93333)"><tspan
+           id="tspan107"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0 -0.011 0 0.044 -0.044 0 0 0.022 -0.011 -0.011 0 0.022 0 0 -0.011 0 0.022 -0.011 -0.011 0.022"
+           y="0">Elasticsearch, Firebase</tspan></text>
+    </g>
+    <g
+       id="g108">
+      <text
+         id="text108"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,233.8)"><tspan
+           id="tspan108"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.044 -0.011 -0.011 0.033 0 0 0 0 -0.011 -0.011 0 0.033"
+           y="0">Cloud &amp; DevOps</tspan></text>
+    </g>
+    <g
+       id="g109">
+      <text
+         id="text109"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,251.33333)"><tspan
+           id="tspan109"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.011 0.011 0 0 0.011 0 -0.011 -0.011 0.022 0 0 0 -0.011 0.022 -0.011 0 -0.011 0 0 0 -0.011 0.022 -0.011 0 0 0 0.022 0 0 -0.011 -0.011 0 0.044 -0.022 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0 0.022"
+           y="0">AWS, Azure, Google Cloud, Docker, Kubernetes,</tspan></text>
+    </g>
+    <g
+       id="g110">
+      <text
+         id="text110"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,268.2)"><tspan
+           id="tspan110"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.022 -0.011 -0.011 0 0.022 -0.011 -0.011 0 0 0.011 -0.011 0 0 0.022 0 -0.011 0 0 0 0.022 -0.011 0 0 -0.011"
+           y="0">Terraform, Ansible, Jenkins, CI/CD</tspan></text>
+    </g>
+    <g
+       id="g111">
+      <text
+         id="text111"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,287.06667)"><tspan
+           id="tspan111"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.011 -0.011 0.033 0 -0.011 -0.011 0.022 -0.011 -0.011 0.011 -0.011 0.044 -0.044 0.044 -0.022 0.022 -0.011 -0.011 0.022 -0.033 0 0 0.022 -0.011 0 -0.011"
+           y="0">Architecture &amp; System Design</tspan></text>
+    </g>
+    <g
+       id="g112">
+      <text
+         id="text112"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,304.6)"><tspan
+           id="tspan112"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0 0 -0.011 -0.011 0 0.022 -0.011 0 0 0 -0.011"
+           y="0">Microservices</tspan></text>
+    </g>
+    <g
+       id="g113">
+      <text
+         id="text113"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,323.46667)"><tspan
+           id="tspan113"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 -0.011 0.022 -0.033 0 0.033 -0.011 -0.011 0.033 -0.011 0.033 0 -0.011 0.033 0 -0.011"
+           y="0">Other Technologies</tspan></text>
+    </g>
+    <g
+       id="g114">
+      <text
+         id="text114"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,341)"><tspan
+           id="tspan114"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.044 0 0 -0.011 -0.011 0.022 0 0 0 0 0 0 0.011 -0.011 -0.011 0 0.044 -0.044 0 0.044 0 -0.022 0.022 -0.011 0 -0.011 0.022 0 0.011 -0.011 -0.011 0 0 0.044 -0.044 0.022 -0.011 0 0 0 0.022 0 0 -0.011 0 0 0 0 0 0 0.022 0 -0.011 0 0 0 0 -0.011 0 0 0 0 0.011 0.022"
+           y="0">C, Node. js, Vue. js, Spring Boot, Ruby On Rails, Objective C, Sas,</tspan></text>
+    </g>
+    <g
+       id="g115">
+      <text
+         id="text115"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,357.86667)"><tspan
+           id="tspan115"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.011 0 0 0 0.011 0 -0.011 0 -0.011 0 0 -0.011 0.022 0 0 0 0 0 0 0 0.011 -0.011 0 0 0.022 0 0 0.011 0 -0.011 -0.011 -0.011 0.044 0 -0.011 -0.011 0.022 0 0 0 -0.011 0 0 0.044 0 -0.011 -0.011 0 0.022 -0.011 0 0 0 0.022 -0.011 0 0 0 0.011 0 0 -0.011 0 0 0 0.044 -0.022 0.022 0 -0.011 -0.011 0 0.022 -0.011"
+           y="0">Shell Scripting, Git, Agile, Scrum, Tdd, Jest, Mocha, Chai, Pytest, Selenium,</tspan></text>
+    </g>
+    <g
+       id="g116">
+      <text
+         id="text116"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,374.73333)"><tspan
+           id="tspan116"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0 0.022 -0.011 -0.011 0 0 0 0.044 -0.044 0.011 0.011 -0.011 0 0.011 0.022 -0.044 0 0.044 0 0 -0.011 0 -0.011 0 0.011 0.022 -0.011 0 -0.011 0.022 -0.011 -0.011 0 -0.011 0.022 0 0 -0.011 0.022 0 -0.011 0 -0.011 0.022 0 -0.011 -0.011 0.022 -0.011 -0.011 0 0.022 -0.011 0 0 0 -0.011 0.022 -0.011 0 0.022 -0.011 -0.011 0.022 -0.011 0 -0.011 -0.011 0.044 0 0 -0.044 0.022"
+           y="0">Cypress, REST Apis, Data Engineering, Machine Learning, Deep Learning, Nlp,</tspan></text>
+    </g>
+    <g
+       id="g117">
+      <text
+         id="text117"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,391.6)"><tspan
+           id="tspan117"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0.022 0 -0.011 -0.011 0.044 -0.022 0 0 0 -0.011 0.022 0 0 0.011 -0.011 -0.011 0.022 -0.011 0 0 0 0 0.022 -0.011 -0.011 0 0 0 0.033 -0.011 0.022 0 -0.011 -0.011 0 0 0.022 -0.044 0.044 0 -0.022 0 0.044 -0.011 -0.011 0 0.022 0 0 -0.022 0.022 -0.011 -0.011 0 0.044 0 -0.022 0 0 0 0 0 0 0.022 -0.011 0.022 -0.011 -0.011"
+           y="0">Computer Vision, Pandas, Numpy, Tensorflow, Pytorch, Keras, Scikit Learn,</tspan></text>
+    </g>
+    <g
+       id="g118">
+      <text
+         id="text118"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,408.46667)"><tspan
+           id="tspan118"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.022 -0.044 0.022 -0.011 0.022 0 0 0.011 -0.011 0 -0.011 -0.011 0 0.011 0 0 0 0.011 0 0 -0.011 0 0 0.044 -0.022 0 0.022 -0.011 -0.011 0.022 -0.011 0 0 0 -0.011 0 0.022 -0.011 0 0 0 0.011 0 -0.011 0.022 -0.011 0 0 0 0 -0.011 0.022 0 0 -0.022 0.044 0 -0.011 0 -0.011 0.022 -0.011 0 0 0.011 -0.011 0.022 -0.011 -0.011 0 0.011 0.022 0 0 0 0 0 -0.011 0 0 0 -0.011 0 0 0.022 -0.011 0 0 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0 0.022 -0.044 0.022"
+           y="0">Tableau, Power Bi, Excel, Bigquery, Linux, Windows, macOS, Figma, Adobe Xd, Ui/ux Design, Leadership, </tspan></text>
+    </g>
+    <g
+       id="g119">
+      <text
+         id="text119"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,425.33333)"><tspan
+           id="tspan119"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0.022 -0.011 0 0 -0.011 0 0 0.022 -0.011 0 0 0.011 -0.011 -0.011 0.022 0 -0.011 -0.011 0 0.011 0.022 -0.044 0 0 0.022 -0.011 0 0 0.033 0 -0.011 -0.011 0 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0 0.044 0 -0.011 -0.011 0.022 -0.011 0 -0.011 -0.011 0 0.044 0 -0.011 -0.011 0.022 0 -0.011 -0.011 0 0.022"
+           y="0">Communication, Problem Solving, Time Management, Teamwork, Mentoring</tspan></text>
+    </g>
+    <g
+       id="g120">
+      <text
+         id="text120"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,451.86667)"><tspan
+           id="tspan120"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.016000001 0 0 0 0 0 0 0.032000002"
+           y="0">LANGUAGES</tspan></text>
+    </g>
+    <g
+       id="g121">
+      <text
+         id="text121"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.8,476.46667)"><tspan
+           id="tspan121"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.011"
+           y="0">English</tspan></text>
+    </g>
+    <g
+       id="g122">
+      <text
+         id="text122"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1170,476.46667)"><tspan
+           id="tspan122"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022"
+           y="0">Native</tspan></text>
+    </g>
+    <g
+       id="g123">
+      <text
+         id="text123"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.8,494)"><tspan
+           id="tspan123"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 -0.011 0.022 -0.011"
+           y="0">German</tspan></text>
+    </g>
+    <g
+       id="g124">
+      <text
+         id="text124"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1170,494)"><tspan
+           id="tspan124"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.011 0 -0.011 0 0 0 0.022 -0.011 -0.011"
+           y="0">Professional</tspan></text>
+    </g>
+    <g
+       id="g125">
+      <text
+         id="text125"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,525.2)"><tspan
+           id="tspan125"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 0 0 0 0.032000002 0 0 0 0 0 0 0.032000002 -0.016000001 0 -0.016000001 0 0 0 0.032000002"
+           y="0">COURSES &amp; CERTIFICATIONS</tspan></text>
+    </g>
+    <g
+       id="g126">
+      <text
+         id="text126"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,545.8)"><tspan
+           id="tspan126"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.033 -0.011 -0.011 0.033 -0.011 0.022 -0.011 0 0 0 -0.011 0.033 -0.033 0.044 -0.011 -0.011 0.011 -0.011 0 0 0.022 -0.011 -0.011 0 0.011 -0.011 0.011 -0.011 0.022 -0.011 -0.011 0.011 -0.011"
+           y="0">Advanced Algorithms Data Structures</tspan></text>
+    </g>
+    <g
+       id="g127">
+      <text
+         id="text127"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1487.8,545.8)"><tspan
+           id="tspan127"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 -0.011 0 0.022 -0.011 -0.011"
+           y="0">Jun 2018</tspan></text>
+    </g>
+    <g
+       id="g128">
+      <text
+         id="text128"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,563.06667)"><tspan
+           id="tspan128"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0 0.022 -0.011 0 0.022 -0.011 -0.011 0 0 0.022 -0.044 0 0.022 -0.011 0 0 0 0 0 -0.011 0 0.022 -0.011 -0.011 0 0.022 -0.011 -0.011"
+           y="0">Stanford University (coursera)</tspan></text>
+    </g>
+    <g
+       id="g129">
+      <text
+         id="text129"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,579.13333)"><tspan
+           id="tspan129"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.02 -0.0099999998 -0.0099999998 -0.0099999998 0.0099999998 0 0.02 -0.02 0.02 -0.0099999998 -0.029999999 0.029999999 -0.0099999998 -0.02 0.029999999 -0.029999999 0.02 -0.0099999998 0 0.02 -0.0099999998 -0.0099999998 0 -0.0099999998 0.02 0 -0.0099999998 0.029999999 -0.0099999998 -0.0099999998 0.0099999998 -0.0099999998 -0.0099999998 0.02 -0.0099999998 -0.02"
+           y="0">Category: Computer Science Fundamentals</tspan></text>
+    </g>
+    <g
+       id="g130">
+      <text
+         id="text130"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,594.86667)"><tspan
+           id="tspan130"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02 -0.0099999998 -0.02"
+           y="0">Certificate: </tspan></text>
+    </g>
+    <g
+       id="g131">
+      <text
+         id="text131"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,943.53333,594.86667)"><tspan
+           id="tspan131"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.0099999998 -0.02 0.029999999 -0.02 0.02 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02"
+           y="0">View Certificate</tspan></text>
+      <path
+         id="path131"
+         d="M 0,-1.5 H 69.4"
+         style="fill:none;stroke:#0563c1;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,943.53333,594.86667)" />
+    </g>
+    <g
+       id="g132">
+      <text
+         id="text132"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,614.06667)"><tspan
+           id="tspan132"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.033 0 0 -0.011 0.044 -0.011 -0.011 0 0.011 0.022 -0.011 0 -0.011 0.033 0 -0.011 0 0.022 -0.011 -0.011 0.022 0 -0.011 0 0.022 -0.033 0.033 -0.011 -0.011 0.011 -0.011 0 0.022 -0.011 -0.011 0.044 -0.022 0 0.022 -0.011 0 0.011 -0.011 0.011 0 -0.011 0.033 0 0 -0.011 0.033 -0.011 0 0 0 -0.011 0.033"
+           y="0">Building Scalable Java Microservices With Spring Boot Cloud</tspan></text>
+    </g>
+    <g
+       id="g133">
+      <text
+         id="text133"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1492.7333,614.06667)"><tspan
+           id="tspan133"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 0 0 -0.011 0.022 -0.011"
+           y="0">Jul 2021</tspan></text>
+    </g>
+    <g
+       id="g134">
+      <text
+         id="text134"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,631.33333)"><tspan
+           id="tspan134"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011"
+           y="0">Udemy</tspan></text>
+    </g>
+    <g
+       id="g135">
+      <text
+         id="text135"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,647.4)"><tspan
+           id="tspan135"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.02 -0.0099999998 -0.0099999998 -0.0099999998 0.0099999998 0 0.02 -0.02 0.029999999 -0.0099999998 0 0 -0.0099999998 -0.0099999998 -0.0099999998 0.02 -0.02 0.029999999 0 -0.0099999998 -0.02 0.029999999 -0.0099999998 -0.029999999 0.029999999 -0.0099999998 -0.02 0.02 0.02 -0.02 -0.02 0.029999999 -0.0099999998 -0.0099999998 0.02 -0.0099999998 0.0099999998 0 -0.0099999998 -0.02 0.02 -0.0099999998 0 0.02 -0.0099999998 0.0099999998"
+           y="0">Category: Backend Development, Cloud Architecture</tspan></text>
+    </g>
+    <g
+       id="g136">
+      <text
+         id="text136"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,663.13333)"><tspan
+           id="tspan136"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02 -0.0099999998 -0.02"
+           y="0">Certificate: </tspan></text>
+    </g>
+    <g
+       id="g137">
+      <text
+         id="text137"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,943.53333,663.13333)"><tspan
+           id="tspan137"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.0099999998 -0.02 0.029999999 -0.02 0.02 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02"
+           y="0">View Certificate</tspan></text>
+      <path
+         id="path137"
+         d="M 0,-1.5 H 69.4"
+         style="fill:none;stroke:#0563c1;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,943.53333,663.13333)" />
+    </g>
+    <g
+       id="g138">
+      <text
+         id="text138"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,682.33333)"><tspan
+           id="tspan138"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 -0.011 0.033 0 -0.011 0.022 0 -0.011 0.022 -0.011 0.011 -0.011 0 -0.011 0.033 0 0.011 -0.011 -0.011 0.022 0 -0.011 0 0 0 0.022 -0.011 0 0.033"
+           y="0">Machine Learning Specialization</tspan></text>
+    </g>
+    <g
+       id="g139">
+      <text
+         id="text139"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1485.4,682.33333)"><tspan
+           id="tspan139"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.011 0 -0.011 0.022 -0.011"
+           y="0">Sep 2019</tspan></text>
+    </g>
+    <g
+       id="g140">
+      <text
+         id="text140"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,699.6)"><tspan
+           id="tspan140"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0 0.022 -0.011"
+           y="0">Coursera</tspan></text>
+    </g>
+    <g
+       id="g141">
+      <text
+         id="text141"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,715.66667)"><tspan
+           id="tspan141"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.02 -0.0099999998 -0.0099999998 -0.0099999998 0.0099999998 0 0.02 -0.02 0.029999999 -0.02 0.02 -0.02 0.02 -0.0099999998 -0.02 0.029999999 -0.02 0.029999999 0 -0.02 -0.0099999998 -0.0099999998"
+           y="0">Category: Ai, Data Science</tspan></text>
+    </g>
+    <g
+       id="g142">
+      <text
+         id="text142"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,731.4)"><tspan
+           id="tspan142"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02 -0.0099999998 -0.02"
+           y="0">Certificate: </tspan></text>
+    </g>
+    <g
+       id="g143">
+      <text
+         id="text143"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,943.53333,731.4)"><tspan
+           id="tspan143"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.0099999998 -0.02 0.029999999 -0.02 0.02 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02"
+           y="0">View Certificate</tspan></text>
+      <path
+         id="path143"
+         d="M 0,-1.5 H 69.4"
+         style="fill:none;stroke:#0563c1;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,943.53333,731.4)" />
+    </g>
+    <g
+       id="g144">
+      <path
+         id="path144"
+         d="M 581.95,747.2 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
+         id="path145"
+         d="M 581.95,448.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
+         id="path146"
+         d="M 581.95,393.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
+         id="path147"
+         d="M 581.95,747.2 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
+         id="path148"
+         d="M 581.95,448.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
+         id="path149"
+         d="M 581.95,393.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+    </g>
+  </g>
+</svg>

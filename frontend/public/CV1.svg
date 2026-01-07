@@ -1,2259 +1,1684 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   viewBox="0 0 816 1056"
-   height="1056"
+   version="1.1"
+   id="svg1"
    width="816"
-   xml:space="preserve"
-   id="svg2"
-   version="1.1"><metadata
-     id="metadata8"><rdf:RDF><cc:Work
-         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
-     id="defs6"><clipPath
-       id="clipPath18"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path16"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath30"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path28"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath38"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path36"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath50"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path48"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath58"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path56"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath70"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path68"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath78"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path76"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath90"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
+   height="1056"
+   viewBox="0 0 816 1056"
+   sodipodi:docname="To SVG.pdf"
+   inkscape:export-filename="To SVG.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:page
+       x="0"
+       y="0"
+       inkscape:label="1"
+       id="page1"
+       width="816"
+       height="1056"
+       margin="0"
+       bleed="0" />
+    <inkscape:page
+       x="836"
+       y="0"
+       inkscape:label="2"
+       id="page96"
+       width="816"
+       height="1056" />
+  </sodipodi:namedview>
+  <g
+     id="g1"
+     inkscape:groupmode="layer"
+     inkscape:label="1">
+    <g
+       id="g3">
+      <text
+         id="text3"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,78.4)"><tspan
+           id="tspan3"
+           style="font-variant:normal;font-weight:700;font-size:36px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.035999998 0 0 0 0.035999998 -0.035999998 0 0 0.035999998"
+           y="0">ANONYMOUS USER</tspan></text>
+    </g>
+    <g
+       id="g4">
+      <text
+         id="text4"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,111.93333)"><tspan
+           id="tspan4"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.016000001 0 0 -0.032000002 0 0.016000001 0 0 0 0.032000002 -0.016000001 0 0.032000002"
+           y="0">Software Engineer</tspan></text>
+    </g>
+    <g
+       id="g5">
+      <text
+         id="text5"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,143.2)"><tspan
+           id="tspan5"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 0 -0.016000001 0 0 0.032000002 0 0 0 -0.016000001 0 0 0 0 -0.016000001"
+           y="0">CONTACT INFORMATION</tspan></text>
+    </g>
+    <g
+       id="g6">
+      <text
+         id="text6"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.8,167.8)"><tspan
+           id="tspan6"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">• </tspan></text>
+    </g>
+    <g
+       id="g7">
+      <text
+         id="text7"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,50,167.8)"><tspan
+           id="tspan7"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.033"
+           y="0">Mobile</tspan></text>
+    </g>
+    <g
+       id="g8">
+      <text
+         id="text8"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,96.4,167.8)"><tspan
+           id="tspan8"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 -0.011 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0.022 -0.011"
+           y="0">: +962790000000</tspan></text>
+    </g>
+    <g
+       id="g9">
+      <text
+         id="text9"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,473.53333,167.8)"><tspan
+           id="tspan9"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">• </tspan></text>
+    </g>
+    <g
+       id="g10">
+      <text
+         id="text10"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,482.73333,167.8)"><tspan
+           id="tspan10"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 -0.011 0 -0.011"
+           y="0">GitHub</tspan></text>
+    </g>
+    <g
+       id="g11">
+      <text
+         id="text11"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,531.6,167.8)"><tspan
+           id="tspan11"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">: </tspan></text>
+    </g>
+    <g
+       id="g12">
+      <text
+         id="text12"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,539.73333,167.8)"><tspan
+           id="tspan12"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0 0.022 -0.011 -0.011"
+           y="0">User13</tspan></text>
+      <path
+         id="path12"
+         d="M 0,-1.6 H 35.4"
+         style="fill:none;stroke:#0563c1;stroke-width:0.9;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,539.73333,167.8)" />
+    </g>
+    <g
+       id="g13">
+      <text
+         id="text13"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.8,187.33333)"><tspan
+           id="tspan13"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">• </tspan></text>
+    </g>
+    <g
+       id="g14">
+      <text
+         id="text14"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,50,187.33333)"><tspan
+           id="tspan14"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.011 -0.011"
+           y="0">Email</tspan></text>
+    </g>
+    <g
+       id="g15">
+      <text
+         id="text15"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,89.066667,187.33333)"><tspan
+           id="tspan15"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 -0.011 -0.011 0.022 -0.011 -0.011 0.022 -0.011 0 0 0 -0.011 0 0.022 0 -0.011"
+           y="0">: Temp@Mailto.plus</tspan></text>
+    </g>
+    <g
+       id="g16">
+      <text
+         id="text16"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,473.53333,187.33333)"><tspan
+           id="tspan16"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">• </tspan></text>
+    </g>
+    <g
+       id="g17">
+      <text
+         id="text17"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,482.73333,187.33333)"><tspan
+           id="tspan17"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0 -0.011 0.022 -0.011 -0.011 0.044"
+           y="0">LinkedIn</tspan></text>
+    </g>
+    <g
+       id="g18">
+      <text
+         id="text18"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,543,187.33333)"><tspan
+           id="tspan18"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">: </tspan></text>
+    </g>
+    <g
+       id="g19">
+      <text
+         id="text19"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,551.13333,187.33333)"><tspan
+           id="tspan19"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0 0.022 -0.011 -0.011"
+           y="0">User16</tspan></text>
+      <path
+         id="path19"
+         d="M 0,-1.6 H 35.4"
+         style="fill:none;stroke:#0563c1;stroke-width:0.9;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,551.13333,187.33333)" />
+    </g>
+    <g
+       id="g20">
+      <text
+         id="text20"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,213.2)"><tspan
+           id="tspan20"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 0 -0.016000001 0.032000002 0 0.032000002 0 0 0 0 -0.016000001 0 0.032000002 0 -0.032000002"
+           y="0">PROFESSIONAL SUMMARY</tspan></text>
+    </g>
+    <g
+       id="g21">
+      <text
+         id="text21"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,233.8)"><tspan
+           id="tspan21"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 0 -0.011 0 0 0.484 0.44 0 -0.011 0 0 0.022 0.41800001 0.495 0.011 -0.011 0 0 0 0.022 -0.011 0.47299999 0.44 0.011 -0.011 0.022 0 -0.011 -0.011 0.022 0.47299999 0.44 0.011 0 0 0.47299999 0.44 0.47299999 0.495 -0.022 0.022 -0.011 -0.011 0.484 0.495 0 0.44 0.495 0.011 0 -0.011 -0.011 0.022 0 -0.011 -0.011 0 0.47299999 0.495 0 -0.011 0 0 -0.011 0.022 -0.044 0.022 0.47299999 0.44 0.011 -0.011 0.47299999 0.495 0 -0.011 0.022 -0.044 0.022 -0.011 -0.011 0.022 0 0 -0.011 0.47299999 0.495 -0.022 0 0.022 0 -0.011 -0.011 0 0.47299999 0.495 -0.022 0.022 0 0 0 -0.011 -0.011"
+           y="0">Results Driven Software Engineer With 5 Years Of Experience Designing And Implementing Scalable Software</tspan></text>
+      <text
+         id="text22"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,776.13333,233.8)"><tspan
+           id="tspan22"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0"> </tspan></text>
+    </g>
+    <g
+       id="g22">
+      <text
+         id="text23"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,250.66667)"><tspan
+           id="tspan23"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.044 0.022 0 0 -0.011 0.022 0 0.34099999 0.396 0.011 -0.011 -0.011 0 0 -0.011 0 0 0 0.022 0.31900001 0.396 0 0.37400001 0.396 -0.022 0.022 0 0 -0.011 -0.011 0.37400001 0.396 0 -0.011 0 -0.011 0 0.022 -0.011 -0.011 0.022 -0.011 0.396 0.34099999 0.011 0 0 0.37400001 0.34099999 0.011 0 0.022 -0.011 -0.011 0 0 0 0.37400001 0.396 0 0.37400001 0.34099999 0 0 0 0 -0.011 0 0.022 -0.011 0 -0.011 0.37400001 0.396 0.011 0 0 0 -0.011 -0.011 0 0.396 0.396 -0.044 0 0.022 -0.011 0.37400001 0.396 -0.022 0.022 0 -0.011 0 0 -0.011 0 0 0.022 -0.011 -0.011 0.396 0.396 -0.022 0.022"
+           y="0">Solutions. Specialized In Backend Development With Expertise In Distributed Systems, Cloud Architecture, And</tspan></text>
+      <text
+         id="text24"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,776.2,250.66667)"><tspan
+           id="tspan24"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0"> </tspan></text>
+    </g>
+    <g
+       id="g24">
+      <text
+         id="text25"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,267.53333)"><tspan
+           id="tspan25"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0 0 -0.011 -0.011 0 0.022 -0.011 0 0 0 -0.011 0 0 -0.044 0.011 -0.011 0.022 0 -0.011 -0.011 0 -0.022 0.022 -0.044 0 0 0 0 -0.044 0.033 -0.011 -0.044 0.022 -0.011 -0.011 -0.011 0 0.011 -0.011 -0.011 0 -0.011 0 0.044 -0.055 0 -0.011 -0.011 0.022 -0.066 0 0 -0.011 0.022 0 -0.011 -0.011 0 0 -0.011 -0.011 0 -0.044 0.022 -0.011 0 -0.011 0 0.022 -0.011 -0.011 0 0 0 0 -0.011 -0.011 0.022 -0.011 0 0 -0.011 -0.011 0 -0.022 0 0 0.044 -0.011 -0.011 -0.044 0.011 -0.011 0.022 0 -0.011 -0.011 0.022 -0.011 -0.011 0 -0.011 0 0.011"
+           y="0">Microservices. Proven Ability To Lead Projects From Concept To Deployment, Improving System Performance By</tspan></text>
+      <text
+         id="text26"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,776.26667,267.53333)"><tspan
+           id="tspan26"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0"> </tspan></text>
+    </g>
+    <g
+       id="g26">
+      <text
+         id="text27"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,284.4)"><tspan
+           id="tspan27"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0 0.011 -0.011 0.022 0 0 -0.011 -0.011 0.022 0 0 -0.011 -0.011 0.044 0 -0.011 -0.011 0.022 -0.011 0 0 -0.011 0.022 -0.011 0 0 0 -0.011 0 0 0 0.044 -0.022 0 0 0.022 -0.011"
+           y="0">40 And Reducing Operational Costs By 25.</tspan></text>
+    </g>
+    <g
+       id="g27">
+      <text
+         id="text28"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,303.93333)"><tspan
+           id="tspan28"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.022 0.022 0 0 0 -0.011 -0.011 0.022 0 -0.011 0 0.011 -0.011 0.022 -0.011 0 0 0 0 -0.011 0.022 -0.011 0 0 -0.011 0.022 -0.011 0 0 0.011 0.022 -0.044 0 0.022 0 -0.011 -0.011 0 0.022 -0.011 0.022 -0.011 0 -0.011 -0.011 0 0.022 0 0 0 0.011 -0.011 -0.011 0.044 -0.011 -0.011 -0.011 0.044 -0.011 -0.011 0 -0.011 0.022 0 0 -0.011 0.022 0 -0.011 -0.011 0 0.011 -0.011 0.022 0 -0.011 -0.011 0.022 -0.011"
+           y="0"> Passionate About Clean Code, Agile Methodologies, And Mentoring Junior Engineers.</tspan></text>
+    </g>
+    <g
+       id="g28">
+      <text
+         id="text29"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,201,320.8)"><tspan
+           id="tspan29"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0 0.022 -0.011 -0.011 0 -0.011 0.022 0 -0.011 0 0 0.022 -0.011 0 0 0.022 -0.011 -0.011 0 0 0 0.022 0 -0.011 -0.011 0.022 0 -0.011 0 0 0 -0.011 0.022 -0.011 0 0 0 0.022 0 0 0 -0.011 -0.011 0.022 0 -0.011 -0.011 0.022 0 -0.011 -0.011 0.022 -0.011 0 -0.011 0.022 0 -0.011 -0.011 0 0.022"
+           y="0">Experience: 7+ years in professional software engineering roles</tspan></text>
+    </g>
+    <g
+       id="g29">
+      <text
+         id="text30"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,377.2)"><tspan
+           id="tspan30"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.032000002 0.032000002 0 0 0 0 0.032000002 0 0 0 0.032000002"
+           y="0">WORK EXPERIENCE</tspan></text>
+    </g>
+    <g
+       id="g30">
+      <text
+         id="text31"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,397.8)"><tspan
+           id="tspan31"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.011 0 -0.011 0.011 0 0.011 -0.011 0.022 -0.011 0 -0.011 0.011 -0.011 0 0.011 0.033 -0.011 0 -0.011 0.022 -0.011"
+           y="0">Senior Software Engineer</tspan></text>
+    </g>
+    <g
+       id="g31">
+      <text
+         id="text32"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,580.06667,397.8)"><tspan
+           id="tspan32"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 -0.011 0.044 -0.011 -0.011 0.022 -0.011 0 -0.011 0.044 -0.022 0.011 -0.011 0.022 -0.011 -0.011"
+           y="0">May 2023 - Present</tspan></text>
+    </g>
+    <g
+       id="g32">
+      <text
+         id="text33"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,415.06667)"><tspan
+           id="tspan33"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0 0.022 0 -0.022 0.022 0 -0.011 0 0 -0.011 0.022 0 0 0 -0.011 0 0 0.044 -0.022 0.022 -0.011 0 0.033 -0.011 -0.011 0.022 0 -0.044"
+           y="0">Tech Solutions Inc. San Francisco</tspan></text>
+    </g>
+    <g
+       id="g33">
+      <text
+         id="text34"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,431.93333)"><tspan
+           id="tspan34"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g34">
+      <text
+         id="text35"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,431.93333)"><tspan
+           id="tspan35"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.022 0 -0.011 -0.011 0 0.022 0 -0.011 -0.011 0.022 -0.011 -0.011 0 0.044 -0.011 0 0 -0.011 0.044 -0.011 0 0 -0.011 -0.011 0 0.022 -0.011 0 0 0 -0.011 0 -0.011 0.022 -0.011 0 0.022 -0.011 0 -0.011 0.022 0 -0.011 -0.011 0.022 -0.011 -0.011 0 -0.011 0.044 -0.011 0 -0.011 0 0 0.022 -0.011 -0.011 0 0 0.022 -0.011 0 0 -0.011 0.022 0 -0.011 -0.011 0 0.022 -0.011 -0.011 0.044 -0.011 0 0 0 -0.011 0 0.022 -0.011"
+           y="0">Led development of a microservices-based e-commerce platform serving 2M monthly users.</tspan></text>
+    </g>
+    <g
+       id="g35">
+      <text
+         id="text36"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,451.46667)"><tspan
+           id="tspan36"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g36">
+      <text
+         id="text37"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,451.46667)"><tspan
+           id="tspan37"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 0 0 -0.011 -0.011 0.022 0.077 0.044 -0.011 0.022 0.077 0.044 0 -0.011 0.022 0 -0.011 -0.011 0.022 -0.011 0 -0.011 0.077 0.088 0.077 0.044 0.022 -0.011 -0.011 0 0.022 0 0 -0.011 0.077 0.044 0 0.022 0 -0.011 -0.011 0 0.022 -0.011 0.044 0.088 -0.011 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0.022 -0.011 0.088 0.044 0 0 0 0 0.022 0.077 0.044 0.022 0 -0.044 0.022 0.077 0.044 0.011 -0.011 0 0 0.077 0.088 -0.011 0.022 0.077 0.044 0 -0.011 0.022 0 0 0.044 0.088 -0.011 -0.011 0.022 -0.011 0 0 -0.011 0.077 0.088 0 0 -0.011"
+           y="0">Designed and implemented a real-time inventory management system using Kafka and Redis, reducing stock</tspan></text>
+      <text
+         id="text38"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,776.13333,451.46667)"><tspan
+           id="tspan38"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0"> </tspan></text>
+    </g>
+    <g
+       id="g38">
+      <text
+         id="text39"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,468.33333)"><tspan
+           id="tspan39"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0 0 0 -0.011 -0.011 0.022 -0.011 -0.011 0 0 0.022 0 0 -0.011 0 0 0.022 -0.011"
+           y="0">discrepancies by 90.</tspan></text>
+    </g>
+    <g
+       id="g39">
+      <text
+         id="text40"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,487.86667)"><tspan
+           id="tspan40"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g40">
+      <text
+         id="text41"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,487.86667)"><tspan
+           id="tspan41"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0 -0.011 -0.011 0.022 0 -0.011 -0.011 0.044 -0.011 -0.011 0.022 -0.011 0 0 0 -0.011 0 0 0 -0.011 0.022 -0.011 0 0 0 -0.011 0 0 0.022 -0.011 0 0 0.022 0 0 0 -0.011 -0.011 0.022 -0.011 -0.011 0.022 0 0 0 -0.011 0 -0.011 0.022 0 -0.011 0 0 -0.011 0 0.044 -0.011 -0.011 0.022 0 -0.011 -0.011 0 0.011 0.011 0.011 0 0 0 -0.011 0 0 0 0.022 -0.011 0 0 -0.011 0 0.022 -0.011 0 0 -0.011 0.022 0 0 -0.011 0.022 -0.011 0 0 -0.011 0 0.044 0 0 -0.011 0 0 -0.011 0.022"
+           y="0">Migrated monolithic application to cloud-native architecture on AWS, cutting infrastructure costs by 35.</tspan></text>
+    </g>
+    <g
+       id="g41">
+      <text
+         id="text42"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,507.4)"><tspan
+           id="tspan42"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g42">
+      <text
+         id="text43"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,507.4)"><tspan
+           id="tspan43"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 -0.011 0.044 -0.011 -0.011 0.022 -0.011 0 -0.011 0.044 -0.044 0.022 -0.011 0 -0.011 0.022 0 -0.011 -0.011 0.022 0 -0.011 -0.011 0.022 -0.011 0 0 0 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0 0 0.022 -0.011 -0.011 0.044 -0.011 -0.011 0 0 -0.011 0 0 0 0.022 -0.011 -0.011 0.044 -0.011 -0.011 0 -0.011 0.044 -0.011 -0.011 0.022 -0.011 -0.011 -0.011 0.022 -0.011 0 -0.011 0.022 0 0 -0.011 0 0 0 -0.011 0.022"
+           y="0">Mentored 3 junior engineers through code reviews and pair programming sessions.</tspan></text>
+    </g>
+    <g
+       id="g43">
+      <text
+         id="text44"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,526.93333)"><tspan
+           id="tspan44"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g44">
+      <text
+         id="text45"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,526.93333)"><tspan
+           id="tspan45"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 -0.011 0.022 -0.011 0 -0.011 0.022 0 -0.022 0.011 0 0 0.022 -0.011 0 -0.011 0.022 -0.011 0 -0.011 0.044 0 0 -0.011 -0.011 0 0 0.022 0 0 -0.011 -0.011 0.044 0 -0.011 -0.011 0.022 -0.011 -0.011 0.022 0 -0.011 0.022 -0.011 -0.011 0 0 0.022 -0.011 0 0 -0.011 0 0 0.022 0 0 -0.011 -0.011 0 0.022 -0.011 -0.011 0.044 0 -0.011 0 -0.011 0 -0.011 0.022 0 0 0 -0.011 0.022 0 -0.011 0.022 -0.044 0.022"
+           y="0">Improved API response times by 60 through query optimization and caching strategies.</tspan></text>
+    </g>
+    <g
+       id="g45">
+      <text
+         id="text46"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,547.8)"><tspan
+           id="tspan46"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.033 -0.011 -0.011 0 0.022 -0.033 0.022 0 -0.022 0.033 -0.011 0 0.033 -0.011 -0.011"
+           y="0">Software Engineer</tspan></text>
+    </g>
+    <g
+       id="g46">
+      <text
+         id="text47"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,573.6,547.8)"><tspan
+           id="tspan47"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.033 0 -0.011 -0.011 0.022 -0.011 0 0.022 0 -0.011 -0.011 0.033 0 -0.011 0.022 -0.011"
+           y="0">Feb 2022 - Feb 2022</tspan></text>
+    </g>
+    <g
+       id="g47">
+      <text
+         id="text48"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,565.06667)"><tspan
+           id="tspan48"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 -0.011 0.022 0 -0.011 0 0.022 0 0 -0.011 -0.011 0 0.022 -0.011 0 0 0.011 -0.011 0 0.044 -0.044"
+           y="0">Innovatestartup, Austin</tspan></text>
+    </g>
+    <g
+       id="g48">
+      <text
+         id="text49"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,581.93333)"><tspan
+           id="tspan49"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g49">
+      <text
+         id="text50"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,581.93333)"><tspan
+           id="tspan50"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.044 0 0 0.044 0 -0.011 0 0 -0.011 0 0 0.022 0 0 0 0 -0.011 0.022 0 -0.011 -0.011 0.022 0 0 0 -0.011 -0.011 0.044 -0.011 0 0.011 -0.011 0.022 -0.022 0 0.022 -0.011 -0.011 0.022 -0.011 0 0 0 0.022 0 0 -0.011 -0.011 0 0 0.022 -0.011 0 0 0 0 0.022 -0.011 -0.011 0 0.022 -0.011 -0.011 0.044 -0.011 -0.011 0.022 0 0 -0.011 -0.011 0.022 0 0 0 0 0 -0.011 0.022 0 0 -0.011 -0.011 0.022"
+           y="0">Built full-stack features for a SaaS product using React frontend and Node. js backend.</tspan></text>
+    </g>
+    <g
+       id="g50">
+      <text
+         id="text51"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,601.46667)"><tspan
+           id="tspan51"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g51">
+      <text
+         id="text52"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,601.46667)"><tspan
+           id="tspan52"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.044 0 0 0.044 -0.011 -0.011 0 0.022 -0.011 -0.011 0.044 -0.011 -0.011 0 0 0.022 0 0 0 -0.011 0.022 0 -0.011 0 -0.011 0.022 -0.044 0 0.022 -0.011 0 -0.011 0.022 -0.011 -0.011 0 0 0.022 -0.011 0 0.022 -0.011 -0.011 0 0.022 -0.011 -0.011 0.022 -0.011 0 0 0 0 -0.011 0.044 -0.011 -0.011 0.022 -0.011 -0.011 0 0 0 0.022 -0.011 0 -0.011 0 0.044 -0.011 -0.011"
+           y="0">Built automated testing pipeline reducing bug reports in production by 45.</tspan></text>
+    </g>
+    <g
+       id="g52">
+      <text
+         id="text53"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,621)"><tspan
+           id="tspan53"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g53">
+      <text
+         id="text54"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,621)"><tspan
+           id="tspan54"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 -0.011 0 -0.011 0.022 -0.011 -0.011 0.044 -0.011 1.122 1.089 0 0 0.044 -0.044 1.1440001 1.089 0.022 0 -0.011 -0.011 0 0 -0.011 1.122 1.1440001 -0.011 0 0 -0.011 1.122 1.1440001 0 -0.011 0.022 0 0 -0.011 1.089 1.1440001 -0.011 0.022 1.122 1.089 0 -0.011 0 0 0.022 -0.011 1.1440001 1.089 0.022 -0.011 0 -0.011 0.022 -0.011 0 0 -0.011 1.122 1.1440001 -0.011 -0.011 0.022 0 -0.011 0 -0.011 0.022 -0.011 1.1440001 1.089 0 0 -0.011 1.122 1.1440001 0 -0.011 0.022 1.0779999 1.1440001 1.122 1.1440001 -0.011 -0.011 0.022 -0.011 1.089 1.1440001 0 1.122 1.1440001 -0.011"
+           y="0">Implemented CI/CD pipeline using Jenkins and Docker, decreasing deployment time from 2 hours to 15</tspan></text>
+      <text
+         id="text55"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,776.2,621)"><tspan
+           id="tspan55"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0"> </tspan></text>
+    </g>
+    <g
+       id="g55">
+      <text
+         id="text56"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,637.86667)"><tspan
+           id="tspan56"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0 -0.011 -0.011 0 0.022"
+           y="0">minutes.</tspan></text>
+    </g>
+    <g
+       id="g56">
+      <text
+         id="text57"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,657.4)"><tspan
+           id="tspan57"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g57">
+      <text
+         id="text58"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,657.4)"><tspan
+           id="tspan58"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 0 -0.044 0.022 -0.011 0.022 -0.011 -0.011 0 0.022 -0.011 0 0 0 0 -0.011 0 0.022 -0.011 -0.011 0.022 -0.011 0 0 0 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0.022 0 0 0 -0.011 0 0.044 -0.011 -0.011 -0.011 0 0 0.022 0 -0.011 0 0.022 -0.011 0 0 -0.011 0.022 0 0 0 -0.011 -0.011 0.022 -0.011 0 -0.011 0.022 -0.011 -0.011 0.022 0 0 0 0 -0.011 0 -0.011 0.044 0 -0.011 0 -0.011 0.022 0 0 -0.011 0 0 0 -0.011 0.022 0 0 0 0 0 -0.011 0 0 -0.011 0.022"
+           y="0">Collaborated with product managers to translate business requirements into technical specifications.</tspan></text>
+    </g>
+    <g
+       id="g58">
+      <text
+         id="text59"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,678.26667)"><tspan
+           id="tspan59"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.033 0 -0.011 0.011 0 0.011 -0.011 -0.011 0.022 0 -0.011 0.011 -0.011 0 0 -0.011 0.022 -0.011 0 0.033 -0.011 -0.011"
+           y="0">Junior Software Developer</tspan></text>
+    </g>
+    <g
+       id="g59">
+      <text
+         id="text60"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,569.46667,678.26667)"><tspan
+           id="tspan60"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 -0.011 0.044 -0.011 -0.011 0.022 -0.011 0 -0.011 0.044 -0.044 0.033 -0.011 0 0.022 -0.011 -0.011"
+           y="0">May 2020 - Nov 2021</tspan></text>
+    </g>
+    <g
+       id="g60">
+      <text
+         id="text61"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,695.53333)"><tspan
+           id="tspan61"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 0 -0.011 0 0 0 0 0.022 -0.011 0 0 0 -0.011 0.022 -0.011 0 0 0 0 0.011 -0.011 0 0.044 -0.011"
+           y="0">Datasystems Corp. , Boston</tspan></text>
+    </g>
+    <g
+       id="g61">
+      <text
+         id="text62"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,712.4)"><tspan
+           id="tspan62"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g62">
+      <text
+         id="text63"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,712.4)"><tspan
+           id="tspan63"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 0 -0.011 0 0.022 -0.011 0 0.022 -0.011 0 0 -0.011 0.044 -0.011 -0.011 0 0.022 0 -0.011 -0.011 0.022 -0.011 -0.011 0 0 0.022 0 0 -0.011 0.022 0 -0.011 0 0.022 -0.011 -0.011 0 0.022 0 0 0 -0.011 -0.011 0 0.022 0 -0.011 -0.011 0 0 -0.011 0.022 0 0 -0.011 0 0 0.022 -0.011 0 0.011 0 0 -0.011 0.022 -0.011 0 -0.011 0.022 -0.011 0 0.011 -0.011 0.022 0 -0.011 -0.011 0 0.011 0.022 -0.011 -0.011"
+           y="0">Contributed to development of data processing pipelines using Python and Apache Spark.</tspan></text>
+    </g>
+    <g
+       id="g63">
+      <text
+         id="text64"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,731.93333)"><tspan
+           id="tspan64"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g64">
+      <text
+         id="text65"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,731.93333)"><tspan
+           id="tspan65"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0 0 -0.011 -0.011 0.044 0 -0.011 0 0 0 0 -0.011 0 0 -0.011 0.022 -0.011 0 0 0 -0.011 0.044 -0.044 0.022 -0.011 0.022 0 0 0 0 0 0 0 -0.011 -0.011 0 0.044 0 0 -0.011 -0.011 -0.011 0.022 0 0 -0.011 -0.011 0 0.022 -0.011 0.022 -0.044 0 0 0.022 0 0 -0.011 -0.011 0 0 0.044 -0.011 -0.011"
+           y="0">Fixed critical bugs in legacy systems, improving application stability.</tspan></text>
+    </g>
+    <g
+       id="g65">
+      <text
+         id="text66"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,751.46667)"><tspan
+           id="tspan66"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g66">
+      <text
+         id="text67"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,751.46667)"><tspan
+           id="tspan67"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 0 -0.011 0 0.022 -0.011 0 0.022 -0.011 0 0 -0.011 0.044 -0.022 0.022 0 -0.044 0.022 0 0 -0.011 0.022 -0.011 -0.011 0.022 -0.011 0 -0.011 0 0 0.022 -0.011 -0.011 0 0 0.022 -0.011 0 -0.011 0 0 0.022 0 -0.011 -0.011 0.022 0 -0.011 -0.011 0 0 0.022 0 0 0 -0.011 -0.011"
+           y="0">Contributed to Agile ceremonies and sprint planning sessions.</tspan></text>
+    </g>
+    <g
+       id="g67">
+      <text
+         id="text68"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,772.33333)"><tspan
+           id="tspan68"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0.022 -0.011 0.033 0 0 -0.011 -0.011 0.022 0 -0.011 0.033 -0.011"
+           y="0">Backend Developer</tspan></text>
+    </g>
+    <g
+       id="g68">
+      <text
+         id="text69"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,575.2,772.33333)"><tspan
+           id="tspan69"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.033 0 -0.011 -0.011 0.022 -0.011 0 0.022 0 0 -0.011 0.011 0 -0.011 -0.011 0.022"
+           y="0">Jan 2018 - Apr 2020</tspan></text>
+    </g>
+    <g
+       id="g69">
+      <text
+         id="text70"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,789.6)"><tspan
+           id="tspan70"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0 0 0.022 0 -0.011 0 0.044 0 0 0.011 -0.011 -0.011 0 0.044 -0.044"
+           y="0">Cloudapps Ltd. , Seattle</tspan></text>
+    </g>
+    <g
+       id="g70">
+      <text
+         id="text71"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,806.46667)"><tspan
+           id="tspan71"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g71">
+      <text
+         id="text72"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,806.46667)"><tspan
+           id="tspan72"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.044 0 0 0.044 -0.044 0.011 0.011 -0.011 0 0.022 0 0 0.011 -0.022 0 0 0.044 -0.044 0.022 0 0 -0.011 0 0.022 -0.011 0.022 0 0 -0.011 -0.011 0.022 0 0 0 0 0 0 -0.011 0.022 0 0 0 -0.011 -0.011 0.022 -0.011 -0.011 0.022 0 -0.011 -0.011 0 0.011 0.022 -0.011 0.011 0 -0.011 -0.011 0.022 -0.011 -0.011 0 0.044"
+           y="0">Built RESTful APIs in Go and Node. js for cloud-based SaaS products.</tspan></text>
+    </g>
+    <g
+       id="g72">
+      <text
+         id="text73"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,826)"><tspan
+           id="tspan73"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g73">
+      <text
+         id="text74"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,826)"><tspan
+           id="tspan74"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 0 -0.011 0.022 -0.011 -0.011 0.044 -0.011 -0.011 0 0 0.022 0 -0.011 -0.011 0.022 -0.011 -0.011 0.022 0 0 0 0 -0.011 -0.011 0 0 0 0.022 0 0 -0.011 -0.011 0.022 0 0 -0.011 -0.011 0.022 -0.011 0 -0.011 0.022 0 0 0 0 0 -0.011 0.022 0 -0.011 -0.011 0 0 -0.011 0.022 0 0 -0.044 0.044"
+           y="0">Integrated third-party services and improved system reliability.</tspan></text>
+    </g>
+    <g
+       id="g74">
+      <text
+         id="text75"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,46.8,845.53333)"><tspan
+           id="tspan75"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           y="0">•</tspan></text>
+    </g>
+    <g
+       id="g75">
+      <text
+         id="text76"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,64.133333,845.53333)"><tspan
+           id="tspan76"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 -0.011 0.022 0 -0.011 0 0.022 -0.011 0 0 0 0.022 -0.011 -0.011 0 0 0.022 0 -0.011 -0.011 0.022 -0.011 0 0 -0.011 0.022 0 0 -0.011 0 0 0 0.044 0 -0.011 0 0.022 -0.011 0 -0.011 0.022 -0.011 0 0 -0.011 0.022 -0.011 0 0.022 -0.011 -0.011"
+           y="0">Wrote unit and integration tests to ensure code quality.</tspan></text>
+    </g>
+    <g
+       id="g76">
+      <text
+         id="text77"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,901.93333)"><tspan
+           id="tspan77"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 0 0 0 0.032000002"
+           y="0">EDUCATION</tspan></text>
+    </g>
+    <g
+       id="g77">
+      <text
+         id="text78"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,922.53333)"><tspan
+           id="tspan78"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0.022 0 -0.011 0.011 0 0.011 0 0 -0.011 0.033 -0.033 0.022"
+           y="0">Bachelor S Degree</tspan></text>
+    </g>
+    <g
+       id="g78">
+      <text
+         id="text79"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,939.8)"><tspan
+           id="tspan79"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0 0 -0.011 0 0.022 -0.011 0 0.022 0 0 0 0 0 -0.011 0 0 0 0 0.022 0 -0.011 0 0.044 0 0 -0.011 0.022 0 -0.011 -0.011 0.022 -0.044 0.022 -0.011 0 0 0.022 -0.011 0 0 -0.011 0 0 0 0.022 -0.011 -0.011 -0.011 0 0.022 -0.011 -0.011 0.044 0 -0.011"
+           y="0">Massachusetts Institute Of Technology (mit), Cambridge, Ma</tspan></text>
+    </g>
+    <g
+       id="g79">
+      <text
+         id="text80"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,647.73333,939.8)"><tspan
+           id="tspan80"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.033 -0.011 0 0.022 -0.011 -0.011"
+           y="0">Nov 2019</tspan></text>
+    </g>
+    <g
+       id="g80">
+      <text
+         id="text81"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,955.86667)"><tspan
+           id="tspan81"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.029999999 -0.02 0.02 -0.0099999998 0.02"
+           y="0">GPA: 3.4</tspan></text>
+    </g>
+    <g
+       id="g81">
+      <text
+         id="text82"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,975.06667)"><tspan
+           id="tspan82"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.044 -0.011 -0.011 0 0.011 -0.011 0.033 -0.011 0.033 0 0 0 0 -0.011 0 0.033 -0.033"
+           y="0">High School Diploma</tspan></text>
+    </g>
+    <g
+       id="g82">
+      <text
+         id="text83"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,992.33333)"><tspan
+           id="tspan83"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0 -0.011 0 -0.011 0 0.022 0 0 0 -0.011 -0.011 0 0.011 0 -0.011 0.022 -0.011 0 0 0 0.011 -0.011 0.022 0 0 -0.011 -0.011 0.022"
+           y="0">Lincoln High School, Portland, Or</tspan></text>
+    </g>
+    <g
+       id="g83">
+      <text
+         id="text84"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,649.4,992.33333)"><tspan
+           id="tspan84"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.033 0 -0.011 -0.011 0.022"
+           y="0">Jun 2015</tspan></text>
+    </g>
+    <g
+       id="g84">
+      <text
+         id="text85"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,40.133333,1008.4)"><tspan
+           id="tspan85"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.029999999 -0.02 0.02 -0.0099999998 0.02"
+           y="0">GPA: 3.8</tspan></text>
+    </g>
+    <g
+       id="g85">
+      <path
+         id="path85"
+         d="M 581.95,679.8 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
+         id="path86"
+         d="M 581.95,627.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
+         id="path87"
+         d="M 581.95,530.25 H 30"
+         style="fill:none;stroke:#e5e7eb;stroke-width:0.25;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
          id="path88"
-         d="m 30,661.9 h 324.91 v 14.64 H 30 Z" /></clipPath><clipPath
-       id="clipPath98"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
+         d="M 581.95,504.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
+         id="path89"
+         d="M 581.95,136.75 H 30"
+         style="fill:none;stroke:#e5e7eb;stroke-width:0.25;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
+         id="path90"
+         d="M 581.95,110.8 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
+         id="path91"
+         d="M 581.95,679.8 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
+         id="path92"
+         d="M 581.95,627.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
+         id="path93"
+         d="M 581.95,530.25 H 30"
+         style="fill:none;stroke:#e5e7eb;stroke-width:0.25;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
+         id="path94"
+         d="M 581.95,504.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
+         id="path95"
+         d="M 581.95,136.75 H 30"
+         style="fill:none;stroke:#e5e7eb;stroke-width:0.25;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+      <path
          id="path96"
-         d="m 30,661.9 h 324.91 v 14.64 H 30 Z" /></clipPath><clipPath
-       id="clipPath110"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path108"
-         d="m 30,661.9 h 324.91 v 14.64 H 30 Z" /></clipPath><clipPath
-       id="clipPath122"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path120"
-         d="m 30,661.9 h 324.91 v 14.64 H 30 Z" /></clipPath><clipPath
-       id="clipPath134"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path132"
-         d="m 30,661.9 h 324.91 v 14.64 H 30 Z" /></clipPath><clipPath
-       id="clipPath142"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path140"
-         d="m 354.91,661.9 h 227.21 v 14.64 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath150"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
+         d="M 581.95,110.8 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,0,1056)" />
+    </g>
+  </g>
+  <g
+     id="g96"
+     inkscape:groupmode="layer"
+     inkscape:label="2">
+    <g
+       id="g98">
+      <text
+         id="text98"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,53.4)"><tspan
+           id="tspan98"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 0 -0.016000001 0.032000002"
+           y="0">SKILLS</tspan></text>
+    </g>
+    <g
+       id="g99">
+      <text
+         id="text99"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,74)"><tspan
+           id="tspan99"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.011 -0.011 0.033 -0.033 0.022 -0.033 0.011 0 -0.011 0.033 0 -0.011 0.022 -0.011 -0.011 0.033 -0.011 -0.011 0.022"
+           y="0">Programming Languages</tspan></text>
+    </g>
+    <g
+       id="g100">
+      <text
+         id="text100"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,91.533333)"><tspan
+           id="tspan100"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 0 -0.011 0 0 0.011 0 0 0.022 -0.011 -0.011 0 0.044 0 -0.011 0 -0.011 0.011 0 -0.011 0 0.022 0 0 0 0 -0.011 0.044 0 -0.011 0 -0.011 0.022 -0.022 0 0.022 0 -0.011 0 0 0 0 0.033 -0.011 -0.011"
+           y="0">Java, Python, JavaScript, Go, TypeScript, HTML,</tspan></text>
+    </g>
+    <g
+       id="g101">
+      <text
+         id="text101"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,108.4)"><tspan
+           id="tspan101"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.011 0.011 0 0 0 -0.011 0.022 0 0 0 0.011 -0.011 -0.011 0 0.044 -0.022 0 0 0 0 0 0.044 -0.022 0.022 0 0 0 -0.011 0 0 0.011 0 -0.011 0 -0.011 0.044 0 -0.022 0.022 -0.011 0 0 0 0 -0.011 0 0.044"
+           y="0">CSS, Ruby, Php, Swift, Kotlin, Scala, Perl, Rust,</tspan></text>
+    </g>
+    <g
+       id="g102">
+      <text
+         id="text102"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,125.26667)"><tspan
+           id="tspan102"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.044 0 -0.011 -0.011 0 0 0.022 -0.011 0 0 0.011 -0.011 0 0.022 0 0 0.011 -0.011 0 -0.011 -0.011 0 0.022 -0.011"
+           y="0">R, Matlab, Bash, Powershell</tspan></text>
+    </g>
+    <g
+       id="g103">
+      <text
+         id="text103"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,144.13333)"><tspan
+           id="tspan103"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0.011 -0.011 -0.033 0.022 0 -0.011 0.011 -0.011"
+           y="0">Frameworks</tspan></text>
+    </g>
+    <g
+       id="g104">
+      <text
+         id="text104"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,161.66667)"><tspan
+           id="tspan104"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 0 0 0 0 0.011 0.022 -0.011 -0.011 0 -0.011 0.022 0 0 0 0 -0.011 -0.011 0.022 -0.011 0 0 0.033 0 -0.011 0 0 0 0 0.022 -0.011 -0.011 0.022 0 -0.011"
+           y="0">React, Angular, Django, Flask, Laravel</tspan></text>
+    </g>
+    <g
+       id="g105">
+      <text
+         id="text105"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,180.53333)"><tspan
+           id="tspan105"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0.033 -0.011 -0.011 0.022"
+           y="0">Databases</tspan></text>
+    </g>
+    <g
+       id="g106">
+      <text
+         id="text106"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,198.06667)"><tspan
+           id="tspan106"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0 0.022 0 0 0 -0.011 0.022 -0.011 -0.011 0.044 -0.011 0 0 -0.011 0.022 -0.011 -0.011 0.022 0 -0.022 0.044 0 -0.022 0.022 0 0 -0.011 -0.011 0.022 0.011 0 -0.011 0 0 0.022 0 -0.022 0 0.022 0 0 0 -0.011 0.022 -0.044"
+           y="0">SQL, GraphQL, MongoDB, PostgreSQL, MySQL, Redis,</tspan></text>
+    </g>
+    <g
+       id="g107">
+      <text
+         id="text107"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,214.93333)"><tspan
+           id="tspan107"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0 -0.011 0 0.044 -0.044 0 0 0.022 -0.011 -0.011 0 0.022 0 0 -0.011 0 0.022 -0.011 -0.011 0.022"
+           y="0">Elasticsearch, Firebase</tspan></text>
+    </g>
+    <g
+       id="g108">
+      <text
+         id="text108"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,233.8)"><tspan
+           id="tspan108"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.044 -0.011 -0.011 0.033 0 0 0 0 -0.011 -0.011 0 0.033"
+           y="0">Cloud &amp; DevOps</tspan></text>
+    </g>
+    <g
+       id="g109">
+      <text
+         id="text109"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,251.33333)"><tspan
+           id="tspan109"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.011 0.011 0 0 0.011 0 -0.011 -0.011 0.022 0 0 0 -0.011 0.022 -0.011 0 -0.011 0 0 0 -0.011 0.022 -0.011 0 0 0 0.022 0 0 -0.011 -0.011 0 0.044 -0.022 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0 0.022"
+           y="0">AWS, Azure, Google Cloud, Docker, Kubernetes,</tspan></text>
+    </g>
+    <g
+       id="g110">
+      <text
+         id="text110"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,268.2)"><tspan
+           id="tspan110"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.022 -0.011 -0.011 0 0.022 -0.011 -0.011 0 0 0.011 -0.011 0 0 0.022 0 -0.011 0 0 0 0.022 -0.011 0 0 -0.011"
+           y="0">Terraform, Ansible, Jenkins, CI/CD</tspan></text>
+    </g>
+    <g
+       id="g111">
+      <text
+         id="text111"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,287.06667)"><tspan
+           id="tspan111"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.011 -0.011 0.033 0 -0.011 -0.011 0.022 -0.011 -0.011 0.011 -0.011 0.044 -0.044 0.044 -0.022 0.022 -0.011 -0.011 0.022 -0.033 0 0 0.022 -0.011 0 -0.011"
+           y="0">Architecture &amp; System Design</tspan></text>
+    </g>
+    <g
+       id="g112">
+      <text
+         id="text112"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,304.6)"><tspan
+           id="tspan112"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 0 0 -0.011 -0.011 0 0.022 -0.011 0 0 0 -0.011"
+           y="0">Microservices</tspan></text>
+    </g>
+    <g
+       id="g113">
+      <text
+         id="text113"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,323.46667)"><tspan
+           id="tspan113"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 -0.011 0.022 -0.033 0 0.033 -0.011 -0.011 0.033 -0.011 0.033 0 -0.011 0.033 0 -0.011"
+           y="0">Other Technologies</tspan></text>
+    </g>
+    <g
+       id="g114">
+      <text
+         id="text114"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,341)"><tspan
+           id="tspan114"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.044 0 0 -0.011 -0.011 0.022 0 0 0 0 0 0 0.011 -0.011 -0.011 0 0.044 -0.044 0 0.044 0 -0.022 0.022 -0.011 0 -0.011 0.022 0 0.011 -0.011 -0.011 0 0 0.044 -0.044 0.022 -0.011 0 0 0 0.022 0 0 -0.011 0 0 0 0 0 0 0.022 0 -0.011 0 0 0 0 -0.011 0 0 0 0 0.011 0.022"
+           y="0">C, Node. js, Vue. js, Spring Boot, Ruby On Rails, Objective C, Sas,</tspan></text>
+    </g>
+    <g
+       id="g115">
+      <text
+         id="text115"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,357.86667)"><tspan
+           id="tspan115"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.011 0 0 0 0.011 0 -0.011 0 -0.011 0 0 -0.011 0.022 0 0 0 0 0 0 0 0.011 -0.011 0 0 0.022 0 0 0.011 0 -0.011 -0.011 -0.011 0.044 0 -0.011 -0.011 0.022 0 0 0 -0.011 0 0 0.044 0 -0.011 -0.011 0 0.022 -0.011 0 0 0 0.022 -0.011 0 0 0 0.011 0 0 -0.011 0 0 0 0.044 -0.022 0.022 0 -0.011 -0.011 0 0.022 -0.011"
+           y="0">Shell Scripting, Git, Agile, Scrum, Tdd, Jest, Mocha, Chai, Pytest, Selenium,</tspan></text>
+    </g>
+    <g
+       id="g116">
+      <text
+         id="text116"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,374.73333)"><tspan
+           id="tspan116"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0 0.022 -0.011 -0.011 0 0 0 0.044 -0.044 0.011 0.011 -0.011 0 0.011 0.022 -0.044 0 0.044 0 0 -0.011 0 -0.011 0 0.011 0.022 -0.011 0 -0.011 0.022 -0.011 -0.011 0 -0.011 0.022 0 0 -0.011 0.022 0 -0.011 0 -0.011 0.022 0 -0.011 -0.011 0.022 -0.011 -0.011 0 0.022 -0.011 0 0 0 -0.011 0.022 -0.011 0 0.022 -0.011 -0.011 0.022 -0.011 0 -0.011 -0.011 0.044 0 0 -0.044 0.022"
+           y="0">Cypress, REST Apis, Data Engineering, Machine Learning, Deep Learning, Nlp,</tspan></text>
+    </g>
+    <g
+       id="g117">
+      <text
+         id="text117"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,391.6)"><tspan
+           id="tspan117"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0.022 0 -0.011 -0.011 0.044 -0.022 0 0 0 -0.011 0.022 0 0 0.011 -0.011 -0.011 0.022 -0.011 0 0 0 0 0.022 -0.011 -0.011 0 0 0 0.033 -0.011 0.022 0 -0.011 -0.011 0 0 0.022 -0.044 0.044 0 -0.022 0 0.044 -0.011 -0.011 0 0.022 0 0 -0.022 0.022 -0.011 -0.011 0 0.044 0 -0.022 0 0 0 0 0 0 0.022 -0.011 0.022 -0.011 -0.011"
+           y="0">Computer Vision, Pandas, Numpy, Tensorflow, Pytorch, Keras, Scikit Learn,</tspan></text>
+    </g>
+    <g
+       id="g118">
+      <text
+         id="text118"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,408.46667)"><tspan
+           id="tspan118"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 0.022 -0.044 0.022 -0.011 0.022 0 0 0.011 -0.011 0 -0.011 -0.011 0 0.011 0 0 0 0.011 0 0 -0.011 0 0 0.044 -0.022 0 0.022 -0.011 -0.011 0.022 -0.011 0 0 0 -0.011 0 0.022 -0.011 0 0 0 0.011 0 -0.011 0.022 -0.011 0 0 0 0 -0.011 0.022 0 0 -0.022 0.044 0 -0.011 0 -0.011 0.022 -0.011 0 0 0.011 -0.011 0.022 -0.011 -0.011 0 0.011 0.022 0 0 0 0 0 -0.011 0 0 0 -0.011 0 0 0.022 -0.011 0 0 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0 0.022 -0.044 0.022"
+           y="0">Tableau, Power Bi, Excel, Bigquery, Linux, Windows, macOS, Figma, Adobe Xd, Ui/ux Design, Leadership, </tspan></text>
+    </g>
+    <g
+       id="g119">
+      <text
+         id="text119"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,425.33333)"><tspan
+           id="tspan119"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0.022 -0.011 0 0 -0.011 0 0 0.022 -0.011 0 0 0.011 -0.011 -0.011 0.022 0 -0.011 -0.011 0 0.011 0.022 -0.044 0 0 0.022 -0.011 0 0 0.033 0 -0.011 -0.011 0 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0.022 -0.011 -0.011 0 0.044 0 -0.011 -0.011 0.022 -0.011 0 -0.011 -0.011 0 0.044 0 -0.011 -0.011 0.022 0 -0.011 -0.011 0 0.022"
+           y="0">Communication, Problem Solving, Time Management, Teamwork, Mentoring</tspan></text>
+    </g>
+    <g
+       id="g120">
+      <text
+         id="text120"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,451.86667)"><tspan
+           id="tspan120"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.016000001 0 0 0 0 0 0 0.032000002"
+           y="0">LANGUAGES</tspan></text>
+    </g>
+    <g
+       id="g121">
+      <text
+         id="text121"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.8,476.46667)"><tspan
+           id="tspan121"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.011"
+           y="0">English</tspan></text>
+    </g>
+    <g
+       id="g122">
+      <text
+         id="text122"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1170,476.46667)"><tspan
+           id="tspan122"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022"
+           y="0">Native</tspan></text>
+    </g>
+    <g
+       id="g123">
+      <text
+         id="text123"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.8,494)"><tspan
+           id="tspan123"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 -0.011 0.022 -0.011"
+           y="0">German</tspan></text>
+    </g>
+    <g
+       id="g124">
+      <text
+         id="text124"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1170,494)"><tspan
+           id="tspan124"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.011 0 -0.011 0 0 0 0.022 -0.011 -0.011"
+           y="0">Professional</tspan></text>
+    </g>
+    <g
+       id="g125">
+      <text
+         id="text125"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,525.2)"><tspan
+           id="tspan125"
+           style="font-variant:normal;font-weight:700;font-size:16px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 0 0 0 0 0.032000002 0 0 0 0 0 0 0.032000002 -0.016000001 0 -0.016000001 0 0 0 0.032000002"
+           y="0">COURSES &amp; CERTIFICATIONS</tspan></text>
+    </g>
+    <g
+       id="g126">
+      <text
+         id="text126"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,545.8)"><tspan
+           id="tspan126"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.033 -0.011 -0.011 0.033 -0.011 0.022 -0.011 0 0 0 -0.011 0.033 -0.033 0.044 -0.011 -0.011 0.011 -0.011 0 0 0.022 -0.011 -0.011 0 0.011 -0.011 0.011 -0.011 0.022 -0.011 -0.011 0.011 -0.011"
+           y="0">Advanced Algorithms Data Structures</tspan></text>
+    </g>
+    <g
+       id="g127">
+      <text
+         id="text127"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1487.8,545.8)"><tspan
+           id="tspan127"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 -0.011 0 0.022 -0.011 -0.011"
+           y="0">Jun 2018</tspan></text>
+    </g>
+    <g
+       id="g128">
+      <text
+         id="text128"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,563.06667)"><tspan
+           id="tspan128"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0 0.022 -0.011 0 0.022 -0.011 -0.011 0 0 0.022 -0.044 0 0.022 -0.011 0 0 0 0 0 -0.011 0 0.022 -0.011 -0.011 0 0.022 -0.011 -0.011"
+           y="0">Stanford University (coursera)</tspan></text>
+    </g>
+    <g
+       id="g129">
+      <text
+         id="text129"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,579.13333)"><tspan
+           id="tspan129"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.02 -0.0099999998 -0.0099999998 -0.0099999998 0.0099999998 0 0.02 -0.02 0.02 -0.0099999998 -0.029999999 0.029999999 -0.0099999998 -0.02 0.029999999 -0.029999999 0.02 -0.0099999998 0 0.02 -0.0099999998 -0.0099999998 0 -0.0099999998 0.02 0 -0.0099999998 0.029999999 -0.0099999998 -0.0099999998 0.0099999998 -0.0099999998 -0.0099999998 0.02 -0.0099999998 -0.02"
+           y="0">Category: Computer Science Fundamentals</tspan></text>
+    </g>
+    <g
+       id="g130">
+      <text
+         id="text130"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,594.86667)"><tspan
+           id="tspan130"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02 -0.0099999998 -0.02"
+           y="0">Certificate: </tspan></text>
+    </g>
+    <g
+       id="g131">
+      <text
+         id="text131"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,943.53333,594.86667)"><tspan
+           id="tspan131"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.0099999998 -0.02 0.029999999 -0.02 0.02 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02"
+           y="0">View Certificate</tspan></text>
+      <path
+         id="path131"
+         d="M 0,-1.5 H 69.4"
+         style="fill:none;stroke:#0563c1;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,943.53333,594.86667)" />
+    </g>
+    <g
+       id="g132">
+      <text
+         id="text132"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,614.06667)"><tspan
+           id="tspan132"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.033 0 0 -0.011 0.044 -0.011 -0.011 0 0.011 0.022 -0.011 0 -0.011 0.033 0 -0.011 0 0.022 -0.011 -0.011 0.022 0 -0.011 0 0.022 -0.033 0.033 -0.011 -0.011 0.011 -0.011 0 0.022 -0.011 -0.011 0.044 -0.022 0 0.022 -0.011 0 0.011 -0.011 0.011 0 -0.011 0.033 0 0 -0.011 0.033 -0.011 0 0 0 -0.011 0.033"
+           y="0">Building Scalable Java Microservices With Spring Boot Cloud</tspan></text>
+    </g>
+    <g
+       id="g133">
+      <text
+         id="text133"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1492.7333,614.06667)"><tspan
+           id="tspan133"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 0 -0.011 0 0 -0.011 0.022 -0.011"
+           y="0">Jul 2021</tspan></text>
+    </g>
+    <g
+       id="g134">
+      <text
+         id="text134"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,631.33333)"><tspan
+           id="tspan134"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011"
+           y="0">Udemy</tspan></text>
+    </g>
+    <g
+       id="g135">
+      <text
+         id="text135"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,647.4)"><tspan
+           id="tspan135"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.02 -0.0099999998 -0.0099999998 -0.0099999998 0.0099999998 0 0.02 -0.02 0.029999999 -0.0099999998 0 0 -0.0099999998 -0.0099999998 -0.0099999998 0.02 -0.02 0.029999999 0 -0.0099999998 -0.02 0.029999999 -0.0099999998 -0.029999999 0.029999999 -0.0099999998 -0.02 0.02 0.02 -0.02 -0.02 0.029999999 -0.0099999998 -0.0099999998 0.02 -0.0099999998 0.0099999998 0 -0.0099999998 -0.02 0.02 -0.0099999998 0 0.02 -0.0099999998 0.0099999998"
+           y="0">Category: Backend Development, Cloud Architecture</tspan></text>
+    </g>
+    <g
+       id="g136">
+      <text
+         id="text136"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,663.13333)"><tspan
+           id="tspan136"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02 -0.0099999998 -0.02"
+           y="0">Certificate: </tspan></text>
+    </g>
+    <g
+       id="g137">
+      <text
+         id="text137"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,943.53333,663.13333)"><tspan
+           id="tspan137"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.0099999998 -0.02 0.029999999 -0.02 0.02 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02"
+           y="0">View Certificate</tspan></text>
+      <path
+         id="path137"
+         d="M 0,-1.5 H 69.4"
+         style="fill:none;stroke:#0563c1;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,943.53333,663.13333)" />
+    </g>
+    <g
+       id="g138">
+      <text
+         id="text138"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,682.33333)"><tspan
+           id="tspan138"
+           style="font-variant:normal;font-weight:700;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.011 -0.011 -0.011 0.033 0 -0.011 0.022 0 -0.011 0.022 -0.011 0.011 -0.011 0 -0.011 0.033 0 0.011 -0.011 -0.011 0.022 0 -0.011 0 0 0 0.022 -0.011 0 0.033"
+           y="0">Machine Learning Specialization</tspan></text>
+    </g>
+    <g
+       id="g139">
+      <text
+         id="text139"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,1485.4,682.33333)"><tspan
+           id="tspan139"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.022 0.022 -0.011 0 -0.011 0.022 -0.011"
+           y="0">Sep 2019</tspan></text>
+    </g>
+    <g
+       id="g140">
+      <text
+         id="text140"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,699.6)"><tspan
+           id="tspan140"
+           style="font-variant:normal;font-weight:normal;font-size:11px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.044 0.022 -0.011 -0.011 0 0.022 -0.011"
+           y="0">Coursera</tspan></text>
+    </g>
+    <g
+       id="g141">
+      <text
+         id="text141"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,715.66667)"><tspan
+           id="tspan141"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.02 -0.0099999998 -0.0099999998 -0.0099999998 0.0099999998 0 0.02 -0.02 0.029999999 -0.02 0.02 -0.02 0.02 -0.0099999998 -0.02 0.029999999 -0.02 0.029999999 0 -0.02 -0.0099999998 -0.0099999998"
+           y="0">Category: Ai, Data Science</tspan></text>
+    </g>
+    <g
+       id="g142">
+      <text
+         id="text142"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,876.13333,731.4)"><tspan
+           id="tspan142"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02 -0.0099999998 -0.02"
+           y="0">Certificate: </tspan></text>
+    </g>
+    <g
+       id="g143">
+      <text
+         id="text143"
+         xml:space="preserve"
+         transform="matrix(1.3333333,0,0,1.3333333,943.53333,731.4)"><tspan
+           id="tspan143"
+           style="font-variant:normal;font-weight:normal;font-size:10px;font-family:Arial;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           x="0"
+           dx="0 -0.0099999998 -0.02 0.029999999 -0.02 0.02 -0.02 -0.0099999998 0.0099999998 -0.02 0.02 -0.02 0.02 0 -0.0099999998 0.02"
+           y="0">View Certificate</tspan></text>
+      <path
+         id="path143"
+         d="M 0,-1.5 H 69.4"
+         style="fill:none;stroke:#0563c1;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,943.53333,731.4)" />
+    </g>
+    <g
+       id="g144">
+      <path
+         id="path144"
+         d="M 581.95,747.2 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
+         id="path145"
+         d="M 581.95,448.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
+         id="path146"
+         d="M 581.95,393.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
+         id="path147"
+         d="M 581.95,747.2 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
          id="path148"
-         d="m 354.91,661.9 h 227.21 v 14.64 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath162"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path160"
-         d="m 354.91,661.9 h 227.21 v 14.64 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath174"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path172"
-         d="m 354.91,661.9 h 227.21 v 14.64 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath186"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path184"
-         d="m 354.91,661.9 h 227.21 v 14.64 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath198"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path196"
-         d="m 354.91,661.9 h 227.21 v 14.64 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath208"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path206"
-         d="M 30,647.26 H 354.91 V 661.9 H 30 Z" /></clipPath><clipPath
-       id="clipPath216"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path214"
-         d="M 30,647.26 H 354.91 V 661.9 H 30 Z" /></clipPath><clipPath
-       id="clipPath228"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path226"
-         d="M 30,647.26 H 354.91 V 661.9 H 30 Z" /></clipPath><clipPath
-       id="clipPath240"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path238"
-         d="M 30,647.26 H 354.91 V 661.9 H 30 Z" /></clipPath><clipPath
-       id="clipPath252"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path250"
-         d="M 30,647.26 H 354.91 V 661.9 H 30 Z" /></clipPath><clipPath
-       id="clipPath264"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path262"
-         d="M 30,647.26 H 354.91 V 661.9 H 30 Z" /></clipPath><clipPath
-       id="clipPath276"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path274"
-         d="M 30,647.26 H 354.91 V 661.9 H 30 Z" /></clipPath><clipPath
-       id="clipPath288"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path286"
-         d="M 30,647.26 H 354.91 V 661.9 H 30 Z" /></clipPath><clipPath
-       id="clipPath300"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path298"
-         d="M 30,647.26 H 354.91 V 661.9 H 30 Z" /></clipPath><clipPath
-       id="clipPath308"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path306"
-         d="M 354.91,647.26 H 582.12 V 661.9 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath316"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path314"
-         d="M 354.91,647.26 H 582.12 V 661.9 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath328"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path326"
-         d="M 354.91,647.26 H 582.12 V 661.9 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath340"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path338"
-         d="M 354.91,647.26 H 582.12 V 661.9 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath352"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path350"
-         d="M 354.91,647.26 H 582.12 V 661.9 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath364"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path362"
-         d="M 354.91,647.26 H 582.12 V 661.9 H 354.91 Z" /></clipPath><clipPath
-       id="clipPath374"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path372"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath386"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path384"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath394"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path392"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath406"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path404"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath418"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path416"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath426"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path424"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath438"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path436"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath446"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path444"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath454"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path452"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath466"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path464"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath478"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path476"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath486"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path484"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath498"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path496"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath510"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path508"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath518"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path516"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath530"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path528"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath542"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path540"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath550"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path548"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath562"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path560"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath570"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path568"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath582"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path580"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath594"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path592"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath602"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path600"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath610"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path608"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath622"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path620"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath630"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path628"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath642"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path640"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath650"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path648"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath662"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path660"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath674"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path672"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath682"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path680"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath694"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path692"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath702"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path700"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath714"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path712"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath726"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path724"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath734"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path732"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath746"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path744"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath754"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path752"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath762"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path760"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath774"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path772"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath782"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path780"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath794"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path792"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath802"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path800"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath814"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path812"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath822"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path820"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath834"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path832"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath842"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path840"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath854"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path852"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath866"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path864"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath874"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path872"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath886"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path884"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath894"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path892"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath902"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path900"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath914"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path912"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath922"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path920"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath934"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path932"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath942"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path940"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath954"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path952"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath962"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path960"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath974"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path972"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath982"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path980"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath994"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path992"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1006"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1004"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1014"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1012"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1026"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1024"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1034"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1032"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1042"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1040"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1054"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1052"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1062"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1060"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1074"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1072"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1082"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1080"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1094"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1092"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1102"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1100"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1114"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1112"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1122"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1120"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1134"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1132"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1146"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1144"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1154"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1152"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1166"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1164"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1174"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1172"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1182"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1180"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1194"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1192"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1202"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1200"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1214"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1212"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1222"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1220"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1234"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1232"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1242"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1240"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1254"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1252"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1262"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1260"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1274"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1272"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1286"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1284"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1294"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1292"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1306"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1304"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1314"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1312"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1322"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1320"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1334"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1332"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1342"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1340"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1354"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1352"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1362"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1360"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1374"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1372"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1382"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1380"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1394"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1392"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1402"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1400"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1414"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1412"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1426"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1424"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1434"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1432"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1446"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1444"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1454"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1452"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1462"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1460"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1474"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1472"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1482"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1480"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1494"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1492"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1502"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1500"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1514"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1512"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1522"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1520"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1534"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1532"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1542"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1540"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1554"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1552"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1566"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1564"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1574"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1572"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1586"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1584"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1594"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1592"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1602"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1600"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1614"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1612"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1622"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1620"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1634"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1632"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1642"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1640"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1654"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1652"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1662"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1660"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1674"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1672"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1682"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1680"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1694"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1692"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1706"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1704"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1714"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1712"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1726"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1724"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1734"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1732"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1742"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1740"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1754"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1752"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1762"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1760"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1774"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1772"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1782"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1780"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1794"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1792"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1802"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1800"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1814"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1812"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1822"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1820"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1834"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1832"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1846"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1844"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1854"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1852"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1866"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1864"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1874"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1872"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1882"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1880"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1894"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1892"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1902"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1900"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1914"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1912"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1922"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1920"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1934"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1932"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1942"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1940"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath><clipPath
-       id="clipPath1950"
-       clipPathUnits="userSpaceOnUse"><path
-         style="clip-rule:evenodd"
-         id="path1948"
-         d="M 9.12e-6,0 H 612.00001 V 792 H 9.12e-6 Z" /></clipPath></defs><g
-     transform="matrix(1.3333333,0,0,-1.3333333,0,1056)"
-     id="g10"><g
-       id="g12"><g
-         clip-path="url(#clipPath18)"
-         id="g14"><text
-           id="text22"
-           style="font-variant:normal;font-weight:bold;font-size:36px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,733.32)"><tspan
-             id="tspan20"
-             y="0"
-             x="0 24.011999 52.02 78.012001 104.004 114.012 140.004 165.996 195.98399">YOUR NAME</tspan></text>
-</g></g><g
-       id="g24"><g
-         clip-path="url(#clipPath30)"
-         id="g26" /></g><g
-       id="g32"><g
-         clip-path="url(#clipPath38)"
-         id="g34"><text
-           id="text42"
-           style="font-variant:normal;font-weight:bold;font-size:15.96000004px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,708.34)"><tspan
-             id="tspan40"
-             y="0"
-             x="0 10.64532 16.90164 26.6532 31.904039 40.777802 49.651562 58.525318 63.089882 72.841438 82.52916 91.402924 95.839798 100.27668 104.82528 114.65664 124.4082 128.84508 138.53281 142.96968 148.28436 152.80104">Professional/job Title</tspan></text>
-</g></g><g
-       id="g44"><g
-         clip-path="url(#clipPath50)"
-         id="g46" /></g><g
-       id="g52"><g
-         clip-path="url(#clipPath58)"
-         id="g54"><text
-           id="text62"
-           style="font-variant:normal;font-weight:bold;font-size:15.96000004px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,684.82)"><tspan
-             id="tspan60"
-             y="0"
-             x="0 11.52312 23.87616 35.495041 45.438122 56.594158 68.213043 78.044403 82.481277 86.918159 98.553001 108.30456 120.72144 132.24455 145.81056 156.9666 166.79796 171.34656 183.6996">CONTACT INFORMATION</tspan></text>
-</g></g><g
-       id="g64"><g
-         clip-path="url(#clipPath70)"
-         id="g66" /></g><g
-       id="g72"><g
-         clip-path="url(#clipPath78)"
-         id="g74"><g
-           id="g80"><path
-             id="path82"
-             style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-             d="m 28.56,679.54 h 555 v 0.72 h -555 z" /></g></g></g><g
-       id="g84"><g
-         clip-path="url(#clipPath90)"
-         id="g86"><g
-           id="g92"><g
-             clip-path="url(#clipPath98)"
-             id="g94"><text
-               id="text102"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,30.48,666.46)"><tspan
-                 id="tspan100"
-                 y="0"
-                 x="0 3.8399999">• </tspan></text>
-</g></g><g
-           id="g104"><g
-             clip-path="url(#clipPath110)"
-             id="g106"><text
-               id="text114"
-               style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,37.44,666.46)"><tspan
-                 id="tspan112"
-                 y="0"
-                 x="0 9.2294397 15.97488 22.55472 25.667999 28.781281">Mobile</tspan></text>
-</g></g><g
-           id="g116"><g
-             clip-path="url(#clipPath122)"
-             id="g118"><text
-               id="text126"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,72.264,666.46)"><tspan
-                 id="tspan124"
-                 y="0"
-                 x="0 3.1132801 6.1161599 12.56352 18.701759 24.84 30.978239 37.072319 43.21056 49.315681 55.453918 61.55904 67.697281 73.802399 79.797119">: +962000000000</tspan></text>
-</g></g><g
-           id="g128"><g
-             clip-path="url(#clipPath134)"
-             id="g130" /></g></g></g><g
-       id="g136"><g
-         clip-path="url(#clipPath142)"
-         id="g138"><g
-           id="g144"><g
-             clip-path="url(#clipPath150)"
-             id="g146"><text
-               id="text154"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,355.39,666.46)"><tspan
-                 id="tspan152"
-                 y="0"
-                 x="0 3.8399999">• </tspan></text>
-</g></g><g
-           id="g156"><g
-             clip-path="url(#clipPath162)"
-             id="g158"><text
-               id="text166"
-               style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,362.35,666.46)"><tspan
-                 id="tspan164"
-                 y="0"
-                 x="0 8.5228796 11.63616 15.3456 23.26128 30.00672">GitHub</tspan></text>
-</g></g><g
-           id="g168"><g
-             clip-path="url(#clipPath174)"
-             id="g170"><text
-               id="text178"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,399.07,666.46)"><tspan
-                 id="tspan176"
-                 y="0"
-                 x="0 3.00002">: </tspan></text>
-</g></g><g
-           id="g180"><g
-             clip-path="url(#clipPath186)"
-             id="g182"><text
-               id="text190"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,405.19,666.46)"><tspan
-                 id="tspan188"
-                 y="0"
-                 x="0 7.9156799 13.43568 19.573919 23.25024 29.388479 35.394241 44.62368">Username</tspan></text>
-</g></g><g
-           id="g192"><g
-             clip-path="url(#clipPath198)"
-             id="g194" /></g><path
-           id="path200"
-           style="fill:#0563c1;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           d="m 405.19,664.42 h 50.664 v 0.84 H 405.19 Z" /></g></g><g
-       id="g202"><g
-         clip-path="url(#clipPath208)"
-         id="g204"><g
-           id="g210"><g
-             clip-path="url(#clipPath216)"
-             id="g212"><text
-               id="text220"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,30.48,651.82)"><tspan
-                 id="tspan218"
-                 y="0"
-                 x="0 3.8399999">• </tspan></text>
-</g></g><g
-           id="g222"><g
-             clip-path="url(#clipPath228)"
-             id="g224"><text
-               id="text232"
-               style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,37.44,651.82)"><tspan
-                 id="tspan230"
-                 y="0"
-                 x="0 7.31952 17.134081 23.27232 26.2752">Email</tspan></text>
-</g></g><g
-           id="g234"><g
-             clip-path="url(#clipPath240)"
-             id="g236"><text
-               id="text244"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,66.864,651.82)"><tspan
-                 id="tspan242"
-                 y="0"
-                 x="0 3.00002">: </tspan></text>
-</g></g><g
-           id="g246"><g
-             clip-path="url(#clipPath252)"
-             id="g248"><text
-               id="text256"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,72.984,651.82)"><tspan
-                 id="tspan254"
-                 y="0"
-                 x="0 7.31952 13.45776 19.56288 23.27232 31.188 37.18272 46.412159 52.5504">YourName@</tspan></text>
-</g></g><g
-           id="g258"><g
-             clip-path="url(#clipPath264)"
-             id="g260"><text
-               id="text268"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,136.7,651.82)"><tspan
-                 id="tspan266"
-                 y="0"
-                 x="0">e</tspan></text>
-</g></g><g
-           id="g270"><g
-             clip-path="url(#clipPath276)"
-             id="g272"><text
-               id="text280"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,142.82,651.82)"><tspan
-                 id="tspan278"
-                 y="0"
-                 x="0 9.1190395 15.25728 17.64192">mail</tspan></text>
-</g></g><g
-           id="g282"><g
-             clip-path="url(#clipPath288)"
-             id="g284"><text
-               id="text292"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,162.86,651.82)"><tspan
-                 id="tspan290"
-                 y="0"
-                 x="0 3.1132801 8.6332798 14.77152">.com</tspan></text>
-</g></g><g
-           id="g294"><g
-             clip-path="url(#clipPath300)"
-             id="g296" /></g></g></g><g
-       id="g302"><g
-         clip-path="url(#clipPath308)"
-         id="g304"><g
-           id="g310"><g
-             clip-path="url(#clipPath316)"
-             id="g312"><text
-               id="text320"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,355.39,651.82)"><tspan
-                 id="tspan318"
-                 y="0"
-                 x="0 3.8399999">• </tspan></text>
-</g></g><g
-           id="g322"><g
-             clip-path="url(#clipPath328)"
-             id="g324"><text
-               id="text332"
-               style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,362.35,651.82)"><tspan
-                 id="tspan330"
-                 y="0"
-                 x="0 6.74544 9.8145599 16.559999 22.69824 28.80336 35.405281 38.518559">LinkedIn</tspan></text>
-</g></g><g
-           id="g334"><g
-             clip-path="url(#clipPath340)"
-             id="g336"><text
-               id="text344"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,407.59,651.82)"><tspan
-                 id="tspan342"
-                 y="0"
-                 x="0 3.00002">: </tspan></text>
-</g></g><g
-           id="g346"><g
-             clip-path="url(#clipPath352)"
-             id="g348"><text
-               id="text356"
-               style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#0563c1;fill-opacity:1;fill-rule:nonzero;stroke:none"
-               transform="matrix(1,0,0,-1,413.71,651.82)"><tspan
-                 id="tspan354"
-                 y="0"
-                 x="0 7.9156799 13.43568 19.573919 23.25024 29.388479 35.394241 44.62368">Username</tspan></text>
-</g></g><g
-           id="g358"><g
-             clip-path="url(#clipPath364)"
-             id="g360" /></g><path
-           id="path366"
-           style="fill:#0563c1;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           d="m 413.71,649.78 h 50.664 v 0.84 H 413.71 Z" /></g></g><g
-       id="g368"><g
-         clip-path="url(#clipPath374)"
-         id="g370"><text
-           id="text378"
-           style="font-variant:normal;font-weight:bold;font-size:15.96000004px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,632.38)"><tspan
-             id="tspan376"
-             y="0"
-             x="0 10.64532 22.16844 34.58532 44.273041 54.918362 65.611557 76.256882 80.837402 93.190437 105.04872 116.44416 126.19572 130.6326 141.27792 152.80104 166.09572 179.66171 190.81776 202.43665">PROFESSIONAL SUMMARY</tspan></text>
-</g></g><g
-       id="g380"><g
-         clip-path="url(#clipPath386)"
-         id="g382" /></g><g
-       id="g388"><g
-         clip-path="url(#clipPath394)"
-         id="g390"><g
-           id="g396"><path
-             id="path398"
-             style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-             d="m 28.56,627.1 h 555 v 0.72 h -555 z" /></g></g></g><g
-       id="g400"><g
-         clip-path="url(#clipPath406)"
-         id="g402"><text
-           id="text410"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,616.9)"><tspan
-             id="tspan408"
-             y="0"
-             x="0 7.31952 10.4328 17.752319 21.46176 23.857441 29.85216 33.07584 36.07872 44.712002 50.110561 56.248798 59.925121 65.345757 67.74144 73.968002 81.773277 84.886559 92.802238 95.197922 101.42448 107.56272 109.94736 112.34304 118.48128 124.5864 127.69968 130.09537 136.2336 142.33871 145.452 152.77151 156.48096 162.47568 165.58896 171.7272 177.24719 182.7672 185.15184 191.29008 197.3952 203.53345 205.91808 209.03136 216.35088 222.48912 227.8656 233.3856 239.52383 243.20016 249.33839 255.47664 261.61487 267.70895 270.71185 273.82513 281.02319 286.65359 289.04929 291.44495 293.84064 299.36063 302.47391 305.58719 312.90671 319.04495 325.15009 328.26337 335.58289 340.98145 347.11969 353.22479 356.93423 359.32993 365.46817 371.57327 377.09329 383.23151 386.30063 393.66431 399.80255 405.89664 408.89951 417.53281 423.67105 429.77615 432.17184 437.69183">A Brief Overview Highlighting Professional Background, Skills, And Experience And Goals.</tspan></text>
-</g></g><g
-       id="g412"><g
-         clip-path="url(#clipPath418)"
-         id="g414" /></g><g
-       id="g420"><g
-         clip-path="url(#clipPath426)"
-         id="g422"><text
-           id="text430"
-           style="font-style:italic;font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-ItalicMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,151.1,604.3)"><tspan
-             id="tspan428"
-             y="0"
-             x="0 7.31952 12.83952 18.97776 25.08288 28.79232 31.188 37.326241 43.431358 48.951359 55.0896 58.158718 61.305119 67.299843 73.7472 76.783203 82.3032 88.441437 94.546562 98.255997 103.65456 106.76784 109.16352 115.30176 118.28256 124.4208 128.09712 134.23537 137.34863 143.48688 149.00688 154.52689 156.91151 163.04976 169.15488 175.29312 177.67776 180.79105 186.31104 192.30576 195.41904 198.42192 206.448 212.44272 216.15216 222.29041 225.35953 231.49776 237.51456 243.6528 246.03745 252.17567 258.28079 264.41904 268.09537 270.54623 276.64032 282.77856 285.84769 289.59024 295.72849 298.11313 304.25137">Experience: 3+ years in professional software engineering roles</tspan></text>
-</g></g><g
-       id="g432"><g
-         clip-path="url(#clipPath438)"
-         id="g434" /></g><g
-       id="g440"><g
-         clip-path="url(#clipPath446)"
-         id="g442" /></g><g
-       id="g448"><g
-         clip-path="url(#clipPath454)"
-         id="g450"><g
-           id="g456"><path
-             id="path458"
-             style="fill:#e5e7eb;fill-opacity:1;fill-rule:evenodd;stroke:none"
-             d="m 28.56,582.82 h 555 v 0.24001 h -555 z" /></g></g></g><g
-       id="g460"><g
-         clip-path="url(#clipPath466)"
-         id="g462"><text
-           id="text470"
-           style="font-variant:normal;font-weight:bold;font-size:15.96000004px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,561.94)"><tspan
-             id="tspan468"
-             y="0"
-             x="0 15.09816 27.4512 38.974319 50.49744 54.934319 65.579643 76.272842 86.918159 97.611359 109.13448 113.68308 124.3284 135.85152 147.37463">WORK EXPERIENCE</tspan></text>
-</g></g><g
-       id="g472"><g
-         clip-path="url(#clipPath478)"
-         id="g474" /></g><g
-       id="g480"><g
-         clip-path="url(#clipPath486)"
-         id="g482"><g
-           id="g488"><path
-             id="path490"
-             style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-             d="m 28.56,556.78 h 555 v 0.72 h -555 z" /></g></g></g><g
-       id="g492"><g
-         clip-path="url(#clipPath498)"
-         id="g494"><text
-           id="text502"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,546.7)"><tspan
-             id="tspan500"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336">Position 1</tspan></text>
-</g></g><g
-       id="g504"><g
-         clip-path="url(#clipPath510)"
-         id="g506" /></g><g
-       id="g512"><g
-         clip-path="url(#clipPath518)"
-         id="g514"><text
-           id="text522"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,433.75,546.7)"><tspan
-             id="tspan520"
-             y="0"
-             x="0 5.52 11.65824 17.763359 20.87664 27.014879">Jan 20</tspan></text>
-</g></g><g
-       id="g524"><g
-         clip-path="url(#clipPath530)"
-         id="g526"><text
-           id="text534"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,466.9,546.7)"><tspan
-             id="tspan532"
-             y="0"
-             x="0 6.1200399">15</tspan></text>
-</g></g><g
-       id="g536"><g
-         clip-path="url(#clipPath542)"
-         id="g538" /></g><g
-       id="g544"><g
-         clip-path="url(#clipPath550)"
-         id="g546"><text
-           id="text554"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,482.14,546.7)"><tspan
-             id="tspan552"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g556"><g
-         clip-path="url(#clipPath562)"
-         id="g558" /></g><g
-       id="g564"><g
-         clip-path="url(#clipPath570)"
-         id="g566"><text
-           id="text574"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,488.98,546.7)"><tspan
-             id="tspan572"
-             y="0"
-             x="0 5.52 11.51472 17.65296 20.72208 26.860319">Jan 20</tspan></text>
-</g></g><g
-       id="g576"><g
-         clip-path="url(#clipPath582)"
-         id="g578"><text
-           id="text586"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,521.98,546.7)"><tspan
-             id="tspan584"
-             y="0"
-             x="0 6.1200399">16</tspan></text>
-</g></g><g
-       id="g588"><g
-         clip-path="url(#clipPath594)"
-         id="g590" /></g><g
-       id="g596"><g
-         clip-path="url(#clipPath602)"
-         id="g598" /></g><g
-       id="g604"><g
-         clip-path="url(#clipPath610)"
-         id="g606"><text
-           id="text614"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,533.59)"><tspan
-             id="tspan612"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439">Company Name 1</tspan></text>
-</g></g><g
-       id="g616"><g
-         clip-path="url(#clipPath622)"
-         id="g618" /></g><g
-       id="g624"><g
-         clip-path="url(#clipPath630)"
-         id="g626"><text
-           id="text634"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,520.87)"><tspan
-             id="tspan632"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g636"><g
-         clip-path="url(#clipPath642)"
-         id="g638" /></g><g
-       id="g644"><g
-         clip-path="url(#clipPath650)"
-         id="g646"><text
-           id="text654"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,520.87)"><tspan
-             id="tspan652"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656">Description Of The </tspan></text>
-</g></g><g
-       id="g656"><g
-         clip-path="url(#clipPath662)"
-         id="g658"><text
-           id="text666"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,142.94,520.87)"><tspan
-             id="tspan664"
-             y="0"
-             x="0 7.31952 13.45776 18.97776 21.3624 24.475679 26.76096 32.8992 39.004318">Position.</tspan></text>
-</g></g><g
-       id="g668"><g
-         clip-path="url(#clipPath674)"
-         id="g670" /></g><g
-       id="g676"><g
-         clip-path="url(#clipPath682)"
-         id="g678"><text
-           id="text686"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,505.39)"><tspan
-             id="tspan684"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336">Position 2</tspan></text>
-</g></g><g
-       id="g688"><g
-         clip-path="url(#clipPath694)"
-         id="g690" /></g><g
-       id="g696"><g
-         clip-path="url(#clipPath702)"
-         id="g698"><text
-           id="text706"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,431.95,505.39)"><tspan
-             id="tspan704"
-             y="0"
-             x="0 5.52 11.65824 17.763359 20.87664 27.014879 33.119999 39.25824 45.363361">Jan 2017 </tspan></text>
-</g></g><g
-       id="g708"><g
-         clip-path="url(#clipPath714)"
-         id="g710"><text
-           id="text718"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,480.34,505.39)"><tspan
-             id="tspan716"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g720"><g
-         clip-path="url(#clipPath726)"
-         id="g722" /></g><g
-       id="g728"><g
-         clip-path="url(#clipPath734)"
-         id="g730"><text
-           id="text738"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,487.18,505.39)"><tspan
-             id="tspan736"
-             y="0"
-             x="0 7.9156799 14.05392 19.430401 22.54368 28.681919 34.787041 40.925282">Dec 2017</tspan></text>
-</g></g><g
-       id="g740"><g
-         clip-path="url(#clipPath746)"
-         id="g742" /></g><g
-       id="g748"><g
-         clip-path="url(#clipPath754)"
-         id="g750" /></g><g
-       id="g756"><g
-         clip-path="url(#clipPath762)"
-         id="g758"><text
-           id="text766"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,492.31)"><tspan
-             id="tspan764"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439">Company Name 2</tspan></text>
-</g></g><g
-       id="g768"><g
-         clip-path="url(#clipPath774)"
-         id="g770" /></g><g
-       id="g776"><g
-         clip-path="url(#clipPath782)"
-         id="g778"><text
-           id="text786"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,479.71)"><tspan
-             id="tspan784"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g788"><g
-         clip-path="url(#clipPath794)"
-         id="g790" /></g><g
-       id="g796"><g
-         clip-path="url(#clipPath802)"
-         id="g798"><text
-           id="text806"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,479.71)"><tspan
-             id="tspan804"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656 94.899841 102.21936 108.3576 113.8776 116.26224 119.37552 121.6608 127.79904 133.90416">Description Of The Position.</tspan></text>
-</g></g><g
-       id="g808"><g
-         clip-path="url(#clipPath814)"
-         id="g810" /></g><g
-       id="g816"><g
-         clip-path="url(#clipPath822)"
-         id="g818"><text
-           id="text826"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,464.11)"><tspan
-             id="tspan824"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336">Position 3</tspan></text>
-</g></g><g
-       id="g828"><g
-         clip-path="url(#clipPath834)"
-         id="g830" /></g><g
-       id="g836"><g
-         clip-path="url(#clipPath842)"
-         id="g838"><text
-           id="text846"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,431.95,464.11)"><tspan
-             id="tspan844"
-             y="0"
-             x="0 5.52 11.65824 17.763359 20.87664 27.014879 33.119999 39.25824 45.363361">Jan 2018 </tspan></text>
-</g></g><g
-       id="g848"><g
-         clip-path="url(#clipPath854)"
-         id="g850"><text
-           id="text858"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,480.34,464.11)"><tspan
-             id="tspan856"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g860"><g
-         clip-path="url(#clipPath866)"
-         id="g862" /></g><g
-       id="g868"><g
-         clip-path="url(#clipPath874)"
-         id="g870"><text
-           id="text878"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,487.18,464.11)"><tspan
-             id="tspan876"
-             y="0"
-             x="0 7.9156799 14.05392 19.430401 22.54368 28.681919 34.787041 40.925282">Dec 2018</tspan></text>
-</g></g><g
-       id="g880"><g
-         clip-path="url(#clipPath886)"
-         id="g882" /></g><g
-       id="g888"><g
-         clip-path="url(#clipPath894)"
-         id="g890" /></g><g
-       id="g896"><g
-         clip-path="url(#clipPath902)"
-         id="g898"><text
-           id="text906"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,451.03)"><tspan
-             id="tspan904"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439">Company Name 3</tspan></text>
-</g></g><g
-       id="g908"><g
-         clip-path="url(#clipPath914)"
-         id="g910" /></g><g
-       id="g916"><g
-         clip-path="url(#clipPath922)"
-         id="g918"><text
-           id="text926"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,438.43)"><tspan
-             id="tspan924"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g928"><g
-         clip-path="url(#clipPath934)"
-         id="g930" /></g><g
-       id="g936"><g
-         clip-path="url(#clipPath942)"
-         id="g938"><text
-           id="text946"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,438.43)"><tspan
-             id="tspan944"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656 94.899841 102.21936 108.3576 113.8776 116.26224 119.37552 121.6608 127.79904 133.90416">Description Of The Position.</tspan></text>
-</g></g><g
-       id="g948"><g
-         clip-path="url(#clipPath954)"
-         id="g950" /></g><g
-       id="g956"><g
-         clip-path="url(#clipPath962)"
-         id="g958"><text
-           id="text966"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,420.91)"><tspan
-             id="tspan964"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336">Position 4</tspan></text>
-</g></g><g
-       id="g968"><g
-         clip-path="url(#clipPath974)"
-         id="g970" /></g><g
-       id="g976"><g
-         clip-path="url(#clipPath982)"
-         id="g978"><text
-           id="text986"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,431.95,420.91)"><tspan
-             id="tspan984"
-             y="0"
-             x="0 5.52 11.65824 17.763359 20.87664 27.014879 33.119999 39.25824 45.363361">Jan 2019 </tspan></text>
-</g></g><g
-       id="g988"><g
-         clip-path="url(#clipPath994)"
-         id="g990"><text
-           id="text998"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,480.34,420.91)"><tspan
-             id="tspan996"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g1000"><g
-         clip-path="url(#clipPath1006)"
-         id="g1002" /></g><g
-       id="g1008"><g
-         clip-path="url(#clipPath1014)"
-         id="g1010"><text
-           id="text1018"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,487.18,420.91)"><tspan
-             id="tspan1016"
-             y="0"
-             x="0 7.9156799 14.05392 19.430401 22.54368 28.681919 34.787041 40.925282">Dec 2019</tspan></text>
-</g></g><g
-       id="g1020"><g
-         clip-path="url(#clipPath1026)"
-         id="g1022" /></g><g
-       id="g1028"><g
-         clip-path="url(#clipPath1034)"
-         id="g1030" /></g><g
-       id="g1036"><g
-         clip-path="url(#clipPath1042)"
-         id="g1038"><text
-           id="text1046"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,407.83)"><tspan
-             id="tspan1044"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439">Company Name 4</tspan></text>
-</g></g><g
-       id="g1048"><g
-         clip-path="url(#clipPath1054)"
-         id="g1050" /></g><g
-       id="g1056"><g
-         clip-path="url(#clipPath1062)"
-         id="g1058"><text
-           id="text1066"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,395.23)"><tspan
-             id="tspan1064"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g1068"><g
-         clip-path="url(#clipPath1074)"
-         id="g1070" /></g><g
-       id="g1076"><g
-         clip-path="url(#clipPath1082)"
-         id="g1078"><text
-           id="text1086"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,395.23)"><tspan
-             id="tspan1084"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656 94.899841 102.21936 108.3576 113.8776 116.26224 119.37552 121.6608 127.79904 133.90416">Description Of The Position.</tspan></text>
-</g></g><g
-       id="g1088"><g
-         clip-path="url(#clipPath1094)"
-         id="g1090" /></g><g
-       id="g1096"><g
-         clip-path="url(#clipPath1102)"
-         id="g1098"><text
-           id="text1106"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,379.63)"><tspan
-             id="tspan1104"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336">Position 5</tspan></text>
-</g></g><g
-       id="g1108"><g
-         clip-path="url(#clipPath1114)"
-         id="g1110" /></g><g
-       id="g1116"><g
-         clip-path="url(#clipPath1122)"
-         id="g1118"><text
-           id="text1126"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,431.95,379.63)"><tspan
-             id="tspan1124"
-             y="0"
-             x="0 5.52 11.65824 17.763359 20.87664 27.014879 33.119999 39.25824 45.363361">Jan 2020 </tspan></text>
-</g></g><g
-       id="g1128"><g
-         clip-path="url(#clipPath1134)"
-         id="g1130"><text
-           id="text1138"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,480.34,379.63)"><tspan
-             id="tspan1136"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g1140"><g
-         clip-path="url(#clipPath1146)"
-         id="g1142" /></g><g
-       id="g1148"><g
-         clip-path="url(#clipPath1154)"
-         id="g1150"><text
-           id="text1158"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,487.18,379.63)"><tspan
-             id="tspan1156"
-             y="0"
-             x="0 7.9156799 14.05392 19.430401 22.54368 28.681919 34.787041 40.925282">Dec 2020</tspan></text>
-</g></g><g
-       id="g1160"><g
-         clip-path="url(#clipPath1166)"
-         id="g1162" /></g><g
-       id="g1168"><g
-         clip-path="url(#clipPath1174)"
-         id="g1170" /></g><g
-       id="g1176"><g
-         clip-path="url(#clipPath1182)"
-         id="g1178"><text
-           id="text1186"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,366.53)"><tspan
-             id="tspan1184"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439">Company Name 5</tspan></text>
-</g></g><g
-       id="g1188"><g
-         clip-path="url(#clipPath1194)"
-         id="g1190" /></g><g
-       id="g1196"><g
-         clip-path="url(#clipPath1202)"
-         id="g1198"><text
-           id="text1206"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,353.93)"><tspan
-             id="tspan1204"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g1208"><g
-         clip-path="url(#clipPath1214)"
-         id="g1210" /></g><g
-       id="g1216"><g
-         clip-path="url(#clipPath1222)"
-         id="g1218"><text
-           id="text1226"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,353.93)"><tspan
-             id="tspan1224"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656 94.899841 102.21936 108.3576 113.8776 116.26224 119.37552 121.6608 127.79904 133.90416">Description Of The Position.</tspan></text>
-</g></g><g
-       id="g1228"><g
-         clip-path="url(#clipPath1234)"
-         id="g1230" /></g><g
-       id="g1236"><g
-         clip-path="url(#clipPath1242)"
-         id="g1238"><text
-           id="text1246"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,338.33)"><tspan
-             id="tspan1244"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336">Position 6</tspan></text>
-</g></g><g
-       id="g1248"><g
-         clip-path="url(#clipPath1254)"
-         id="g1250" /></g><g
-       id="g1256"><g
-         clip-path="url(#clipPath1262)"
-         id="g1258"><text
-           id="text1266"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,433.75,338.33)"><tspan
-             id="tspan1264"
-             y="0"
-             x="0 5.52 11.65824 17.763359 20.87664 27.014879 33.119999 39.25824 45.363361">Jan 2021 </tspan></text>
-</g></g><g
-       id="g1268"><g
-         clip-path="url(#clipPath1274)"
-         id="g1270"><text
-           id="text1278"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,482.14,338.33)"><tspan
-             id="tspan1276"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g1280"><g
-         clip-path="url(#clipPath1286)"
-         id="g1282" /></g><g
-       id="g1288"><g
-         clip-path="url(#clipPath1294)"
-         id="g1290"><text
-           id="text1298"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,488.98,338.33)"><tspan
-             id="tspan1296"
-             y="0"
-             x="0 5.52 11.51472 17.65296 20.72208 26.860319 32.998562 39.136799">Jan 2022</tspan></text>
-</g></g><g
-       id="g1300"><g
-         clip-path="url(#clipPath1306)"
-         id="g1302" /></g><g
-       id="g1308"><g
-         clip-path="url(#clipPath1314)"
-         id="g1310" /></g><g
-       id="g1316"><g
-         clip-path="url(#clipPath1322)"
-         id="g1318"><text
-           id="text1326"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,325.37)"><tspan
-             id="tspan1324"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439">Company Name 6</tspan></text>
-</g></g><g
-       id="g1328"><g
-         clip-path="url(#clipPath1334)"
-         id="g1330" /></g><g
-       id="g1336"><g
-         clip-path="url(#clipPath1342)"
-         id="g1338"><text
-           id="text1346"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,312.65)"><tspan
-             id="tspan1344"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g1348"><g
-         clip-path="url(#clipPath1354)"
-         id="g1350" /></g><g
-       id="g1356"><g
-         clip-path="url(#clipPath1362)"
-         id="g1358"><text
-           id="text1366"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,312.65)"><tspan
-             id="tspan1364"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656 94.899841 102.21936 108.3576 113.8776 116.26224 119.37552 121.6608 127.79904 133.90416">Description Of The Position.</tspan></text>
-</g></g><g
-       id="g1368"><g
-         clip-path="url(#clipPath1374)"
-         id="g1370" /></g><g
-       id="g1376"><g
-         clip-path="url(#clipPath1382)"
-         id="g1378"><text
-           id="text1386"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,295.13)"><tspan
-             id="tspan1384"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336">Position 7</tspan></text>
-</g></g><g
-       id="g1388"><g
-         clip-path="url(#clipPath1394)"
-         id="g1390" /></g><g
-       id="g1396"><g
-         clip-path="url(#clipPath1402)"
-         id="g1398"><text
-           id="text1406"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,432.55,295.13)"><tspan
-             id="tspan1404"
-             y="0"
-             x="0 6.74544 12.83952 18.97776 22.046881 28.18512 34.32336 40.461601 46.555679">Feb 2022 </tspan></text>
-</g></g><g
-       id="g1408"><g
-         clip-path="url(#clipPath1414)"
-         id="g1410"><text
-           id="text1418"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,482.14,295.13)"><tspan
-             id="tspan1416"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g1420"><g
-         clip-path="url(#clipPath1426)"
-         id="g1422" /></g><g
-       id="g1428"><g
-         clip-path="url(#clipPath1434)"
-         id="g1430"><text
-           id="text1438"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,488.98,295.13)"><tspan
-             id="tspan1436"
-             y="0"
-             x="0 5.52 11.65824 17.64192 20.755199 26.89344 32.998562 39.136799">Jan 2023</tspan></text>
-</g></g><g
-       id="g1440"><g
-         clip-path="url(#clipPath1446)"
-         id="g1442" /></g><g
-       id="g1448"><g
-         clip-path="url(#clipPath1454)"
-         id="g1450" /></g><g
-       id="g1456"><g
-         clip-path="url(#clipPath1462)"
-         id="g1458"><text
-           id="text1466"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,282.05)"><tspan
-             id="tspan1464"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439">Company Name 7</tspan></text>
-</g></g><g
-       id="g1468"><g
-         clip-path="url(#clipPath1474)"
-         id="g1470" /></g><g
-       id="g1476"><g
-         clip-path="url(#clipPath1482)"
-         id="g1478"><text
-           id="text1486"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,269.45)"><tspan
-             id="tspan1484"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g1488"><g
-         clip-path="url(#clipPath1494)"
-         id="g1490" /></g><g
-       id="g1496"><g
-         clip-path="url(#clipPath1502)"
-         id="g1498"><text
-           id="text1506"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,269.45)"><tspan
-             id="tspan1504"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656 94.899841 102.21936 108.3576 113.8776 116.26224 119.37552 121.6608 127.79904 133.90416">Description Of The Position.</tspan></text>
-</g></g><g
-       id="g1508"><g
-         clip-path="url(#clipPath1514)"
-         id="g1510" /></g><g
-       id="g1516"><g
-         clip-path="url(#clipPath1522)"
-         id="g1518"><text
-           id="text1526"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,253.85)"><tspan
-             id="tspan1524"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336">Position 8</tspan></text>
-</g></g><g
-       id="g1528"><g
-         clip-path="url(#clipPath1534)"
-         id="g1530" /></g><g
-       id="g1536"><g
-         clip-path="url(#clipPath1542)"
-         id="g1538"><text
-           id="text1546"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,432.55,253.85)"><tspan
-             id="tspan1544"
-             y="0"
-             x="0 6.74544 12.83952 18.97776 22.046881 28.18512 34.32336 40.461601 46.555679">Feb 2023 </tspan></text>
-</g></g><g
-       id="g1548"><g
-         clip-path="url(#clipPath1554)"
-         id="g1550"><text
-           id="text1558"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,482.14,253.85)"><tspan
-             id="tspan1556"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g1560"><g
-         clip-path="url(#clipPath1566)"
-         id="g1562" /></g><g
-       id="g1568"><g
-         clip-path="url(#clipPath1574)"
-         id="g1570"><text
-           id="text1578"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,488.98,253.85)"><tspan
-             id="tspan1576"
-             y="0"
-             x="0 5.52 11.65824 17.64192 20.755199 26.89344 32.998562 39.136799">Jan 2024</tspan></text>
-</g></g><g
-       id="g1580"><g
-         clip-path="url(#clipPath1586)"
-         id="g1582" /></g><g
-       id="g1588"><g
-         clip-path="url(#clipPath1594)"
-         id="g1590" /></g><g
-       id="g1596"><g
-         clip-path="url(#clipPath1602)"
-         id="g1598"><text
-           id="text1606"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,240.77)"><tspan
-             id="tspan1604"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439">Company Name 8</tspan></text>
-</g></g><g
-       id="g1608"><g
-         clip-path="url(#clipPath1614)"
-         id="g1610" /></g><g
-       id="g1616"><g
-         clip-path="url(#clipPath1622)"
-         id="g1618"><text
-           id="text1626"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,228.17)"><tspan
-             id="tspan1624"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g1628"><g
-         clip-path="url(#clipPath1634)"
-         id="g1630" /></g><g
-       id="g1636"><g
-         clip-path="url(#clipPath1642)"
-         id="g1638"><text
-           id="text1646"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,228.17)"><tspan
-             id="tspan1644"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656 94.899841 102.21936 108.3576 113.8776 116.26224 119.37552 121.6608 127.79904 133.90416">Description Of The Position.</tspan></text>
-</g></g><g
-       id="g1648"><g
-         clip-path="url(#clipPath1654)"
-         id="g1650" /></g><g
-       id="g1656"><g
-         clip-path="url(#clipPath1662)"
-         id="g1658"><text
-           id="text1666"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,212.69)"><tspan
-             id="tspan1664"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336">Position 9</tspan></text>
-</g></g><g
-       id="g1668"><g
-         clip-path="url(#clipPath1674)"
-         id="g1670" /></g><g
-       id="g1676"><g
-         clip-path="url(#clipPath1682)"
-         id="g1678"><text
-           id="text1686"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,432.55,212.69)"><tspan
-             id="tspan1684"
-             y="0"
-             x="0 6.74544 12.83952 18.97776 22.046881 28.18512 34.32336 40.461601 46.555679">Feb 2024 </tspan></text>
-</g></g><g
-       id="g1688"><g
-         clip-path="url(#clipPath1694)"
-         id="g1690"><text
-           id="text1698"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,482.14,212.69)"><tspan
-             id="tspan1696"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g1700"><g
-         clip-path="url(#clipPath1706)"
-         id="g1702" /></g><g
-       id="g1708"><g
-         clip-path="url(#clipPath1714)"
-         id="g1710"><text
-           id="text1718"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,488.98,212.69)"><tspan
-             id="tspan1716"
-             y="0"
-             x="0 5.52 11.65824 17.64192 20.755199 26.89344 32.998562 39.136799">Jan 2025</tspan></text>
-</g></g><g
-       id="g1720"><g
-         clip-path="url(#clipPath1726)"
-         id="g1722" /></g><g
-       id="g1728"><g
-         clip-path="url(#clipPath1734)"
-         id="g1730" /></g><g
-       id="g1736"><g
-         clip-path="url(#clipPath1742)"
-         id="g1738"><text
-           id="text1746"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,199.58)"><tspan
-             id="tspan1744"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439">Company Name 9</tspan></text>
-</g></g><g
-       id="g1748"><g
-         clip-path="url(#clipPath1754)"
-         id="g1750" /></g><g
-       id="g1756"><g
-         clip-path="url(#clipPath1762)"
-         id="g1758"><text
-           id="text1766"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,186.86)"><tspan
-             id="tspan1764"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g1768"><g
-         clip-path="url(#clipPath1774)"
-         id="g1770" /></g><g
-       id="g1776"><g
-         clip-path="url(#clipPath1782)"
-         id="g1778"><text
-           id="text1786"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,186.86)"><tspan
-             id="tspan1784"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656 94.899841 102.21936 108.3576 113.8776 116.26224 119.37552 121.6608 127.79904 133.90416">Description Of The Position.</tspan></text>
-</g></g><g
-       id="g1788"><g
-         clip-path="url(#clipPath1794)"
-         id="g1790" /></g><g
-       id="g1796"><g
-         clip-path="url(#clipPath1802)"
-         id="g1798"><text
-           id="text1806"
-           style="font-variant:normal;font-weight:bold;font-size:11.03999996px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,169.34)"><tspan
-             id="tspan1804"
-             y="0"
-             x="0 7.31952 14.06496 20.15904 23.27232 26.98176 30.095039 36.840481 43.420319 46.5336 52.671841">Position 10</tspan></text>
-</g></g><g
-       id="g1808"><g
-         clip-path="url(#clipPath1814)"
-         id="g1810" /></g><g
-       id="g1816"><g
-         clip-path="url(#clipPath1822)"
-         id="g1818"><text
-           id="text1826"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,439.87,169.34)"><tspan
-             id="tspan1824"
-             y="0"
-             x="0 6.74544 12.83952 18.97776 22.046881 28.18512 34.32336 40.461601 46.555679">Feb 2025 </tspan></text>
-</g></g><g
-       id="g1828"><g
-         clip-path="url(#clipPath1834)"
-         id="g1830"><text
-           id="text1838"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,489.46,169.34)"><tspan
-             id="tspan1836"
-             y="0"
-             x="0">-</tspan></text>
-</g></g><g
-       id="g1840"><g
-         clip-path="url(#clipPath1846)"
-         id="g1842" /></g><g
-       id="g1848"><g
-         clip-path="url(#clipPath1854)"
-         id="g1850"><text
-           id="text1858"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,496.3,169.34)"><tspan
-             id="tspan1856"
-             y="0"
-             x="0 7.31952 11.02896 17.02368 22.54368 28.681919 34.787041">Present</tspan></text>
-</g></g><g
-       id="g1860"><g
-         clip-path="url(#clipPath1866)"
-         id="g1862" /></g><g
-       id="g1868"><g
-         clip-path="url(#clipPath1874)"
-         id="g1870" /></g><g
-       id="g1876"><g
-         clip-path="url(#clipPath1882)"
-         id="g1878"><text
-           id="text1886"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,30,156.26)"><tspan
-             id="tspan1884"
-             y="0"
-             x="0 7.9156799 14.05392 23.25024 29.388479 35.526718 41.664959 47.030399 50.143681 58.059361 64.197601 73.393921 79.532158 82.645439 88.783684">Company Name 10</tspan></text>
-</g></g><g
-       id="g1888"><g
-         clip-path="url(#clipPath1894)"
-         id="g1890" /></g><g
-       id="g1896"><g
-         clip-path="url(#clipPath1902)"
-         id="g1898"><text
-           id="text1906"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,35.04,143.66)"><tspan
-             id="tspan1904"
-             y="0"
-             x="0">•</tspan></text>
-</g></g><g
-       id="g1908"><g
-         clip-path="url(#clipPath1914)"
-         id="g1910" /></g><g
-       id="g1916"><g
-         clip-path="url(#clipPath1922)"
-         id="g1918"><text
-           id="text1926"
-           style="font-variant:normal;font-weight:normal;font-size:11.03999996px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-           transform="matrix(1,0,0,-1,48,143.66)"><tspan
-             id="tspan1924"
-             y="0"
-             x="0 7.9156799 14.05392 19.573919 25.09392 28.770241 31.221121 37.315201 40.428478 42.824162 48.962399 55.06752 58.0704 66.593277 69.706558 72.709442 79.543198 85.681442 91.78656 94.899841 102.21936 108.3576 113.8776 116.26224 119.37552 121.6608 127.79904 133.90416">Description Of The Position.</tspan></text>
-</g></g><g
-       id="g1928"><g
-         clip-path="url(#clipPath1934)"
-         id="g1930" /></g><g
-       id="g1936"><g
-         clip-path="url(#clipPath1942)"
-         id="g1938" /></g><g
-       id="g1944"><g
-         clip-path="url(#clipPath1950)"
-         id="g1946"><g
-           id="g1952"><path
-             id="path1954"
-             style="fill:#e5e7eb;fill-opacity:1;fill-rule:evenodd;stroke:none"
-             d="m 28.56,124.34 h 555 v 0.23999 h -555 z" /></g></g></g></g></svg>
+         d="M 581.95,448.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+      <path
+         id="path149"
+         d="M 581.95,393.3 H 30"
+         style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.3333333,0,0,-1.3333333,836,1056)" />
+    </g>
+  </g>
+</svg>

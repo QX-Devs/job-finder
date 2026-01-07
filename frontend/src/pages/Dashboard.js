@@ -316,21 +316,43 @@ const Dashboard = () => {
                 </div>
                 {hasResume ? (
                   <div className="dash-list">
-                    {resumes.slice(0, 5).map((r) => (
+                    {resumes.slice(0, 5).map((r) => {
+                      // Check if resume is incomplete (not uploaded and isComplete is explicitly false)
+                      const isIncomplete = !r.content?.uploadedFile?.url && r.isComplete !== true;
+                      const isUploaded = r.content?.uploadedFile?.url;
+                      // Get current step for incomplete resumes
+                      const currentStep = r.currentStep || 1;
+                      const totalSteps = 5;
+                      
+                      return (
                       <div key={r.id} className="dash-list-item" style={{ position: 'relative' }}>
                         <div className="dash-list-main">
                           <div className="dash-list-title">
                             {r.title || t('resume')}
-                            {r.content?.uploadedFile?.url && (
+                            {isUploaded && (
                               <span style={{ marginLeft: 8, fontSize: 12, color: '#059669', fontWeight: 700 }}>
                                 {t('uploaded')}
+                              </span>
+                            )}
+                            {isIncomplete && (
+                              <span style={{ 
+                                marginLeft: 8, 
+                                fontSize: 11, 
+                                color: '#92400e', 
+                                fontWeight: 700, 
+                                backgroundColor: '#fef3c7', 
+                                padding: '2px 8px', 
+                                borderRadius: 12,
+                                border: '1px solid #f59e0b'
+                              }}>
+                                {t('incomplete') || 'Incomplete'} ({currentStep}/{totalSteps})
                               </span>
                             )}
                           </div>
                           <div className="dash-list-sub">{new Date(r.updatedAt || r.lastModified || r.createdAt).toLocaleString()}</div>
                         </div>
                         <div className="resume-actions">
-                          {r.content?.uploadedFile?.url ? (
+                          {isUploaded ? (
                             // Uploaded file - show download button only
                             <button
                               type="button"
@@ -375,8 +397,51 @@ const Dashboard = () => {
                             >
                               <Download size={14} /> {t('downloadCV') || 'Download'}
                             </button>
+                          ) : isIncomplete ? (
+                            // Incomplete resume - show only Continue and Delete buttons
+                            <>
+                              <button 
+                                className="resume-action-btn edit-btn" 
+                                style={{ 
+                                  backgroundColor: '#fef3c7', 
+                                  borderColor: '#f59e0b', 
+                                  color: '#92400e',
+                                  gridColumn: 'span 2'
+                                }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  e.preventDefault();
+                                  navigate(`/cv-generator?resumeId=${r.id}`, { replace: false });
+                                }}
+                                title={t('continue') || 'Continue editing'}
+                              >
+                                <ArrowRight size={14} /> {t('continue') || 'Continue'}
+                              </button>
+                              <button
+                                type="button"
+                                className="resume-action-btn delete-btn"
+                                style={{ gridColumn: 'span 2' }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  e.preventDefault();
+                                  handleDeleteResume(r.id, r.title);
+                                }}
+                                disabled={deletingId === r.id}
+                                title={t('delete') || 'Delete CV'}
+                              >
+                                {deletingId === r.id ? (
+                                  <>
+                                    <Loader2 size={14} className="spin" /> {t('deleting') || 'Deleting...'}
+                                  </>
+                                ) : (
+                                  <>
+                                    <Trash2 size={14} /> {t('delete') || 'Delete'}
+                                  </>
+                                )}
+                              </button>
+                            </>
                           ) : (
-                            // Generated CV - show all buttons in 2x2 grid
+                            // Complete generated CV - show all buttons in 2x2 grid
                             <>
                               <button 
                                 className="resume-action-btn preview-btn" 
@@ -481,7 +546,8 @@ const Dashboard = () => {
                           )}
                         </div>
                       </div>
-                    ))}
+                    );
+                    })}
                   </div>
                 ) : (
                   <div className="dash-empty">

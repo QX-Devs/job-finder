@@ -1,7 +1,7 @@
 // routes/resumeRoutes.js
 const express = require('express');
 const { protect } = require('../middleware/auth');
-const { createResume, listResumes, generateDocx, uploadResumeFile, downloadUploadedResume, getResumeById, updateResume, deleteResume } = require('../controllers/resumeController');
+const { createResume, listResumes, generateDocx, uploadResumeFile, downloadUploadedResume, getResumeById, updateResume, deleteResume, saveProgress, getInProgressResumes, getLatestDraft } = require('../controllers/resumeController');
 const multer = require('multer');
 const path = require('path');
 
@@ -31,6 +31,9 @@ router.get('/', listResumes);
 router.post('/', createResume);
 router.post('/generate', generateDocx);
 router.post('/upload', upload.single('file'), uploadResumeFile);
+router.post('/save-progress', saveProgress);  // Auto-save progress endpoint
+router.get('/in-progress', getInProgressResumes);  // Get all in-progress/draft resumes
+router.get('/latest-draft', getLatestDraft);  // Get the most recent draft resume
 router.get('/file/:filename', downloadUploadedResume);
 // Parameterized routes come last
 router.get('/:id', getResumeById);

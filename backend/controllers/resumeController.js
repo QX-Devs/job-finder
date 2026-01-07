@@ -191,13 +191,15 @@ function categorizeSkills(skillsArray) {
     }
   });
   
-  // Remove empty categories
+  // Deduplicate and remove empty categories
   Object.keys(categories).forEach(key => {
+    // Remove duplicates
+    categories[key] = Array.from(new Set(categories[key]));
+    // Remove empty categories
     if (categories[key].length === 0) {
       delete categories[key];
     }
   });
-  
   return categories;
 }
 
@@ -404,12 +406,18 @@ function buildDocxFromResume(data, userProfile) {
   const languages = Array.isArray(data.languages) ? data.languages : [];
   const experience = Array.isArray(data.experience) ? data.experience : [];
   const education = Array.isArray(data.education) ? data.education : [];
+  const courses = Array.isArray(data.courses) ? data.courses : [];
   const graduationProject = data.graduationProject || null;
   const projectSkills = Array.isArray(data.projectSkills) ? data.projectSkills : [];
   const isGraduate = userProfile?.isGraduate === true;
   
   // Calculate total experience years
   const totalExperienceYears = computeTotalExperience(experience);
+  
+  // Count work experiences - used to determine spacing mode
+  const experienceCount = experience.length;
+  // Use compact mode when fewer than 3 experiences (keep everything on one page)
+  const useCompactLayout = experienceCount < 3;
 
   // ========== SPACING OPTIMIZATION HELPERS ==========
   
@@ -427,6 +435,13 @@ function buildDocxFromResume(data, userProfile) {
 
   // Helper to get optimized spacing for sections (dynamic vertical padding)
   const getSectionSpacing = (baseBefore = 100, baseAfter = 100) => {
+    // Use compact spacing when fewer than 3 experiences to fit on one page
+    if (useCompactLayout) {
+      return {
+        before: Math.round(baseBefore * 0.6), // 40% reduction for compact layout
+        after: Math.round(baseAfter * 0.6)
+      };
+    }
     // Adjust spacing based on estimated pages
     const spacingMultiplier = estimatedPages > 2 ? 0.9 : 1.0; // Reduce spacing if content is long
     return {
@@ -527,23 +542,28 @@ function buildDocxFromResume(data, userProfile) {
   
   // Decide if EDUCATION section should force page break
   // Returns true if EDUCATION block should start on new page
+  // ONLY considers page breaks when there are 3+ work experiences
   const shouldForceEducationPageBreak = (educationArray, experienceArray) => {
     if (!Array.isArray(educationArray) || educationArray.length === 0) return false;
+    
+    // NEVER force page break if fewer than 3 experiences - keep everything on one page
+    if (useCompactLayout) return false;
     
     const educationHeight = estimateEducationBlockHeight(educationArray);
     const remainingSpace = estimateRemainingPageSpace(experienceArray);
     
-    // Minimum space required: header (420) + at least 3 lines of content (720) = 1140 twips
-    // If remaining space is less than education height OR less than minimum (1140), force break
-    const minimumRequiredSpace = 1140; // Header + 3 lines minimum
+    // Only force page break if education section truly won't fit in remaining space
+    // Allow Word to handle natural page breaks - don't be aggressive
+    // Only break if remaining space is less than the minimum header height (420 twips)
+    const minimumHeaderSpace = 420; // Just enough for section header
     
-    // Force page break if:
-    // 1. Education block won't fit (educationHeight > remainingSpace)
-    // 2. Remaining space is less than minimum required (would cause orphaned header)
-    // 3. Education would leave less than 500 twips of space (large empty space at bottom)
-    const wouldLeaveLargeEmptySpace = (remainingSpace - educationHeight) < 500 && (remainingSpace - educationHeight) > 0;
+    // Force page break ONLY if:
+    // 1. Education block won't fit AND remaining space is very small (orphaned header risk)
+    if (educationHeight > remainingSpace && remainingSpace < minimumHeaderSpace) {
+      return true;
+    }
     
-    return educationHeight > remainingSpace || remainingSpace < minimumRequiredSpace || wouldLeaveLargeEmptySpace;
+    return false;
   };
 
   // Format skills with balanced multi-line wrapping (target 3-4 lines)
@@ -866,11 +886,11 @@ function buildDocxFromResume(data, userProfile) {
                 new TableCell({
                   children: [
                     new Paragraph({
-                      children: [
-                        new TextRun({ text: '• ', size: 22 }),
-                        new TextRun({ text: 'Email', bold: true, size: 22 }),
-                        new TextRun({ text: ': ' + email, size: 22 }),
-                      ],
+                        children: (email && email.trim()) ? [
+                          new TextRun({ text: '• ', size: 22 }),
+                          new TextRun({ text: 'Email', bold: true, size: 22 }),
+                          new TextRun({ text: ': ' + email, size: 22 }),
+                        ] : [],
                       spacing: { line: 240, after: 40 },
                     }),
                   ],
@@ -1071,11 +1091,17 @@ function buildDocxFromResume(data, userProfile) {
                   size: 22,
                   font: 'Arial',
                 }),
-                new TextRun({
-                  text: '\t' + period,
-                  size: 22,
-                  font: 'Arial',
-                }),
+                  new TextRun({
+                    text: '\t',
+                    size: 22,
+                    font: 'Arial',
+                  }),
+                  new TextRun({
+                    text: period,
+                    size: 22,
+                    font: 'Arial',
+                    bold: true,
+                  }),
               ],
               tabStops: [
                 {
@@ -1415,7 +1441,8 @@ function buildDocxFromResume(data, userProfile) {
             }),
           ],
           spacing: { 
-            after: Math.round(100 * (estimatedPages > 2 ? 0.9 : 1.0)), // Increased spacing between major sections
+            // Use compact spacing when fewer than 3 experiences
+            after: useCompactLayout ? 40 : Math.round(100 * (estimatedPages > 2 ? 0.9 : 1.0)),
             before: 0, 
             line: adjustedLineHeight 
           },
@@ -1424,7 +1451,7 @@ function buildDocxFromResume(data, userProfile) {
         }),
 
         // EDUCATION - All entries must stay together on same page
-        // PREDICTIVE PAGE BREAK: Force to next page if block won't fit or would orphan
+        // PREDICTIVE PAGE BREAK: Only force to next page if 3+ experiences AND block won't fit
         ...(education.length > 0 ? [
           new Paragraph({
             style: 'SectionHeading',
@@ -1434,26 +1461,16 @@ function buildDocxFromResume(data, userProfile) {
               }),
             ],
             border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: '000000' } },
-            spacing: getSectionSpacing(120, 0), // Increased spacing between major sections
-            // PREDICTIVE DECISION: Force page break if EDUCATION block won't fit or would cause orphan
-            // Also checks for >12% blank space on page 1
+            // Use compact spacing when fewer than 3 experiences
+            spacing: useCompactLayout ? { before: 60, after: 0 } : getSectionSpacing(120, 0),
+            // PREDICTIVE DECISION: Force page break ONLY if education truly won't fit
+            // Let Word handle natural page flow - avoid leaving large gaps
             pageBreakBefore: (() => {
-              const shouldBreak = shouldForceEducationPageBreak(education, experience);
-              if (shouldBreak) return true;
+              // Never force page break in compact layout (< 3 experiences)
+              if (useCompactLayout) return false;
               
-              // Check for large blank space (>12% of page height = ~1900 twips)
-              const remainingSpace = estimateRemainingPageSpace(experience);
-              const educationHeight = estimateEducationBlockHeight(education);
-              const blankSpaceAfter = remainingSpace - educationHeight;
-              const pageHeight = 15840;
-              const blankSpaceThreshold = pageHeight * 0.12; // 12% of page
-              
-              // If blank space would be >12%, force page break
-              if (blankSpaceAfter > blankSpaceThreshold && blankSpaceAfter > 0) {
-                return true;
-              }
-              
-              return false;
+              // Only force page break if education section won't fit at all
+              return shouldForceEducationPageBreak(education, experience);
             })(),
             keepWithNext: true, // Keep header with first education entry (minimum 3 lines rule)
             keepLines: true, // Prevent splitting section header
@@ -1493,12 +1510,19 @@ function buildDocxFromResume(data, userProfile) {
                   text: safe(edu.institution),
                   bold: false, // Institution name not bold
                 }),
-                new TextRun({
-                  text: '\t' + formatDate(edu.graduationDate || edu.graduationYear),
-                }),
+                  new TextRun({
+                    text: '\t',
+                  }),
+                  new TextRun({
+                    text: formatDate(edu.graduationDate || edu.graduationYear),
+                    bold: true,
+                  }),
               ],
               spacing: { 
-                after: edu.gpa ? 6 : (isLastEducation ? Math.round(100 * (estimatedPages > 2 ? 0.9 : 1.0)) : Math.round(40 * (estimatedPages > 2 ? 0.9 : 1.0))), // Reduced spacing if GPA follows
+                // Use compact spacing when fewer than 3 experiences
+                after: edu.gpa ? 6 : (isLastEducation 
+                  ? (useCompactLayout ? 40 : Math.round(100 * (estimatedPages > 2 ? 0.9 : 1.0))) 
+                  : (useCompactLayout ? 20 : Math.round(40 * (estimatedPages > 2 ? 0.9 : 1.0)))),
                 line: adjustedLineHeight,
                 lineRule: 'auto'
               },
@@ -1520,30 +1544,36 @@ function buildDocxFromResume(data, userProfile) {
           
           // Add GPA if present
           if (edu.gpa && edu.gpa.trim()) {
-            educationParagraphs.push(
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: `GPA: ${safe(edu.gpa)}`,
-                    bold: false,
-                    size: 20,
-                    font: 'Arial',
-                    italics: true,
-                  }),
-                ],
-                spacing: { 
-                  after: isLastEducation ? Math.round(100 * (estimatedPages > 2 ? 0.9 : 1.0)) : Math.round(40 * (estimatedPages > 2 ? 0.9 : 1.0)), // Reduced spacing within section
-                  line: adjustedLineHeight,
-                  lineRule: 'auto'
-                },
-                keepWithNext: !isLastEducation, // Keep with next education entry unless last
-                pageBreakBefore: false,
-                widowControl: true,
-                orphanControl: true,
-                keepLines: true,
-                alignment: containsRTL(safe(edu.gpa)) ? AlignmentType.RIGHT : AlignmentType.LEFT,
-              })
-            );
+              // Clean up GPA: remove spaces after decimal point (e.g., '3. 4' -> '3.4')
+              let gpaValue = safe(edu.gpa);
+              gpaValue = gpaValue.replace(/(\d)\.\s+(\d)/g, '$1.$2');
+              educationParagraphs.push(
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: `GPA: ${gpaValue}`,
+                      bold: false,
+                      size: 20,
+                      font: 'Arial',
+                      italics: true,
+                    }),
+                  ],
+                  spacing: { 
+                    // Use compact spacing when fewer than 3 experiences
+                    after: isLastEducation 
+                      ? (useCompactLayout ? 40 : Math.round(100 * (estimatedPages > 2 ? 0.9 : 1.0))) 
+                      : (useCompactLayout ? 20 : Math.round(40 * (estimatedPages > 2 ? 0.9 : 1.0))),
+                    line: adjustedLineHeight,
+                    lineRule: 'auto'
+                  },
+                  keepWithNext: !isLastEducation, // Keep with next education entry unless last
+                  pageBreakBefore: false,
+                  widowControl: true,
+                  orphanControl: true,
+                  keepLines: true,
+                  alignment: containsRTL(gpaValue) ? AlignmentType.RIGHT : AlignmentType.LEFT,
+                })
+              );
           }
           
           return educationParagraphs;
@@ -1559,7 +1589,8 @@ function buildDocxFromResume(data, userProfile) {
               }),
             ],
             border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: '000000' } },
-            spacing: getSectionSpacing(120, 0), // Increased spacing between major sections
+            // Use compact spacing when fewer than 3 experiences
+            spacing: useCompactLayout ? { before: 60, after: 0 } : getSectionSpacing(120, 0),
             pageBreakBefore: false,
             keepWithNext: true, // Keep header with skills content
             keepNext: languages.length > 0, // Keep Skills with Languages if Languages exist
@@ -1592,22 +1623,22 @@ function buildDocxFromResume(data, userProfile) {
                     }),
                   ],
                   spacing: { 
-                    before: catIndex === 0 ? 0 : 30, // Reduced spacing between related content
+                    before: catIndex === 0 ? 0 : 30,
                     after: 10 
                   },
-                  keepWithNext: true, // Keep category title with its skills
+                  keepWithNext: true,
+                  keepLines: true,
                   pageBreakBefore: false,
-                  keepLines: true, // Prevent splitting category header
                 })
               );
-              
+
               // Format skills into balanced lines for this category
               const skillLines = formatSkillsIntoBlocks(categorySkills);
-              
+
               skillLines.forEach((line, lineIndex) => {
                 const isLastLine = lineIndex === skillLines.length - 1;
                 const isLastLineOfLastCategory = isLastCategory && isLastLine;
-                
+
                 result.push(
                   new Paragraph({
                     children: [
@@ -1620,15 +1651,15 @@ function buildDocxFromResume(data, userProfile) {
                     spacing: { 
                       after: isLastLineOfLastCategory
                         ? (languages.length > 0 ? Math.round(50 * (estimatedPages > 2 ? 0.9 : 1.0)) : Math.round(120 * (estimatedPages > 2 ? 0.9 : 1.0)))
-                        : (isLastLine ? 20 : 0), // Reduced spacing within category
+                        : (isLastLine ? 20 : 0),
                       line: adjustedLineHeight,
                       lineRule: 'auto'
                     },
                     alignment: AlignmentType.LEFT,
-                    keepWithNext: !isLastLineOfLastCategory && (isLastLine ? false : true), // Chain within category, break between categories
-                    keepNext: languages.length > 0 && isLastLineOfLastCategory,
+                    keepWithNext: !isLastLineOfLastCategory,
+                    keepLines: true,
+                    keepNext: !isLastLineOfLastCategory,
                     pageBreakBefore: false,
-                    keepLines: true, // Prevent page break inside category - keep category together
                     widowControl: true,
                     orphanControl: true,
                   })
@@ -1650,7 +1681,10 @@ function buildDocxFromResume(data, userProfile) {
               }),
             ],
             border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: '000000' } },
-            spacing: { before: skills.length > 0 ? 0 : getSectionSpacing(120, 0).before }, // Increased spacing between major sections
+            // Use compact spacing when fewer than 3 experiences
+            spacing: { 
+              before: skills.length > 0 ? 0 : (useCompactLayout ? 60 : getSectionSpacing(120, 0).before) 
+            },
             pageBreakBefore: false,
             keepWithNext: true, // Keep header with languages content (minimum 3 lines rule)
             keepLines: true, // Prevent splitting section header
@@ -1672,8 +1706,8 @@ function buildDocxFromResume(data, userProfile) {
               insideVertical: { style: BorderStyle.NONE },
             },
             columnWidths: [6000, 4000], // Language name (60%), Proficiency (40%)
-            rows: formatLanguagesTable(languages).map((lang, idx) => {
-              const isLastRow = idx === formatLanguagesTable(languages).length - 1;
+            rows: formatLanguagesTable(languages).map((lang, idx, arr) => {
+              const isLastRow = idx === arr.length - 1;
               return new TableRow({
                 children: [
                   new TableCell({
@@ -1690,6 +1724,8 @@ function buildDocxFromResume(data, userProfile) {
                           line: adjustedLineHeight, 
                           after: isLastRow ? 0 : 10 // Reduced spacing within section
                         },
+                        keepLines: true,
+                        keepNext: !isLastRow,
                       }),
                     ],
                     borders: {
@@ -1714,6 +1750,8 @@ function buildDocxFromResume(data, userProfile) {
                           after: isLastRow ? 0 : 10 
                         },
                         alignment: AlignmentType.LEFT,
+                        keepLines: true,
+                        keepNext: !isLastRow,
                       }),
                     ],
                     borders: {
@@ -1724,8 +1762,147 @@ function buildDocxFromResume(data, userProfile) {
                     },
                   }),
                 ],
+                keepLines: true,
+                keepNext: !isLastRow,
               });
             }),
+          }),
+        ] : []),
+
+        // COURSES & CERTIFICATIONS
+        ...(courses.length > 0 ? [
+          new Paragraph({
+            style: 'SectionHeading',
+            children: [
+              new TextRun({
+                text: 'COURSES & CERTIFICATIONS',
+              }),
+            ],
+            border: { bottom: { style: BorderStyle.SINGLE, size: 6, space: 1, color: '000000' } },
+            spacing: useCompactLayout ? { before: 60, after: 0 } : getSectionSpacing(120, 0),
+            pageBreakBefore: false,
+            keepWithNext: true,
+            keepLines: true,
+            widowControl: true,
+            orphanControl: true,
+          }),
+          ...courses.flatMap((course, courseIndex) => {
+            const isLastCourse = courseIndex === courses.length - 1;
+            const courseName = safe(course.courseName || course.name || '');
+            const provider = safe(course.provider || course.institution || '');
+            const completionDate = course.completionDate ? formatDate(course.completionDate) : '';
+            const category = safe(course.category || '');
+            const certificateUrl = course.certificateUrl || '';
+            
+            const courseParagraphs = [
+              // Course Name
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: courseName,
+                    bold: true,
+                    size: 22,
+                    font: 'Arial',
+                  }),
+                  ...(completionDate ? [
+                    new TextRun({
+                      text: '\t' + completionDate,
+                      size: 22,
+                      font: 'Arial',
+                    }),
+                  ] : []),
+                ],
+                tabStops: [
+                  {
+                    type: TabStopType.RIGHT,
+                    position: convertInchesToTwip(7.0),
+                  },
+                ],
+                spacing: { after: 6 },
+                keepWithNext: true,
+                pageBreakBefore: false,
+                widowControl: true,
+                orphanControl: true,
+                keepLines: true,
+                alignment: AlignmentType.LEFT,
+              }),
+              // Provider
+              ...(provider ? [
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: provider,
+                      size: 22,
+                      font: 'Arial',
+                      bold: false,
+                    }),
+                  ],
+                  spacing: { 
+                    after: (category || certificateUrl) ? 6 : (isLastCourse ? 100 : 40),
+                    line: adjustedLineHeight,
+                    lineRule: 'auto'
+                  },
+                  keepWithNext: !!(category || certificateUrl) || !isLastCourse,
+                  pageBreakBefore: false,
+                  widowControl: true,
+                  orphanControl: true,
+                  alignment: AlignmentType.LEFT,
+                }),
+              ] : []),
+              // Category (if present)
+              ...(category ? [
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: 'Category: ' + category,
+                      size: 20,
+                      font: 'Arial',
+                      italics: true,
+                    }),
+                  ],
+                  spacing: { 
+                    after: certificateUrl ? 6 : (isLastCourse ? 100 : 40),
+                    line: adjustedLineHeight,
+                    lineRule: 'auto'
+                  },
+                  keepWithNext: !!certificateUrl || !isLastCourse,
+                  pageBreakBefore: false,
+                  widowControl: true,
+                  orphanControl: true,
+                  alignment: AlignmentType.LEFT,
+                }),
+              ] : []),
+              // Certificate URL (if present)
+              ...(certificateUrl ? [
+                new Paragraph({
+                  children: [
+                    new TextRun({ text: 'Certificate: ', size: 20, font: 'Arial' }),
+                    new ExternalHyperlink({
+                      children: [
+                        new TextRun({
+                          text: 'View Certificate',
+                          style: 'Hyperlink',
+                          size: 20,
+                        }),
+                      ],
+                      link: certificateUrl,
+                    }),
+                  ],
+                  spacing: { 
+                    after: isLastCourse ? 100 : 40,
+                    line: adjustedLineHeight,
+                    lineRule: 'auto'
+                  },
+                  keepWithNext: !isLastCourse,
+                  pageBreakBefore: false,
+                  widowControl: true,
+                  orphanControl: true,
+                  alignment: AlignmentType.LEFT,
+                }),
+              ] : []),
+            ];
+            
+            return courseParagraphs;
           }),
         ] : []),
       ],
@@ -1816,6 +1993,7 @@ exports.generateDocx = async (req, res) => {
       template: resumeData.template || 'modern',
       content: resumeData,
       isPublic: false,
+      isComplete: true,
       lastModified: new Date(),
     });
 
@@ -1833,10 +2011,94 @@ exports.generateDocx = async (req, res) => {
 
 exports.listResumes = async (req, res) => {
   try {
-    const resumes = await Resume.findAll({ where: { userId: req.user.id } });
-    return res.json({ success: true, data: resumes });
+    const resumes = await Resume.findAll({ 
+      where: { userId: req.user.id },
+      order: [['lastModified', 'DESC']]
+    });
+    
+    // Include all relevant fields for dashboard display
+    const formattedResumes = resumes.map(resume => ({
+      id: resume.id,
+      title: resume.title,
+      template: resume.template,
+      content: resume.content,
+      currentStep: resume.currentStep,
+      isComplete: resume.isComplete,
+      isPublic: resume.isPublic,
+      lastModified: resume.lastModified,
+      createdAt: resume.createdAt,
+      updatedAt: resume.updatedAt
+    }));
+    
+    return res.json({ success: true, data: formattedResumes });
   } catch (err) {
+    console.error('List resumes error:', err);
     return res.status(500).json({ success: false, error: 'Failed to fetch resumes' });
+  }
+};
+
+// Get in-progress/draft resumes (incomplete ones)
+exports.getInProgressResumes = async (req, res) => {
+  try {
+    const resumes = await Resume.findAll({ 
+      where: { 
+        userId: req.user.id,
+        isComplete: false
+      },
+      order: [['lastModified', 'DESC']]
+    });
+    
+    const formattedResumes = resumes.map(resume => ({
+      id: resume.id,
+      title: resume.title,
+      template: resume.template,
+      content: resume.content,
+      currentStep: resume.currentStep,
+      isComplete: resume.isComplete,
+      lastModified: resume.lastModified,
+      createdAt: resume.createdAt,
+      updatedAt: resume.updatedAt
+    }));
+    
+    return res.json({ success: true, data: formattedResumes });
+  } catch (err) {
+    console.error('Get in-progress resumes error:', err);
+    return res.status(500).json({ success: false, error: 'Failed to fetch in-progress resumes' });
+  }
+};
+
+// Get the most recent in-progress resume (for auto-continue feature)
+exports.getLatestDraft = async (req, res) => {
+  try {
+    const resume = await Resume.findOne({ 
+      where: { 
+        userId: req.user.id,
+        isComplete: false
+      },
+      order: [['lastModified', 'DESC']]
+    });
+    
+    if (!resume) {
+      return res.json({ success: true, data: null });
+    }
+    
+    return res.json({ 
+      success: true, 
+      data: {
+        id: resume.id,
+        title: resume.title,
+        template: resume.template,
+        content: resume.content,
+        currentStep: resume.currentStep,
+        isComplete: resume.isComplete,
+        lastModified: resume.lastModified,
+        createdAt: resume.createdAt,
+        updatedAt: resume.updatedAt
+      }
+    });
+  } catch (err) {
+    console.error('Get latest draft error:', err);
+    return res.status(500).json({ success: false, error: 'Failed to fetch draft resume' });
   }
 };
 
@@ -1922,6 +2184,7 @@ exports.updateResume = async (req, res) => {
     // Update the resume record
     resume.title = resumeData.title || resume.title || 'My Resume';
     resume.content = resumeData;
+    resume.isComplete = true;
     resume.lastModified = new Date();
     await resume.save();
     
@@ -2046,5 +2309,72 @@ exports.downloadUploadedResume = async (req, res) => {
   } catch (err) {
     console.error('Download resume error:', err);
     return res.status(500).json({ success: false, error: 'Failed to download file' });
+  }
+};
+
+// Save resume progress (auto-save during CV generation)
+exports.saveProgress = async (req, res) => {
+  try {
+    const { resumeId, currentStep, content, title } = req.body;
+    
+    // Sanitize content if provided
+    const sanitizedContent = content ? sanitizeResumeData(content) : null;
+    
+    if (resumeId) {
+      // Update existing resume
+      const resume = await Resume.findOne({
+        where: { id: resumeId, userId: req.user.id }
+      });
+      
+      if (!resume) {
+        return res.status(404).json({ success: false, error: 'Resume not found' });
+      }
+      
+      // Update fields
+      if (sanitizedContent) {
+        resume.content = sanitizedContent;
+      }
+      if (currentStep) {
+        resume.currentStep = currentStep;
+      }
+      if (title) {
+        resume.title = sanitizeResumeData({ title }).title || resume.title;
+      }
+      resume.lastModified = new Date();
+      
+      await resume.save();
+      
+      return res.json({
+        success: true,
+        data: {
+          id: resume.id,
+          currentStep: resume.currentStep,
+          isComplete: resume.isComplete
+        }
+      });
+    } else {
+      // Create new draft resume
+      const newResume = await Resume.create({
+        userId: req.user.id,
+        title: sanitizeResumeData({ title: title || 'Draft Resume' }).title,
+        template: 'modern',
+        content: sanitizedContent || {},
+        currentStep: currentStep || 1,
+        isComplete: false,
+        lastModified: new Date()
+      });
+      
+      return res.status(201).json({
+        success: true,
+        data: {
+          id: newResume.id,
+          currentStep: newResume.currentStep,
+          isComplete: newResume.isComplete
+        }
+      });
+    }
+  } catch (err) {
+    console.error('Save progress error:', err);
+    return res.status(500).json({ success: false, error: 'Failed to save progress' });
   }
 };

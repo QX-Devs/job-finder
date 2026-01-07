@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import ReactCountryFlag from 'react-country-flag';
 import { 
   User, Briefcase, GraduationCap, Code, Globe, 
-  Plus, X, ArrowRight, ArrowLeft, Save, Github, Linkedin, Sparkles, Phone, BookOpen, Mic
+  Plus, X, ArrowRight, ArrowLeft, Save, Github, Linkedin, Sparkles, Phone, BookOpen, Mic, Loader2
 } from 'lucide-react';
 import api from '../services/api';
 import resumeService from '../services/resumeService';
@@ -74,6 +74,13 @@ const DEGREE_OPTIONS = [
   'Certificate',
   'Diploma',
   'Other'
+];
+
+// Field of Study options
+const FIELD_OF_STUDY_OPTIONS = [
+  { value: 'CS', label: 'Computer Science (CS)' },
+  { value: 'CIS', label: 'Computer Information Systems (CIS)' },
+  { value: 'SE', label: 'Software Engineering (SE)' }
 ];
 
 // Common language options
@@ -803,9 +810,11 @@ const CVGenerator = () => {
   const { t, isRTL, language } = useLanguage();
   const { user, updateUser } = useAuth();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const resumeId = searchParams.get('resumeId');
+  const [draftResumeId, setDraftResumeId] = useState(resumeId || null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [isSaving, setIsSaving] = useState(false);
   const [countryCode, setCountryCode] = useState('+962');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isCountrySelectOpen, setIsCountrySelectOpen] = useState(false);
@@ -874,6 +883,7 @@ const CVGenerator = () => {
   const voiceFinalTranscriptRef = useRef('');
   const voiceInterimTranscriptRef = useRef('');
   const processAfterStopRef = useRef(false);
+  const savedExperienceRef = useRef(null); // Store experience data when toggling isGraduate ON
 
   // Parse phone number to extract country code when user data is available
   useEffect(() => {
@@ -945,15 +955,41 @@ const CVGenerator = () => {
     }
   }, [user]);
 
-  // Load resume data if resumeId is provided
+  // Load resume data if resumeId is provided, OR auto-load latest draft if no resumeId
   useEffect(() => {
-    if (resumeId) {
-      setLoadingResume(true);
-      resumeService.getResume(resumeId)
-        .then(response => {
+    const loadResumeOrDraft = async () => {
+      let targetResumeId = resumeId;
+      
+      // If no resumeId in URL, check for an existing draft
+      if (!targetResumeId) {
+        try {
+          const draftResponse = await resumeService.getLatestDraft();
+          if (draftResponse.success && draftResponse.data) {
+            // Found an existing draft - use it
+            targetResumeId = draftResponse.data.id;
+            setDraftResumeId(targetResumeId);
+            // Update URL without navigation
+            setSearchParams({ resumeId: targetResumeId }, { replace: true });
+            console.log('📝 Found existing draft:', targetResumeId, 'Step:', draftResponse.data.currentStep);
+          }
+        } catch (error) {
+          console.log('📝 No existing draft found or error:', error);
+        }
+      }
+      
+      if (targetResumeId) {
+        setLoadingResume(true);
+        try {
+          const response = await resumeService.getResume(targetResumeId);
           if (response.success && response.data) {
             const resume = response.data;
             const content = resume.content || {};
+            
+            // Restore the current step if available (for draft resumes)
+            if (resume.currentStep && resume.currentStep > 0) {
+              setCurrentStep(resume.currentStep);
+              console.log('📝 Restored to step:', resume.currentStep);
+            }
             
             // Map resume content to form data
             setFormData({
@@ -989,7 +1025,7 @@ const CVGenerator = () => {
                       gpa: edu.gpa || ''
                     };
                   })
-                : [{ degree: '', institution: '', graduationDate: '', fieldOfStudy: '', customDegree: '' }],
+                : [{ degree: '', institution: '', graduationDate: '', fieldOfStudy: '', customDegree: '', gpa: '' }],
               skills: Array.isArray(content.skills) 
                 ? content.skills.map(s => typeof s === 'string' ? s : s.skillName || s.name || s)
                 : [],
@@ -1031,16 +1067,24 @@ const CVGenerator = () => {
                 githubUrl: '',
                 supervisor: ''
               },
-              projectSkills: content.projectSkills || []
+              projectSkills: content.projectSkills || [],
+              isGraduate: content.isGraduate !== undefined ? content.isGraduate : (user?.isGraduate || false)
             });
+            
+            // Set the draft resume ID for subsequent saves
+            setDraftResumeId(resume.id);
           }
-        })
-        .catch(error => {
+        } catch (error) {
           console.error('Failed to load resume:', error);
-        })
-        .finally(() => {
+        } finally {
           setLoadingResume(false);
-        });
+        }
+      }
+    };
+    
+    // Only load if user is available
+    if (user) {
+      loadResumeOrDraft();
     }
   }, [resumeId, user]);
 
@@ -1222,54 +1266,73 @@ const CVGenerator = () => {
   };
 
   const updateEducation = (index, field, value) => {
-    // Validate GPA if it's being updated
+    // Validate GPA if it's being updated - only allow numbers, dots, and percent signs
     if (field === 'gpa') {
-      const gpaValue = value.trim();
+      // Filter out any characters that are not numbers, dots, or percent signs
+      const filteredValue = value.replace(/[^0-9.%]/g, '');
       
       // If empty, clear errors and allow
-      if (gpaValue === '') {
+      if (filteredValue === '') {
         setErrors(prev => {
           const newErrors = { ...prev };
           delete newErrors[`education_${index}_gpa`];
           return newErrors;
         });
       } else {
-        // Check if it's a numeric value (GPA or percentage)
-        const numericMatch = gpaValue.match(/^(\d+(?:\.\d+)?)\s*(%|out of \d+)?$/i);
+        // Check if it's a valid numeric value (GPA or percentage)
+        const numericMatch = filteredValue.match(/^(\d+(?:\.\d+)?)\s*(%)?$/i);
         
         if (numericMatch) {
           const numValue = parseFloat(numericMatch[1]);
-          // Check if it's a percentage (has % or > 4)
-          const isPercentage = gpaValue.includes('%') || numValue > 4;
+          // Check if it's a percentage (has %)
+          const isPercentage = filteredValue.includes('%');
           
           if (isPercentage) {
             // Percentage: 0-100%
             if (numValue < 0 || numValue > 100) {
               setErrors(prev => ({
                 ...prev,
-                [`education_${index}_gpa`]: 'GPA must be between 0-100% or 0-4.0 scale.'
+                [`education_${index}_gpa`]: 'Percentage must be between 0-100%.'
               }));
-              return;
+            } else {
+              setErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[`education_${index}_gpa`];
+                return newErrors;
+              });
             }
           } else {
             // GPA scale: 0-4
             if (numValue < 0 || numValue > 4) {
               setErrors(prev => ({
                 ...prev,
-                [`education_${index}_gpa`]: 'GPA must be between 0-4.0 scale or 0-100%.'
+                [`education_${index}_gpa`]: 'GPA must be between 0-4.0 scale or add % for percentage.'
               }));
-              return;
+            } else {
+              setErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[`education_${index}_gpa`];
+                return newErrors;
+              });
             }
           }
+        } else {
+          // Invalid format
+          setErrors(prev => ({
+            ...prev,
+            [`education_${index}_gpa`]: 'Enter a valid GPA (e.g., 3.6) or percentage (e.g., 88%).'
+          }));
         }
-        // If it's text (like "Very Good", "Excellent"), allow it
-        // Clear any previous errors
-        setErrors(prev => {
-          const newErrors = { ...prev };
-          delete newErrors[`education_${index}_gpa`];
-          return newErrors;
-        });
       }
+      
+      // Update with filtered value
+      setFormData(prev => ({
+        ...prev,
+        education: prev.education.map((edu, i) => 
+          i === index ? { ...edu, [field]: filteredValue } : edu
+        )
+      }));
+      return;
     }
     
     setFormData(prev => ({
@@ -1491,25 +1554,116 @@ const CVGenerator = () => {
       // If isGraduate === true, no experience validation is performed (experience is optional)
     } else if (currentStep === 3) {
       formData.education.forEach((edu, index) => {
-        const degreeValue = edu.degree === 'Other' ? (edu.customDegree || '').trim() : edu.degree.trim();
+        const degreeValue = edu.degree === 'Other' ? (edu.customDegree || '').trim() : (edu.degree || '').trim();
         if (!degreeValue) newErrors[`education_${index}_degree`] = t('degreeRequired');
-        if (!edu.institution.trim()) newErrors[`education_${index}_institution`] = t('institutionRequired');
+        if (!(edu.institution || '').trim()) newErrors[`education_${index}_institution`] = t('institutionRequired');
+        if (!(edu.fieldOfStudy || '').trim()) newErrors[`education_${index}_fieldOfStudy`] = t('fieldOfStudyRequired') || 'Field of study is required';
       });
+    } else if (currentStep === 4) {
+      // Validate technical skills - minimum 3 required
+      if (formData.skills.length < 3) {
+        newErrors.skills = t('skillsMinimumRequired') || 'Please add at least 3 technical skills';
+      }
+      
+      // Validate languages - at least 1 language required with at least 1 Native
+      const validLanguages = formData.languages.filter(lang => {
+        const langValue = lang.language === 'Other' ? (lang.customLanguage || '').trim() : (lang.language || '').trim();
+        return langValue !== '';
+      });
+      
+      if (validLanguages.length === 0) {
+        newErrors.languages = t('languageRequired') || 'Please add at least 1 language';
+      } else {
+        // Check if at least one language is marked as Native
+        const hasNativeLanguage = validLanguages.some(lang => lang.proficiency === 'Native');
+        if (!hasNativeLanguage) {
+          newErrors.languages = t('nativeLanguageRequired') || 'At least one language must be marked as Native';
+        }
+      }
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Navigation
-  const handleNext = () => {
-    if (validateStep()) {
-      setCurrentStep(prev => Math.min(prev + 1, 5));
+  // Auto-save progress to database
+  const saveProgressToDb = async (step) => {
+    if (isSaving) return;
+    
+    // Check if user is authenticated before attempting to save
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('📝 Skipping auto-save - no auth token');
+      return;
+    }
+    
+    try {
+      setIsSaving(true);
+      console.log('📝 Auto-saving progress... Step:', step, 'DraftResumeId:', draftResumeId);
+      
+      // Build content object from formData
+      const content = {
+        summary: formData.summary,
+        title: formData.title,
+        github: constructUrl(formData.github, 'github'),
+        linkedin: constructUrl(formData.linkedin, 'linkedin'),
+        experience: formData.experience,
+        education: formData.education,
+        skills: formData.skills,
+        languages: formData.languages,
+        courses: formData.courses,
+        graduationProject: formData.graduationProject,
+        projectSkills: formData.projectSkills,
+        isGraduate: formData.isGraduate
+      };
+      
+      const response = await resumeService.saveProgress({
+        resumeId: draftResumeId,
+        currentStep: step,
+        content,
+        title: formData.title || 'Draft Resume'
+      });
+      
+      console.log('📝 Save response:', response);
+      
+      if (response.success && response.data?.id) {
+        // If this was a new draft, update the URL and state with the new ID
+        if (!draftResumeId) {
+          console.log('📝 New draft created with ID:', response.data.id);
+          setDraftResumeId(response.data.id);
+          // Update URL without navigation
+          setSearchParams({ resumeId: response.data.id }, { replace: true });
+          console.log('📝 URL updated with resumeId');
+        }
+      }
+    } catch (error) {
+      console.error('❌ Auto-save failed:', error);
+      // Don't propagate auth errors - just silently fail for auto-save
+      // This prevents the user from being logged out due to auto-save issues
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  const handleBack = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 1));
+  // Navigation
+  const handleNext = async () => {
+    if (validateStep()) {
+      const nextStep = Math.min(currentStep + 1, 5);
+      setCurrentStep(nextStep);
+      // Auto-save progress with next step AFTER navigating (await to ensure URL is updated)
+      await saveProgressToDb(nextStep);
+      // Scroll to top of the page
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleBack = async () => {
+    const prevStep = Math.max(currentStep - 1, 1);
+    setCurrentStep(prevStep);
+    // Auto-save progress with prev step AFTER navigating (await to ensure URL is updated)
+    await saveProgressToDb(prevStep);
+    // Scroll to top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSave = async () => {
@@ -1646,6 +1800,8 @@ const CVGenerator = () => {
       const payload = {
         title: sanitizeText(formData.title),
         summary: sanitizeText(formData.summary),
+        isComplete: true, // Mark as complete when finally saved
+        currentStep: 5,   // Set to final step
         skills: formData.skills.map(s => sanitizeText(String(s))),
         experience: experienceToSave.map(e => ({
           position: sanitizeText(e.position),
@@ -1818,6 +1974,26 @@ const CVGenerator = () => {
         return;
       }
 
+      // Check minimum character requirement (50 chars)
+      if (transcript.length < 50) {
+        const detectedLang = detectLanguageFromText(transcript);
+        const charsNeeded = 50 - transcript.length;
+        const errorMsg = detectedLang === 'ar' 
+          ? `يرجى التحدث أكثر. تحتاج إلى ${charsNeeded} حرف إضافي على الأقل.`
+          : `Please speak more. You need at least ${charsNeeded} more characters.`;
+        
+        // Still save the transcript so user can see what was captured
+        setFormData(prev => ({
+          ...prev,
+          graduationProject: { ...prev.graduationProject, description: transcript }
+        }));
+        
+        setIsProjectVoiceActive(false);
+        setProjectDescriptionPlaceholder('');
+        alert(errorMsg);
+        return;
+      }
+
       const detectedLang = detectLanguageFromText(transcript);
       setProjectDescriptionPlaceholder(detectedLang === 'ar' ? 'جاري التحسين بالذكاء الاصطناعي...' : 'Improving with AI...');
 
@@ -1918,6 +2094,23 @@ const CVGenerator = () => {
       // Detect actual language from transcript
       const detectedLang = detectLanguageFromText(transcript);
       
+      // Check minimum character requirement (50 chars)
+      if (transcript.length < 50) {
+        const charsNeeded = 50 - transcript.length;
+        const errorMsg = detectedLang === 'ar' 
+          ? `يرجى التحدث أكثر. تحتاج إلى ${charsNeeded} حرف إضافي على الأقل.`
+          : `Please speak more. You need at least ${charsNeeded} more characters.`;
+        
+        // Still save the transcript so user can see what was captured
+        handleChange('summary', transcript);
+        
+        setIsListening(false);
+        setIsSuggesting(false);
+        setSummaryPlaceholder('');
+        alert(errorMsg);
+        return;
+      }
+
       // Update placeholder (use detected language for placeholder)
       setSummaryPlaceholder(detectedLang === 'ar' ? 'جاري التحسين بالذكاء الاصطناعي...' : 'Improving with AI...');
       setIsListening(false);
@@ -2234,6 +2427,22 @@ const CVGenerator = () => {
           return;
         }
 
+        // Check minimum character requirement (50 chars) before sending to AI
+        const MIN_CHARS = 50;
+        if (finalText.length < MIN_CHARS) {
+          const needed = MIN_CHARS - finalText.length;
+          const isArabic = /[\u0600-\u06FF]/.test(finalText);
+          alert(isArabic 
+            ? `النص قصير جداً للتحسين بالذكاء الاصطناعي.\n\nالنص الملتقط: "${finalText}"\n\nيرجى التحدث بـ ${needed} حرف إضافي على الأقل (${finalText.length}/${MIN_CHARS}).`
+            : `Text too short for AI improvement.\n\nCaptured: "${finalText}"\n\nPlease speak at least ${needed} more characters (${finalText.length}/${MIN_CHARS}).`
+          );
+          // Keep the captured text in the field but don't send to AI
+          handleChange('summary', finalText);
+          setSummaryPlaceholder('');
+          setVoiceActive(false);
+          return;
+        }
+
         // Detect language
         const detectedLang = typeof detectLanguageFromText === 'function'
           ? detectLanguageFromText(finalText)
@@ -2379,6 +2588,23 @@ const CVGenerator = () => {
       setVoiceActive(false);
     };
   }, []); // Only runs on unmount
+
+  // Auto-save on page unload/navigation away (only if we already have a draft)
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      // Only save if we have an existing draft and user has made progress
+      if (!draftResumeId) return;
+      if (currentStep <= 1 && !formData.summary && !formData.title) return;
+      
+      // Show browser's default "Leave site?" dialog for unsaved changes
+      // The save will happen via the normal API flow when user navigates away
+      e.preventDefault();
+      e.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [currentStep, formData, draftResumeId]);
 
   const steps = [
     { number: 1, title: t('profile'), icon: User },
@@ -2697,11 +2923,22 @@ const CVGenerator = () => {
                     className={`toggle-switch ${formData.isGraduate ? 'on' : 'off'}`}
                     onClick={() => {
                       const isChecked = !formData.isGraduate;
+                      if (isChecked) {
+                        // Save current experience before clearing (only if there's meaningful data)
+                        const hasExperienceData = formData.experience.some(exp => 
+                          exp.position || exp.company || exp.description
+                        );
+                        if (hasExperienceData) {
+                          savedExperienceRef.current = formData.experience;
+                        }
+                      }
                       setFormData(prev => ({
                         ...prev,
                         isGraduate: isChecked,
-                        // Clear experience to empty array if user checks the graduate box
-                        experience: isChecked ? [] : (prev.experience.length === 0 ? [{ position: '', company: '', startDate: '', endDate: '', description: '', current: false }] : prev.experience)
+                        // Clear experience when checking, restore saved data when unchecking
+                        experience: isChecked 
+                          ? [] 
+                          : (savedExperienceRef.current || [{ position: '', company: '', startDate: '', endDate: '', description: '', current: false }])
                       }));
                       // No auto-navigation - user stays on current step
                     }}
@@ -2712,11 +2949,22 @@ const CVGenerator = () => {
                   <label 
                     onClick={() => {
                       const isChecked = !formData.isGraduate;
+                      if (isChecked) {
+                        // Save current experience before clearing (only if there's meaningful data)
+                        const hasExperienceData = formData.experience.some(exp => 
+                          exp.position || exp.company || exp.description
+                        );
+                        if (hasExperienceData) {
+                          savedExperienceRef.current = formData.experience;
+                        }
+                      }
                       setFormData(prev => ({
                         ...prev,
                         isGraduate: isChecked,
-                        // Clear experience to empty array if user checks the graduate box
-                        experience: isChecked ? [] : (prev.experience.length === 0 ? [{ position: '', company: '', startDate: '', endDate: '', description: '', current: false }] : prev.experience)
+                        // Clear experience when checking, restore saved data when unchecking
+                        experience: isChecked 
+                          ? [] 
+                          : (savedExperienceRef.current || [{ position: '', company: '', startDate: '', endDate: '', description: '', current: false }])
                       }));
                       // No auto-navigation - user stays on current step
                     }}
@@ -3029,7 +3277,7 @@ const CVGenerator = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>{t('supervisor') || 'Supervisor / Professor'} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
+                      <label>{t('supervisor') || 'Supervisor / Doctor'} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
                       <input
                         type="text"
                         value={formData.graduationProject.supervisor}
@@ -3331,13 +3579,22 @@ const CVGenerator = () => {
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>{t('fieldOfStudy')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
-                      <input
-                        type="text"
-                        value={edu.fieldOfStudy}
+                      <label>{t('fieldOfStudy')} <span className="required">*</span></label>
+                      <select
+                        value={edu.fieldOfStudy || ''}
                         onChange={(e) => updateEducation(index, 'fieldOfStudy', e.target.value)}
-                        placeholder={t('fieldOfStudyPlaceholder')}
-                      />
+                        className={errors[`education_${index}_fieldOfStudy`] ? 'error' : ''}
+                      >
+                        <option value="">{t('selectFieldOfStudy') || 'Select field of study'}</option>
+                        {FIELD_OF_STUDY_OPTIONS.map((field) => (
+                          <option key={field.value} value={field.value}>
+                            {field.label}
+                          </option>
+                        ))}
+                      </select>
+                      {errors[`education_${index}_fieldOfStudy`] && (
+                        <span className="error-message">{errors[`education_${index}_fieldOfStudy`]}</span>
+                      )}
                     </div>
 
                     <div className="form-group">
@@ -3356,14 +3613,14 @@ const CVGenerator = () => {
                       type="text"
                       value={edu.gpa || ''}
                       onChange={(e) => updateEducation(index, 'gpa', e.target.value)}
-                      placeholder="e.g., 3.6, 88%, Very Good, Excellent"
+                      placeholder="e.g., 3.6 or 88%"
                       className={errors[`education_${index}_gpa`] ? 'error' : ''}
                     />
                     {errors[`education_${index}_gpa`] && (
                       <span className="error-message">{errors[`education_${index}_gpa`]}</span>
                     )}
                     <small style={{ color: '#6b7280', fontSize: '12px', marginTop: '4px', display: 'block' }}>
-                      Enter GPA (0-4.0 scale), percentage (0-100%), or text grade (e.g., Very Good, Excellent)
+                      Enter GPA (0-4.0 scale) or percentage (0-100%). Only numbers, dots, and % allowed.
                     </small>
                   </div>
                 </div>
@@ -3382,7 +3639,10 @@ const CVGenerator = () => {
               <p className="step-description">{t('showcaseExpertise')}</p>
 
               <div className="form-group">
-                <label>{t('technicalSkills')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
+                <label>{t('technicalSkills')} <span className="required">*</span> <span style={{ fontSize: '13px', fontWeight: 'normal', color: '#6b7280' }}>(minimum 3)</span></label>
+                {errors.skills && (
+                  <span className="error-message" style={{ display: 'block', marginBottom: '8px' }}>{errors.skills}</span>
+                )}
                 <div className="skills-input-container" style={{ position: 'relative' }}>
                   <div className="skills-input">
                     <input
@@ -3460,7 +3720,10 @@ const CVGenerator = () => {
               </div>
 
               <div className="form-group">
-                <label><Globe size={18} /> {t('languages')} <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#6b7280' }}>(optional)</span></label>
+                <label><Globe size={18} /> {t('languages')} <span className="required">*</span> <span style={{ fontSize: '13px', fontWeight: 'normal', color: '#6b7280' }}>(at least 1 Native)</span></label>
+                {errors.languages && (
+                  <span className="error-message" style={{ display: 'block', marginBottom: '8px' }}>{errors.languages}</span>
+                )}
                 {formData.languages.map((lang, index) => (
                   <div key={index}>
                     <div className="language-row">
@@ -3671,6 +3934,18 @@ const CVGenerator = () => {
           
           <div className="step-indicator">
             {t('step')} {currentStep} {t('of')} 5
+            {isSaving && (
+              <span style={{ 
+                marginLeft: 8, 
+                fontSize: 12, 
+                color: '#059669',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 4
+              }}>
+                <Loader2 size={12} className="spin" /> Saving...
+              </span>
+            )}
           </div>
 
           {currentStep < 5 ? (

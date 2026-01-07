@@ -13,6 +13,7 @@ const scraperRoutes = require('../routes/scraperRoutes');
 const candidateRoutes = require('../routes/candidateRoutes');
 const courseRoutes = require('../routes/courseRoutes');
 const graduationProjectRoutes = require('../routes/graduationProjectRoutes');
+const aiApplyRoutes = require('../routes/aiApplyRoutes');
 const { trafficRecorder, getTrafficSnapshot } = require('../middleware/traffic');
 // Job fetching is now handled by separate scripts (fetchAndImportJobs.js, scrapeLinkedInJobs.js)
 // const { startScheduler } = require('../services/scraperScheduler');
@@ -503,6 +504,7 @@ app.use('/api', scraperRoutes);
 app.use('/api/candidates', candidateRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/graduation-project', graduationProjectRoutes);
+app.use('/api/ai-apply', aiApplyRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {

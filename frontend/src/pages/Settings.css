@@ -583,6 +583,108 @@
   background: #ffffff;
 }
 
+/* ===== MUI Autocomplete Styling (Career Objective & Location) ===== */
+.form-group .MuiAutocomplete-root {
+  width: 100%;
+}
+
+/* Remove duplicate border and styling from MUI components */
+.form-group .MuiAutocomplete-root .MuiTextField-root {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.form-group .MuiAutocomplete-root .MuiInputBase-root {
+  border: 2px solid var(--settings-gray-200) !important;
+  border-radius: var(--settings-radius-md) !important;
+  padding: 6px 12px !important;
+  background: #ffffff !important;
+  transition: all var(--settings-transition-base) !important;
+  font-size: 0.95rem !important;
+  min-height: 52px !important;
+}
+
+.form-group .MuiAutocomplete-root .MuiInputBase-root:hover {
+  border-color: var(--settings-gray-300) !important;
+  background: var(--settings-gray-50) !important;
+}
+
+.form-group .MuiAutocomplete-root .MuiInputBase-root.Mui-focused {
+  border-color: var(--settings-primary-500) !important;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12) !important;
+  background: #ffffff !important;
+}
+
+/* Remove the default MUI outline */
+.form-group .MuiAutocomplete-root .MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+
+.form-group .MuiAutocomplete-root .MuiInputBase-input {
+  padding: 8px 6px !important;
+  color: var(--settings-gray-900) !important;
+  font-size: 0.95rem !important;
+}
+
+.form-group .MuiAutocomplete-root .MuiInputBase-input::placeholder {
+  color: var(--settings-gray-400) !important;
+  opacity: 1 !important;
+}
+
+/* Dropdown menu styling */
+.form-group .MuiAutocomplete-popper {
+  z-index: 1300 !important;
+}
+
+.form-group .MuiAutocomplete-paper {
+  margin-top: 8px !important;
+  border-radius: var(--settings-radius-md) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  border: 2px solid var(--settings-gray-200) !important;
+  animation: dropdownFadeIn var(--settings-transition-smooth) ease-out !important;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group .MuiAutocomplete-listbox {
+  padding: 8px !important;
+  max-height: 300px !important;
+}
+
+.form-group .MuiAutocomplete-option {
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  padding: 12px 16px !important;
+  font-size: 0.95rem !important;
+  transition: all var(--settings-transition-fast) !important;
+  color: var(--settings-gray-800) !important;
+}
+
+.form-group .MuiAutocomplete-option:hover {
+  background-color: var(--settings-primary-50) !important;
+  color: var(--settings-primary-700) !important;
+  transform: translateX(2px) !important;
+}
+
+.form-group .MuiAutocomplete-option[aria-selected="true"] {
+  background-color: var(--settings-primary-100) !important;
+  color: var(--settings-primary-700) !important;
+  font-weight: 600 !important;
+}
+
+.form-group .MuiAutocomplete-option[aria-selected="true"].Mui-focused {
+  background-color: var(--settings-primary-100) !important;
+}
+
 /* ===== Password Field with Toggle ===== */
 .password-field {
   position: relative;
@@ -644,6 +746,8 @@
 .btn-primary::before {
   content: '';
   position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--settings-primary-600), var(--settings-primary-700));
   opacity: 0;
   transition: opacity var(--settings-transition-fast);
 }
@@ -1247,60 +1351,11 @@
   }
 }
 
-
 /* High Contrast Mode */
 @media (prefers-contrast: high) {
   .settings-card {
     border-width: 2px;
   }
-
-/* MUI Autocomplete Styling */
-.form-group .MuiAutocomplete-root {
-  width: 100%;
-}
-
-.form-group .MuiAutocomplete-root .MuiOutlinedInput-root {
-  transition: all var(--settings-transition-base);
-}
-
-.form-group .MuiAutocomplete-root .MuiOutlinedInput-root:hover {
-  box-shadow: var(--settings-shadow-sm);
-}
-
-.form-group .MuiAutocomplete-popper {
-  z-index: 1300;
-}
-
-.form-group .MuiAutocomplete-paper {
-  margin-top: 4px;
-  border-radius: var(--settings-radius-sm);
-  box-shadow: var(--settings-shadow-lg);
-  border: 1px solid var(--settings-gray-200);
-  animation: dropdownFadeIn var(--settings-transition-smooth) ease-out;
-}
-
-@keyframes dropdownFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.form-group .MuiAutocomplete-option {
-  transition: all var(--settings-transition-fast);
-}
-
-.form-group .MuiAutocomplete-option:hover {
-  transform: translateX(2px);
-}
-
-.form-group .MuiAutocomplete-option[aria-selected="true"] {
-  font-weight: 500;
-}
 
   .form-group input,
   .form-group select,
@@ -1392,7 +1447,7 @@ html.dark .form-group input[type="password"],
 html.dark .form-group input[type="tel"],
 html.dark .form-group textarea,
 html.dark .form-group select {
-  background: transparent !important;
+  background: rgba(51, 65, 85, 0.6) !important;
   border-color: rgba(148, 163, 184, 0.3) !important;
   color: #f1f5f9 !important;
 }
@@ -1403,6 +1458,16 @@ html.dark .form-group input[type="password"]::placeholder,
 html.dark .form-group input[type="tel"]::placeholder,
 html.dark .form-group textarea::placeholder {
   color: #94a3b8 !important;
+}
+
+html.dark .form-group input[type="text"]:hover,
+html.dark .form-group input[type="email"]:hover,
+html.dark .form-group input[type="password"]:hover,
+html.dark .form-group input[type="tel"]:hover,
+html.dark .form-group textarea:hover,
+html.dark .form-group select:hover {
+  background: rgba(51, 65, 85, 0.7) !important;
+  border-color: rgba(148, 163, 184, 0.4) !important;
 }
 
 html.dark .form-group input[type="text"]:focus,
@@ -1495,6 +1560,11 @@ html.dark .phone-number-input {
   color: #f1f5f9 !important;
 }
 
+html.dark .phone-number-input:hover {
+  background: rgba(51, 65, 85, 0.7) !important;
+  border-color: rgba(148, 163, 184, 0.4) !important;
+}
+
 html.dark .phone-number-input:focus {
   background: rgba(51, 65, 85, 0.8) !important;
   border-color: #10b981 !important;
@@ -1502,6 +1572,64 @@ html.dark .phone-number-input:focus {
 }
 
 html.dark .phone-number-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Dark Mode - MUI Autocomplete */
+html.dark .MuiAutocomplete-root .MuiInputBase-root {
+  background: rgba(51, 65, 85, 0.6) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .MuiAutocomplete-root .MuiInputBase-root:hover {
+  background: rgba(51, 65, 85, 0.7) !important;
+  border-color: rgba(148, 163, 184, 0.4) !important;
+}
+
+html.dark .MuiAutocomplete-root .MuiInputBase-root.Mui-focused {
+  background: rgba(51, 65, 85, 0.8) !important;
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .MuiAutocomplete-root .MuiInputBase-input {
+  color: #f1f5f9 !important;
+}
+
+html.dark .MuiAutocomplete-root .MuiInputBase-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.dark .MuiAutocomplete-paper {
+  background: rgba(30, 41, 59, 0.98) !important;
+  border-color: rgba(16, 185, 129, 0.2) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+html.dark .MuiAutocomplete-listbox {
+  background: rgba(30, 41, 59, 0.98) !important;
+}
+
+html.dark .MuiAutocomplete-option {
+  color: #f1f5f9 !important;
+}
+
+html.dark .MuiAutocomplete-option:hover {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .MuiAutocomplete-option[aria-selected="true"] {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #6ee7b7 !important;
+}
+
+html.dark .MuiAutocomplete-option[aria-selected="true"].Mui-focused {
+  background: rgba(16, 185, 129, 0.2) !important;
+}
+
+html.dark .MuiSvgIcon-root {
   color: #94a3b8 !important;
 }
 
@@ -1561,60 +1689,4 @@ html.dark .settings-error {
   background: rgba(239, 68, 68, 0.2) !important;
   color: #fca5a5 !important;
   border-color: rgba(239, 68, 68, 0.3) !important;
-}
-
-/* Material-UI Autocomplete dark mode styles */
-html.dark .MuiOutlinedInput-root {
-  background-color: #ffffff ;
-  color: #fff ;
-}
-
-html.dark .MuiOutlinedInput-root fieldset {
-  border-color: rgba(148, 163, 184, 0.3) !important;
-}
-
-html.dark .MuiOutlinedInput-root:hover fieldset {
-  border-color: rgba(148, 163, 184, 0.5) !important;
-}
-
-html.dark .MuiOutlinedInput-root.Mui-focused fieldset {
-  border-color: #10b981 !important;
-  border-width: 2px !important;
-}
-
-html.dark .MuiInputBase-input {
-  color: #000000 !important;
-}
-
-html.dark .MuiInputBase-input::placeholder {
-  color: #ffffff !important;
-  opacity: 1;
-}
-
-html.dark .MuiAutocomplete-listbox {
-  background-color: rgba(30, 41, 59, 0.98) !important;
-  border: 1px solid rgba(0, 255, 170, 0.5) !important;
-  
-}
-
-html.dark .MuiAutocomplete-option {
-  color: #f1f5f9 !important;
-}
-
-html.dark .MuiAutocomplete-option:hover {
-  background-color: rgba(16, 185, 129, 0.1) !important;
-}
-
-html.dark .MuiAutocomplete-option[aria-selected="true"] {
-  background-color: rgba(16, 185, 129, 0.2) !important;
-  color: #6ee7b7 !important;
-}
-
-html.dark .MuiAutocomplete-option[aria-selected="true"].Mui-focused {
-  background-color: rgba(16, 185, 129, 0.2) !important;
-}
-
-/* GitHub/LinkedIn prefix text */
-html.dark .form-group span[style*="color: #6b7280"] {
-  color: #94a3b8 !important;
 }

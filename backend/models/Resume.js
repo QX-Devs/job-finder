@@ -39,6 +39,18 @@ const Resume = sequelize.define('Resume', {
       projects: []
     }
   },
+  currentStep: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 1,
+    comment: 'Current step in the CV generator (1-5)'
+  },
+  isComplete: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+    comment: 'Whether the resume has been fully completed and saved'
+  },
   isPublic: {
     type: DataTypes.BOOLEAN,
     defaultValue: false

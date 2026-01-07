@@ -68,7 +68,7 @@ export const translations = {
     // Home Page
     discoverCareer: "Discover Your Dream Career",
     opportunities: "opportunities waiting for talented people like you",
-    searchPlaceholder: "Search by job title, company, or skills...",
+    searchPlaceholder: "Search by job title",
     allJobs: "All Jobs",
     engineering: "Engineering",
     design: "Design",
@@ -91,6 +91,8 @@ export const translations = {
     skillsRequired: "Skills Required",
     jobDescription: "Job Description",
     applyNow: "Apply Now",
+    applyWithAI: "Apply with AI",
+    aiApply: "AI Apply",
     applicants: "Applicants",
     views: "Views",
     posted: "Posted",
@@ -259,6 +261,8 @@ verificationHelpMessage: "Need help? You can request a new verification email fr
     // === NEW COMMON TRANSLATIONS ===
     or: "Or",
     continue: "Continue",
+    incomplete: "Incomplete",
+    draft: "Draft",
     submit: "Submit",
     back: "Back",
     next: "Next",
@@ -447,7 +451,7 @@ verificationHelpMessage: "Need help? You can request a new verification email fr
     mostPopular: "Most Popular",
     
     // Search & Filters
-    searchPlaceholder: "Search by title, company, or skill",
+    searchPlaceholder: "Search by title",
     search: "Search",
     filters: "Filters",
     jobType: "Job Type",
@@ -571,8 +575,8 @@ verificationHelpMessage: "Need help? You can request a new verification email fr
     technologiesUsed: "Technologies Used",
     technologiesPlaceholder: "Type to search technologies (e.g., React, Node.js, MongoDB...)",
     technologiesRequired: "At least one technology is required",
-    githubRepository: "GitHub / Repository Link (Optional)",
-    supervisor: "Supervisor / Professor",
+    githubRepository: "GitHub / Repository Link",
+    supervisor: "Supervisor / Doctor",
     supervisorPlaceholder: "e.g., Dr. John Smith",
     projectSkillsQuestion: "What skills did you gain from this project?",
     projectSkillsHint: "Select at least 5-7 skills that you developed or used during this project:",
@@ -1098,7 +1102,7 @@ verificationHelpMessage: "Need help? You can request a new verification email fr
     // Home Page
     discoverCareer: "اكتشف مسيرتك المهنية الحلم",
     opportunities: "فرصة تنتظر الأشخاص الموهوبين مثلك",
-    searchPlaceholder: "ابحث باسم الوظيفة، الشركة، أو المهارات...",
+    searchPlaceholder: "ابحث باسم الوظيفة",
     allJobs: "جميع الوظائف",
     engineering: "هندسة",
     design: "تصميم",
@@ -1121,6 +1125,8 @@ verificationHelpMessage: "Need help? You can request a new verification email fr
     skillsRequired: "المهارات المطلوبة",
     jobDescription: "وصف الوظيفة",
     applyNow: "قدم الآن",
+    applyWithAI: "التقديم بالذكاء الاصطناعي",
+    aiApply: "تقديم ذكي",
     applicants: "المتقدمين",
     views: "المشاهدات",
     posted: "تاريخ النشر",
@@ -1289,6 +1295,8 @@ verificationHelpMessage: "هل تحتاج مساعدة؟ يمكنك طلب بر�
     // === NEW COMMON TRANSLATIONS ===
     or: "أو",
     continue: "متابعة",
+    incomplete: "غير مكتمل",
+    draft: "مسودة",
     submit: "إرسال",
     back: "رجوع",
     next: "التالي",
@@ -1478,7 +1486,7 @@ verificationHelpMessage: "هل تحتاج مساعدة؟ يمكنك طلب بر�
     mostPopular: "الأكثر شيوعاً",
     
     // Search & Filters
-    searchPlaceholder: "ابحث باسم الوظيفة، الشركة، أو المهارة",
+    searchPlaceholder: "ابحث باسم الوظيفة",
     search: "بحث",
     filters: "فلاتر",
     jobType: "نوع الوظيفة",

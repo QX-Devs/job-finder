@@ -1,26 +1,31 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Search, MapPin, Briefcase, DollarSign, Building2, 
+  Search, MapPin, Briefcase, DollarSign, Building2,
   Bookmark, BookmarkCheck,
   CheckCircle, ArrowRight, Sparkles, FileText, Brain,
   X, TrendingUp, Clock, Users, Grid3x3, List,
   SlidersHorizontal, ChevronDown, Zap, Target, Award,
-  Rocket, Share2, Badge
+  Rocket, Share2, Badge, Star, Globe, Laptop, Bot
 } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import AuthModal from '../components/AuthModal';
 import ResetPasswordModal from '../components/ResetPasswordModal';
 import VerificationStatusModal from '../components/VerificationStatusModal';
+import AIApplyModal from '../components/AIApplyModal';
 import authService from '../services/authService';
 import applicationService from '../services/applicationService';
 import jobService from '../services/jobService';
+import aiApplyService from '../services/aiApplyService';
 import { useTranslate } from '../utils/translate';
 import { useSearchParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { prioritizeJobsByCareerObjective, getMatchLevel } from '../utils/jobPrioritization';
 import './Home.css';
 
 const Home = () => {
   const { t, isRTL, language } = useTranslate();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,37 +35,122 @@ const Home = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState('latest');
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [displayCount, setDisplayCount] = useState(9);
   const [selectedJob, setSelectedJob] = useState(null);
   const initialIsMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
   const [isMobile, setIsMobile] = useState(initialIsMobile);
   const [expandedJobId, setExpandedJobId] = useState(null);
 
+  // Career Objective from user profile for job prioritization
+  const careerObjective = user?.careerObjective || '';
+
+  // Helper function to extract source name from URL
+  const getSourceFromUrl = (url) => {
+    if (!url) return 'Unknown';
+    try {
+      const hostname = new URL(url).hostname.toLowerCase();
+      if (hostname.includes('linkedin')) return 'LinkedIn';
+      if (hostname.includes('indeed')) return 'Indeed';
+      if (hostname.includes('glassdoor')) return 'Glassdoor';
+      if (hostname.includes('monster')) return 'Monster';
+      if (hostname.includes('ziprecruiter')) return 'ZipRecruiter';
+      if (hostname.includes('careerbuilder')) return 'CareerBuilder';
+      if (hostname.includes('dice')) return 'Dice';
+      if (hostname.includes('simplyhired')) return 'SimplyHired';
+      if (hostname.includes('bayt')) return 'Bayt';
+      if (hostname.includes('wuzzuf')) return 'Wuzzuf';
+      if (hostname.includes('akhtaboot')) return 'Akhtaboot';
+      // Extract domain name as fallback
+      const parts = hostname.replace('www.', '').split('.');
+      return parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+    } catch {
+      return 'External';
+    }
+  };
+
+  // Helper to extract LinkedIn job ID from various LinkedIn URL formats
+  const extractLinkedInJobId = (url) => {
+    if (!url) return null;
+    try {
+      // Match patterns like:
+      // /job-apply/4348925531/
+      // /jobs/view/4348925531/
+      // /jobs/search/?currentJobId=4348925531
+      // /jobs/4348925531/
+      const patterns = [
+        /job-apply\/(\d+)/,
+        /jobs\/view\/(\d+)/,
+        /currentJobId=(\d+)/,
+        /jobs\/(\d+)/
+      ];
+      for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match && match[1]) {
+          return match[1];
+        }
+      }
+    } catch {
+      return null;
+    }
+    return null;
+  };
+
+  // Helper to build proper LinkedIn job URL
+  const buildLinkedInJobUrl = (linkedinJobId, applyUrl) => {
+    // First priority: use provided linkedin_job_id
+    if (linkedinJobId) {
+      return `https://www.linkedin.com/jobs/search/?currentJobId=${linkedinJobId}`;
+    }
+    // Second priority: extract from apply_url if it's a LinkedIn URL
+    if (applyUrl && applyUrl.includes('linkedin.com')) {
+      const extractedId = extractLinkedInJobId(applyUrl);
+      if (extractedId) {
+        return `https://www.linkedin.com/jobs/search/?currentJobId=${extractedId}`;
+      }
+    }
+    // Fallback: return original URL
+    return applyUrl;
+  };
+
+  // Helper to get display source - prefer backend source field, fallback to URL parsing
+  const getJobSource = (job) => {
+    if (job.source && job.source !== 'External') {
+      return job.source;
+    }
+    return getSourceFromUrl(job.applicationUrl);
+  };
+
   const [filters, setFilters] = useState({
     jobType: 'all',
     location: 'all',
     experienceLevel: 'all',
     salaryRange: 'all',
-    remote: false,
+    workplaceType: 'all',
     keyword: '',
     datePosted: 'any'
   });
-  
+
   // Auth Modal State
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState('login');
-  
+
   // Reset Password Modal State
   const [searchParams, setSearchParams] = useSearchParams();
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
   const [resetToken, setResetToken] = useState(null);
-  
+
   // Verification Status Modal State
   const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
   const [verificationStatus, setVerificationStatus] = useState(null);
   const [verificationMessage, setVerificationMessage] = useState('');
-  
+
+  // AI Apply Modal State
+  const [isAIApplyModalOpen, setIsAIApplyModalOpen] = useState(false);
+  const [aiApplyJob, setAIApplyJob] = useState(null);
+  const [aiApplyStatus, setAIApplyStatus] = useState(null); // null, 'loading', 'success', 'failed'
+  const [aiApplyProgress, setAIApplyProgress] = useState(null); // Progress step from backend
+
   const isLoggedIn = authService.isAuthenticated();
   const heroRef = useRef(null);
   const jobsRef = useRef(null);
@@ -80,14 +170,14 @@ const Home = () => {
     const token = searchParams.get('token');
     const verifyStatus = searchParams.get('verify');
     const verifyMessage = searchParams.get('message');
-    
+
     if (token) {
       setResetToken(token);
       setIsResetPasswordModalOpen(true);
       // Remove token from URL but keep it in state
       setSearchParams({}, { replace: true });
     }
-    
+
     if (verifyStatus) {
       setVerificationStatus(verifyStatus);
       setVerificationMessage(verifyMessage ? decodeURIComponent(verifyMessage) : '');
@@ -117,10 +207,11 @@ const Home = () => {
     const fetchJobs = async () => {
       setIsLoading(true);
       try {
-        console.log('Home: Fetching jobs from API...');
-        const response = await jobService.getAll();
+        console.log('Home: Fetching jobs from API...', { careerObjective });
+        // Pass career objective to API for server-side prioritization
+        const response = await jobService.getAll({ careerObjective });
         console.log('Home: API response:', { success: response.success, count: response.data?.length || 0 });
-        
+
         if (response.success && response.data) {
           // Transform API jobs to match frontend format (only real fields from backend)
           const transformedJobs = response.data.map((job) => {
@@ -156,15 +247,15 @@ const Home = () => {
             const logoIndex = (job.company || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % companyLogos.length;
 
             // Format posted date
-            const postedDate = job.posted_at 
+            const postedDate = job.posted_at
               ? new Date(job.posted_at)
               : (job.createdAt ? new Date(job.createdAt) : new Date());
             const daysAgo = Math.floor((Date.now() - postedDate.getTime()) / (1000 * 60 * 60 * 24));
-            const postedDateStr = daysAgo === 0 
+            const postedDateStr = daysAgo === 0
               ? (language === 'en' ? 'Today' : 'اليوم')
               : daysAgo === 1
-              ? (language === 'en' ? '1 day ago' : 'يوم واحد')
-              : `${daysAgo} ${language === 'en' ? 'days ago' : 'أيام'}`;
+                ? (language === 'en' ? '1 day ago' : 'يوم واحد')
+                : `${daysAgo} ${language === 'en' ? 'days ago' : 'أيام'}`;
 
             return {
               id: job.id,
@@ -183,13 +274,22 @@ const Home = () => {
               postedDate: postedDateStr,
               postedTimestamp: postedDate.getTime(),
               description: job.description || '',
-              applicationUrl: job.apply_url,
-              remote: (job.location || '').toLowerCase().includes('remote')
+              // Build proper LinkedIn URL or fallback to apply_url
+              applicationUrl: buildLinkedInJobUrl(job.linkedin_job_id, job.apply_url),
+              remote: (job.location || '').toLowerCase().includes('remote'),
+              // Easy Apply indicator from backend
+              easyApply: job.easy_apply === true,
+              // Source from backend
+              source: job.source || 'External',
+              // Workplace type from backend (Remote, On-site, Hybrid)
+              workplaceType: job.workplace_type || null,
+              // Preserve career match score from API (server-side prioritization)
+              careerMatchScore: job.careerMatchScore || 0
             };
           });
 
           console.log(`Home: Transformed ${transformedJobs.length} jobs`);
-          
+
           // Sort jobs immediately after transformation (before setting state)
           // This ensures correct sorting on initial render
           const sortedJobs = transformedJobs.sort((a, b) => {
@@ -198,18 +298,18 @@ const Home = () => {
               if (!location) return false;
               return location.toLowerCase().includes('amman');
             };
-            
+
             // Prioritize Amman jobs first
             const aIsAmman = isAmman(a.location);
             const bIsAmman = isAmman(b.location);
-            
+
             if (aIsAmman && !bIsAmman) return -1;
             if (!aIsAmman && bIsAmman) return 1;
-            
+
             // If both are Amman or both are not, sort by date (latest first)
             return b.postedTimestamp - a.postedTimestamp;
           });
-          
+
           setJobs(sortedJobs);
         } else {
           console.warn('Home: No jobs in response or response not successful');
@@ -224,7 +324,7 @@ const Home = () => {
     };
 
     fetchJobs();
-  }, [language]);
+  }, [language, careerObjective]); // Re-fetch when career objective changes
 
   // Extract unique values from jobs for dynamic dropdowns
   const uniqueJobTypes = useMemo(() => {
@@ -233,8 +333,39 @@ const Home = () => {
   }, [jobs]);
 
   const uniqueLocations = useMemo(() => {
-    const locations = new Set(jobs.map(job => job.location).filter(Boolean));
-    return Array.from(locations).sort();
+    // Define city-to-country mappings for Jordan
+    const jordanCities = ['amman', 'irbid', 'zarqa', 'aqaba', 'madaba', 'jerash', 'ajloun', 'karak', 'mafraq', 'salt', 'tafilah', 'maan'];
+
+    // Normalize location to country/region level
+    const normalizeToRegion = (location) => {
+      if (!location) return null;
+      const lower = location.toLowerCase();
+
+      // Check if it's a Jordan city or contains "jordan"
+      if (lower.includes('jordan') || jordanCities.some(city => lower.includes(city))) {
+        return 'Jordan';
+      }
+
+      // Keep regional identifiers as-is
+      if (lower.includes('emea')) return 'EMEA';
+      if (lower.includes('mena')) return 'MENA';
+      if (lower.includes('remote')) return 'Remote';
+
+      // For other locations, clean up duplicates and return
+      const parts = location.split(',').map(p => p.trim()).filter(Boolean);
+      const uniqueParts = [...new Set(parts)];
+      return uniqueParts[0]; // Return primary location
+    };
+
+    const regions = new Set();
+
+    jobs.forEach(job => {
+      if (!job.location) return;
+      const region = normalizeToRegion(job.location);
+      if (region) regions.add(region);
+    });
+
+    return Array.from(regions).sort();
   }, [jobs]);
 
   const uniqueExperienceLevels = useMemo(() => {
@@ -251,7 +382,7 @@ const Home = () => {
       result = result.filter(job =>
         job.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         job.company?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (job.skills && Array.isArray(job.skills) && job.skills.some(skill => 
+        (job.skills && Array.isArray(job.skills) && job.skills.some(skill =>
           typeof skill === 'string' && skill.toLowerCase().includes(searchTerm.toLowerCase())
         ))
       );
@@ -259,22 +390,34 @@ const Home = () => {
 
     // Apply ALL filters with AND logic - each filter must match
     result = result.filter(job => {
-      // Category filter
-      const matchesCategory = selectedCategory === 'all' || job.category === selectedCategory;
+      // Category filter (multi-select: empty array means all categories)
+      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(job.category);
 
       // Job type filter
       const matchesType = filters.jobType === 'all' || job.jobType === filters.jobType;
 
       // Job type filter
-      
 
-      // Location filter
+
+      // Location filter - match based on primary location (first part before comma)
       let matchesLocation = true;
       if (filters.location !== 'all') {
         if (filters.location === 'remote') {
           matchesLocation = job.remote || job.location?.toLowerCase().includes('remote');
         } else {
-          matchesLocation = job.location === filters.location;
+          // Jordan cities list for matching
+          const jordanCities = ['amman', 'irbid', 'zarqa', 'aqaba', 'madaba', 'jerash', 'ajloun', 'karak', 'mafraq', 'salt', 'tafilah', 'maan'];
+          const filterLower = filters.location.toLowerCase();
+          const jobLocationLower = (job.location || '').toLowerCase();
+
+          // If filtering by Jordan, match all Jordan cities
+          if (filterLower === 'jordan') {
+            matchesLocation = jobLocationLower.includes('jordan') ||
+              jordanCities.some(city => jobLocationLower.includes(city));
+          } else {
+            // Direct match or contains
+            matchesLocation = jobLocationLower.includes(filterLower);
+          }
         }
       }
 
@@ -288,8 +431,22 @@ const Home = () => {
         matchesSalary = job.salaryMin >= min && job.salaryMax <= max;
       }
 
-      // Remote filter
-      const matchesRemote = !filters.remote || job.remote === true;
+      // Workplace type filter (Remote, On-site, Hybrid)
+      let matchesWorkplaceType = true;
+      if (filters.workplaceType !== 'all') {
+        const filterType = filters.workplaceType.toLowerCase();
+        const jobType = (job.workplaceType || '').toLowerCase();
+
+        if (filterType === 'remote') {
+          // Match jobs with workplace_type = 'Remote' OR location contains 'remote'
+          matchesWorkplaceType = jobType === 'remote' || job.remote === true ||
+            (job.location || '').toLowerCase().includes('remote');
+        } else if (filterType === 'on-site') {
+          matchesWorkplaceType = jobType === 'on-site';
+        } else if (filterType === 'hybrid') {
+          matchesWorkplaceType = jobType === 'hybrid';
+        }
+      }
 
       // Keyword search filter (searches in title, company, description)
       const keyword = filters.keyword?.trim() || '';
@@ -303,7 +460,7 @@ const Home = () => {
       if (filters.datePosted !== 'any' && job.postedTimestamp) {
         const postedDate = new Date(job.postedTimestamp);
         const diffDays = (Date.now() - postedDate.getTime()) / (1000 * 60 * 60 * 24);
-        
+
         switch (filters.datePosted) {
           case '24h':
             matchesDate = diffDays <= 1;
@@ -323,28 +480,29 @@ const Home = () => {
       }
 
       // ALL conditions must be true (AND logic)
-      return matchesCategory && matchesType && matchesLocation && matchesLevel && matchesSalary && matchesRemote && matchesKeyword && matchesDate;
+      return matchesCategory && matchesType && matchesLocation && matchesLevel && matchesSalary && matchesWorkplaceType && matchesKeyword && matchesDate;
     });
 
     // Sorting
     const sortedResult = [...result]; // Create a copy to avoid mutating
-    
+
     // Helper function to check if location is Amman
     const isAmman = (location) => {
       if (!location) return false;
       return location.toLowerCase().includes('amman');
     };
-    
+
+    // Apply regular sorting first
     switch (sortBy) {
       case 'latest':
         sortedResult.sort((a, b) => {
           // Prioritize Amman jobs first
           const aIsAmman = isAmman(a.location);
           const bIsAmman = isAmman(b.location);
-          
+
           if (aIsAmman && !bIsAmman) return -1;
           if (!aIsAmman && bIsAmman) return 1;
-          
+
           // If both are Amman or both are not, sort by date
           return b.postedTimestamp - a.postedTimestamp;
         });
@@ -354,10 +512,10 @@ const Home = () => {
           // Prioritize Amman jobs first
           const aIsAmman = isAmman(a.location);
           const bIsAmman = isAmman(b.location);
-          
+
           if (aIsAmman && !bIsAmman) return -1;
           if (!aIsAmman && bIsAmman) return 1;
-          
+
           // If both are Amman or both are not, sort by salary
           return b.salaryMax - a.salaryMax;
         });
@@ -367,10 +525,10 @@ const Home = () => {
           // Prioritize Amman jobs first
           const aIsAmman = isAmman(a.location);
           const bIsAmman = isAmman(b.location);
-          
+
           if (aIsAmman && !bIsAmman) return -1;
           if (!aIsAmman && bIsAmman) return 1;
-          
+
           // If both are Amman or both are not, sort by salary
           return a.salaryMin - b.salaryMin;
         });
@@ -380,10 +538,10 @@ const Home = () => {
           // Prioritize Amman jobs first
           const aIsAmman = isAmman(a.location);
           const bIsAmman = isAmman(b.location);
-          
+
           if (aIsAmman && !bIsAmman) return -1;
           if (!aIsAmman && bIsAmman) return 1;
-          
+
           // If both are Amman or both are not, sort by date
           return b.postedTimestamp - a.postedTimestamp;
         });
@@ -393,17 +551,24 @@ const Home = () => {
         sortedResult.sort((a, b) => {
           const aIsAmman = isAmman(a.location);
           const bIsAmman = isAmman(b.location);
-          
+
           if (aIsAmman && !bIsAmman) return -1;
           if (!aIsAmman && bIsAmman) return 1;
-          
+
           return b.postedTimestamp - a.postedTimestamp;
         });
         break;
     }
 
+    // Apply career objective prioritization AFTER regular sorting
+    // This puts career-matching jobs at the top while preserving relative order
+    if (careerObjective && careerObjective.trim()) {
+      const prioritizedResult = prioritizeJobsByCareerObjective(sortedResult, careerObjective);
+      return prioritizedResult;
+    }
+
     return sortedResult;
-  }, [filters, searchTerm, selectedCategory, sortBy, jobs]);
+  }, [filters, searchTerm, selectedCategories, sortBy, jobs, careerObjective]);
 
   const toggleSaveJob = async (jobId) => {
     if (!isLoggedIn) {
@@ -440,7 +605,7 @@ const Home = () => {
               const match = (listRes.data || []).find(a => a.status === 'saved' && a.jobTitle === job.title && a.company === job.company);
               if (match) appId = match.id;
             }
-          } catch (_) {}
+          } catch (_) { }
         }
         if (appId) {
           const delRes = await applicationService.remove(appId);
@@ -479,6 +644,72 @@ const Home = () => {
     // Allow default behavior - link will open in new tab
   };
 
+  // AI Apply handlers
+  const handleAIApplyClick = (e, job) => {
+    e.preventDefault();
+    if (!isLoggedIn) {
+      openAuthModal('login');
+      return;
+    }
+    setAIApplyJob(job);
+    setAIApplyStatus(null);
+    setIsAIApplyModalOpen(true);
+  };
+
+  const handleAIApplyStart = async (resumeId) => {
+    if (!aiApplyJob) return;
+
+    setAIApplyStatus('loading');
+    setAIApplyProgress('initializing');
+
+    try {
+      const response = await aiApplyService.startApplication({
+        resumeId,
+        jobUrl: aiApplyJob.applicationUrl,
+        jobTitle: aiApplyJob.title,
+        company: aiApplyJob.company
+      });
+
+      if (response.success) {
+        // Poll for status updates
+        try {
+          const result = await aiApplyService.pollStatus(
+            response.data.jobId,
+            (status) => {
+              // Update UI with progress
+              console.log('AI Apply progress:', status.progress);
+              setAIApplyProgress(status.progress);
+            }
+          );
+
+          // Check if it was actually successful
+          if (result.progress === 'submitted' || result.status === 'completed') {
+            setAIApplyProgress('submitted');
+            setAIApplyStatus('success');
+          } else {
+            setAIApplyStatus('failed');
+          }
+        } catch (pollError) {
+          // pollStatus throws on 'failed' status
+          console.error('AI Apply poll error:', pollError);
+          setAIApplyStatus('failed');
+        }
+      } else {
+        setAIApplyStatus('failed');
+      }
+    } catch (error) {
+      console.error('AI Apply error:', error);
+      setAIApplyStatus('failed');
+    }
+  };
+
+  const closeAIApplyModal = () => {
+    setIsAIApplyModalOpen(false);
+    setAIApplyJob(null);
+    setAIApplyStatus(null);
+    setAIApplyProgress(null);
+  };
+
   const openAuthModal = (tab = 'login') => {
     setAuthModalTab(tab);
     setIsAuthModalOpen(true);
@@ -498,11 +729,11 @@ const Home = () => {
       location: 'all',
       experienceLevel: 'all',
       salaryRange: 'all',
-      remote: false,
+      workplaceType: 'all',
       keyword: '',
       datePosted: 'any'
     });
-    setSelectedCategory('all');
+    setSelectedCategories([]);
     setSearchTerm('');
   };
 
@@ -521,7 +752,7 @@ const Home = () => {
     {
       icon: Brain,
       title: t('aiMatching'),
-      description: language === 'en' 
+      description: language === 'en'
         ? 'Smart algorithms match you with jobs that fit your skills and experience perfectly'
         : 'خوارزميات ذكية تطابقك مع الوظائف التي تناسب مهاراتك وخبراتك بشكل مثالي',
       color: 'from-blue-500 to-cyan-500'
@@ -575,12 +806,12 @@ const Home = () => {
     if (filters.location !== 'all') count++;
     if (filters.experienceLevel !== 'all') count++;
     if (filters.salaryRange !== 'all') count++;
-    if (filters.remote) count++;
+    if (filters.workplaceType !== 'all') count++;
     if (filters.keyword && filters.keyword.trim() !== '') count++;
     if (filters.datePosted !== 'any') count++;
-    if (selectedCategory !== 'all') count++;
+    if (selectedCategories.length > 0) count += selectedCategories.length;
     return count;
-  }, [filters, selectedCategory]);
+  }, [filters, selectedCategories]);
 
   return (
     <>
@@ -618,17 +849,29 @@ const Home = () => {
                 <p className="jobs-subtitle">
                   {filteredJobs.length} {t('opportunities')}
                 </p>
+                {/* Career Objective Prioritization Indicator */}
+                {careerObjective && careerObjective.trim() && (
+                  <div className="career-prioritization-indicator">
+                    <Target size={14} />
+                    <span>
+                      {language === 'en'
+                        ? `Showing jobs matching "${careerObjective}" first`
+                        : `عرض الوظائف المطابقة لـ "${careerObjective}" أولاً`
+                      }
+                    </span>
+                  </div>
+                )}
               </div>
-              
+
               <div className="header-actions">
                 {/* Language Toggle Button */}
-               {/* <button 
+                {/* <button 
                   className="language-toggle-btn"
                   onClick={toggleLanguage}
                 >
                   {language === 'en' ? 'العربية' : 'English'}
                 </button>*/}
-                
+
                 {!isLoggedIn && (
                   <button onClick={() => openAuthModal('signup')} className="header-cta-btn">
                     <Sparkles size={18} />
@@ -655,9 +898,9 @@ const Home = () => {
                   </button>
                 )}
               </div>
-              
-              <button 
-                onClick={() => setShowFilters(!showFilters)} 
+
+              <button
+                onClick={() => setShowFilters(!showFilters)}
                 className={`filter-toggle-btn ${activeFiltersCount > 0 ? 'active' : ''}`}
               >
                 <SlidersHorizontal size={20} />
@@ -672,15 +915,32 @@ const Home = () => {
             <div className="categories-scroll">
               {webCategories.map((cat) => {
                 const Icon = cat.icon;
-                const count = cat.id === 'all' 
-                  ? jobs.length 
+                const count = cat.id === 'all'
+                  ? jobs.length
                   : jobs.filter(j => j.category === cat.id).length;
-                
+
+                // Determine if this category is selected
+                const isSelected = cat.id === 'all'
+                  ? selectedCategories.length === 0
+                  : selectedCategories.includes(cat.id);
+
                 return (
                   <button
                     key={cat.id}
-                    onClick={() => setSelectedCategory(cat.id)}
-                    className={`category-chip ${selectedCategory === cat.id ? 'active' : ''}`}
+                    onClick={() => {
+                      if (cat.id === 'all') {
+                        // Clicking "All" clears all selections
+                        setSelectedCategories([]);
+                      } else {
+                        // Toggle individual category
+                        setSelectedCategories(prev =>
+                          prev.includes(cat.id)
+                            ? prev.filter(c => c !== cat.id)
+                            : [...prev, cat.id]
+                        );
+                      }
+                    }}
+                    className={`category-chip ${isSelected ? 'active' : ''}`}
                   >
                     <Icon size={16} />
                     {cat.name}
@@ -707,18 +967,6 @@ const Home = () => {
               </div>
 
               <div className="filters-grid">
-                {/* Keyword Search */}
-                <div className="filter-group filter-group-full">
-                  <label>{t('keywordSearch')}</label>
-                  <input
-                    type="text"
-                    placeholder={t('keywordSearchPlaceholder')}
-                    value={filters.keyword}
-                    onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
-                    className="filter-input-enhanced"
-                  />
-                </div>
-
                 {/* Date Posted Filter */}
                 <div className="filter-group">
                   <label>{t('datePosted')}</label>
@@ -743,11 +991,22 @@ const Home = () => {
                     className="filter-select-enhanced"
                   >
                     <option value="all">{t('allTypes')}</option>
-                    <option value="remote">Remote</option>
-                    <option value="part-time">Part-Time</option>
-                    {uniqueJobTypes.map(type => (
-                      <option key={type} value={type}>{type}</option>
-                    ))}
+                    <option value="Full-time">{language === 'en' ? 'Full-Time' : 'دوام كامل'}</option>
+                    <option value="Part-time">{language === 'en' ? 'Part-Time' : 'دوام جزئي'}</option>
+                  </select>
+                </div>
+
+                <div className="filter-group">
+                  <label>{language === 'en' ? 'Workplace Type' : 'نوع مكان العمل'}</label>
+                  <select
+                    value={filters.workplaceType}
+                    onChange={(e) => setFilters({ ...filters, workplaceType: e.target.value })}
+                    className="filter-select-enhanced"
+                  >
+                    <option value="all">{t('allTypes')}</option>
+                    <option value="Remote">{language === 'en' ? 'Remote' : 'عن بُعد'}</option>
+                    <option value="On-site">{language === 'en' ? 'On-site' : 'في الموقع'}</option>
+                    <option value="Hybrid">{language === 'en' ? 'Hybrid' : 'هجين'}</option>
                   </select>
                 </div>
 
@@ -807,12 +1066,12 @@ const Home = () => {
                   </label>
                 </div> */}
 
-                
+
               </div>
             </div>
           )}
 
-                    {/* Loading State */}
+          {/* Loading State */}
           {isLoading ? (
             <div className="loading-state">
               <div className="loader"></div>
@@ -824,8 +1083,8 @@ const Home = () => {
               <div className="empty-icon">🔍</div>
               <h3>{t('noJobsFound')}</h3>
               <p>
-                {activeFiltersCount > 0 
-                  ? t('noJobsMatchFilters') 
+                {activeFiltersCount > 0
+                  ? t('noJobsMatchFilters')
                   : t('tryAdjusting')}
               </p>
               {activeFiltersCount > 0 && (
@@ -856,15 +1115,26 @@ const Home = () => {
                         >
                           {/* Company Logo */}
                           <div className="company-logo-small">{job.companyLogo}</div>
-                          
+
                           <div className="job-list-content">
                             {/* Job Title and Company */}
                             <div className="job-list-header">
                               <h4 className="job-list-title">{job.title}</h4>
+                              {/* Career Match Badge */}
+                              {job.careerMatchScore > 0 && (
+                                <span
+                                  className="career-match-badge"
+                                  style={{ backgroundColor: getMatchLevel(job.careerMatchScore).color }}
+                                  title={`${job.careerMatchScore}% match with your career objective`}
+                                >
+                                  <Star size={10} />
+                                  {getMatchLevel(job.careerMatchScore).label}
+                                </span>
+                              )}
                             </div>
-                            
+
                             <div className="job-list-company">{job.company}</div>
-                            
+
                             {/* Quick Info */}
                             <div className="job-list-meta">
                               <span className="meta-item-small">
@@ -876,7 +1146,7 @@ const Home = () => {
                                 {job.salary}
                               </span>
                             </div>
-                            
+
                             <div className="job-list-footer">
                               <span className="job-list-date">
                                 <Clock size={12} />
@@ -890,11 +1160,11 @@ const Home = () => {
                         </div>
                       ))}
                     </div>
-                    
+
                     {/* Load More in Sidebar */}
                     {displayCount < filteredJobs.length && (
                       <button onClick={loadMore} className="btn-load-more-sidebar">
-                        {language === 'en' 
+                        {language === 'en'
                           ? `Load More (${filteredJobs.length - displayCount} more)`
                           : `تحميل المزيد (${filteredJobs.length - displayCount} أخرى)`
                         }
@@ -907,121 +1177,165 @@ const Home = () => {
                   <div className="job-details-panel">
                     {selectedJob ? (
                       <div className="job-details">
-                      {/* Header */}
-                      <div className="job-details-header">
-                        <div className="job-details-company-logo">{selectedJob.companyLogo}</div>
-                        <div className="job-details-header-content">
-                          <div className="job-details-badges">
-                            {selectedJob.remote && (
-                              <span className="badge remote-badge">
-                                {language === 'en' ? 'Remote' : 'عن بُعد'}
-                              </span>
-                            )}
+                        {/* Header */}
+                        <div className="job-details-header">
+                          <div className="job-details-company-logo">{selectedJob.companyLogo}</div>
+                          <div className="job-details-header-content">
+                            <div className="job-details-badges">
+                              {selectedJob.remote && (
+                                <span className="badge remote-badge">
+                                  {language === 'en' ? 'Remote' : 'عن بُعد'}
+                                </span>
+                              )}
+                            </div>
+                            <h2 className="job-details-title">{selectedJob.title}</h2>
+                            <div className="job-details-company">
+                              <span className="company-name">{selectedJob.company}</span>
+                              <span className="separator">•</span>
+                              <span className="industry">{selectedJob.industry}</span>
+                            </div>
                           </div>
-                          <h2 className="job-details-title">{selectedJob.title}</h2>
-                          <div className="job-details-company">
-                            <span className="company-name">{selectedJob.company}</span>
-                            <span className="separator">•</span>
-                            <span className="industry">{selectedJob.industry}</span>
+
+                          <div className="job-details-actions">
+                            <button
+                              onClick={() => toggleSaveJob(selectedJob.id)}
+                              className={`icon-btn-large ${savedJobs.has(selectedJob.id) ? 'saved' : ''}`}
+                              title={t('save')}
+                            >
+                              {savedJobs.has(selectedJob.id) ? (
+                                <BookmarkCheck size={24} />
+                              ) : (
+                                <Bookmark size={24} />
+                              )}
+                            </button>
+                            <button className="icon-btn-large" title={t('share')}>
+                              <Share2 size={24} />
+                            </button>
                           </div>
                         </div>
-                        
-                        <div className="job-details-actions">
-                          <button
-                            onClick={() => toggleSaveJob(selectedJob.id)}
-                            className={`icon-btn-large ${savedJobs.has(selectedJob.id) ? 'saved' : ''}`}
-                            title={t('save')}
+
+                        {/* Key Info Grid */}
+                        <div className="job-details-info-grid">
+                          <div className="info-card">
+                            <MapPin size={18} />
+                            <div>
+                              <div className="info-label">{t('location')}</div>
+                              <div className="info-value">{selectedJob.location}</div>
+                            </div>
+                          </div>
+                          <div className="info-card">
+                            <Briefcase size={18} />
+                            <div>
+                              <div className="info-label">{t('jobType')}</div>
+                              <div className="info-value">{selectedJob.jobType}</div>
+                            </div>
+                          </div>
+                          <div className="info-card">
+                            <DollarSign size={18} />
+                            <div>
+                              <div className="info-label">{t('salary')}</div>
+                              <div className="info-value">{selectedJob.salary}</div>
+                            </div>
+                          </div>
+                          <div className="info-card">
+                            <Badge size={18} />
+                            <div>
+                              <div className="info-label">{t('experience')}</div>
+                              <div className="info-value">{selectedJob.experienceLevel}</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Source and Easy Apply Section */}
+                        <div className="job-source-section">
+                          <div className="source-info">
+                            <span className="source-label">{language === 'en' ? 'Source:' : 'المصدر:'}</span>
+                            <a
+                              href={selectedJob.applicationUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="source-link"
+                            >
+                              {getJobSource(selectedJob)}
+                            </a>
+                          </div>
+                          <div className="job-badges-row">
+                            {selectedJob.workplaceType && (
+                              <div className={`workplace-type-badge ${selectedJob.workplaceType.toLowerCase().replace('-', '')}`}>
+                                {selectedJob.workplaceType === 'Remote' && <Globe size={14} />}
+                                {selectedJob.workplaceType === 'On-site' && <Building2 size={14} />}
+                                {selectedJob.workplaceType === 'Hybrid' && <Laptop size={14} />}
+                                <span>
+                                  {selectedJob.workplaceType === 'Remote' && (language === 'en' ? 'Remote' : 'عن بُعد')}
+                                  {selectedJob.workplaceType === 'On-site' && (language === 'en' ? 'On-site' : 'في الموقع')}
+                                  {selectedJob.workplaceType === 'Hybrid' && (language === 'en' ? 'Hybrid' : 'هجين')}
+                                </span>
+                              </div>
+                            )}
+                            {selectedJob.easyApply && (
+                              <div className="easy-apply-badge">
+                                <Zap size={14} />
+                                <span>{language === 'en' ? 'Easy Apply' : 'تقديم سريع'}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Skills */}
+                        <div className="job-details-section">
+                          <h3 className="section-title">{t('skillsRequired')}</h3>
+                          <div className="job-skills-large">
+                            {selectedJob.skills.map((skill, idx) => (
+                              <span key={idx} className="skill-tag-large">{skill}</span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Description */}
+                        <div className="job-details-section">
+                          <h3 className="section-title">{t('jobDescription')}</h3>
+                          <div
+                            className="job-description"
+                            dangerouslySetInnerHTML={{
+                              __html: DOMPurify.sanitize(selectedJob.description || '')
+                            }}
+                          />
+                        </div>
+
+                        {/* Stats */}
+                        {/* Stats */}
+                        <div className="job-details-stats">
+                          <div className="stat-item">
+                            <Clock size={18} />
+                            <div>
+                              <div className="stat-value">{selectedJob.postedDate}</div>
+                              <div className="stat-label">{t('posted')}</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Apply Button */}
+                        <div className="job-details-footer">
+                          <a
+                            href={selectedJob.applicationUrl}
+                            className="apply-btn-large"
+                            onClick={(e) => handleApplyClick(e, selectedJob)}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
-                            {savedJobs.has(selectedJob.id) ? (
-                              <BookmarkCheck size={24} />
-                            ) : (
-                              <Bookmark size={24} />
-                            )}
-                          </button>
-                          <button className="icon-btn-large" title={t('share')}>
-                            <Share2 size={24} />
-                          </button>
+                            {t('applyNow')}
+                            <ArrowRight size={20} />
+                          </a>
+                          {selectedJob.easyApply && (
+                            <button
+                              className="apply-btn-ai"
+                              onClick={(e) => handleAIApplyClick(e, selectedJob)}
+                            >
+                              <Bot size={20} />
+                              {language === 'en' ? 'Apply with AI' : 'التقديم بالذكاء الاصطناعي'}
+                            </button>
+                          )}
                         </div>
-                      </div>
-
-                      {/* Key Info Grid */}
-                      <div className="job-details-info-grid">
-                        <div className="info-card">
-                          <MapPin size={18} />
-                          <div>
-                            <div className="info-label">{t('location')}</div>
-                            <div className="info-value">{selectedJob.location}</div>
-                          </div>
-                        </div>
-                        <div className="info-card">
-                          <Briefcase size={18} />
-                          <div>
-                            <div className="info-label">{t('jobType')}</div>
-                            <div className="info-value">{selectedJob.jobType}</div>
-                          </div>
-                        </div>
-                        <div className="info-card">
-                          <DollarSign size={18} />
-                          <div>
-                            <div className="info-label">{t('salary')}</div>
-                            <div className="info-value">{selectedJob.salary}</div>
-                          </div>
-                        </div>
-                        <div className="info-card">
-                          <Badge size={18} />
-                          <div>
-                            <div className="info-label">{t('experience')}</div>
-                            <div className="info-value">{selectedJob.experienceLevel}</div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Skills */}
-                      <div className="job-details-section">
-                        <h3 className="section-title">{t('skillsRequired')}</h3>
-                        <div className="job-skills-large">
-                          {selectedJob.skills.map((skill, idx) => (
-                            <span key={idx} className="skill-tag-large">{skill}</span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <div className="job-details-section">
-                        <h3 className="section-title">{t('jobDescription')}</h3>
-                        <div 
-                          className="job-description"
-                          dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(selectedJob.description || '')
-                          }}
-                        />
-                      </div>
-
-                      {/* Stats */}
-                      {/* Stats */}
-                      <div className="job-details-stats">
-                        <div className="stat-item">
-                          <Clock size={18} />
-                          <div>
-                            <div className="stat-value">{selectedJob.postedDate}</div>
-                            <div className="stat-label">{t('posted')}</div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Apply Button */}
-                      <div className="job-details-footer">
-                        <a
-                          href={selectedJob.applicationUrl}
-                          className="apply-btn-large"
-                          onClick={(e) => handleApplyClick(e, selectedJob)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {t('applyNow')}
-                          <ArrowRight size={20} />
-                        </a>
-                      </div>
                       </div>
                     ) : (
                       <div className="job-details-empty">
@@ -1044,6 +1358,16 @@ const Home = () => {
                             <div>
                               <h3>{job.title}</h3>
                               <p>{job.company}</p>
+                              {/* Career Match Badge for Mobile */}
+                              {job.careerMatchScore > 0 && (
+                                <span
+                                  className="career-match-badge mobile"
+                                  style={{ backgroundColor: getMatchLevel(job.careerMatchScore).color }}
+                                >
+                                  <Star size={10} />
+                                  {getMatchLevel(job.careerMatchScore).label}
+                                </span>
+                              )}
                             </div>
                           </div>
                           <button
@@ -1078,10 +1402,53 @@ const Home = () => {
                             {t('applyNow')}
                             <ArrowRight size={16} />
                           </a>
+                          {job.easyApply && (
+                            <button
+                              className="btn-cta-ai mobile"
+                              onClick={(e) => handleAIApplyClick(e, job)}
+                            >
+                              <Bot size={16} />
+                              {language === 'en' ? 'AI Apply' : 'تقديم ذكي'}
+                            </button>
+                          )}
                         </div>
 
                         {isExpanded && (
                           <div className="mobile-job-details">
+                            {/* Source and Easy Apply for Mobile */}
+                            <div className="mobile-source-section">
+                              <div className="source-info">
+                                <span className="source-label">{language === 'en' ? 'Source:' : 'المصدر:'}</span>
+                                <a
+                                  href={job.applicationUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="source-link"
+                                >
+                                  {getJobSource(job)}
+                                </a>
+                              </div>
+                              <div className="job-badges-row mobile">
+                                {job.workplaceType && (
+                                  <div className={`workplace-type-badge ${job.workplaceType.toLowerCase().replace('-', '')}`}>
+                                    {job.workplaceType === 'Remote' && <Globe size={12} />}
+                                    {job.workplaceType === 'On-site' && <Building2 size={12} />}
+                                    {job.workplaceType === 'Hybrid' && <Laptop size={12} />}
+                                    <span>
+                                      {job.workplaceType === 'Remote' && (language === 'en' ? 'Remote' : 'عن بُعد')}
+                                      {job.workplaceType === 'On-site' && (language === 'en' ? 'On-site' : 'في الموقع')}
+                                      {job.workplaceType === 'Hybrid' && (language === 'en' ? 'Hybrid' : 'هجين')}
+                                    </span>
+                                  </div>
+                                )}
+                                {job.easyApply && (
+                                  <div className="easy-apply-badge">
+                                    <Zap size={12} />
+                                    <span>{language === 'en' ? 'Easy Apply' : 'تقديم سريع'}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
                             <div className="mobile-job-stats">
                               <div>
                                 <span>{t('experience')}</span>
@@ -1097,7 +1464,7 @@ const Home = () => {
                                 <span key={idx}>{skill}</span>
                               ))}
                             </div>
-                            <div 
+                            <div
                               className="mobile-description"
                               dangerouslySetInnerHTML={{
                                 __html: DOMPurify.sanitize(job.description || '')
@@ -1111,7 +1478,7 @@ const Home = () => {
 
                   {displayCount < filteredJobs.length && (
                     <button onClick={loadMore} className="btn-load-more-mobile">
-                      {language === 'en' 
+                      {language === 'en'
                         ? `Load More (${filteredJobs.length - displayCount} more)`
                         : `تحميل المزيد (${filteredJobs.length - displayCount} أخرى)`
                       }
@@ -1158,7 +1525,7 @@ const Home = () => {
                     <div className="resume-caption">
                       <h3>{t('modernProfessional')}</h3>
                       <p>
-                        {language === 'en' 
+                        {language === 'en'
                           ? 'Clean layout with strong typography for maximum ATS compatibility'
                           : 'تصميم نظيف مع طباعة قوية لأقصى توافق مع أنظمة التتبع الآلي'
                         }
@@ -1236,7 +1603,7 @@ const Home = () => {
             <div className="cta-circle circle-2"></div>
             <div className="cta-circle circle-3"></div>
           </div>
-          
+
           <div className="cta-content-enhanced">
             <div className="cta-icon">
               <Rocket size={48} />
@@ -1245,7 +1612,7 @@ const Home = () => {
             <p>
               {t('joinCommunity')}
             </p>
-            
+
             {!isLoggedIn && (
               <div className="cta-buttons">
                 <button onClick={() => openAuthModal('signup')} className="btn-cta-primary">
@@ -1277,13 +1644,13 @@ const Home = () => {
       </div>
 
       {/* Auth Modal */}
-      <AuthModal 
+      <AuthModal
         isOpen={isAuthModalOpen}
         onClose={closeAuthModal}
         defaultTab={authModalTab}
         onSuccess={handleAuthSuccess}
       />
-      
+
       <ResetPasswordModal
         isOpen={isResetPasswordModalOpen}
         onClose={() => {
@@ -1292,7 +1659,7 @@ const Home = () => {
         }}
         token={resetToken}
       />
-      
+
       <VerificationStatusModal
         isOpen={isVerificationModalOpen}
         onClose={() => {
@@ -1302,6 +1669,16 @@ const Home = () => {
         }}
         status={verificationStatus}
         message={verificationMessage}
+      />
+
+      {/* AI Apply Modal */}
+      <AIApplyModal
+        isOpen={isAIApplyModalOpen}
+        onClose={closeAIApplyModal}
+        job={aiApplyJob}
+        onApplyStart={handleAIApplyStart}
+        applyStatus={aiApplyStatus}
+        applyProgress={aiApplyProgress}
       />
     </>
   );

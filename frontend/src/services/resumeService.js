@@ -122,6 +122,41 @@ const resumeService = {
     }
   },
 
+  // Save resume progress (auto-save during CV generation)
+  saveProgress: async ({ resumeId, currentStep, content, title }) => {
+    try {
+      const response = await api.post('/me/resumes/save-progress', {
+        resumeId,
+        currentStep,
+        content,
+        title
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to save progress' };
+    }
+  },
+
+  // Get all in-progress/draft resumes
+  getInProgressResumes: async () => {
+    try {
+      const response = await api.get('/me/resumes/in-progress');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to fetch in-progress resumes' };
+    }
+  },
+
+  // Get the most recent draft resume (for auto-continue feature)
+  getLatestDraft: async () => {
+    try {
+      const response = await api.get('/me/resumes/latest-draft');
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { message: 'Failed to fetch latest draft' };
+    }
+  },
+
   // Preview resume
   previewResume: async (id) => {
     try {

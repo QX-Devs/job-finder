@@ -441,14 +441,13 @@ const Settings = () => {
                   options={careerObjectiveOptions}
                   value={profile.careerObjective || null}
                   onChange={(event, newValue) => {
-                    setProfile({...profile, careerObjective: newValue || ''});
+                    setProfile({ ...profile, careerObjective: newValue || '' });
                   }}
                   onInputChange={(event, newInputValue) => {
-                    setProfile({...profile, careerObjective: newInputValue});
+                    setProfile({ ...profile, careerObjective: newInputValue });
                   }}
                   filterOptions={(options, params) => {
                     const filtered = createFilterOptions()(options, params);
-                    // If user typed something that doesn't match, allow it as custom
                     if (params.inputValue !== '' && !filtered.some(option => option === params.inputValue)) {
                       filtered.push(params.inputValue);
                     }
@@ -458,25 +457,15 @@ const Settings = () => {
                     <TextField
                       {...params}
                       placeholder="Type or select career objective (e.g., Software Engineering, Full Stack Developer...)"
-                      variant="outlined"
-                      sx={{
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: '8px',
-                          fontSize: '16px',
-                          '& fieldset': {
-                            borderColor: '#d1d5db',
-                          },
-                          '&:hover fieldset': {
-                            borderColor: '#9ca3af',
-                          },
-                          '&.Mui-focused fieldset': {
-                            borderColor: '#00a651',
-                            borderWidth: '2px',
-                          },
-                        },
-                        '& .MuiInputBase-input': {
-                          padding: '12px 14px',
-                        },
+                      variant="standard"
+                      InputProps={{
+                        ...params.InputProps,
+                        disableUnderline: true,
+                        className: 'linkedin-input',
+                      }}
+                      inputProps={{
+                        ...params.inputProps,
+                        style: { padding: '14px 20px', fontSize: 16 },
                       }}
                     />
                   )}
@@ -511,14 +500,13 @@ const Settings = () => {
                   options={locationOptions}
                   value={profile.location || null}
                   onChange={(event, newValue) => {
-                    setProfile({...profile, location: newValue || ''});
+                    setProfile({ ...profile, location: newValue || '' });
                   }}
                   onInputChange={(event, newInputValue) => {
-                    setProfile({...profile, location: newInputValue});
+                    setProfile({ ...profile, location: newInputValue });
                   }}
                   filterOptions={(options, params) => {
                     const filtered = createFilterOptions()(options, params);
-                    // If user typed something that doesn't match, allow it as custom
                     if (params.inputValue !== '' && !filtered.some(option => option === params.inputValue)) {
                       filtered.push(params.inputValue);
                     }
@@ -528,29 +516,19 @@ const Settings = () => {
                     <TextField
                       {...params}
                       placeholder="Type or select location (e.g., Amman, Dubai, Remote...)"
-                      variant="outlined"
-                     sx={{
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: '8px',
-                          fontSize: '16px',
-                          '& fieldset': {
-                            borderColor: '#d1d5db',
-                          },
-                          '&:hover fieldset': {
-                            borderColor: '#9ca3af',
-                          },
-                          '&.Mui-focused fieldset': {
-                            borderColor: '#00a651',
-                            borderWidth: '2px',
-                          },
-                        },
-                        '& .MuiInputBase-input': {
-                          padding: '12px 14px',
-                        },
+                      variant="standard"
+                      InputProps={{
+                        ...params.InputProps,
+                        disableUnderline: true,
+                        className: 'linkedin-input',
+                      }}
+                      inputProps={{
+                        ...params.inputProps,
+                        style: { padding: '14px 20px', fontSize: 16 },
                       }}
                     />
                   )}
-                 sx={{
+                  sx={{
                     '& .MuiAutocomplete-listbox': {
                       padding: '4px',
                     },

@@ -75,6 +75,11 @@ const Job = sequelize.define('Job', {
     type: DataTypes.JSON,
     allowNull: true,
     defaultValue: null
+  },
+  workplace_type: {
+    type: DataTypes.ENUM('Remote', 'On-site', 'Hybrid'),
+    allowNull: true,
+    defaultValue: null
   }
 }, {
   timestamps: true,
