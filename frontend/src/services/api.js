@@ -25,7 +25,7 @@ function getApiUrl() {
   }
   
   // Fallback to localhost only if on localhost
-  return 'http://localhost:5000/api';
+  return 'https://job-finder-r1dh.onrender.com/api';
 }
 
 // Get initial API URL

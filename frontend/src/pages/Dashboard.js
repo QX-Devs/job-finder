@@ -483,7 +483,7 @@ const Dashboard = () => {
                                       const apiBase = (process.env.REACT_APP_API_URL || 
                                         (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
                                           ? `http://${window.location.hostname}:5000/api`
-                                          : 'http://localhost:5000/api')).replace(/\/$/, '');
+                                          : 'https://job-finder-r1dh.onrender.com/api')).replace(/\/$/, '');
                                       const hostBase = apiBase.replace(/\/api$/, '');
                                       
                                       const fullUrl = response.downloadUrl.startsWith('http') 
@@ -705,7 +705,7 @@ const Dashboard = () => {
                 const apiBase = (process.env.REACT_APP_API_URL || 
                   (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
                     ? `http://${window.location.hostname}:5000/api`
-                    : 'http://localhost:5000/api')).replace(/\/$/, '');
+                    : 'https://job-finder-r1dh.onrender.com/api')).replace(/\/$/, '');
                 const hostBase = apiBase.replace(/\/api$/, '');
                 
                 const fullUrl = response.downloadUrl.startsWith('http') 
