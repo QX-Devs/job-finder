@@ -8,6 +8,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
+import usePageTitle from "./hooks/usePageTitle";
 import api, { getCurrentApiUrl } from "./services/api";
 import "./components/AuthModal.css";
 import { LanguageProvider } from "./context/LanguageContext"; // <<< أضف هذا
@@ -315,6 +316,9 @@ const VerifyEmailStatusRedirect = () => {
 
 // Single layout component that wraps ALL pages
 const MainLayout = () => {
+  // Automatically update page title based on current route
+  usePageTitle();
+  
   return (
     <Layout>
       <Outlet />
